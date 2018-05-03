@@ -1,0 +1,4 @@
+set(HEADER_FILES ${HEADER_FILES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/exporter.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/module.hpp
+    PARENT_SCOPE)

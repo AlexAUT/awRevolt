@@ -1,0 +1,5 @@
+#
+set(SOURCE_FILES ${SOURCE_FILES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/exporter.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/module.cpp
+    PARENT_SCOPE)

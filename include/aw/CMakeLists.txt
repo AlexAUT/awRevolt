@@ -1,0 +1,8 @@
+#
+add_subdirectory(engine)
+add_subdirectory(module)
+add_subdirectory(opengl)
+add_subdirectory(reflection)
+add_subdirectory(utils)
+
+set(SOURCE_FILES ${SOURCE_FILES} PARENT_SCOPE)
