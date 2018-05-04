@@ -56,7 +56,6 @@ Settings loadSettings()
   {
     LogEngineW() << "Config file could not be opened fallback to default settings";
   }
-
   return settings;
 }
 

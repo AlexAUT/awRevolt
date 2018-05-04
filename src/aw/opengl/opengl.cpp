@@ -22,32 +22,38 @@ namespace priv
 GLenum glCheckError(const char* file, int line)
 {
   GLenum errorCode;
-  while ((errorCode = gl::GetError()) != gl::NO_ERROR_)
+  while ((errorCode = glGetError()) != GL_NO_ERROR)
   {
     std::string message;
     switch (errorCode)
     {
-    case gl::INVALID_ENUM:
+    case GL_INVALID_ENUM:
       message = "INVALID_ENUM";
       break;
-    case gl::INVALID_VALUE:
+    case GL_INVALID_VALUE:
       message = "INVALID_VALUE";
       break;
-    case gl::INVALID_OPERATION:
+    case GL_INVALID_OPERATION:
       message = "INVALID_OPERATION";
       break;
-    case gl::STACK_OVERFLOW:
+#ifdef GL_STACK_OVERFLOW
+    case GL_STACK_OVERFLOW:
       message = "STACK_OVERFLOW";
       break;
-    case gl::STACK_UNDERFLOW:
+#endif
+#ifdef GL_STACK_UNDERFLOW
+    case GL_STACK_UNDERFLOW:
       message = "STACK_UNDERFLOW";
       break;
-    case gl::OUT_OF_MEMORY:
+#endif
+    case GL_OUT_OF_MEMORY:
       message = "OUT_OF_MEMORY";
       break;
-    case gl::INVALID_FRAMEBUFFER_OPERATION:
+#ifdef GL_INVALID_FRAMEBUFFER_OPERATION
+    case GL_INVALID_FRAMEBUFFER_OPERATION:
       message = "INVALID_FRAMEBUFFER_OPERATION";
       break;
+#endif
     default:
       message = "UNKNOWN OPENGL ERROR, CODE: " + std::to_string(errorCode);
     }
@@ -55,7 +61,7 @@ GLenum glCheckError(const char* file, int line)
     LogOpenGLE() << message;
     throw GLException(message);
   }
-  return gl::NO_ERROR_;
+  return GL_NO_ERROR;
 }
 
 } // namespace priv

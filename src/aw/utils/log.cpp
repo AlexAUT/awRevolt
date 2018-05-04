@@ -6,6 +6,10 @@
 #include <fstream>
 #include <memory>
 
+#ifdef AW_ANDROID
+#include <aw/utils/impl/androidStreamBuffer.hpp>
+#endif
+
 namespace aw
 {
 
@@ -66,6 +70,11 @@ bool LOG_INITIALIZE(log::LogLevel console, log::LogLevel filesystem, std::string
   logOutputLevelConsole = console;
   logOutputLevelFile = filesystem;
 
+#ifdef AW_ANDROID
+  // Redirect cout to logcat on android
+  std::cout.rdbuf(new AndroidStreamBuffer);
+#endif
+
   consoleStream = &std::cout;
 
   if (logOutputLevelFile != log::None)
@@ -81,6 +90,7 @@ bool LOG_INITIALIZE(log::LogLevel console, log::LogLevel filesystem, std::string
       std::cout << "Failed to open log output file!" << std::endl;
     }
   }
+  return true;
 }
 
 aw::log::LogInstance LOG(log::LogLevel level, std::string moduleName)

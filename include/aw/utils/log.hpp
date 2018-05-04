@@ -1,5 +1,7 @@
 #pragma once
 
+#include <aw/utils/path.hpp>
+
 #include <functional>
 #include <iostream>
 #include <string>
@@ -53,7 +55,7 @@ private:
 } // namespace log
 
 bool LOG_INITIALIZE(log::LogLevel console = log::Debug, log::LogLevel filesystem = log::Verbose,
-                    std::string logFilePath = "log.txt");
+                    std::string logFilePath = path::getInternal() + "log.txt");
 aw::log::LogInstance LOG(log::LogLevel level, std::string moduleName);
 aw::log::LogInstance LOG(const log::LogModule& logModule);
 } // namespace aw

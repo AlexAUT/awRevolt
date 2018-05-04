@@ -2,9 +2,15 @@
 set(SOURCE_FILES ${SOURCE_FILES}
     ${CMAKE_CURRENT_SOURCE_DIR}/opengl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/loader.cpp
+    PARENT_SCOPE)
+
+#OPENGL only when AW_USE_OPENGL is defined
+if(AW_USE_OPENGL)
+  set(SOURCE_FILES ${SOURCE_FILES}
     ${CMAKE_CURRENT_SOURCE_DIR}/impl/gl_core_4_5.cpp
     PARENT_SCOPE)
 
-set(HEADER_FILES ${HEADER_FILES}
+  set(HEADER_FILES ${HEADER_FILES}
     ${CMAKE_CURRENT_SOURCE_DIR}/impl/gl_core_4_5.hpp
     PARENT_SCOPE)
+endif()

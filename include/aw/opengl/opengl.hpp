@@ -1,7 +1,11 @@
 #pragma once
 
+#ifdef AW_USE_OPENGL
 #include <aw/opengl/impl/gl_core_4_5.hpp>
-
+#endif
+#ifdef AW_USE_GLES
+#include <GLES2/gl2.h>
+#endif
 #include <stdexcept>
 
 namespace aw

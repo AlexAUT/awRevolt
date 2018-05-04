@@ -5,7 +5,7 @@ namespace aw
 {
 Engine::Engine() : mSettings(priv::loadSettings()), mWindow(mSettings), mRunning(true)
 {
-  gl::ClearColor(0.f, 0.8f, 0.25f, 1.0f);
+  glClearColor(0.f, 0.8f, 0.25f, 1.0f);
 }
 
 int Engine::run()
@@ -30,7 +30,8 @@ void Engine::update(float delta)
 
 void Engine::render()
 {
-  gl::Clear(gl::COLOR_BUFFER_BIT | gl::DEPTH_BUFFER_BIT);
+  glClearColor(0.f, 0.25f, 0.8f, 1.0f);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   mWindow.getSFMLWindow().display();
 }
 

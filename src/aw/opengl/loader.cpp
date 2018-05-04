@@ -14,6 +14,7 @@ namespace opengl
 
 void init()
 {
+#ifdef AW_USE_OPENGL
   auto result = gl::sys::LoadFunctions();
   if (result.GetNumMissing() > 0)
   {
@@ -24,6 +25,7 @@ void init()
     LogOpenGLLoaderD() << "Opengl version " << gl::sys::GetMajorVersion() << "." << gl::sys::GetMinorVersion()
                        << " loaded!";
   }
+#endif
 }
 
 } // namespace opengl
