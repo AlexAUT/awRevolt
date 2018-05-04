@@ -11,10 +11,16 @@ AssetInputStream::AssetInputStream(std::string path) : std::istream(nullptr)
 {
   path = path::getAssetPath() + path;
 #ifdef AW_DESKTOP
-  mFileStream.open(path.c_str());
+  mFileStream.open(path.c_str(), std::ios::binary);
+  mIsOpen = mFileStream.is_open();
   rdbuf(mFileStream.rdbuf());
 #elif AW_ANDROID
-  rdbuf(new AndroidAssetBuffer(path));
+  auto* buffer = new AndroidAssetBuffer(path);
+  mIsOpen = buffer->isOpen();
+  if (mIsOpen)
+    rdbuf(buffer);
+  else
+    delete buffer;
 #endif
 }
 
@@ -30,10 +36,7 @@ AssetInputStream::~AssetInputStream()
 
 bool AssetInputStream::isOpen() const
 {
-#ifdef AW_DESKTOP
-  return mFileStream.is_open() && !mFileStream.fail();
-#endif
-  return good();
+  return mIsOpen;
 }
 
 } // namespace aw

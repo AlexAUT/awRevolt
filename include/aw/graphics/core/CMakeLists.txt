@@ -1,0 +1,6 @@
+set(HEADER_FILES ${HEADER_FILES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/bufferObject.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/image.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/texture2D.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/vertexArrayObject.hpp
+    PARENT_SCOPE)

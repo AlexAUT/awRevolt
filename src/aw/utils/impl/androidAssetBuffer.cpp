@@ -9,16 +9,23 @@ AndroidAssetBuffer::AndroidAssetBuffer(const std::string& filePath)
 {
   ANativeActivity* activity = sf::getNativeActivity();
   mAsset = AAssetManager_open(activity->assetManager, filePath.c_str(), AASSET_MODE_STREAMING);
-  mBuffer.resize(1024);
 
-  setg(0, 0, 0);
-  setp(&mBuffer.front(), &mBuffer.front() + mBuffer.size());
+  if (mAsset)
+  {
+    mBuffer.resize(1024);
+
+    setg(0, 0, 0);
+    setp(&mBuffer.front(), &mBuffer.front() + mBuffer.size());
+  }
 }
 
 AndroidAssetBuffer::~AndroidAssetBuffer()
 {
-  sync();
-  AAsset_close(mAsset);
+  if (mAsset)
+  {
+    sync();
+    AAsset_close(mAsset);
+  }
 }
 
 std::streambuf::int_type AndroidAssetBuffer::underflow()
@@ -47,4 +54,10 @@ int AndroidAssetBuffer::sync()
 
   return traits_type::eq_int_type(result, traits_type::eof()) ? -1 : 0;
 }
+
+bool AndroidAssetBuffer::isOpen() const
+{
+  return mAsset != nullptr;
+}
+
 } // namespace aw

@@ -19,6 +19,8 @@ public:
   std::streambuf::int_type overflow(std::streambuf::int_type value) override;
   int sync() override;
 
+  bool isOpen() const;
+
 private:
   AAsset* mAsset;
   std::vector<char> mBuffer;

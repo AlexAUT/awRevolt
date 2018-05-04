@@ -15,6 +15,10 @@ typedef int16_t int16;
 typedef int32_t int32_t;
 
 typedef std::size_t size_t;
+#ifdef AW_DESKTOP
 typedef std::byte byte;
+#else
+typedef uint8 byte;
+#endif
 
 } // namespace aw

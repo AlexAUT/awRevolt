@@ -19,6 +19,7 @@ public:
 private:
 private:
   std::ifstream mFileStream;
+  bool mIsOpen;
 };
 
 } // namespace aw

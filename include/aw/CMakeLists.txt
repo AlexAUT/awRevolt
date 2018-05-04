@@ -1,5 +1,6 @@
 #
 add_subdirectory(engine)
+add_subdirectory(graphics)
 add_subdirectory(module)
 add_subdirectory(opengl)
 add_subdirectory(reflection)
