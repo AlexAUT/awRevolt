@@ -9,6 +9,14 @@ namespace aw
 {
 namespace path
 {
+std::string getAssetPath()
+{
+#ifdef AW_DESKTOP
+  return "assets/";
+#endif
+  return "";
+}
+
 std::string getInternal()
 {
 #ifdef AW_DESKTOP

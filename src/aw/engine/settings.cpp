@@ -2,6 +2,7 @@
 
 #include <aw/engine/logCategories.hpp>
 #include <aw/utils/log.hpp>
+#include <aw/utils/path.hpp>
 
 #include <fstream>
 
@@ -20,7 +21,7 @@ Settings loadSettings()
 {
   Settings settings;
 
-  std::ifstream configFile("config/engine.json");
+  std::ifstream configFile(path::getInternal() + "engine.json");
   if (configFile.is_open())
   {
     Json::CharReaderBuilder builder;
@@ -61,7 +62,7 @@ Settings loadSettings()
 
 bool saveSettings(const Settings& settings)
 {
-  std::fstream configFile("config/engine.json", std::ios::out | std::ios::trunc);
+  std::fstream configFile(path::getInternal() + "engine.json", std::ios::out | std::ios::trunc);
   if (configFile.is_open())
   {
     Json::Value config;
