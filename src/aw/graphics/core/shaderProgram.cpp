@@ -95,7 +95,7 @@ void ShaderProgram::setUniform(std::string name, const Mat4& matrix) const
 void ShaderProgram::setUniform(int id, const Mat4& matrix) const
 {
   if (id >= 0)
-    GL_CHECK(_ptrc_glUniformMatrix4fv(id, 1, GL_FALSE, glm::value_ptr(matrix)));
+    GL_CHECK(glUniformMatrix4fv(id, 1, GL_FALSE, glm::value_ptr(matrix)));
 }
 
 void ShaderProgram::bind() const
