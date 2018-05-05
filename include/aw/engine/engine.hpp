@@ -1,5 +1,6 @@
 #pragma once
 
+#include <aw/engine/runtime/stateMachine.hpp>
 #include <aw/engine/settings.hpp>
 #include <aw/engine/window.hpp>
 
@@ -15,7 +16,13 @@ public:
 
   int run();
 
+  void terminate();
+
   const Settings& getSettings() const;
+  StateMachine& getStateMachine();
+  const StateMachine& getStateMachine() const;
+  Window& getWindow();
+  const Window& getWindow() const;
 
 private:
   void handleEvents();
@@ -24,6 +31,7 @@ private:
 
 private:
   Settings mSettings;
+  StateMachine mStateMachine;
   Window mWindow;
 
   bool mRunning;

@@ -2,8 +2,12 @@
 
 #include <aw/engine/settings.hpp>
 #include <aw/opengl/loader.hpp>
+#include <aw/opengl/opengl.hpp>
 
 #include <SFML/Window/Event.hpp>
+
+#include <chrono>
+#include <thread>
 
 namespace aw
 {
@@ -19,8 +23,8 @@ void Window::handleEvents(/*const EventHandlers& eventHandlers*/)
   sf::Event event;
   while (mWindow.pollEvent(event))
   {
-    // for (auto& handler : eventHandlers)
-    //  handler->processWindowEvent(event);
+    for(auto& callback : mEventListeners)
+      callback.second(event);
   }
 }
 
@@ -54,6 +58,32 @@ void Window::applySettings(const Settings& settings)
 
   mWindow.setMouseCursorGrabbed(settings.grabCursor);
   mWindow.setMouseCursorVisible(settings.cursorVisible);
+
+#ifdef AW_ANDROID
+  // We need to wait for the EGL context to be created, otherwise opengl calls will fail silently!
+  std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+  handleEvents();
+  mWindow.display();
+#endif
+}
+
+Window::EventListenerID Window::registerEventListener(EventCallback callback)
+{
+  mEventListeners.push_back({mListenerID, callback});
+  return mListenerID++;
+}
+
+void Window::unregisterEventListener(EventListenerID id)
+{
+  for(auto it = mEventListeners.begin(); it != mEventListeners.end(); it++)
+  {
+    if(it->first == id)
+    {
+      *it = *(mEventListeners.end() - 1);
+      mEventListeners.pop_back();
+      break;
+    }
+  }
 }
 
 sf::Window& Window::getSFMLWindow()

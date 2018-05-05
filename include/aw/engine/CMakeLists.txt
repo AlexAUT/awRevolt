@@ -1,5 +1,8 @@
+add_subdirectory(runtime)
+
 set(HEADER_FILES ${HEADER_FILES}
     ${CMAKE_CURRENT_SOURCE_DIR}/engine.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/eventHandler.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/logCategories.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/settings.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/window.hpp
