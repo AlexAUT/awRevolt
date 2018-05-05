@@ -8,10 +8,11 @@ Engine::Engine() : mSettings(priv::loadSettings()), mWindow(mSettings), mRunning
 
 int Engine::run()
 {
+  mUpdateTimer.restart();
   while (mRunning)
   {
     handleEvents();
-    update(0);
+    update(mUpdateTimer.restart<Seconds>());
     render();
   }
   return 0;

@@ -4,6 +4,8 @@
 #include <aw/engine/settings.hpp>
 #include <aw/engine/window.hpp>
 
+#include <aw/utils/clock.hpp>
+
 namespace aw
 {
 
@@ -33,6 +35,8 @@ private:
   Settings mSettings;
   StateMachine mStateMachine;
   Window mWindow;
+
+  Clock mUpdateTimer;
 
   bool mRunning;
 };

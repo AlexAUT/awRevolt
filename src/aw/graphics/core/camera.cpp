@@ -129,7 +129,7 @@ void Camera::rotate(Quaternion rotation)
 
 void Camera::rotateEuler(Vec3 rotation)
 {
-  mRotation = rotation * glm::quat(rotation);
+  mRotation *= glm::quat(rotation);
   invalidViewCache();
 }
 
