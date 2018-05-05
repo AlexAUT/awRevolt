@@ -14,6 +14,8 @@ typedef int8_t int8;
 typedef int16_t int16;
 typedef int32_t int32_t;
 
+typedef std::ptrdiff_t ptrdiff;
+
 typedef std::size_t size_t;
 #ifdef AW_DESKTOP
 typedef std::byte byte;

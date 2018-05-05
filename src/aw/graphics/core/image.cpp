@@ -1,5 +1,7 @@
 #include <aw/graphics/core/image.hpp>
 
+#include <aw/utils/streamReading.hpp>
+
 #define STB_IMAGE_IMPLEMENTATION
 #include <aw/graphics/core/stb_image.hpp>
 
@@ -7,17 +9,7 @@ namespace aw
 {
 bool Image::loadFromStream(std::istream& stream, bool invertYAxis)
 {
-  const size_t CHUNK_SIZE = 2048;
-  std::vector<uint8> fileBuffer(CHUNK_SIZE);
-  size_t cursor = 0;
-  size_t readBytes;
-  while (stream.read(reinterpret_cast<char*>(fileBuffer.data() + cursor), CHUNK_SIZE))
-  {
-    cursor += CHUNK_SIZE;
-    fileBuffer.resize(cursor + CHUNK_SIZE);
-  }
-  fileBuffer.resize(cursor + stream.gcount());
-
+  std::vector<uint8> fileBuffer = stream::toUint8(stream);
   uint8* ptr =
       stbi_load_from_memory(fileBuffer.data(), fileBuffer.size(), &mWidth, &mHeight, &mNumChannels, STBI_rgb_alpha);
   if (ptr)

@@ -1,11 +1,9 @@
 #include <aw/engine/engine.hpp>
-#include <aw/opengl/opengl.hpp>
 
 namespace aw
 {
 Engine::Engine() : mSettings(priv::loadSettings()), mWindow(mSettings), mRunning(true)
 {
-  glClearColor(0.f, 0.8f, 0.25f, 1.0f);
 }
 
 int Engine::run()
@@ -36,9 +34,6 @@ void Engine::update(float delta)
 
 void Engine::render()
 {
-  //  glClearColor(0.f, 0.25f, 0.8f, 1.0f);
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
   mStateMachine.render();
 
   mWindow.getSFMLWindow().display();
