@@ -8,36 +8,39 @@ namespace aw
 {
 void VertexArrayObject::bind() const
 {
-  for (auto& attribute : mAttributes)
+  for (auto& bufferAttrib : mAttributes)
   {
-    attribute.buffer->bind();
-    glEnableVertexAttribArray(attribute.index);
-    glVertexAttribPointer(attribute.index, attribute.size, attribute.type, attribute.normalized, attribute.stride,
-                          attribute.offset);
+    const auto& buffer = bufferAttrib.first;
+    const auto& attrib = bufferAttrib.second;
+    buffer->bind();
+    glEnableVertexAttribArray(attrib.index);
+    glVertexAttribPointer(attrib.index, attrib.size, attrib.type, attrib.normalized, attrib.stride, attrib.offset);
   }
 }
 
 void VertexArrayObject::unbind() const
 {
-  for (auto& attribute : mAttributes)
+  for (auto& bufferAttrib : mAttributes)
   {
-    attribute.buffer->unbind();
-    glDisableVertexAttribArray(attribute.index);
+    const auto& buffer = bufferAttrib.first;
+    const auto& attrib = bufferAttrib.second;
+    buffer->unbind();
+    glDisableVertexAttribArray(attrib.index);
   }
 }
 
-void VertexArrayObject::addVertexAttribute(VertexAttribute attribute)
+void VertexArrayObject::addVertexAttribute(const BufferObject* buffer, VertexAttribute attribute)
 {
   assert(!indexInUse(attribute.index) && "You cannot insert a vertex attribute with the same index more than once!");
-  assert(attribute.buffer && "VertexAttribute should not have a nullptr as buffer!");
-  mAttributes.push_back(attribute);
+  assert(buffer && "VertexAttribute should not have a nullptr as buffer!");
+  mAttributes.push_back({buffer, attribute});
 }
 
 bool VertexArrayObject::indexInUse(int index) const
 {
   for (auto& a : mAttributes)
   {
-    if (a.index == index)
+    if (a.second.index == index)
       return true;
   }
   return false;

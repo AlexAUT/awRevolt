@@ -8,13 +8,12 @@ typedef unsigned GLenum;
 
 struct VertexAttribute
 {
-  BufferObject* buffer;
   int index;
   int size;
   GLenum type;
   GLenum normalized;
   int stride;
-  void* offset;
+  const void* offset;
 };
 
 } // namespace aw

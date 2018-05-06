@@ -209,8 +209,8 @@ void Camera::updateViewMatrix() const
   {
     mViewDirty = false;
 
-    Mat4 rotationMatrix = glm::mat4_cast(mRotation);
-    mViewMatrix = glm::translate(rotationMatrix, -mPosition);
+    Mat4 rotationMatrix = glm::mat4_cast(glm::inverse(mRotation));
+    mViewMatrix = rotationMatrix * glm::translate(Mat4(1.f), -mPosition);
   }
 }
 

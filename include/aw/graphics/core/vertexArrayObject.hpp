@@ -17,13 +17,13 @@ public:
   void bind() const;
   void unbind() const;
 
-  void addVertexAttribute(VertexAttribute attribute);
+  void addVertexAttribute(const BufferObject* buffer, VertexAttribute attribute);
 
 private:
   bool indexInUse(int index) const;
 
 private:
-  std::vector<VertexAttribute> mAttributes;
+  std::vector<std::pair<const BufferObject*, const VertexAttribute>> mAttributes;
 };
 
 } // namespace aw

@@ -1,12 +1,16 @@
 set(HEADER_FILES ${HEADER_FILES}
     ${CMAKE_CURRENT_SOURCE_DIR}/bufferObject.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/camera.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/color.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/geometry.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/indicesBuffer.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/shaderProgram.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/shaderStage.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/texture2D.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/vertex.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/vertexBuffer.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/vertexArrayObject.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/vertexAttribute.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/vertexLayout.hpp
     PARENT_SCOPE)

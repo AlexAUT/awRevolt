@@ -77,3 +77,5 @@ LogInstance& LogInstance::operator<<(const T& toOutput)
 } // namespace log
 
 } // namespace aw
+
+aw::log::LogInstance LogTemp();

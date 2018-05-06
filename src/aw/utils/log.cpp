@@ -106,3 +106,9 @@ aw::log::LogInstance LOG(const log::LogModule& logModule)
 }
 
 } // namespace aw
+
+const aw::log::LogModule logModuleTemp{aw::log::Debug, "LogTemp"};
+aw::log::LogInstance LogTemp()
+{
+  return aw::LOG(logModuleTemp);
+}
