@@ -39,4 +39,16 @@ struct VertexPosColor
   Vec4 color;
   static VertexLayout<2> Layout;
 };
+
+struct VertexBones
+{
+  Vec3 position;
+  Vec3 normal;
+  Vec2 texCoord;
+  Vec4 boneIds;
+  Vec4 boneWeights;
+
+  static VertexLayout<5> Layout;
+};
+
 } // namespace aw

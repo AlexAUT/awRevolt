@@ -2,10 +2,14 @@
 
 #include <aw/graphics/core/vertexAttribute.hpp>
 
+#include <tuple>
 #include <vector>
 
 namespace aw
 {
+
+class VertexBuffer;
+class IndicesBuffer;
 
 class VertexArrayObject
 {
@@ -17,13 +21,15 @@ public:
   void bind() const;
   void unbind() const;
 
-  void addVertexAttribute(const BufferObject* buffer, VertexAttribute attribute);
+  void addVertexAttribute(const VertexBuffer* buffer, VertexAttribute attribute);
+  void addVertexAttribute(const VertexBuffer* buffer, const IndicesBuffer* indices, VertexAttribute attribute);
 
 private:
   bool indexInUse(int index) const;
 
 private:
-  std::vector<std::pair<const BufferObject*, const VertexAttribute>> mAttributes;
+  typedef std::tuple<const VertexBuffer*, const IndicesBuffer*> DrawBufferBindings;
+  std::vector<std::pair<DrawBufferBindings, const VertexAttribute>> mAttributes;
 };
 
 } // namespace aw

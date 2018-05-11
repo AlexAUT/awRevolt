@@ -4,11 +4,11 @@
 
 namespace aw
 {
-IndicesBuffer::IndicesBuffer() : BufferObject(GL_ARRAY_BUFFER)
+IndicesBuffer::IndicesBuffer() : BufferObject(GL_ELEMENT_ARRAY_BUFFER)
 {
 }
 
-IndicesBuffer::IndicesBuffer(GLbitfield usage) : BufferObject(GL_ARRAY_BUFFER, usage)
+IndicesBuffer::IndicesBuffer(GLbitfield usage) : BufferObject(GL_ELEMENT_ARRAY_BUFFER, usage)
 {
 }
 

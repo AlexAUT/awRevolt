@@ -58,6 +58,8 @@ GLenum ShaderStage::getGLType() const
     return GL_VERTEX_SHADER;
   case Fragment:
     return GL_FRAGMENT_SHADER;
+  default:
+    return GL_VERTEX_SHADER;
   }
 }
 

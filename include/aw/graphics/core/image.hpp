@@ -26,6 +26,10 @@ public:
   {
     return mNumChannels;
   }
+  const uint8* getPixelPtr() const
+  {
+    return mData.data();
+  }
 
 private:
 private:

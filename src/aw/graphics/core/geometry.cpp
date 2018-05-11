@@ -115,8 +115,9 @@ std::array<Vertex, 6 * 6> cube(Vec3 center, Vec3 size)
   return vertices;
 }
 
-std::array<Vertex, 8 * 3> octahedron(Vec3 center, float radius){
-
+std::array<Vertex, 8 * 3> octahedron(Vec3 center, float radius)
+{
+  return {};
 };
 } // namespace geo
 } // namespace aw

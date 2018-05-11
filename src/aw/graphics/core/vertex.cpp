@@ -25,4 +25,12 @@ VertexLayout<2> VertexPosColor::Layout = {
     VertexAttribute{0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexPosColor), vOffsetof(VertexPosColor, position)},
     VertexAttribute{2, 4, GL_FLOAT, GL_FALSE, sizeof(VertexPosColor), vOffsetof(VertexPosColor, color)},
 };
+
+VertexLayout<5> VertexBones::Layout = {
+    VertexAttribute{0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexBones), vOffsetof(VertexBones, position)},
+    VertexAttribute{1, 3, GL_FLOAT, GL_FALSE, sizeof(VertexBones), vOffsetof(VertexBones, normal)},
+    VertexAttribute{3, 2, GL_FLOAT, GL_FALSE, sizeof(VertexBones), vOffsetof(VertexBones, texCoord)},
+    VertexAttribute{4, 4, GL_FLOAT, GL_FALSE, sizeof(VertexBones), vOffsetof(VertexBones, boneIds)},
+    VertexAttribute{5, 4, GL_FLOAT, GL_FALSE, sizeof(VertexBones), vOffsetof(VertexBones, boneWeights)},
+};
 } // namespace aw

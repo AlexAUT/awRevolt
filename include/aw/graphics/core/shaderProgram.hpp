@@ -26,10 +26,19 @@ public:
   int getUniformLocation(std::string name) const;
   int getAttributeLocation(std::string name) const;
 
+  void setUniform(std::string name, int value) const;
+  void setUniform(int id, int value) const;
+  void setUniform(std::string name, float value) const;
+  void setUniform(int id, float value) const;
+  void setUniform(std::string name, Vec3 vec) const;
+  void setUniform(int id, Vec3 vec) const;
   void setUniform(std::string name, Vec4 vec) const;
   void setUniform(int id, Vec4 vec) const;
   void setUniform(std::string name, const Mat4& matrix) const;
   void setUniform(int id, const Mat4& matrix) const;
+
+  void setUniformArrayMat4(std::string name, unsigned count, const float* data) const;
+  void setUniformArrayMat4(int id, unsigned count, const float* data) const;
 
   void bind() const;
   void unbind() const;

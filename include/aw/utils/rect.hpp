@@ -38,6 +38,7 @@ struct Rect
   {
     stream << "Rect: (left:" << rect.left << ", right:" << rect.right << ", width" << rect.width << ", height"
            << rect.height << ")";
+    return stream;
   }
 };
 

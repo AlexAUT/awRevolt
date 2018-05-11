@@ -47,9 +47,9 @@ if(AW_BUILD_TEST)
     message(error "Test target is not supported for android builds")
   endif()
 
-  set(TEST_FILES test/main.cpp test/testState.cpp test/testState.hpp)
+  set(TEST_FILES test/main.cpp test/testState.cpp test/testState.hpp test/assimpImporter.hpp test/assimpImporter.cpp)
   add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${HEADER_FILES} ${TEST_FILES})
-  target_link_libraries(${PROJECT_NAME} jsoncpp GL sfml-window-d sfml-system-d)
+  target_link_libraries(${PROJECT_NAME} jsoncpp assimp GL sfml-window-d sfml-system-d)
 else()
   add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES} ${HEADER_FILES})
 
