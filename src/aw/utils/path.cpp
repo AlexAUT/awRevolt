@@ -38,5 +38,15 @@ std::string getExternal()
   return "";
 }
 
+std::string getConfigPath()
+{
+#ifdef AW_DESKTOP
+  return "config/";
+#elif AW_ANDROID
+  return getInternal();
+#endif
+  return "";
+}
+
 } // namespace path
 } // namespace aw

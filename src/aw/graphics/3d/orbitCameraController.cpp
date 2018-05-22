@@ -70,4 +70,14 @@ void OrbitCameraController::update(float delta)
   mCamera->setRotationEuler(rotation);
 }
 
+float OrbitCameraController::getHorizontalRotation() const
+{
+  return mHorizontalRotation;
+}
+
+float OrbitCameraController::getVerticalRotation() const
+{
+  return mVerticalRotation;
+}
+
 } // namespace aw

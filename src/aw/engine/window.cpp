@@ -4,6 +4,8 @@
 #include <aw/opengl/loader.hpp>
 #include <aw/opengl/opengl.hpp>
 
+#include <aw/utils/log.hpp>
+
 #include <SFML/Window/Event.hpp>
 
 #include <chrono>
@@ -23,7 +25,7 @@ void Window::handleEvents(/*const EventHandlers& eventHandlers*/)
   sf::Event event;
   while (mWindow.pollEvent(event))
   {
-    for(auto& callback : mEventListeners)
+    for (auto& callback : mEventListeners)
       callback.second(event);
   }
 }
@@ -56,6 +58,7 @@ void Window::applySettings(const Settings& settings)
   else
     mWindow.setFramerateLimit(settings.frameLimit);
 
+  LogTemp() << "Grab cursor: " << settings.grabCursor;
   mWindow.setMouseCursorGrabbed(settings.grabCursor);
   mWindow.setMouseCursorVisible(settings.cursorVisible);
 
@@ -75,9 +78,9 @@ Window::EventListenerID Window::registerEventListener(EventCallback callback)
 
 void Window::unregisterEventListener(EventListenerID id)
 {
-  for(auto it = mEventListeners.begin(); it != mEventListeners.end(); it++)
+  for (auto it = mEventListeners.begin(); it != mEventListeners.end(); it++)
   {
-    if(it->first == id)
+    if (it->first == id)
     {
       *it = *(mEventListeners.end() - 1);
       mEventListeners.pop_back();

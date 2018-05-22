@@ -17,7 +17,7 @@ public:
   };
 
 public:
-  static Camera createPerspective(float aspectRatio, float fieldOfView, float near = 0.01f, float far = 1000.f);
+  static Camera createPerspective(float aspectRatio, float fieldOfView, float near = 0.1f, float far = 1000.f);
   static Camera createOrthograpic(float left, float right, float bottom, float top, float near = 0.0f,
                                   float far = 100.f);
 

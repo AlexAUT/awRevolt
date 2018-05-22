@@ -1,6 +1,7 @@
 #pragma one
 
 #include <aw/graphics/3d/meshPose.hpp>
+#include <aw/graphics/3d/transform.hpp>
 
 #include <aw/utils/math/vector.hpp>
 
@@ -28,6 +29,8 @@ public:
   const Mesh& getMesh() const;
   const MeshAnimation* getAnimation() const;
   const MeshPose& getPose() const;
+
+  Transform localTransform;
 
 private:
 private:

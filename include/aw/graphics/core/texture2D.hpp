@@ -33,6 +33,9 @@ public:
   ~Texture2D();
 
   void loadFromImage(const Image& img);
+  void loadFromMemory(const void* data, unsigned width, unsigned height);
+  void loadFromMemory(const void* data, unsigned width, unsigned height, GLenum interalFormat, GLenum format,
+                      GLenum dataType);
 
   void bind(unsigned textureUnit = 0) const;
   void unbind() const;
