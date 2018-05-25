@@ -2,11 +2,12 @@
 
 #include <istream>
 
+#include <memory>
+
 typedef unsigned GLenum;
 
 namespace aw
 {
-
 class ShaderStage
 {
 public:
@@ -15,6 +16,9 @@ public:
     Vertex,
     Fragment,
   };
+
+public:
+  static std::unique_ptr<ShaderStage> loadFromAssetFile(Type type, const std::string& path);
 
 public:
   ShaderStage(Type type);

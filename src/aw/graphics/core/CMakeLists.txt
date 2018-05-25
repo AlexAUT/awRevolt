@@ -2,9 +2,12 @@
 set(SOURCE_FILES ${SOURCE_FILES}
     ${CMAKE_CURRENT_SOURCE_DIR}/bufferObject.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/camera.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/frameBuffer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/geometry.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/indicesBuffer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/postProcessRenderer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/renderBuffer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/shaderProgram.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/shaderStage.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/texture2D.cpp

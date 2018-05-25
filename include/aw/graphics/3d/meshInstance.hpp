@@ -1,4 +1,4 @@
-#pragma one
+#pragma once
 
 #include <aw/graphics/3d/meshPose.hpp>
 

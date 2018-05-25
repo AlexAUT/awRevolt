@@ -25,6 +25,9 @@ public:
 
   void update(float delta);
 
+  float getHorizontalRotation() const;
+  float getVerticalRotation() const;
+
 private:
 private:
   aw::Camera* mCamera{nullptr};
@@ -34,8 +37,8 @@ private:
   float mDistance{1.f};
   Vec3 mLookAt{0.f};
 
-  float mHorizontalSensibility{0.01f};
-  float mVerticalSensibility{0.01f};
+  float mHorizontalSensibility{0.005f};
+  float mVerticalSensibility{0.005f};
   float mZoomSensibility{1.f};
 };
 

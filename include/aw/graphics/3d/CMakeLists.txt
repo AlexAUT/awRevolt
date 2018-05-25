@@ -10,4 +10,5 @@ set(HEADER_FILES ${HEADER_FILES}
   ${CMAKE_CURRENT_SOURCE_DIR}/meshSkeleton.hpp
   ${CMAKE_CURRENT_SOURCE_DIR}/meshSkeletonNode.hpp
   ${CMAKE_CURRENT_SOURCE_DIR}/orbitCameraController.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/transform.hpp
   PARENT_SCOPE)

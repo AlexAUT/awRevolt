@@ -36,8 +36,6 @@ bool Image::loadFromStream(std::istream& stream, bool invertYAxis)
     size_t size = mWidth * mHeight * mNumChannels; // 4 components 4bytes each, for every pixel
     mData.resize(size);
     std::memcpy(mData.data(), ptr, size);
-    LogTemp() << "Width: " << mWidth << ", heighjt: " << mHeight << ", num channel: " << mNumChannels
-              << ", size: " << size;
     stbi_image_free(ptr);
 
     return true;

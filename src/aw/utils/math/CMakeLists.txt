@@ -1,5 +1,6 @@
 #
 set(SOURCE_FILES ${SOURCE_FILES}
     ${CMAKE_CURRENT_SOURCE_DIR}/matrix.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/quaternion.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/vector.cpp
     PARENT_SCOPE)

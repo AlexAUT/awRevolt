@@ -19,8 +19,17 @@ Texture2D::~Texture2D()
 
 void Texture2D::loadFromImage(const Image& image)
 {
-  GL_CHECK(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.getWidth(), image.getHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE,
-                        image.getPixelPtr()));
+  loadFromMemory(image.getPixelPtr(), image.getWidth(), image.getHeight());
+}
+
+void Texture2D::loadFromMemory(const void* data, unsigned width, unsigned height)
+{
+  loadFromMemory(data, width, height, GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE);
+}
+void Texture2D::loadFromMemory(const void* data, unsigned width, unsigned height, GLenum interalFormat, GLenum format,
+                               GLenum dataType)
+{
+  GL_CHECK(glTexImage2D(GL_TEXTURE_2D, 0, interalFormat, width, height, 0, format, dataType, data));
   setMinFilter(MinFilter::LINEAR);
   setMagFilter(MagFilter::LINEAR);
   setWrapMode(WrapMode::REPEAT);
@@ -122,6 +131,11 @@ void Texture2D::unbind() const
 {
   GL_CHECK(glActiveTexture(GL_TEXTURE0 + mBoundTextureUnit));
   GL_CHECK(glBindTexture(GL_TEXTURE_2D, 0));
+}
+
+unsigned Texture2D::getId() const
+{
+  return mId;
 }
 
 } // namespace aw

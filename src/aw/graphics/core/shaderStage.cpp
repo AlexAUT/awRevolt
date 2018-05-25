@@ -2,6 +2,7 @@
 
 #include <aw/opengl/opengl.hpp>
 
+#include <aw/utils/assetInputStream.hpp>
 #include <aw/utils/log.hpp>
 #include <aw/utils/streamReading.hpp>
 
@@ -9,6 +10,14 @@ DEFINE_LOG_CATEGORY(ShaderStageE, aw::log::Error, ShaderStage)
 
 namespace aw
 {
+std::unique_ptr<ShaderStage> ShaderStage::loadFromAssetFile(Type type, const std::string& path)
+{
+  auto result = std::make_unique<ShaderStage>(type);
+  aw::AssetInputStream stream(path);
+  result->loadFromStream(stream);
+  return result;
+}
+
 ShaderStage::ShaderStage(Type type) : mType(type), mId(0)
 {
 }
@@ -28,7 +37,20 @@ bool ShaderStage::loadFromStream(std::istream& stream)
 bool ShaderStage::loadFromMemory(const char* content)
 {
   mId = GL_CHECK(glCreateShader(getGLType()));
-  GL_CHECK(glShaderSource(mId, 1, &content, nullptr));
+
+  const char* prefix = "";
+  // Add a prefix to make shaders compatible between opengl and opengl es
+#ifdef AW_DESKTOP
+  if (mType == Type::Vertex)
+    prefix = "#version 330\n";
+#else
+  if (mType == Type::Fragment)
+    prefix = "precision mediump float;\n";
+#endif
+
+  const char* combined[2] = {prefix, content};
+
+  GL_CHECK(glShaderSource(mId, 2, combined, nullptr));
   GL_CHECK(glCompileShader(mId));
 
   int success;

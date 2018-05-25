@@ -5,6 +5,8 @@
 
 #include <aw/opengl/opengl.hpp>
 
+#include <aw/utils/log.hpp>
+
 namespace aw
 {
 MeshInstance::MeshInstance(const Mesh& mesh) : mMesh(mesh)
@@ -26,20 +28,17 @@ void MeshInstance::update(float delta)
 
 void MeshInstance::render(const ShaderProgram& shader)
 {
-  int bonesUniform = shader.getUniformLocation("bones[0]");
-  if (bonesUniform >= 0)
-  {
+  if (mBoneTransforms.size() > 0)
     shader.setUniformArrayMat4("bones[0]", mBoneTransforms.size(), reinterpret_cast<float*>(mBoneTransforms.data()));
 
-    const unsigned meshCount = mMesh.getObjectCount();
-    for (unsigned i = 0; i < meshCount; i++)
-    {
-      const auto& meshObject = mMesh.getObject(i);
-      meshObject.vao.bind();
-      const auto& material = mMesh.getMaterial(meshObject.materialIndex);
-      material.getDiffuseSlot(0).texture2D->bind();
-      GL_CHECK(glDrawElements(GL_TRIANGLES, meshObject.indices.size(), GL_UNSIGNED_INT, (void*)0));
-    }
+  const unsigned meshCount = mMesh.getObjectCount();
+  for (unsigned i = 0; i < meshCount; i++)
+  {
+    const auto& meshObject = mMesh.getObject(i);
+    meshObject.vao.bind();
+    const auto& material = mMesh.getMaterial(meshObject.materialIndex);
+    material.getDiffuseSlot(0).texture2D->bind();
+    GL_CHECK(glDrawElements(GL_TRIANGLES, meshObject.indices.size(), GL_UNSIGNED_INT, (void*)0));
   }
 }
 

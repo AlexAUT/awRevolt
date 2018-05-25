@@ -93,7 +93,8 @@ void ShaderProgram::setUniform(std::string name, int value) const
 
 void ShaderProgram::setUniform(int id, int value) const
 {
-  GL_CHECK(glUniform1i(id, value));
+  if (id >= 0)
+    GL_CHECK(glUniform1i(id, value));
 }
 
 void ShaderProgram::setUniform(std::string name, float value) const
@@ -103,7 +104,8 @@ void ShaderProgram::setUniform(std::string name, float value) const
 
 void ShaderProgram::setUniform(int id, float value) const
 {
-  GL_CHECK(glUniform1f(id, value));
+  if (id >= 0)
+    GL_CHECK(glUniform1f(id, value));
 }
 
 void ShaderProgram::setUniform(std::string name, Vec3 vec) const
@@ -113,7 +115,10 @@ void ShaderProgram::setUniform(std::string name, Vec3 vec) const
 
 void ShaderProgram::setUniform(int id, Vec3 vec) const
 {
-  GL_CHECK(glUniform3f(id, vec.x, vec.y, vec.z));
+  if (id >= 0)
+  {
+    GL_CHECK(glUniform3f(id, vec.x, vec.y, vec.z));
+  }
 }
 
 void ShaderProgram::setUniform(std::string name, Vec4 vec) const
@@ -123,7 +128,8 @@ void ShaderProgram::setUniform(std::string name, Vec4 vec) const
 
 void ShaderProgram::setUniform(int id, Vec4 vec) const
 {
-  GL_CHECK(glUniform4f(id, vec.x, vec.y, vec.z, vec.w));
+  if (id >= 0)
+    GL_CHECK(glUniform4f(id, vec.x, vec.y, vec.z, vec.w));
 }
 
 void ShaderProgram::setUniform(std::string name, const Mat4& matrix) const
@@ -144,7 +150,8 @@ void ShaderProgram::setUniformArrayMat4(std::string name, unsigned count, const 
 
 void ShaderProgram::setUniformArrayMat4(int id, unsigned count, const float* data) const
 {
-  GL_CHECK(glUniformMatrix4fv(id, count, GL_FALSE, data));
+  if (id >= 0)
+    GL_CHECK(glUniformMatrix4fv(id, count, GL_FALSE, data));
 }
 
 void ShaderProgram::bind() const

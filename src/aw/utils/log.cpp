@@ -23,6 +23,27 @@ std::ostream* fileStream{nullptr};
 namespace log
 {
 
+std::string colorPrefix(LogLevel level)
+{
+#ifdef AW_DESKTOP
+  switch (level)
+  {
+  case Error:
+    return "\033[0;31m";
+  case Warning:
+    return "\033[0;33m";
+  case Verbose:
+    return "\033[0m";
+  case Debug:
+    return "\033[0;34m";
+  default:
+    return "\033[0m";
+  }
+#else
+  return "";
+#endif
+}
+
 std::string logLevelToString(LogLevel level)
 {
   switch (level)
@@ -44,7 +65,7 @@ LogInstance::LogInstance(LogLevel level, const std::string& module, std::ostream
     : mWriteToConsole(level <= logOutputLevelConsole), mWriteToFileSystem(level <= logOutputLevelFile),
       mConsoleStream(console), mFileStream(file)
 {
-  auto prefix = logLevelToString(level);
+  auto prefix = colorPrefix(level) + logLevelToString(level);
   auto timestamp = date::getDateTime();
   if (mWriteToConsole)
     mConsoleStream << prefix << timestamp << " (" << module << "): ";
