@@ -7,6 +7,7 @@ namespace aw
 Transform::Transform(std::function<void()> listenerCallback) : mChangeListener(listenerCallback)
 {
 }
+
 void Transform::setOrigin(Vec3 origin)
 {
   mOrigin = origin;
