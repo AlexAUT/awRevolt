@@ -2,9 +2,21 @@
 
 namespace aw
 {
-MeshAnimation::MeshAnimation(float duration, float ticksPerSecond, MeshAnimationChannels& channels)
-    : mDuration(duration), mTicksPerSecond(ticksPerSecond), mChannels(channels)
+MeshAnimation::MeshAnimation(const std::string& fileName, const std::string& displayName, float duration,
+                             float ticksPerSecond, MeshAnimationChannels& channels)
+    : mFileName(fileName), mDisplayName(displayName), mDuration(duration), mTicksPerSecond(ticksPerSecond),
+      mChannels(channels)
 {
+}
+
+const std::string& MeshAnimation::getFileName() const
+{
+  return mFileName;
+}
+
+const std::string& MeshAnimation::getDisplayName() const
+{
+  return mDisplayName;
 }
 
 float MeshAnimation::getDuration() const

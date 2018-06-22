@@ -1,0 +1,6 @@
+set(HEADER_FILES ${HEADER_FILES}
+  ${CMAKE_CURRENT_SOURCE_DIR}/TextureManager.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/MeshManager.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/MeshAnimationManager.hpp
+  PARENT_SCOPE)
+

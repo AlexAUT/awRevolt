@@ -34,7 +34,11 @@ typedef std::vector<MeshAnimationChannel> MeshAnimationChannels;
 class MeshAnimation
 {
 public:
-  MeshAnimation(float duration, float ticksPerSecond, MeshAnimationChannels& channels);
+  MeshAnimation(const std::string& fileName, const std::string& displayName, float duration, float ticksPerSecond,
+                MeshAnimationChannels& channels);
+
+  const std::string& getFileName() const;
+  const std::string& getDisplayName() const;
 
   float getDuration() const;
   float getTicksPerSecond() const;
@@ -44,6 +48,8 @@ public:
 
 private:
 private:
+  const std::string mFileName;
+  const std::string mDisplayName;
   const float mDuration;
   const float mTicksPerSecond;
   const MeshAnimationChannels mChannels;

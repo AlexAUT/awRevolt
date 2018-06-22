@@ -4,6 +4,14 @@
 
 namespace aw
 {
+Mesh::Mesh(const std::string& fileName) : Mesh(fileName, fileName)
+{
+}
+
+Mesh::Mesh(const std::string& fileName, const std::string& displayName) : mFileName(fileName), mDisplayName(displayName)
+{
+}
+
 MeshObject* Mesh::createObject(std::string name)
 {
   mObjects.emplace_back(new MeshObject());
@@ -14,6 +22,16 @@ Material* Mesh::createMaterial(std::string name)
 {
   mMaterials.emplace_back(name);
   return &mMaterials.back();
+}
+
+const std::string& Mesh::getFileName() const
+{
+  return mFileName;
+}
+
+const std::string& Mesh::getDisplayName() const
+{
+  return mDisplayName;
 }
 
 size_t Mesh::getObjectCount() const

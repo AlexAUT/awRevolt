@@ -15,7 +15,7 @@ MeshInstance::MeshInstance(const Mesh& mesh) : mMesh(mesh)
   mBoneTransforms.resize(mesh.getBoneCount());
 }
 
-void MeshInstance::setAnimation(std::shared_ptr<const MeshAnimation> animation)
+void MeshInstance::setAnimation(const MeshAnimation* animation)
 {
   mAnimation = animation;
 }
@@ -26,10 +26,18 @@ void MeshInstance::update(float delta)
     mPose.update(delta);
 }
 
-void MeshInstance::render(const ShaderProgram& shader)
+void MeshInstance::render(const ShaderProgram& shader) const
 {
   if (mBoneTransforms.size() > 0)
-    shader.setUniformArrayMat4("bones[0]", mBoneTransforms.size(), reinterpret_cast<float*>(mBoneTransforms.data()));
+  {
+    shader.setUniform("has_bones", true);
+    shader.setUniformArrayMat4("bones[0]", mBoneTransforms.size(),
+                               reinterpret_cast<const float*>(mBoneTransforms.data()));
+  }
+  else
+  {
+    shader.setUniform("has_bones", false);
+  }
 
   const unsigned meshCount = mMesh.getObjectCount();
   for (unsigned i = 0; i < meshCount; i++)
@@ -58,7 +66,7 @@ const Mesh& MeshInstance::getMesh() const
 
 const MeshAnimation* MeshInstance::getAnimation() const
 {
-  return mAnimation.get();
+  return mAnimation;
 }
 
 const MeshPose& MeshInstance::getPose() const

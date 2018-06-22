@@ -1,7 +1,5 @@
 #include <aw/runtime/scene/sceneNode.hpp>
 
-#include <aw/utils/log.hpp>
-
 namespace aw
 {
 SceneNode::SceneNode() : mLocalTransform(std::bind(&SceneNode::invalidGlobalTransformCache, this))
@@ -55,7 +53,6 @@ const Mat4& SceneNode::getGlobalTransform() const
   auto currentVersion = mLocalTransform.getVersionNumber();
   if (mIsGlobalTransformDirty)
   {
-    LogTemp() << "Update in global transform";
     mGlobalTransform = mParent->getGlobalTransform() * mLocalTransform.getTransform();
     mIsGlobalTransformDirty = false;
   }

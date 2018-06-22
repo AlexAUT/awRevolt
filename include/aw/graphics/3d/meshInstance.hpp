@@ -19,10 +19,10 @@ class MeshInstance
 public:
   MeshInstance(const Mesh& mesh);
 
-  void setAnimation(std::shared_ptr<const MeshAnimation> animation);
+  void setAnimation(const MeshAnimation* animation);
 
   void update(float delta);
-  void render(const ShaderProgram& shader);
+  void render(const ShaderProgram& shader) const;
 
   void setBoneTransformation(const std::string& name, const Mat4& transform);
 
@@ -30,12 +30,10 @@ public:
   const MeshAnimation* getAnimation() const;
   const MeshPose& getPose() const;
 
-  Transform localTransform;
-
 private:
 private:
   const Mesh& mMesh;
-  std::shared_ptr<const MeshAnimation> mAnimation{nullptr};
+  const MeshAnimation* mAnimation{nullptr};
   MeshPose mPose;
 
   std::vector<Mat4> mBoneTransforms;

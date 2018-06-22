@@ -37,12 +37,16 @@ struct MeshBone
 class Mesh
 {
 public:
-  Mesh() = default;
+  Mesh(const std::string& fileName);
+  Mesh(const std::string& fileName, const std::string& displayName);
   Mesh(const Mesh&) = delete;
   Mesh operator=(const Mesh&) = delete;
 
   MeshObject* createObject(std::string name);
   Material* createMaterial(std::string name);
+
+  const std::string& getFileName() const;
+  const std::string& getDisplayName() const;
 
   size_t getObjectCount() const;
   const MeshObject& getObject(size_t index) const;
@@ -64,6 +68,9 @@ public:
 
 private:
 private:
+  std::string mFileName;
+  std::string mDisplayName;
+
   std::vector<std::shared_ptr<MeshObject>> mObjects;
   std::vector<Material> mMaterials;
 

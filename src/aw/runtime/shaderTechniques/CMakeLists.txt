@@ -1,0 +1,5 @@
+#
+set(SOURCE_FILES ${SOURCE_FILES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/shaderTechnique.cpp
+    PARENT_SCOPE)
+
