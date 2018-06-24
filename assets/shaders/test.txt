@@ -1,4 +1,0 @@
-hallo Welt
-ich bin
-eine
-Zeile

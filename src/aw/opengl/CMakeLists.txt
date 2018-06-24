@@ -1,19 +1,11 @@
-#
 #OPENGL only when AW_USE_OPENGL is defined
 if(AW_USE_OPENGL)
   set(IMPL_SOURCE_FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/impl/gl_core_3_3.cpp
-    )
-
-  set(IMPL_HEADER_FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/impl/gl_core_3_3.hpp
-    )
+  )
 endif()
-
 set(SOURCE_FILES ${SOURCE_FILES} ${IMPL_SOURCE_FILES}
     ${CMAKE_CURRENT_SOURCE_DIR}/opengl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/loader.cpp
     PARENT_SCOPE)
-
-set(HEADER_FILES ${HEADER_FILES} ${IMPL_HEADER_FILES})
 

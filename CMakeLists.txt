@@ -42,17 +42,13 @@ add_subdirectory(${SRC_DIR_AW})
 set(AW_BUILD_TEST false CACHE BOOL "Builds test application instead of library")
 set(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose a build type")
 
-if(AW_BUILD_TEST)
-  if(AW_ANDROID)
-    message(error "Test target is not supported for android builds")
-  endif()
+add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES} ${HEADER_FILES})
 
-  set(TEST_FILES test/main.cpp test/testState.cpp test/testState.hpp test/assimpImporter.hpp test/assimpImporter.cpp)
-  add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${HEADER_FILES} ${TEST_FILES})
-
+if(AW_DESKTOP)
   # Find SFML
   set(SFML_DIR "${CMAKE_SOURCE_DIR}/extlibs/lib/cmake/SFML")
   find_package(SFML 2 REQUIRED  window system)
+  target_link_libraries(${PROJECT_NAME} sfml-window sfml-system)
 
   # Setup assimp, we need to create a target ourself
   FILE(GLOB ASSIMP_DIR "${CMAKE_SOURCE_DIR}/extlibs/lib/cmake/assimp*")
@@ -63,41 +59,36 @@ if(AW_BUILD_TEST)
     set_target_properties(${ASSIMP_LIBRARY} PROPERTIES
       IMPORTED_LOCATION "${ASSIMP_LIBRARY_DIRS}/libassimp.so")
   endif()
-
-  #jsoncpp
+  target_link_libraries(${PROJECT_NAME} ${ASSIMP_LIBRARY})
+#jsoncpp
   set(jsoncpp_DIR "${CMAKE_SOURCE_DIR}/extlibs/lib64/cmake/jsoncpp")
   find_package(jsoncpp REQUIRED)
+  target_link_libraries(${PROJECT_NAME} jsoncpp)
 
-  # Link everyhing
-  target_link_libraries(${PROJECT_NAME} jsoncpp_lib_static assimp GL sfml-window sfml-system)
-else()
-  add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES} ${HEADER_FILES})
-
-  if(AW_DESKTOP)
-    include (GNUInstallDirs)
-    install(TARGETS ${PROJECT_NAME}
-      LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-      PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-    install (
-      DIRECTORY ${INC_DIR_AW}
-      DESTINATION include
-      FILES_MATCHING PATTERN "*.h*")
-  else(AW_ANDROID)
-    include_directories(${CMAKE_ANDROID_NDK}/sources/third_party/)
-    include_directories(${CMAKE_ANDROID_NDK}/sources/third_party/sfml/include)
-    include_directories(${CMAKE_ANDROID_NDK}/sources/third_party/jsoncpp/include)
-    set(INSTALL_DIR ${CMAKE_ANDROID_NDK}/sources/third_party/awRevolt/)
-    message(STATUS "Android: ${INSTALL_DIR}")
-    install(TARGETS ${PROJECT_NAME}
-      LIBRARY DESTINATION ${INSTALL_DIR}/lib/${CMAKE_ANDROID_ARCH_ABI}
-      PUBLIC_HEADER DESTINATION ${INSTALL_DIR}/include/
-    )
-    install (
-      DIRECTORY ${INC_DIR_AW}
-      DESTINATION ${INSTALL_DIR}/include/
-      FILES_MATCHING PATTERN "*.h*" 
-    )
-  endif()
+  # Install library
+  include (GNUInstallDirs)
+  install(TARGETS ${PROJECT_NAME}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+  install (
+    DIRECTORY ${INC_DIR_AW}
+    DESTINATION include
+    FILES_MATCHING PATTERN "*.h*")
+else(AW_ANDROID)
+  include_directories(${CMAKE_ANDROID_NDK}/sources/third_party/)
+  include_directories(${CMAKE_ANDROID_NDK}/sources/third_party/sfml/include)
+  include_directories(${CMAKE_ANDROID_NDK}/sources/third_party/jsoncpp/include)
+  set(INSTALL_DIR ${CMAKE_ANDROID_NDK}/sources/third_party/awRevolt/)
+  message(STATUS "Android: ${INSTALL_DIR}")
+  install(TARGETS ${PROJECT_NAME}
+    LIBRARY DESTINATION ${INSTALL_DIR}/lib/${CMAKE_ANDROID_ARCH_ABI}
+    PUBLIC_HEADER DESTINATION ${INSTALL_DIR}/include/
+  )
+  install (
+    DIRECTORY ${INC_DIR_AW}
+    DESTINATION ${INSTALL_DIR}/include/
+    FILES_MATCHING PATTERN "*.h*" 
+  )
 endif()
 
 set_target_properties(${PROJECT_NAME} PROPERTIES SOVERSION 1)
