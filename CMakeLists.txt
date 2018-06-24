@@ -49,7 +49,27 @@ if(AW_BUILD_TEST)
 
   set(TEST_FILES test/main.cpp test/testState.cpp test/testState.hpp test/assimpImporter.hpp test/assimpImporter.cpp)
   add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${HEADER_FILES} ${TEST_FILES})
-  target_link_libraries(${PROJECT_NAME} jsoncpp assimp GL sfml-window-d sfml-system-d)
+
+  # Find SFML
+  set(SFML_DIR "${CMAKE_SOURCE_DIR}/extlibs/lib/cmake/SFML")
+  find_package(SFML 2 REQUIRED  window system)
+
+  # Setup assimp, we need to create a target ourself
+  FILE(GLOB ASSIMP_DIR "${CMAKE_SOURCE_DIR}/extlibs/lib/cmake/assimp*")
+  find_package(ASSIMP REQUIRED)
+  if (ASSIMP_FOUND)
+    set(ASSIMP_LIBRARY "assimp")
+    add_library(${ASSIMP_LIBRARY} SHARED IMPORTED)
+    set_target_properties(${ASSIMP_LIBRARY} PROPERTIES
+      IMPORTED_LOCATION "${ASSIMP_LIBRARY_DIRS}/libassimp.so")
+  endif()
+
+  #jsoncpp
+  set(jsoncpp_DIR "${CMAKE_SOURCE_DIR}/extlibs/lib64/cmake/jsoncpp")
+  find_package(jsoncpp REQUIRED)
+
+  # Link everyhing
+  target_link_libraries(${PROJECT_NAME} jsoncpp_lib_static assimp GL sfml-window sfml-system)
 else()
   add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES} ${HEADER_FILES})
 
