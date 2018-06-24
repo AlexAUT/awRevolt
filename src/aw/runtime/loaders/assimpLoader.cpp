@@ -109,7 +109,8 @@ std::unique_ptr<aw::Mesh> AssimpLoader::loadMesh(const std::string& displayName,
 bool AssimpLoader::parseMesh(aw::Mesh& mesh, const aiMesh* assimpMesh)
 {
   LogTemp() << "UV channels: " << assimpMesh->GetNumUVChannels() << ", " << assimpMesh->mName.C_Str();
-  MeshObject* part = mesh.createObject(std::string(assimpMesh->mName.C_Str()));
+  MeshObject* part = new MeshObject();
+  part->name = assimpMesh->mName.C_Str();
 
   part->materialIndex = assimpMesh->mMaterialIndex;
   part->vertices.resize(assimpMesh->mNumVertices);
@@ -150,6 +151,8 @@ bool AssimpLoader::parseMesh(aw::Mesh& mesh, const aiMesh* assimpMesh)
   for (auto l : VertexBones::Layout)
     part->vao.addVertexAttribute(&part->vbo, &part->ibo, l);
   part->vao.unbind();
+
+  mesh.addObject(part);
   return true;
 }
 
@@ -187,7 +190,7 @@ bool AssimpLoader::parseMaterial(aw::Mesh& mesh, const aiMaterial* assimpMat)
     return false;
   }
   LogTemp() << "Material name: " << matName.C_Str();
-  auto mat = mesh.createMaterial(std::string(matName.C_Str()));
+  Material mat(matName.C_Str());
 
   // Load diffuse textures
   unsigned diffuseCount = assimpMat->GetTextureCount(aiTextureType_DIFFUSE);
@@ -241,9 +244,9 @@ bool AssimpLoader::parseMaterial(aw::Mesh& mesh, const aiMaterial* assimpMat)
     tex2D->setMinFilter(slot.minFilter);
     tex2D->setMagFilter(slot.magFilter);
     slot.texture2D = tex2D;
-    mat->addDiffuseTexture(slot);
+    mat.addDiffuseTexture(slot);
   }
-
+  mesh.addMaterial(mat);
   return true;
 }
 

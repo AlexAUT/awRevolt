@@ -20,6 +20,7 @@ namespace aw
 
 struct MeshObject
 {
+  std::string name;
   unsigned materialIndex;
   std::vector<VertexBones> vertices;
   std::vector<unsigned> indices;
@@ -42,8 +43,8 @@ public:
   Mesh(const Mesh&) = delete;
   Mesh operator=(const Mesh&) = delete;
 
-  MeshObject* createObject(std::string name);
-  Material* createMaterial(std::string name);
+  void addObject(MeshObject* obj);
+  void addMaterial(Material mat);
 
   const std::string& getFileName() const;
   const std::string& getDisplayName() const;

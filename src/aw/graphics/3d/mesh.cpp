@@ -12,16 +12,14 @@ Mesh::Mesh(const std::string& fileName, const std::string& displayName) : mFileN
 {
 }
 
-MeshObject* Mesh::createObject(std::string name)
+void Mesh::addObject(MeshObject* obj)
 {
-  mObjects.emplace_back(new MeshObject());
-  return mObjects.back().get();
+  mObjects.emplace_back(obj);
 }
 
-Material* Mesh::createMaterial(std::string name)
+void Mesh::addMaterial(Material mat)
 {
-  mMaterials.emplace_back(name);
-  return &mMaterials.back();
+  mMaterials.push_back(mat);
 }
 
 const std::string& Mesh::getFileName() const
