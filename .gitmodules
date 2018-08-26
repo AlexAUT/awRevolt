@@ -1,0 +1,3 @@
+[submodule "awRevoltDesktopSample"]
+	path = awRevoltDesktopSample
+	url = git@github.com:AlexAUT/awRevoltDesktopSample.git

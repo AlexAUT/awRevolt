@@ -15,6 +15,10 @@ Mesh::Mesh(const std::string& fileName, const std::string& displayName) : mFileN
 void Mesh::addObject(MeshObject* obj)
 {
   mObjects.emplace_back(obj);
+  // Add points to bounding box
+  for (const auto& v : obj->vertices)
+    mBounds += v.position;
+  // LogTemp() << "Bounds: " << mBounds;
 }
 
 void Mesh::addMaterial(Material mat)
@@ -106,6 +110,11 @@ void Mesh::setGlobalInverseTransform(const Mat4& mat)
 const Mat4& Mesh::getGlobalInverseTransform() const
 {
   return mGlobalInverseTranform;
+}
+
+const BBox& Mesh::getBounds() const
+{
+  return mBounds;
 }
 
 } // namespace aw

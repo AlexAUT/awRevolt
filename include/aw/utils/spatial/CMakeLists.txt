@@ -1,0 +1,5 @@
+
+set(HEADER_FILES ${HEADER_FILES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/boxCell.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/octree.hpp
+    PARENT_SCOPE)

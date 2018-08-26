@@ -8,6 +8,7 @@
 #include <aw/graphics/3d/material.hpp>
 #include <aw/graphics/3d/meshSkeleton.hpp>
 
+#include <aw/utils/bBox.hpp>
 #include <aw/utils/math/matrix.hpp>
 
 #include <list>
@@ -67,7 +68,8 @@ public:
   void setGlobalInverseTransform(const Mat4& mat);
   const Mat4& getGlobalInverseTransform() const;
 
-private:
+  const BBox& getBounds() const;
+
 private:
   std::string mFileName;
   std::string mDisplayName;
@@ -79,6 +81,8 @@ private:
   std::unordered_map<std::string, MeshBone> mBones;
   std::unordered_map<std::string, int> mBoneMapping;
   std::shared_ptr<MeshSkeleton> mSkeleton;
+
+  BBox mBounds{0.f};
 };
 
 } // namespace aw

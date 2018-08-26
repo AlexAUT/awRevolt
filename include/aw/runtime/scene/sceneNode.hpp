@@ -5,6 +5,7 @@
 #include <aw/utils/math/matrix.hpp>
 #include <aw/utils/types.hpp>
 
+#include <string>
 #include <vector>
 
 namespace aw
@@ -14,12 +15,16 @@ class SceneNode
 public:
   SceneNode();
   virtual ~SceneNode();
+
+  void setName(const std::string& name);
+  const std::string& getName() const;
   // Tree
   void setParent(SceneNode* parent);
   void addChild(SceneNode* child);
 
   SceneNode* getParent() const;
   const std::vector<SceneNode*>& getChildren() const;
+  SceneNode* searchNodeByName(const std::string& name) const;
 
   // Transform
   Transform& localTransform();
@@ -30,6 +35,8 @@ private:
   void invalidGlobalTransformCache();
 
 private:
+  std::string mName;
+
   SceneNode* mParent{nullptr};
   std::vector<SceneNode*> mChildren;
 
@@ -38,5 +45,4 @@ private:
   mutable Mat4 mGlobalTransform;
   mutable bool mIsGlobalTransformDirty{true};
 };
-
 } // namespace aw

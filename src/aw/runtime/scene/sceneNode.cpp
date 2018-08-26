@@ -10,11 +10,21 @@ SceneNode::~SceneNode()
 {
 }
 
+void SceneNode::setName(const std::string& name)
+{
+  mName = name;
+}
+
+const std::string& SceneNode::getName() const
+{
+  return mName;
+}
+
 void SceneNode::setParent(SceneNode* parent)
 {
-  assert(parent);
   mParent = parent;
-  mParent->mChildren.push_back(this);
+  if (mParent)
+    mParent->mChildren.push_back(this);
   invalidGlobalTransformCache();
 }
 
@@ -32,6 +42,16 @@ SceneNode* SceneNode::getParent() const
 const std::vector<SceneNode*>& SceneNode::getChildren() const
 {
   return mChildren;
+}
+
+SceneNode* SceneNode::searchNodeByName(const std::string& name) const
+{
+  for (auto& child : mChildren)
+  {
+    if (child->getName() == name)
+      return child;
+  }
+  return nullptr;
 }
 
 Transform& SceneNode::localTransform()

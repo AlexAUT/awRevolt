@@ -54,6 +54,13 @@ SceneLoader::SceneLoader(const Json::Value& rootNode, Scene& scene, TextureManag
 {
   loadTexturesAndAnimations();
   loadSceneGraph();
+  // The first node is our actual scene node after loading
+  assert(scene.getChildren().size() <= 1);
+  if (!scene.getChildren().empty())
+  {
+    scene = *scene.getChildren()[0];
+    scene.setParent(nullptr);
+  }
 }
 
 bool SceneLoader::loadTexturesAndAnimations()
@@ -197,6 +204,8 @@ bool SceneLoader::parseSceneNode(const Json::Value& node, SceneNode& parent, Sce
   }
   // Set the parent
   sceneNode->setParent(&parent);
+  if (node.isMember("name"))
+    sceneNode->setName(node["name"].asString());
   // Seach transform node
   if (node.isMember("transform"))
   {
