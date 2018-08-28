@@ -16,6 +16,11 @@ void Material::addNormalTexture(const TextureSlot& textureSlot)
   mNormalSlots.push_back(textureSlot);
 }
 
+size_t Material::getDiffseSlotCount() const
+{
+  return mDiffuseSlots.size();
+}
+
 const TextureSlot& Material::getDiffuseSlot(unsigned index) const
 {
   return mDiffuseSlots[index];

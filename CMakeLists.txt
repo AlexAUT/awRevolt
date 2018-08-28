@@ -2,6 +2,11 @@ cmake_minimum_required(VERSION 3.6)
 
 project(awRevolt VERSION 0.0.1 DESCRIPTION "awRevolt engine")
 
+#if (EXISTS "${CMAKE_SOURCE_DIR}/awRevoltDesktopSample/CMakeLists.txt")
+#    message(STATUS "Found AW SAMPLE")
+#    add_subdirectory(awRevoltDesktopSample)
+#endif()
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS "ON")
 

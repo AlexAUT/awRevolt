@@ -1,6 +1,7 @@
 #pragma once
 
 #include <aw/graphics/core/texture2D.hpp>
+#include <aw/utils/types.hpp>
 
 #include <memory>
 #include <string>
@@ -28,6 +29,7 @@ public:
   void addDiffuseTexture(const TextureSlot& textureSlot);
   void addNormalTexture(const TextureSlot& textureSlot);
 
+  size_t getDiffseSlotCount() const;
   const TextureSlot& getDiffuseSlot(unsigned index) const;
 
 private:

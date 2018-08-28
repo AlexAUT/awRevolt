@@ -2,7 +2,6 @@ add_subdirectory(math)
 add_subdirectory(spatial)
 
 set(HEADER_FILES ${HEADER_FILES}
-    ${CMAKE_CURRENT_SOURCE_DIR}/bBox.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/clock.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/date.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/assetInputStream.hpp

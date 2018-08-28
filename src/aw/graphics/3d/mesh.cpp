@@ -112,7 +112,7 @@ const Mat4& Mesh::getGlobalInverseTransform() const
   return mGlobalInverseTranform;
 }
 
-const BBox& Mesh::getBounds() const
+const AABB& Mesh::getBounds() const
 {
   return mBounds;
 }
