@@ -6,6 +6,8 @@ set(HEADER_FILES ${HEADER_FILES}
     ${CMAKE_CURRENT_SOURCE_DIR}/geometry.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/indicesBuffer.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/intermediateRenderer.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/intermediateRenderer.inl
     ${CMAKE_CURRENT_SOURCE_DIR}/postProcessRenderer.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/renderBuffer.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/shaderProgram.hpp

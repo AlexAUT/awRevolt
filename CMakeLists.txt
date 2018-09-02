@@ -2,11 +2,6 @@ cmake_minimum_required(VERSION 3.6)
 
 project(awRevolt VERSION 0.0.1 DESCRIPTION "awRevolt engine")
 
-#if (EXISTS "${CMAKE_SOURCE_DIR}/awRevoltDesktopSample/CMakeLists.txt")
-#    message(STATUS "Found AW SAMPLE")
-#    add_subdirectory(awRevoltDesktopSample)
-#endif()
-
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS "ON")
 
@@ -79,6 +74,10 @@ if(AW_DESKTOP)
     DIRECTORY ${INC_DIR_AW}
     DESTINATION include
     FILES_MATCHING PATTERN "*.h*")
+  install (
+    DIRECTORY ${INC_DIR_AW}
+    DESTINATION include
+    FILES_MATCHING PATTERN "*.inl")
 else(AW_ANDROID)
   include_directories(${CMAKE_ANDROID_NDK}/sources/third_party/)
   include_directories(${CMAKE_ANDROID_NDK}/sources/third_party/sfml/include)
@@ -98,4 +97,9 @@ endif()
 
 set_target_properties(${PROJECT_NAME} PROPERTIES SOVERSION 1)
 target_include_directories(${PROJECT_NAME} PUBLIC ${INC_DIR} )
-target_include_directories(${PROJECT_NAME} PRIVATE ${SRC_DIR} )
+target_include_directories(${PROJECT_NAME} PUBLIC ${SRC_DIR} )
+
+if (EXISTS "${CMAKE_SOURCE_DIR}/awRevoltDesktopSample/CMakeLists.txt")
+    message(STATUS "Found AW SAMPLE")
+    add_subdirectory(awRevoltDesktopSample)
+endif()

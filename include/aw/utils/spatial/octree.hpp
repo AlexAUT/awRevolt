@@ -5,7 +5,6 @@
 #include <aw/utils/log.hpp>
 #include <aw/utils/spatial/AABB.hpp>
 #include <aw/utils/spatial/AABBIntersectors.hpp>
-#include <aw/utils/spatial/boxCell.hpp>
 
 #include <array>
 #include <cassert>
