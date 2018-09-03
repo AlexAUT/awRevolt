@@ -33,6 +33,7 @@ bool IntermediateRenderer<VertexType>::addVertices(const VertexType* begin, cons
     render();
   std::copy(begin, end, &mBuffer[mBufferCursor]);
   mBufferCursor += size;
+  return true;
 }
 
 template <typename VertexType>

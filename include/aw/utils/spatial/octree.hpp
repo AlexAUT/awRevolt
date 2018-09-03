@@ -25,8 +25,15 @@ public:
 
   void addElement(ChildType element, Intersector intersector);
 
-  void traverse(const std::function<void(ChildType)>& callback, AABB boundsToCheck,
-                Intersector intersector = Intersector());
+  AABB getBounds() const
+  {
+    return mBounds;
+  }
+
+  void traverseElements(const std::function<void(ChildType)>& callback, AABB boundsToCheck,
+                        Intersector intersector = Intersector());
+  void traverseNodes(const std::function<void(Octree<ChildType, Intersector>&)>& callback, AABB boundsToCheck,
+                     Intersector intersector = Intersector());
 
 private:
   void split();
@@ -110,8 +117,8 @@ void Octree<ChildType, Intersector>::split()
 }
 
 template <typename ChildType, typename Intersector>
-void Octree<ChildType, Intersector>::traverse(const std::function<void(ChildType)>& callback, AABB boundsToCheck,
-                                              Intersector intersector)
+void Octree<ChildType, Intersector>::traverseElements(const std::function<void(ChildType)>& callback,
+                                                      AABB boundsToCheck, Intersector intersector)
 {
   if (!AABBAABBIntersector()(mBounds, boundsToCheck))
     return;
@@ -119,7 +126,7 @@ void Octree<ChildType, Intersector>::traverse(const std::function<void(ChildType
   if (mSplit)
   {
     for (auto& child : mChildNodes)
-      child->traverse(callback, boundsToCheck);
+      child->traverseElements(callback, boundsToCheck);
   }
   else
   {
@@ -128,6 +135,19 @@ void Octree<ChildType, Intersector>::traverse(const std::function<void(ChildType
       if (Intersector()(boundsToCheck, element))
         callback(element);
     }
+  }
+}
+template <typename ChildType, typename Intersector>
+void Octree<ChildType, Intersector>::traverseNodes(const std::function<void(Octree<ChildType, Intersector>&)>& callback,
+                                                   AABB boundsToCheck, Intersector intersector)
+{
+  if (!AABBAABBIntersector()(mBounds, boundsToCheck))
+    return;
+  callback(*this);
+  if (mSplit)
+  {
+    for (auto& child : mChildNodes)
+      child->traverseNodes(callback, boundsToCheck);
   }
 }
 

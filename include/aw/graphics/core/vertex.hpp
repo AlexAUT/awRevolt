@@ -16,6 +16,13 @@ struct Vertex
   static VertexLayout<3> Layout;
 };
 
+struct VertexPos
+{
+  Vec3 position;
+
+  static VertexLayout<1> Layout;
+};
+
 struct VertexPosNormalColor
 {
   Vec3 position;

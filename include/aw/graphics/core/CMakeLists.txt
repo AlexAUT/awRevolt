@@ -3,6 +3,7 @@ set(HEADER_FILES ${HEADER_FILES}
     ${CMAKE_CURRENT_SOURCE_DIR}/camera.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/color.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/frameBuffer.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/geometry.inl
     ${CMAKE_CURRENT_SOURCE_DIR}/geometry.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/indicesBuffer.hpp

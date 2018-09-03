@@ -17,10 +17,10 @@ using void_t = typename voider<T...>::type;
   {                                                                                                                    \
   };                                                                                                                   \
   template <typename T, typename = void>                                                                               \
-  struct HasAtLeastOne##name : public std::true_type                                                                   \
+  struct Has_##name : public std::true_type                                                                            \
   {                                                                                                                    \
   };                                                                                                                   \
   template <typename T>                                                                                                \
-  struct HasAtLeastOne##name<T, void_t<decltype(Multiple##name<T>::name)>> : public std::false_type                    \
+  struct Has_##name<T, void_t<decltype(Multiple##name<T>::name)>> : public std::false_type                             \
   {                                                                                                                    \
   };

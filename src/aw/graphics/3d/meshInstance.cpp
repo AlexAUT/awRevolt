@@ -5,8 +5,6 @@
 
 #include <aw/opengl/opengl.hpp>
 
-#include <aw/utils/log.hpp>
-
 namespace aw
 {
 MeshInstance::MeshInstance(const Mesh& mesh) : mMesh(mesh)

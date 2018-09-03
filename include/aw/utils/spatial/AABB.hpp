@@ -36,7 +36,7 @@ public:
 
   Vec3 getCenter() const
   {
-    return min + getSize() * 0.5f;
+    return min + getExtend();
   }
 
   void operator+=(const Vec3& point)

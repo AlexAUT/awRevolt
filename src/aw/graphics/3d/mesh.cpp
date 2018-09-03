@@ -18,7 +18,6 @@ void Mesh::addObject(MeshObject* obj)
   // Add points to bounding box
   for (const auto& v : obj->vertices)
     mBounds += v.position;
-  // LogTemp() << "Bounds: " << mBounds;
 }
 
 void Mesh::addMaterial(Material mat)

@@ -26,7 +26,8 @@ std::array<Vertex, 6> quad(RectFloat rect, RectFloat texCoords, float depth = 0.
 template <std::size_t vertexCount>
 std::array<float, (vertexCount + 2) * 3> circle(float centerX, float centerY, float radius, float depth = 0.f);
 
-std::array<Vertex, 6 * 6> cube(Vec3 center, Vec3 size);
+template <typename VertexType>
+std::array<VertexType, 6 * 6> cube(Vec3 center, Vec3 size);
 // Make it quadratic, to calculate normals more easily (use scale afterwards to
 // create non quadratic)
 std::array<Vertex, 8 * 3> octahedron(Vec3 center, float radius);
@@ -77,3 +78,5 @@ std::array<VertexType, 2> line(Vec3 from, Vec3 to, VertexType templateVertex)
 } // namespace geo
 
 } // namespace aw
+
+#include <aw/graphics/core/geometry.inl>

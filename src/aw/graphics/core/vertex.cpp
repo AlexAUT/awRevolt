@@ -10,6 +10,10 @@ VertexLayout<3> Vertex::Layout = {
     VertexAttribute{3, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), vOffsetof(Vertex, texCoord)},
 };
 
+VertexLayout<1> VertexPos::Layout = {
+    VertexAttribute{0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexPos), vOffsetof(VertexPos, position)},
+};
+
 VertexLayout<3> VertexPosNormalColor::Layout = {
     VertexAttribute{0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexPosNormalColor), vOffsetof(VertexPosNormalColor, position)},
     VertexAttribute{1, 3, GL_FLOAT, GL_FALSE, sizeof(VertexPosNormalColor), vOffsetof(VertexPosNormalColor, normal)},
