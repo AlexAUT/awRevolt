@@ -193,9 +193,18 @@ bool AssimpLoader::parseMaterial(aw::Mesh& mesh, const aiMaterial* assimpMat)
   LogTemp() << "Material name: " << matName.C_Str();
   Material mat(matName.C_Str());
 
+  aiColor3D color;
+  if (assimpMat->Get(AI_MATKEY_COLOR_DIFFUSE, color) == AI_SUCCESS)
+  {
+    mat.setDiffuseColor({color.r, color.g, color.b});
+  }
+
   // Load diffuse textures
   unsigned diffuseCount = assimpMat->GetTextureCount(aiTextureType_DIFFUSE);
   outputTextureCount(assimpMat, "Unkown: ", aiTextureType_NONE);
+  outputTextureCount(assimpMat, "Diffuse: ", aiTextureType_DIFFUSE);
+  outputTextureCount(assimpMat, "Ambient: ", aiTextureType_AMBIENT);
+  outputTextureCount(assimpMat, "Other: ", aiTextureType_NONE);
   LogTemp() << "Diffuse count: " << diffuseCount;
   for (unsigned i = 0; i < diffuseCount; i++)
   {

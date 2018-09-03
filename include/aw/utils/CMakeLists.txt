@@ -11,4 +11,5 @@ set(HEADER_FILES ${HEADER_FILES}
     ${CMAKE_CURRENT_SOURCE_DIR}/streamReading.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/time.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/types.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/typeChecks.hpp
     PARENT_SCOPE)

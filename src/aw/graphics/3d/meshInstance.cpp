@@ -45,6 +45,8 @@ void MeshInstance::render(const ShaderProgram& shader) const
     const auto& meshObject = mMesh.getObject(i);
     meshObject.vao.bind();
     const auto& material = mMesh.getMaterial(meshObject.materialIndex);
+    shader.setUniform("diffuseColor", material.getDiffuseColor());
+    shader.setUniform("enableDiffuseTex", material.getDiffseSlotCount() > 0);
     if (material.getDiffseSlotCount() > 0)
       material.getDiffuseSlot(0).texture2D->bind();
     GL_CHECK(glDrawElements(GL_TRIANGLES, meshObject.indices.size(), GL_UNSIGNED_INT, (void*)0));
