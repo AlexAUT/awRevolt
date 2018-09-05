@@ -15,12 +15,13 @@ int Engine::run()
     update(mUpdateTimer.restart<Seconds>());
     render();
   }
-  return 0;
+  return mReturnCode;
 }
 
-void Engine::terminate()
+void Engine::terminate(int returnCode)
 {
   mRunning = false;
+  mReturnCode = returnCode;
 }
 
 void Engine::handleEvents()

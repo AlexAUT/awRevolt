@@ -4,6 +4,8 @@
 #include <string>
 #include <unordered_map>
 
+#include <aw/graphics/3d/meshAnimation.hpp>
+
 namespace aw
 {
 class MeshAnimation;

@@ -70,7 +70,7 @@ LogInstance::LogInstance(LogLevel level, const std::string& module, std::ostream
   if (mWriteToConsole)
     mConsoleStream << prefix << timestamp << " (" << module << "): ";
   if (mWriteToFileSystem)
-    mFileStream << prefix << timestamp << " (" << module << "): ";
+    mFileStream << timestamp << " (" << module << "): ";
 }
 
 LogInstance::~LogInstance()

@@ -4,10 +4,10 @@
 #include <string>
 #include <unordered_map>
 
+#include <aw/graphics/core/texture2D.hpp>
+
 namespace aw
 {
-class Texture2D;
-
 typedef std::unordered_map<std::string, std::unique_ptr<Texture2D>> TextureManager;
 
 } // namespace aw

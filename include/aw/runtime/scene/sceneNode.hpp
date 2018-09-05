@@ -5,6 +5,7 @@
 #include <aw/utils/math/matrix.hpp>
 #include <aw/utils/types.hpp>
 
+#include <functional>
 #include <string>
 #include <vector>
 
@@ -24,7 +25,9 @@ public:
 
   SceneNode* getParent() const;
   const std::vector<SceneNode*>& getChildren() const;
-  SceneNode* searchNodeByName(const std::string& name) const;
+  SceneNode* findNodeByName(const std::string& name) const;
+  void traverseChilds(std::function<void(SceneNode*)>& callback);
+  void traverseChilds(std::function<void(const SceneNode*)>& callback) const;
 
   // Transform
   Transform& localTransform();

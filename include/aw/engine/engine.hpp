@@ -18,7 +18,7 @@ public:
 
   int run();
 
-  void terminate();
+  void terminate(int returnCode = 0);
 
   const Settings& getSettings() const;
   StateMachine& getStateMachine();
@@ -39,6 +39,7 @@ private:
   Clock mUpdateTimer;
 
   bool mRunning;
+  int mReturnCode{0};
 };
 
 } // namespace aw

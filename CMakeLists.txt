@@ -100,6 +100,11 @@ target_include_directories(${PROJECT_NAME} PUBLIC ${INC_DIR} )
 target_include_directories(${PROJECT_NAME} PUBLIC ${SRC_DIR} )
 
 if (EXISTS "${CMAKE_SOURCE_DIR}/awRevoltDesktopSample/CMakeLists.txt")
-    message(STATUS "Found AW SAMPLE")
+  message(STATUS "Flight game found")
     add_subdirectory(awRevoltDesktopSample)
+endif()
+
+if (EXISTS "${CMAKE_SOURCE_DIR}/flightGame/CMakeLists.txt")
+  message(STATUS "Flight game found")
+    add_subdirectory(flightGame)
 endif()

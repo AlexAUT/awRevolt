@@ -54,6 +54,11 @@ bool AssimpLoader::loadFromStream(const std::string& fileName, std::istream& str
 {
   mFileName = fileName;
   auto fileContent = stream::toUint8(stream);
+  if (fileContent.empty())
+  {
+    LogAssimpE() << "The stream did not contain any content!: " << fileName;
+    return false;
+  }
   auto flags = aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs;
   const aiScene* scene = mImporter.ReadFileFromMemory(fileContent.data(), fileContent.size(), flags, hint);
   if (!scene)

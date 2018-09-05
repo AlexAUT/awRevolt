@@ -43,8 +43,8 @@ void MeshRenderer::renderShadowMap(const Camera& camera, const ShaderProgram& sh
   }
 }
 
-void MeshRenderer::renderForwardPass(const Camera& camera, const Camera& lightCam, const Texture2D& shadowMap,
-                                     ShaderProgram& shader, const DirectionalLight& light) const
+void MeshRenderer::renderForwardPassWithShadow(const Camera& camera, const Camera& lightCam, const Texture2D& shadowMap,
+                                               ShaderProgram& shader, const DirectionalLight& light) const
 {
   shader.bind();
 
@@ -62,6 +62,23 @@ void MeshRenderer::renderForwardPass(const Camera& camera, const Camera& lightCa
 
   auto vp = camera.getVPMatrix();
   auto v = camera.getViewMatrix();
+  for (auto meshNode : mMeshes)
+  {
+    shader.setUniform("mvp_matrix", vp * meshNode->getGlobalTransform());
+    shader.setUniform("vp_matrix", vp);
+    shader.setUniform("vm_matrix", v * meshNode->getGlobalTransform());
+    shader.setUniform("m_matrix", meshNode->getGlobalTransform());
+    meshNode->meshInstance().render(shader);
+  }
+}
+
+void MeshRenderer::renderForwardPass(const Camera& camera, ShaderProgram& shader)
+{
+  shader.bind();
+
+  auto vp = camera.getVPMatrix();
+  auto v = camera.getViewMatrix();
+
   for (auto meshNode : mMeshes)
   {
     shader.setUniform("mvp_matrix", vp * meshNode->getGlobalTransform());

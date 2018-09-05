@@ -44,7 +44,7 @@ const std::vector<SceneNode*>& SceneNode::getChildren() const
   return mChildren;
 }
 
-SceneNode* SceneNode::searchNodeByName(const std::string& name) const
+SceneNode* SceneNode::findNodeByName(const std::string& name) const
 {
   for (auto& child : mChildren)
   {
@@ -52,6 +52,19 @@ SceneNode* SceneNode::searchNodeByName(const std::string& name) const
       return child;
   }
   return nullptr;
+}
+void SceneNode::traverseChilds(std::function<void(SceneNode*)>& callback)
+{
+  callback(this);
+  for (auto& child : mChildren)
+    child->traverseChilds(callback);
+}
+
+void SceneNode::traverseChilds(std::function<void(const SceneNode*)>& callback) const
+{
+  callback(this);
+  for (auto& child : mChildren)
+    child->traverseChilds(callback);
 }
 
 Transform& SceneNode::localTransform()

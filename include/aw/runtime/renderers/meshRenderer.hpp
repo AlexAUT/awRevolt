@@ -15,9 +15,11 @@ class MeshRenderer
 public:
   void registerMesh(const MeshNode* mesh);
 
+  void renderForwardPass(const Camera& camera, ShaderProgram& shader);
+
   void renderShadowMap(const Camera& camera, const ShaderProgram& shader, const DirectionalLight& light) const;
-  void renderForwardPass(const Camera& camera, const Camera& lightCam, const Texture2D& shadowMap,
-                         ShaderProgram& shader, const DirectionalLight& light) const;
+  void renderForwardPassWithShadow(const Camera& camera, const Camera& lightCam, const Texture2D& shadowMap,
+                                   ShaderProgram& shader, const DirectionalLight& light) const;
 
 private:
 private:
