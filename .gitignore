@@ -3,3 +3,4 @@ buildAndroid/*
 config/*
 extlibs/
 log.txt
+.ycm*

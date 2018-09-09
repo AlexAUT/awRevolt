@@ -36,11 +36,15 @@ public:
   const sf::Window& getSFMLWindow() const;
   Vec2u getSize() const;
 
+  bool hasFocus() const;
+
 private:
   void loadOpenGLFunctions();
 
 private:
   sf::Window mWindow;
+
+  bool mHasFocus{true};
 
   unsigned mListenerID{0};
   std::vector<std::pair<int, EventCallback>> mEventListeners;

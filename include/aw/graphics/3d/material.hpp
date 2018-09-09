@@ -30,8 +30,14 @@ public:
   void addDiffuseTexture(const TextureSlot& textureSlot);
   void addNormalTexture(const TextureSlot& textureSlot);
 
+  void setAmbientColor(Vec3 color);
+  Vec3 getAmbientColor() const;
+
   void setDiffuseColor(Vec3 color);
   Vec3 getDiffuseColor() const;
+
+  void setSpecularColor(Vec3 color);
+  Vec3 getSpecularColor() const;
 
   size_t getDiffseSlotCount() const;
   const TextureSlot& getDiffuseSlot(unsigned index) const;
@@ -40,7 +46,9 @@ private:
 private:
   std::string mName;
 
-  Vec3 mDiffuseColor{1.f, 1.f, 1.f};
+  Vec3 mAmbientColor{0.f, 0.f, 0.f};
+  Vec3 mDiffuseColor{0.f, 0.f, 0.f};
+  Vec3 mSpecularColor{0.f, 0.f, 0.f};
 
   std::vector<TextureSlot> mDiffuseSlots;
   std::vector<TextureSlot> mNormalSlots;

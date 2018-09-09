@@ -55,6 +55,9 @@ public:
   float getAspectRatio() const;
   float getOrthoWidth() const;
   float getFieldOfView() const;
+  Vec3 getViewDirection() const;
+  Vec3 getUpDirection() const;
+  Vec3 getLeftDirection() const;
 
   Vec3 getPosition() const;
   Quaternion getRotation() const;

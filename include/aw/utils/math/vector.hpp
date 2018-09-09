@@ -29,6 +29,7 @@ typedef glm::dvec4 Vec4d;
 
 std::ostream& operator<<(std::ostream& stream, const Vec2& vec);
 std::ostream& operator<<(std::ostream& stream, const Vec2i& vec);
+std::ostream& operator<<(std::ostream& stream, const Vec2u& vec);
 
 std::ostream& operator<<(std::ostream& stream, const Vec3& vec);
 std::ostream& operator<<(std::ostream& stream, const Vec3i& vec);

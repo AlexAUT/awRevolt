@@ -12,7 +12,7 @@ namespace aw
 class Engine
 {
 public:
-  Engine();
+  Engine(aw::Settings settings = aw::Settings::loadFromFile());
   Engine(const Engine&) = delete;
   Engine operator=(const Engine&) = delete;
 

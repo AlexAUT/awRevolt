@@ -5,6 +5,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/quaternion.hpp>
 
+#include <glm/gtc/matrix_access.hpp>
+
 namespace aw
 {
 
@@ -156,6 +158,21 @@ float Camera::getOrthoWidth() const
 float Camera::getFieldOfView() const
 {
   return mFieldOfView;
+}
+
+Vec3 Camera::getViewDirection() const
+{
+  return -glm::column(getViewMatrix(), 2);
+}
+
+Vec3 Camera::getUpDirection() const
+{
+  return glm::column(getViewMatrix(), 1);
+}
+
+Vec3 Camera::getLeftDirection() const
+{
+  return glm::column(getViewMatrix(), 0);
 }
 
 Vec3 Camera::getPosition() const

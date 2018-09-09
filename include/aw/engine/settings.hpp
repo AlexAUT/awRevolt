@@ -1,6 +1,7 @@
 #pragma once
 
 #include <aw/utils/math/vector.hpp>
+#include <aw/utils/path.hpp>
 
 #include <string>
 
@@ -23,13 +24,11 @@ struct Settings
   unsigned frameLimit{0};
   bool grabCursor{false};
   bool cursorVisible{true};
+
+  static Settings loadFromFile(const std::string& path = path::getConfigPath() + "engine.json");
+  bool save(const std::string& path = path::getConfigPath() + "engine.json") const;
 };
 
-void logSettings(const Settings& settings);
+std::ostream& operator<<(std::ostream& stream, const Settings& settings);
 
-namespace priv
-{
-Settings loadSettings();
-bool saveSettings(const Settings& settings);
-} // namespace priv
 } // namespace aw

@@ -1,8 +1,13 @@
 #include <aw/engine/engine.hpp>
 
+#include <aw/utils/log.hpp>
+
+#include <chrono>
+#include <thread>
+
 namespace aw
 {
-Engine::Engine() : mSettings(priv::loadSettings()), mWindow(mSettings), mRunning(true)
+Engine::Engine(aw::Settings settings) : mSettings(settings), mWindow(mSettings), mRunning(true)
 {
 }
 
@@ -14,6 +19,11 @@ int Engine::run()
     handleEvents();
     update(mUpdateTimer.restart<Seconds>());
     render();
+    if (!mWindow.hasFocus())
+    {
+      LogTemp() << "In background sleep for 1 sec!";
+      std::this_thread::sleep_for(std::chrono::seconds(1));
+    }
   }
   return mReturnCode;
 }
@@ -36,6 +46,8 @@ void Engine::update(float delta)
 
 void Engine::render()
 {
+  if (!mWindow.hasFocus())
+    return;
   mStateMachine.render();
 
   mWindow.getSFMLWindow().display();

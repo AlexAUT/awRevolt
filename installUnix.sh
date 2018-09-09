@@ -1,5 +1,3 @@
-set -e
-
 #Download dependencies
 ./downloadExtlibs.sh
 

@@ -25,6 +25,10 @@ void Window::handleEvents(/*const EventHandlers& eventHandlers*/)
   sf::Event event;
   while (mWindow.pollEvent(event))
   {
+    if (event.type == sf::Event::LostFocus || event.type == sf::Event::MouseLeft)
+      mHasFocus = false;
+    if (event.type == sf::Event::GainedFocus || event.type == sf::Event::MouseEntered)
+      mHasFocus = true;
     for (auto& callback : mEventListeners)
       callback.second(event);
   }
@@ -103,6 +107,11 @@ Vec2u Window::getSize() const
 {
   auto size = mWindow.getSize();
   return {static_cast<unsigned>(size.x), static_cast<unsigned>(size.y)};
+}
+
+bool Window::hasFocus() const
+{
+  return mHasFocus;
 }
 
 void Window::loadOpenGLFunctions()

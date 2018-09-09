@@ -57,8 +57,9 @@ void MeshRenderer::renderForwardPassWithShadow(const Camera& camera, const Camer
 
   // Enable textures
   shader.setUniform("baseColor_tex", 0);
-  shader.setUniform("shadow_tex", 1);
-  shadowMap.bind(1);
+  shader.setUniform("decalColor_tex", 1);
+  shader.setUniform("shadowMap_1", 2);
+  shadowMap.bind(2);
 
   auto vp = camera.getVPMatrix();
   auto v = camera.getViewMatrix();
@@ -79,10 +80,14 @@ void MeshRenderer::renderForwardPass(const Camera& camera, ShaderProgram& shader
   auto vp = camera.getVPMatrix();
   auto v = camera.getViewMatrix();
 
+  shader.setUniform("baseColor_tex", 0);
+  shader.setUniform("decalColor_tex", 1);
+  shader.setUniform("camera_position", camera.getPosition());
+  shader.setUniform("camera_viewDir", glm::normalize(camera.getViewDirection()));
+  shader.setUniform("vp_matrix", vp);
   for (auto meshNode : mMeshes)
   {
     shader.setUniform("mvp_matrix", vp * meshNode->getGlobalTransform());
-    shader.setUniform("vp_matrix", vp);
     shader.setUniform("vm_matrix", v * meshNode->getGlobalTransform());
     shader.setUniform("m_matrix", meshNode->getGlobalTransform());
     meshNode->meshInstance().render(shader);

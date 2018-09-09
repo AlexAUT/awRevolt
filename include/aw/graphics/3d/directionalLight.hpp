@@ -8,7 +8,7 @@ namespace aw
 struct DirectionalLight
 {
   Vec3 direction;
-  Color color;
+  Vec3 color;
   float energy;
 };
 } // namespace aw

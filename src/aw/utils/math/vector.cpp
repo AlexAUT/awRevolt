@@ -15,6 +15,12 @@ std::ostream& operator<<(std::ostream& stream, const Vec2i& vec)
   return stream;
 }
 
+std::ostream& operator<<(std::ostream& stream, const Vec2u& vec)
+{
+  stream << "(" << vec.x << "," << vec.y << ")";
+  return stream;
+}
+
 std::ostream& operator<<(std::ostream& stream, const Vec3& vec)
 {
   stream << "(" << vec.x << "," << vec.y << "," << vec.z << ")";

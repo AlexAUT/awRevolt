@@ -202,6 +202,17 @@ bool AssimpLoader::parseMaterial(aw::Mesh& mesh, const aiMaterial* assimpMat)
   if (assimpMat->Get(AI_MATKEY_COLOR_DIFFUSE, color) == AI_SUCCESS)
   {
     mat.setDiffuseColor({color.r, color.g, color.b});
+    LogTemp() << "Diffuse: " << mat.getDiffuseColor();
+  }
+  if (assimpMat->Get(AI_MATKEY_COLOR_AMBIENT, color) == AI_SUCCESS)
+  {
+    mat.setAmbientColor({color.r, color.g, color.b});
+    LogTemp() << "Ambient: " << mat.getAmbientColor();
+  }
+  if (assimpMat->Get(AI_MATKEY_COLOR_SPECULAR, color) == AI_SUCCESS)
+  {
+    mat.setSpecularColor({color.r, color.g, color.b});
+    LogTemp() << "Specular: " << mat.getSpecularColor();
   }
 
   // Load diffuse textures

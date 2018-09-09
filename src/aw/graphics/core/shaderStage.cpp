@@ -43,6 +43,8 @@ bool ShaderStage::loadFromMemory(const char* content)
 #ifdef AW_DESKTOP
   if (mType == Type::Vertex)
     prefix = "#version 330\n";
+  if (mType == Type::Fragment)
+    prefix = "#version 330\n";
 #else
   if (mType == Type::Fragment)
     prefix = "precision mediump float;\n";

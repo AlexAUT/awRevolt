@@ -44,9 +44,15 @@ void MeshInstance::render(const ShaderProgram& shader) const
     meshObject.vao.bind();
     const auto& material = mMesh.getMaterial(meshObject.materialIndex);
     shader.setUniform("diffuseColor", material.getDiffuseColor());
+    shader.setUniform("ambientColor", material.getAmbientColor());
+    shader.setUniform("specularColor", Vec4(material.getSpecularColor(), 10));
     shader.setUniform("enableDiffuseTex", material.getDiffseSlotCount() > 0);
+
     if (material.getDiffseSlotCount() > 0)
       material.getDiffuseSlot(0).texture2D->bind();
+    shader.setUniform("enableDecalTex", material.getDiffseSlotCount() > 1);
+    if (material.getDiffseSlotCount() > 1)
+      material.getDiffuseSlot(1).texture2D->bind(1);
     GL_CHECK(glDrawElements(GL_TRIANGLES, meshObject.indices.size(), GL_UNSIGNED_INT, (void*)0));
   }
 }

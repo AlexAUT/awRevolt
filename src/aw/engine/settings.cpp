@@ -2,7 +2,6 @@
 
 #include <aw/engine/logCategories.hpp>
 #include <aw/utils/log.hpp>
-#include <aw/utils/path.hpp>
 
 #include <fstream>
 
@@ -10,18 +9,11 @@
 
 namespace aw
 {
-
-void logSettings(const Settings& settings)
-{
-}
-
-namespace priv
-{
-Settings loadSettings()
+Settings Settings::loadFromFile(const std::string& path)
 {
   Settings settings;
 
-  std::ifstream configFile(path::getConfigPath() + "engine.json");
+  std::ifstream configFile(path.c_str());
   if (configFile.is_open())
   {
     Json::CharReaderBuilder builder;
@@ -60,34 +52,49 @@ Settings loadSettings()
   return settings;
 }
 
-bool saveSettings(const Settings& settings)
+bool Settings::save(const std::string& path) const
 {
-  std::fstream configFile(path::getConfigPath() + "engine.json", std::ios::out | std::ios::trunc);
+  std::fstream configFile(path.c_str(), std::ios::out | std::ios::trunc);
   if (configFile.is_open())
   {
     Json::Value config;
-    config["applicationName"] = settings.applicationName;
-    config["resolutionX"] = settings.resolution.x;
-    config["resolutionY"] = settings.resolution.y;
-    config["bitsPerPixel"] = settings.bitsPerPixel;
-    config["depthBits"] = settings.depthBits;
-    config["stencilBits"] = settings.stencilBits;
-    config["antialiasing"] = settings.antialiasing;
-    config["openglMajor"] = settings.openglMajor;
-    config["openglMinor"] = settings.openglMinor;
-    config["coreContext"] = settings.coreContext;
-    config["debugContext"] = settings.debugContext;
-    config["vsync"] = settings.vsync;
-    config["frameLimit"] = settings.frameLimit;
-    config["grabCursor"] = settings.grabCursor;
-    config["cursorVisible"] = settings.cursorVisible;
+    config["applicationName"] = applicationName;
+    config["resolutionX"] = resolution.x;
+    config["resolutionY"] = resolution.y;
+    config["bitsPerPixel"] = bitsPerPixel;
+    config["depthBits"] = depthBits;
+    config["stencilBits"] = stencilBits;
+    config["antialiasing"] = antialiasing;
+    config["openglMajor"] = openglMajor;
+    config["openglMinor"] = openglMinor;
+    config["coreContext"] = coreContext;
+    config["debugContext"] = debugContext;
+    config["vsync"] = vsync;
+    config["frameLimit"] = frameLimit;
+    config["grabCursor"] = grabCursor;
+    config["cursorVisible"] = cursorVisible;
 
     configFile << config << std::endl;
     return true;
   }
   return false;
 }
-
-} // namespace priv
-
+std::ostream& operator<<(std::ostream& stream, const Settings& settings)
+{
+#define PRINT_MEMBER(x) "\tx: " << settings.x
+  stream << PRINT_MEMBER(applicationName);
+  stream << PRINT_MEMBER(resolution);
+  stream << PRINT_MEMBER(bitsPerPixel);
+  stream << PRINT_MEMBER(depthBits);
+  stream << PRINT_MEMBER(stencilBits);
+  stream << PRINT_MEMBER(antialiasing);
+  stream << PRINT_MEMBER(openglMajor);
+  stream << PRINT_MEMBER(openglMinor);
+  stream << PRINT_MEMBER(coreContext);
+  stream << PRINT_MEMBER(debugContext);
+  stream << PRINT_MEMBER(vsync);
+  stream << PRINT_MEMBER(frameLimit);
+  stream << PRINT_MEMBER(grabCursor);
+  stream << PRINT_MEMBER(cursorVisible);
+}
 } // namespace aw
