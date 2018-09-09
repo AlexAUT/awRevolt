@@ -230,7 +230,7 @@ bool SceneLoader::parseSceneNode(const Json::Value& node, SceneNode& parent, Sce
       LogSceneLoaderError() << "Child attribute must be an array or not defined: " << node.toStyledString();
       return false;
     }
-    for (int i = 0; i < childObject.size(); i++)
+    for (unsigned i = 0; i < childObject.size(); i++)
     {
       parseNode(childObject[i], *sceneNode);
     }

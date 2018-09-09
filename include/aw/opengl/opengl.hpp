@@ -25,11 +25,19 @@ namespace opengl
 
 namespace priv
 {
-GLenum glCheckError(const char* file, int line);
-}
+GLenum glCheckError(const char* stmt, const char* file, int line);
+
+} // namespace priv
 } // namespace opengl
 } // namespace aw
 
-#define GL_CHECK(x)                                                                                                    \
-  x;                                                                                                                   \
-  aw::opengl::priv::glCheckError(__FILE__, __LINE__);
+#ifdef _DEBUG
+#define GL_CHECK(stmt)                                                                                                 \
+  do                                                                                                                   \
+  {                                                                                                                    \
+    stmt;                                                                                                              \
+    aw::opengl::priv::glCheckError(#stmt, __FILE__, __LINE__);                                                         \
+  } while (0)
+#else
+#define GL_CHECK(stmt) stmt
+#endif

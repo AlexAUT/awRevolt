@@ -50,6 +50,6 @@ std::array<Vertex, 6> quad(RectFloat rect, RectFloat texCoords, float depth)
 std::array<Vertex, 8 * 3> octahedron(Vec3 center, float radius)
 {
   return {};
-};
+}
 } // namespace geo
 } // namespace aw

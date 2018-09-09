@@ -23,7 +23,7 @@ bool Image::loadFromStream(std::istream& stream, bool invertYAxis)
     {
       uint32* ptr_32 = reinterpret_cast<uint32*>(ptr);
       auto* buffer = new uint32_t[mWidth];
-      for (std::size_t i = 0; i < mHeight / 2; i++)
+      for (int i = 0; i < mHeight / 2; i++)
       {
         // Swap i with h - i - 1
         auto j = mHeight - i - 1;

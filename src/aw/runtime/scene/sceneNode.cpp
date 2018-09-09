@@ -83,7 +83,6 @@ const Mat4& SceneNode::getGlobalTransform() const
     return mLocalTransform.getTransform();
 
   // Check if local transform has changed
-  auto currentVersion = mLocalTransform.getVersionNumber();
   if (mIsGlobalTransformDirty)
   {
     mGlobalTransform = mParent->getGlobalTransform() * mLocalTransform.getTransform();

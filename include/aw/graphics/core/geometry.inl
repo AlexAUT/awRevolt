@@ -10,9 +10,9 @@ namespace geo
 {
 namespace priv
 {
-MEMBER_PRESENT_CHECKER(position, Vec3);
-MEMBER_PRESENT_CHECKER(normal, Vec3);
-MEMBER_PRESENT_CHECKER(texCoord, Vec2);
+MEMBER_PRESENT_CHECKER(position, Vec3)
+MEMBER_PRESENT_CHECKER(normal, Vec3)
+MEMBER_PRESENT_CHECKER(texCoord, Vec2)
 
 template <typename VertexType>
 void setVertex(VertexType& vertex, Vec3 pos, Vec3 normal, Vec2 texCoord)

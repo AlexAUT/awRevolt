@@ -61,7 +61,7 @@ void OrbitCameraController::update(float delta)
     return;
   // Move camera to right point
   const float horiScale = (std::cos(mHorizontalRotation));
-  const float sinTest = std::sin(mHorizontalRotation);
+
   const Vec3 camPos =
       mLookAt + Vec3{horiScale * std::sin(mVerticalRotation) * mDistance, std::sin(mHorizontalRotation) * mDistance,
                      horiScale * std::cos(mVerticalRotation) * mDistance};

@@ -19,7 +19,7 @@ namespace opengl
 {
 namespace priv
 {
-GLenum glCheckError(const char* file, int line)
+GLenum glCheckError(const char* stmt, const char* file, int line)
 {
   GLenum errorCode;
   while ((errorCode = glGetError()) != GL_NO_ERROR)
@@ -57,7 +57,7 @@ GLenum glCheckError(const char* file, int line)
     default:
       message = "UNKNOWN OPENGL ERROR, CODE: " + std::to_string(errorCode);
     }
-    message += " in " + std::string(file) + ":" + std::to_string(line);
+    message += " at " + std::string(stmt) + " in " + std::string(file) + ":" + std::to_string(line);
     LogOpenGLE() << message;
     throw GLException(message);
   }

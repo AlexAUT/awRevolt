@@ -26,7 +26,7 @@ void IntermediateRenderer<VertexType>::addVertex(const VertexType& vertex)
 template <typename VertexType>
 bool IntermediateRenderer<VertexType>::addVertices(const VertexType* begin, const VertexType* end)
 {
-  auto size = end - begin;
+  unsigned size = end - begin;
   if (size > mBuffer.size())
     return false;
   if (size > (mBuffer.size() - mBufferCursor))

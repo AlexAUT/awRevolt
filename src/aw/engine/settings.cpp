@@ -96,5 +96,7 @@ std::ostream& operator<<(std::ostream& stream, const Settings& settings)
   stream << PRINT_MEMBER(frameLimit);
   stream << PRINT_MEMBER(grabCursor);
   stream << PRINT_MEMBER(cursorVisible);
+
+  return stream;
 }
 } // namespace aw

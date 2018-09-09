@@ -47,7 +47,7 @@ private:
   bool mHasFocus{true};
 
   unsigned mListenerID{0};
-  std::vector<std::pair<int, EventCallback>> mEventListeners;
+  std::vector<std::pair<unsigned, EventCallback>> mEventListeners;
 };
 
 } // namespace aw

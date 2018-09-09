@@ -321,7 +321,8 @@ typedef unsigned char stbi_uc;
 typedef unsigned short stbi_us;
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 #ifdef STB_IMAGE_STATIC
@@ -330,55 +331,56 @@ extern "C" {
 #define STBIDEF extern
 #endif
 
-//////////////////////////////////////////////////////////////////////////////
-//
-// PRIMARY API - works on images of any type
-//
+  //////////////////////////////////////////////////////////////////////////////
+  //
+  // PRIMARY API - works on images of any type
+  //
 
-//
-// load image by filename, open file, or memory buffer
-//
+  //
+  // load image by filename, open file, or memory buffer
+  //
 
-typedef struct
-{
-  int (*read)(void* user, char* data, int size); // fill 'data' with 'size' bytes.  return number of bytes actually read
-  void (*skip)(void* user, int n);               // skip the next 'n' bytes, or 'unget' the last -n bytes if negative
-  int (*eof)(void* user);                        // returns nonzero if we are at end of file/data
-} stbi_io_callbacks;
+  typedef struct
+  {
+    int (*read)(void* user, char* data,
+                int size);           // fill 'data' with 'size' bytes.  return number of bytes actually read
+    void (*skip)(void* user, int n); // skip the next 'n' bytes, or 'unget' the last -n bytes if negative
+    int (*eof)(void* user);          // returns nonzero if we are at end of file/data
+  } stbi_io_callbacks;
 
-////////////////////////////////////
-//
-// 8-bits-per-channel interface
-//
+  ////////////////////////////////////
+  //
+  // 8-bits-per-channel interface
+  //
 
-STBIDEF stbi_uc* stbi_load_from_memory(stbi_uc const* buffer, int len, int* x, int* y, int* channels_in_file,
-                                       int desired_channels);
-STBIDEF stbi_uc* stbi_load_from_callbacks(stbi_io_callbacks const* clbk, void* user, int* x, int* y,
-                                          int* channels_in_file, int desired_channels);
+  STBIDEF stbi_uc* stbi_load_from_memory(stbi_uc const* buffer, int len, int* x, int* y, int* channels_in_file,
+                                         int desired_channels);
+  STBIDEF stbi_uc* stbi_load_from_callbacks(stbi_io_callbacks const* clbk, void* user, int* x, int* y,
+                                            int* channels_in_file, int desired_channels);
 #ifndef STBI_NO_GIF
-STBIDEF stbi_uc* stbi_load_gif_from_memory(stbi_uc const* buffer, int len, int** delays, int* x, int* y, int* z,
-                                           int* comp, int req_comp);
+  STBIDEF stbi_uc* stbi_load_gif_from_memory(stbi_uc const* buffer, int len, int** delays, int* x, int* y, int* z,
+                                             int* comp, int req_comp);
 #endif
 
 #ifndef STBI_NO_STDIO
-STBIDEF stbi_uc* stbi_load(char const* filename, int* x, int* y, int* channels_in_file, int desired_channels);
-STBIDEF stbi_uc* stbi_load_from_file(FILE* f, int* x, int* y, int* channels_in_file, int desired_channels);
+  STBIDEF stbi_uc* stbi_load(char const* filename, int* x, int* y, int* channels_in_file, int desired_channels);
+  STBIDEF stbi_uc* stbi_load_from_file(FILE* f, int* x, int* y, int* channels_in_file, int desired_channels);
 // for stbi_load_from_file, file pointer is left pointing immediately after image
 #endif
 
-////////////////////////////////////
-//
-// 16-bits-per-channel interface
-//
+  ////////////////////////////////////
+  //
+  // 16-bits-per-channel interface
+  //
 
-STBIDEF stbi_us* stbi_load_16_from_memory(stbi_uc const* buffer, int len, int* x, int* y, int* channels_in_file,
-                                          int desired_channels);
-STBIDEF stbi_us* stbi_load_16_from_callbacks(stbi_io_callbacks const* clbk, void* user, int* x, int* y,
-                                             int* channels_in_file, int desired_channels);
+  STBIDEF stbi_us* stbi_load_16_from_memory(stbi_uc const* buffer, int len, int* x, int* y, int* channels_in_file,
+                                            int desired_channels);
+  STBIDEF stbi_us* stbi_load_16_from_callbacks(stbi_io_callbacks const* clbk, void* user, int* x, int* y,
+                                               int* channels_in_file, int desired_channels);
 
 #ifndef STBI_NO_STDIO
-STBIDEF stbi_us* stbi_load_16(char const* filename, int* x, int* y, int* channels_in_file, int desired_channels);
-STBIDEF stbi_us* stbi_load_from_file_16(FILE* f, int* x, int* y, int* channels_in_file, int desired_channels);
+  STBIDEF stbi_us* stbi_load_16(char const* filename, int* x, int* y, int* channels_in_file, int desired_channels);
+  STBIDEF stbi_us* stbi_load_from_file_16(FILE* f, int* x, int* y, int* channels_in_file, int desired_channels);
 #endif
 
 ////////////////////////////////////
@@ -386,77 +388,77 @@ STBIDEF stbi_us* stbi_load_from_file_16(FILE* f, int* x, int* y, int* channels_i
 // float-per-channel interface
 //
 #ifndef STBI_NO_LINEAR
-STBIDEF float* stbi_loadf_from_memory(stbi_uc const* buffer, int len, int* x, int* y, int* channels_in_file,
-                                      int desired_channels);
-STBIDEF float* stbi_loadf_from_callbacks(stbi_io_callbacks const* clbk, void* user, int* x, int* y,
-                                         int* channels_in_file, int desired_channels);
+  STBIDEF float* stbi_loadf_from_memory(stbi_uc const* buffer, int len, int* x, int* y, int* channels_in_file,
+                                        int desired_channels);
+  STBIDEF float* stbi_loadf_from_callbacks(stbi_io_callbacks const* clbk, void* user, int* x, int* y,
+                                           int* channels_in_file, int desired_channels);
 
 #ifndef STBI_NO_STDIO
-STBIDEF float* stbi_loadf(char const* filename, int* x, int* y, int* channels_in_file, int desired_channels);
-STBIDEF float* stbi_loadf_from_file(FILE* f, int* x, int* y, int* channels_in_file, int desired_channels);
+  STBIDEF float* stbi_loadf(char const* filename, int* x, int* y, int* channels_in_file, int desired_channels);
+  STBIDEF float* stbi_loadf_from_file(FILE* f, int* x, int* y, int* channels_in_file, int desired_channels);
 #endif
 #endif
 
 #ifndef STBI_NO_HDR
-STBIDEF void stbi_hdr_to_ldr_gamma(float gamma);
-STBIDEF void stbi_hdr_to_ldr_scale(float scale);
+  STBIDEF void stbi_hdr_to_ldr_gamma(float gamma);
+  STBIDEF void stbi_hdr_to_ldr_scale(float scale);
 #endif // STBI_NO_HDR
 
 #ifndef STBI_NO_LINEAR
-STBIDEF void stbi_ldr_to_hdr_gamma(float gamma);
-STBIDEF void stbi_ldr_to_hdr_scale(float scale);
+  STBIDEF void stbi_ldr_to_hdr_gamma(float gamma);
+  STBIDEF void stbi_ldr_to_hdr_scale(float scale);
 #endif // STBI_NO_LINEAR
 
-// stbi_is_hdr is always defined, but always returns false if STBI_NO_HDR
-STBIDEF int stbi_is_hdr_from_callbacks(stbi_io_callbacks const* clbk, void* user);
-STBIDEF int stbi_is_hdr_from_memory(stbi_uc const* buffer, int len);
+  // stbi_is_hdr is always defined, but always returns false if STBI_NO_HDR
+  STBIDEF int stbi_is_hdr_from_callbacks(stbi_io_callbacks const* clbk, void* user);
+  STBIDEF int stbi_is_hdr_from_memory(stbi_uc const* buffer, int len);
 #ifndef STBI_NO_STDIO
-STBIDEF int stbi_is_hdr(char const* filename);
-STBIDEF int stbi_is_hdr_from_file(FILE* f);
+  STBIDEF int stbi_is_hdr(char const* filename);
+  STBIDEF int stbi_is_hdr_from_file(FILE* f);
 #endif // STBI_NO_STDIO
 
-// get a VERY brief reason for failure
-// NOT THREADSAFE
-STBIDEF const char* stbi_failure_reason(void);
+  // get a VERY brief reason for failure
+  // NOT THREADSAFE
+  STBIDEF const char* stbi_failure_reason(void);
 
-// free the loaded image -- this is just free()
-STBIDEF void stbi_image_free(void* retval_from_stbi_load);
+  // free the loaded image -- this is just free()
+  STBIDEF void stbi_image_free(void* retval_from_stbi_load);
 
-// get image dimensions & components without fully decoding
-STBIDEF int stbi_info_from_memory(stbi_uc const* buffer, int len, int* x, int* y, int* comp);
-STBIDEF int stbi_info_from_callbacks(stbi_io_callbacks const* clbk, void* user, int* x, int* y, int* comp);
-STBIDEF int stbi_is_16_bit_from_memory(stbi_uc const* buffer, int len);
-STBIDEF int stbi_is_16_bit_from_callbacks(stbi_io_callbacks const* clbk, void* user);
+  // get image dimensions & components without fully decoding
+  STBIDEF int stbi_info_from_memory(stbi_uc const* buffer, int len, int* x, int* y, int* comp);
+  STBIDEF int stbi_info_from_callbacks(stbi_io_callbacks const* clbk, void* user, int* x, int* y, int* comp);
+  STBIDEF int stbi_is_16_bit_from_memory(stbi_uc const* buffer, int len);
+  STBIDEF int stbi_is_16_bit_from_callbacks(stbi_io_callbacks const* clbk, void* user);
 
 #ifndef STBI_NO_STDIO
-STBIDEF int stbi_info(char const* filename, int* x, int* y, int* comp);
-STBIDEF int stbi_info_from_file(FILE* f, int* x, int* y, int* comp);
-STBIDEF int stbi_is_16_bit(char const* filename);
-STBIDEF int stbi_is_16_bit_from_file(FILE* f);
+  STBIDEF int stbi_info(char const* filename, int* x, int* y, int* comp);
+  STBIDEF int stbi_info_from_file(FILE* f, int* x, int* y, int* comp);
+  STBIDEF int stbi_is_16_bit(char const* filename);
+  STBIDEF int stbi_is_16_bit_from_file(FILE* f);
 #endif
 
-// for image formats that explicitly notate that they have premultiplied alpha,
-// we just return the colors as stored in the file. set this flag to force
-// unpremultiplication. results are undefined if the unpremultiply overflow.
-STBIDEF void stbi_set_unpremultiply_on_load(int flag_true_if_should_unpremultiply);
+  // for image formats that explicitly notate that they have premultiplied alpha,
+  // we just return the colors as stored in the file. set this flag to force
+  // unpremultiplication. results are undefined if the unpremultiply overflow.
+  STBIDEF void stbi_set_unpremultiply_on_load(int flag_true_if_should_unpremultiply);
 
-// indicate whether we should process iphone images back to canonical format,
-// or just pass them through "as-is"
-STBIDEF void stbi_convert_iphone_png_to_rgb(int flag_true_if_should_convert);
+  // indicate whether we should process iphone images back to canonical format,
+  // or just pass them through "as-is"
+  STBIDEF void stbi_convert_iphone_png_to_rgb(int flag_true_if_should_convert);
 
-// flip the image vertically, so the first pixel in the output array is the bottom left
-STBIDEF void stbi_set_flip_vertically_on_load(int flag_true_if_should_flip);
+  // flip the image vertically, so the first pixel in the output array is the bottom left
+  STBIDEF void stbi_set_flip_vertically_on_load(int flag_true_if_should_flip);
 
-// ZLIB client - used by PNG, available for other purposes
+  // ZLIB client - used by PNG, available for other purposes
 
-STBIDEF char* stbi_zlib_decode_malloc_guesssize(const char* buffer, int len, int initial_size, int* outlen);
-STBIDEF char* stbi_zlib_decode_malloc_guesssize_headerflag(const char* buffer, int len, int initial_size, int* outlen,
-                                                           int parse_header);
-STBIDEF char* stbi_zlib_decode_malloc(const char* buffer, int len, int* outlen);
-STBIDEF int stbi_zlib_decode_buffer(char* obuffer, int olen, const char* ibuffer, int ilen);
+  STBIDEF char* stbi_zlib_decode_malloc_guesssize(const char* buffer, int len, int initial_size, int* outlen);
+  STBIDEF char* stbi_zlib_decode_malloc_guesssize_headerflag(const char* buffer, int len, int initial_size, int* outlen,
+                                                             int parse_header);
+  STBIDEF char* stbi_zlib_decode_malloc(const char* buffer, int len, int* outlen);
+  STBIDEF int stbi_zlib_decode_buffer(char* obuffer, int olen, const char* ibuffer, int ilen);
 
-STBIDEF char* stbi_zlib_decode_noheader_malloc(const char* buffer, int len, int* outlen);
-STBIDEF int stbi_zlib_decode_noheader_buffer(char* obuffer, int olen, const char* ibuffer, int ilen);
+  STBIDEF char* stbi_zlib_decode_noheader_malloc(const char* buffer, int len, int* outlen);
+  STBIDEF int stbi_zlib_decode_noheader_buffer(char* obuffer, int olen, const char* ibuffer, int ilen);
 
 #ifdef __cplusplus
 }
@@ -752,7 +754,7 @@ static void stbi__start_file(stbi__context* s, FILE* f)
   stbi__start_callbacks(s, &stbi__stdio_callbacks, (void*)f);
 }
 
-  // static void stop_file(stbi__context *s) { }
+// static void stop_file(stbi__context *s) { }
 
 #endif // !STBI_NO_STDIO
 
@@ -934,9 +936,9 @@ static void* stbi__malloc_mad4(int a, int b, int c, int d, int add)
 }
 #endif
 
-  // stbi__err - error
-  // stbi__errpf - error returning pointer to float
-  // stbi__errpuc - error returning pointer to unsigned char
+// stbi__err - error
+// stbi__errpf - error returning pointer to float
+// stbi__errpuc - error returning pointer to unsigned char
 
 #ifdef STBI_NO_FAILURE_STRINGS
 #define stbi__err(x, y) 0
@@ -1849,26 +1851,26 @@ static stbi_uc* stbi__hdr_to_ldr(float* data, int x, int y, int comp)
 }
 #endif
 
-  //////////////////////////////////////////////////////////////////////////////
-  //
-  //  "baseline" JPEG/JFIF decoder
-  //
-  //    simple implementation
-  //      - doesn't support delayed output of y-dimension
-  //      - simple interface (only one output format: 8-bit interleaved RGB)
-  //      - doesn't try to recover corrupt jpegs
-  //      - doesn't allow partial loading, loading multiple at once
-  //      - still fast on x86 (copying globals into locals doesn't help x86)
-  //      - allocates lots of intermediate memory (full size of all components)
-  //        - non-interleaved case requires this anyway
-  //        - allows good upsampling (see next)
-  //    high-quality
-  //      - upsampled channels are bilinearly interpolated, even across blocks
-  //      - quality integer IDCT derived from IJG's 'slow'
-  //    performance
-  //      - fast huffman; reasonable integer IDCT
-  //      - some SIMD kernels for common paths on targets with SSE2/NEON
-  //      - uses a lot of intermediate memory, could cache poorly
+//////////////////////////////////////////////////////////////////////////////
+//
+//  "baseline" JPEG/JFIF decoder
+//
+//    simple implementation
+//      - doesn't support delayed output of y-dimension
+//      - simple interface (only one output format: 8-bit interleaved RGB)
+//      - doesn't try to recover corrupt jpegs
+//      - doesn't allow partial loading, loading multiple at once
+//      - still fast on x86 (copying globals into locals doesn't help x86)
+//      - allocates lots of intermediate memory (full size of all components)
+//        - non-interleaved case requires this anyway
+//        - allows good upsampling (see next)
+//    high-quality
+//      - upsampled channels are bilinearly interpolated, even across blocks
+//      - quality integer IDCT derived from IJG's 'slow'
+//    performance
+//      - fast huffman; reasonable integer IDCT
+//      - some SIMD kernels for common paths on targets with SSE2/NEON
+//      - uses a lot of intermediate memory, could cache poorly
 
 #ifndef STBI_NO_JPEG
 
@@ -4336,12 +4338,12 @@ static int stbi__jpeg_info(stbi__context* s, int* x, int* y, int* comp)
 }
 #endif
 
-  // public domain zlib decode    v0.2  Sean Barrett 2006-11-18
-  //    simple implementation
-  //      - all input must be provided in an upfront buffer
-  //      - all output is written to a single output buffer (can malloc/realloc)
-  //    performance
-  //      - fast huffman
+// public domain zlib decode    v0.2  Sean Barrett 2006-11-18
+//    simple implementation
+//      - all input must be provided in an upfront buffer
+//      - all output is written to a single output buffer (can malloc/realloc)
+//    performance
+//      - fast huffman
 
 #ifndef STBI_NO_ZLIB
 
@@ -4897,15 +4899,15 @@ STBIDEF int stbi_zlib_decode_noheader_buffer(char* obuffer, int olen, const char
 }
 #endif
 
-  // public domain "baseline" PNG decoder   v0.10  Sean Barrett 2006-11-18
-  //    simple implementation
-  //      - only 8-bit samples
-  //      - no CRC checking
-  //      - allocates lots of intermediate memory
-  //        - avoids problem of streaming data between subsystems
-  //        - avoids explicit window management
-  //    performance
-  //      - uses stb_zlib, a PD zlib implementation with fast huffman decoding
+// public domain "baseline" PNG decoder   v0.10  Sean Barrett 2006-11-18
+//    simple implementation
+//      - only 8-bit samples
+//      - no CRC checking
+//      - allocates lots of intermediate memory
+//        - avoids problem of streaming data between subsystems
+//        - avoids explicit window management
+//    performance
+//      - uses stb_zlib, a PD zlib implementation with fast huffman decoding
 
 #ifndef STBI_NO_PNG
 typedef struct
@@ -5881,7 +5883,7 @@ static int stbi__png_is16(stbi__context* s)
 }
 #endif
 
-  // Microsoft/Windows BMP image
+// Microsoft/Windows BMP image
 
 #ifndef STBI_NO_BMP
 static int stbi__bmp_test_raw(stbi__context* s)
@@ -6703,8 +6705,8 @@ static void* stbi__tga_load(stbi__context* s, int* x, int* y, int* comp, int req
 }
 #endif
 
-  // *************************************************************************************************
-  // Photoshop PSD loader -- PD by Thatcher Ulrich, integration by Nicolas Schulz, tweaked by STB
+// *************************************************************************************************
+// Photoshop PSD loader -- PD by Thatcher Ulrich, integration by Nicolas Schulz, tweaked by STB
 
 #ifndef STBI_NO_PSD
 static int stbi__psd_test(stbi__context* s)
@@ -6995,12 +6997,12 @@ static void* stbi__psd_load(stbi__context* s, int* x, int* y, int* comp, int req
 }
 #endif
 
-  // *************************************************************************************************
-  // Softimage PIC loader
-  // by Tom Seddon
-  //
-  // See http://softimage.wiki.softimage.com/index.php/INFO:_PIC_file_format
-  // See http://ozviz.wasp.uwa.edu.au/~pbourke/dataformats/softimagepic/
+// *************************************************************************************************
+// Softimage PIC loader
+// by Tom Seddon
+//
+// See http://softimage.wiki.softimage.com/index.php/INFO:_PIC_file_format
+// See http://ozviz.wasp.uwa.edu.au/~pbourke/dataformats/softimagepic/
 
 #ifndef STBI_NO_PIC
 static int stbi__pic_is4(stbi__context* s, const char* str)
@@ -7236,8 +7238,8 @@ static int stbi__pic_test(stbi__context* s)
 }
 #endif
 
-  // *************************************************************************************************
-  // GIF loader -- public domain by Jean-Marc Lienher -- simplified/shrunk by stb
+// *************************************************************************************************
+// GIF loader -- public domain by Jean-Marc Lienher -- simplified/shrunk by stb
 
 #ifndef STBI_NO_GIF
 typedef struct
@@ -8184,6 +8186,7 @@ static int stbi__psd_info(stbi__context* s, int* x, int* y, int* comp)
 static int stbi__psd_is16(stbi__context* s)
 {
   int channelCount, dummy, depth;
+  (void)dummy;
   if (stbi__get32be(s) != 0x38425053)
   {
     stbi__rewind(s);
@@ -8281,17 +8284,17 @@ static int stbi__pic_info(stbi__context* s, int* x, int* y, int* comp)
 }
 #endif
 
-  // *************************************************************************************************
-  // Portable Gray Map and Portable Pixel Map loader
-  // by Ken Miller
-  //
-  // PGM: http://netpbm.sourceforge.net/doc/pgm.html
-  // PPM: http://netpbm.sourceforge.net/doc/ppm.html
-  //
-  // Known limitations:
-  //    Does not support comments in the header section
-  //    Does not support ASCII image data (formats P2 and P3)
-  //    Does not support 16-bit-per-channel
+// *************************************************************************************************
+// Portable Gray Map and Portable Pixel Map loader
+// by Ken Miller
+//
+// PGM: http://netpbm.sourceforge.net/doc/pgm.html
+// PPM: http://netpbm.sourceforge.net/doc/ppm.html
+//
+// Known limitations:
+//    Does not support comments in the header section
+//    Does not support ASCII image data (formats P2 and P3)
+//    Does not support 16-bit-per-channel
 
 #ifndef STBI_NO_PNM
 

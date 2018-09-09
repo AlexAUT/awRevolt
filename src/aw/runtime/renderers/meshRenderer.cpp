@@ -19,8 +19,6 @@ void MeshRenderer::registerMesh(const MeshNode* meshNode)
 void MeshRenderer::renderShadowMap(const Camera& camera, const ShaderProgram& shader,
                                    const DirectionalLight& light) const
 {
-  aw::Vec3 inverseLight = -light.direction;
-
   auto vp = camera.getVPMatrix();
   auto v = camera.getViewMatrix();
 

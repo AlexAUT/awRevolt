@@ -227,13 +227,13 @@ bool AssimpLoader::parseMaterial(aw::Mesh& mesh, const aiMaterial* assimpMat)
     // unsigned int index, aiString *path, aiTextureMapping *mapping=NULL, unsigned int *uvindex=NULL, float
     // *blend=NULL, aiTextureOp *op=NULL, aiTextureMapMode *mapmode=NULL)
     aiString aPath;
-    aiTextureMapping mapping;
+    aiTextureMapping mapping = aiTextureMapping_UV;
+    aiTextureOp op = aiTextureOp_Add;
     unsigned uvIndex;
     float blend;
-    aiTextureOp op;
     aiTextureMapMode mapMode;
 
-    auto tex = assimpMat->GetTexture(aiTextureType_DIFFUSE, i, &aPath, &mapping, &uvIndex, &blend, &op, &mapMode);
+    assimpMat->GetTexture(aiTextureType_DIFFUSE, i, &aPath, &mapping, &uvIndex, &blend, &op, &mapMode);
     std::string path(aPath.C_Str());
     if (mapping != aiTextureMapping_UV)
     {
@@ -364,7 +364,7 @@ std::vector<std::unique_ptr<aw::MeshAnimation>> AssimpLoader::loadAnimations()
     return result;
 
   auto animCount = scene->mNumAnimations;
-  for (int i = 0; i < animCount; i++)
+  for (unsigned i = 0; i < animCount; i++)
   {
     const auto* assimpAnimation = scene->mAnimations[i];
 
@@ -374,25 +374,25 @@ std::vector<std::unique_ptr<aw::MeshAnimation>> AssimpLoader::loadAnimations()
 
     const auto channelCount = assimpAnimation->mNumChannels;
     MeshAnimationChannels channels(channelCount);
-    for (int j = 0; j < channelCount; j++)
+    for (unsigned j = 0; j < channelCount; j++)
     {
       const auto* assimpChannel = assimpAnimation->mChannels[j];
       auto& channel = channels[j];
       channel.boneName = assimpChannel->mNodeName.C_Str();
       const auto posKeyNum = assimpChannel->mNumPositionKeys;
-      for (int k = 0; k < posKeyNum; k++)
+      for (unsigned k = 0; k < posKeyNum; k++)
       {
         const auto& posKey = assimpChannel->mPositionKeys[k];
         channel.posKeys.push_back({static_cast<float>(posKey.mTime), aiVec3ToGlm(&posKey.mValue)});
       }
       const auto scaleKeyNum = assimpChannel->mNumScalingKeys;
-      for (int k = 0; k < scaleKeyNum; k++)
+      for (unsigned k = 0; k < scaleKeyNum; k++)
       {
         const auto& scaleKey = assimpChannel->mScalingKeys[k];
         channel.scaleKeys.push_back({static_cast<float>(scaleKey.mTime), aiVec3ToGlm(&scaleKey.mValue)});
       }
       const auto rotKeyNum = assimpChannel->mNumRotationKeys;
-      for (int k = 0; k < rotKeyNum; k++)
+      for (unsigned k = 0; k < rotKeyNum; k++)
       {
         const auto& rotKey = assimpChannel->mRotationKeys[k];
         channel.rotKeys.push_back({static_cast<float>(rotKey.mTime), aiQuat3ToGlm(&rotKey.mValue)});

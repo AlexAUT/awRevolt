@@ -35,8 +35,8 @@ public:
 
 private:
   bool mWriteToConsole;
-  std::ostream& mConsoleStream;
   bool mWriteToFileSystem;
+  std::ostream& mConsoleStream;
   std::ostream& mFileStream;
 };
 
@@ -51,7 +51,7 @@ private:
   aw::log::LogInstance Log##Name()                                                                                     \
   {                                                                                                                    \
     return aw::LOG(logModule##Name);                                                                                   \
-  };
+  }
 } // namespace log
 
 bool LOG_INITIALIZE(log::LogLevel console = log::Debug, log::LogLevel filesystem = log::Verbose,
