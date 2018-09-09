@@ -1,6 +1,6 @@
 [submodule "awRevoltDesktopSample"]
 	path = awRevoltDesktopSample
-	url = git@github.com:AlexAUT/awRevoltDesktopSample.git
+	url = https://github.com/AlexAUT/awRevoltDesktopSample
 [submodule "flightGame"]
 	path = flightGame
-	url = git@github.com:AlexAUT/flightGame.git
+	url = https://github.com/AlexAUT/flightGame
