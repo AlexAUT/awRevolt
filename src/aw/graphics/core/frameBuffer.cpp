@@ -34,9 +34,9 @@ void FrameBuffer::create(unsigned width, unsigned height, unsigned depthPrecisio
 
     mDepthTexture.loadFromMemory(nullptr, width, height, GL_DEPTH_COMPONENT, GL_DEPTH_COMPONENT, GL_UNSIGNED_SHORT);
 
-    mDepthTexture.setMagFilter(Texture2D::MagFilter::NEAREST);
-    mDepthTexture.setMinFilter(Texture2D::MinFilter::NEAREST);
-    mDepthTexture.setWrapMode(Texture2D::WrapMode::CLAMP_TO_EDGE);
+    mDepthTexture.setMagFilter(Texture2D::MagFilter::LINEAR);
+    mDepthTexture.setMinFilter(Texture2D::MinFilter::LINEAR);
+    mDepthTexture.setWrapMode(Texture2D::WrapMode::CLAMP_TO_BORDER);
     GL_CHECK(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, mDepthTexture.getId(), 0));
   }
   if (stencilPrecision > 0)

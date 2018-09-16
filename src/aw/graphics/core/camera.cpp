@@ -39,6 +39,15 @@ Camera Camera::createOrthograpic(float left, float right, float bottom, float to
   return camera;
 }
 
+Camera Camera::createFromCustomProjection(const Mat4& customProj)
+{
+  Camera camera;
+  camera.setProjectionType(ProjectionType::Custom);
+  camera.setCustomProjectionMatrix(customProj);
+
+  return camera;
+}
+
 Vec3 Camera::projectVector(Vec3 vector) const
 {
   return Vec3(projectVector(Vec4(vector, 1.f)));
@@ -97,6 +106,15 @@ void Camera::setFieldOfView(float fieldOfView)
   mFieldOfView = fieldOfView;
   if (mProjectionType == ProjectionType::Perspective)
     invalidProjectionCache();
+}
+
+void Camera::setCustomProjectionMatrix(const Mat4& customProj)
+{
+  assert(mProjectionType == ProjectionType::Custom &&
+         "You have to set custom projection first, because it will not be saved when switching back");
+
+  mProjectionMatrix = customProj;
+  invalidProjectionCache();
 }
 
 void Camera::setPosition(Vec3 position)
@@ -240,12 +258,13 @@ void Camera::updateProjectioMatrix() const
     {
       mProjectionMatrix = glm::perspective(mFieldOfView, mAspectRatio, mNear, mFar);
     }
-    else
+    else if (mProjectionType == Camera::Orthographic)
     {
       const float widthHalf = mOrthoWidth / 2.f;
       const float heightHalf = widthHalf / mAspectRatio;
       mProjectionMatrix = glm::ortho(-widthHalf, widthHalf, -heightHalf, heightHalf, mNear, mFar);
     }
+    // Not for custom projection the matrix is set directly by the setter
   }
 }
 

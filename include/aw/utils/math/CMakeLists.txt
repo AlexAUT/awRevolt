@@ -1,5 +1,6 @@
 set(HEADER_FILES ${HEADER_FILES}
     ${CMAKE_CURRENT_SOURCE_DIR}/constants.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/frustum.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/matrix.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/vector.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/quaternion.hpp

@@ -13,13 +13,15 @@ public:
   enum ProjectionType
   {
     Orthographic,
-    Perspective
+    Perspective,
+    Custom
   };
 
 public:
   static Camera createPerspective(float aspectRatio, float fieldOfView, float near = 0.1f, float far = 1000.f);
   static Camera createOrthograpic(float left, float right, float bottom, float top, float near = 0.0f,
                                   float far = 100.f);
+  static Camera createFromCustomProjection(const Mat4& customProjection);
 
 public:
   Vec3 projectVector(Vec3 vector) const;
@@ -36,6 +38,7 @@ public:
   void setAspectRatio(float aspectRatio);
   void setOrthoWidth(float orthoWidth);
   void setFieldOfView(float fieldOfView);
+  void setCustomProjectionMatrix(const Mat4& customProjection);
 
   // Set view properties to fixed point
   void setPosition(Vec3 position);

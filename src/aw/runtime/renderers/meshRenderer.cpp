@@ -46,9 +46,6 @@ void MeshRenderer::renderForwardPassWithShadow(const Camera& camera, const Camer
 {
   shader.bind();
 
-  const aw::Mat4 biasMatrix(0.5, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.5, 0.5, 0.5, 1.0);
-  shader.setUniform("shadow_mvp_biased", biasMatrix * lightCam.getVPMatrix());
-
   shader.setUniform("dirLights[0].dir", light.direction);
   shader.setUniform("dirLights[0].color", light.color);
   shader.setUniform("dirLights[0].energy", light.energy);
