@@ -63,7 +63,7 @@ if(AW_DESKTOP)
   target_link_libraries(${PROJECT_NAME} sfml-window sfml-system)
 
   if(WIN32)
-    target_link_libraries(${PROJECT_NAME} jsoncpp assimp)
+    target_link_libraries(${PROJECT_NAME} jsoncpp assimp opengl32)
   else()
     # Setup assimp, we need to create a target ourself
     FILE(GLOB ASSIMP_DIR "${CMAKE_SOURCE_DIR}/extlibs/lib/cmake/assimp*")
