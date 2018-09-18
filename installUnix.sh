@@ -11,22 +11,22 @@ cp -r extlibs/glm/glm extlibs/include/
 mkdir -p extlibs/sfml/buildDesktop
 cd extlibs/sfml/buildDesktop
 # Build sfml for all desktop types
-mkdir debugShared
+mkdir -p debugShared
 cd debugShared
 cmake ../../ -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=../../../ -DBUILD_SHARED_LIBS=True 
 make -j 8 && make install
 cd ..
-mkdir debugStatic
+mkdir -p debugStatic
 cd debugStatic
 cmake ../../ -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=../../../ -DBUILD_SHARED_LIBS=False 
 make -j 8 && make install
 cd ..
-mkdir releaseShared
+mkdir -p releaseShared
 cd releaseShared
 cmake ../../ -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../../../ -DBUILD_SHARED_LIBS=True 
 make -j 8 && make install
 cd ..
-mkdir releaseStatic
+mkdir -p releaseStatic
 cd releaseStatic
 cmake ../../ -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../../../ -DBUILD_SHARED_LIBS=False 
 make -j 8 && make install
@@ -50,10 +50,10 @@ cd ../../../
 # JSONCPP
 mkdir -p extlibs/jsoncpp/buildDesktop
 cd extlibs/jsoncpp/buildDesktop
-mkdir release
+mkdir -p release
 cd release
 cmake ../.. -DCMAKE_BUILD_TYPE=Release \
-         -DCMAKE_INSTALL_PREFIX=../../../ \
+         -DCMAKE_INSTALL_PREFIX=../../../
 make -j 8 && make install
 
 cd ..
