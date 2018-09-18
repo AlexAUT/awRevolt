@@ -62,34 +62,41 @@ if(AW_DESKTOP)
   find_package(SFML 2 REQUIRED  window system)
   target_link_libraries(${PROJECT_NAME} sfml-window sfml-system)
 
-  # Setup assimp, we need to create a target ourself
-  FILE(GLOB ASSIMP_DIR "${CMAKE_SOURCE_DIR}/extlibs/lib/cmake/assimp*")
-  find_package(ASSIMP REQUIRED)
-  if (ASSIMP_FOUND)
-    set(ASSIMP_LIBRARY "assimp")
-    add_library(${ASSIMP_LIBRARY} SHARED IMPORTED)
-    set_target_properties(${ASSIMP_LIBRARY} PROPERTIES
-      IMPORTED_LOCATION "${ASSIMP_LIBRARY_DIRS}/libassimp.so")
+  if(WIN32)
+    target_link_libraries({PROJECT_NAME} jsoncpp assimp)
+  else()
+    # Setup assimp, we need to create a target ourself
+    FILE(GLOB ASSIMP_DIR "${CMAKE_SOURCE_DIR}/extlibs/lib/cmake/assimp*")
+    find_package(ASSIMP REQUIRED)
+    if (ASSIMP_FOUND)
+      set(ASSIMP_LIBRARY "assimp")
+      add_library(${ASSIMP_LIBRARY} SHARED IMPORTED)
+      set_target_properties(${ASSIMP_LIBRARY} PROPERTIES
+        IMPORTED_LOCATION "${ASSIMP_LIBRARY_DIRS}/libassimp.so")
+    endif()
+    target_link_libraries(${PROJECT_NAME} ${ASSIMP_LIBRARY})
+    #jsoncpp
+    set(jsoncpp_DIR "${CMAKE_SOURCE_DIR}/extlibs/lib64/cmake/jsoncpp")
+    find_package(jsoncpp REQUIRED)
+    target_link_libraries(${PROJECT_NAME} jsoncpp)
   endif()
-  target_link_libraries(${PROJECT_NAME} ${ASSIMP_LIBRARY})
-#jsoncpp
-  set(jsoncpp_DIR "${CMAKE_SOURCE_DIR}/extlibs/lib64/cmake/jsoncpp")
-  find_package(jsoncpp REQUIRED)
-  target_link_libraries(${PROJECT_NAME} jsoncpp)
 
-  # Install library
-  include (GNUInstallDirs)
-  install(TARGETS ${PROJECT_NAME}
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-  install (
-    DIRECTORY ${INC_DIR_AW}
-    DESTINATION include
-    FILES_MATCHING PATTERN "*.h*")
-  install (
-    DIRECTORY ${INC_DIR_AW}
-    DESTINATION include
-    FILES_MATCHING PATTERN "*.inl")
+  if(WIN32)
+  else()
+    # Install library
+    include (GNUInstallDirs)
+    install(TARGETS ${PROJECT_NAME}
+      LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+      PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+    install (
+      DIRECTORY ${INC_DIR_AW}
+      DESTINATION include
+      FILES_MATCHING PATTERN "*.h*")
+    install (
+      DIRECTORY ${INC_DIR_AW}
+      DESTINATION include
+      FILES_MATCHING PATTERN "*.inl")
+  endif()
 else(AW_ANDROID)
   include_directories(${CMAKE_ANDROID_NDK}/sources/third_party/)
   include_directories(${CMAKE_ANDROID_NDK}/sources/third_party/include)
@@ -113,11 +120,6 @@ target_include_directories(${PROJECT_NAME} PUBLIC ${INC_DIR} )
 target_include_directories(${PROJECT_NAME} PUBLIC ${SRC_DIR} )
 
 if(AW_DESKTOP)
-  if (EXISTS "${CMAKE_SOURCE_DIR}/awRevoltDesktopSample/CMakeLists.txt")
-    message(STATUS "Flight game found")
-      add_subdirectory(awRevoltDesktopSample)
-  endif()
-
   if (EXISTS "${CMAKE_SOURCE_DIR}/flightGame/CMakeLists.txt")
     message(STATUS "Flight game found")
       add_subdirectory(flightGame)
