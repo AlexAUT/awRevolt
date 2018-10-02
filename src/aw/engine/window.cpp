@@ -1,7 +1,6 @@
 #include <aw/engine/window.hpp>
 
 #include <aw/engine/settings.hpp>
-#include <aw/opengl/loader.hpp>
 #include <aw/opengl/opengl.hpp>
 
 #include <aw/utils/log.hpp>
@@ -17,7 +16,6 @@ namespace aw
 Window::Window(const Settings& settings)
 {
   applySettings(settings);
-  loadOpenGLFunctions();
 }
 
 void Window::handleEvents(/*const EventHandlers& eventHandlers*/)
@@ -112,11 +110,6 @@ Vec2u Window::getSize() const
 bool Window::hasFocus() const
 {
   return mHasFocus;
-}
-
-void Window::loadOpenGLFunctions()
-{
-  opengl::init();
 }
 
 } // namespace aw

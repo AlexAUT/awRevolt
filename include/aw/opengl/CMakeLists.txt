@@ -6,7 +6,6 @@ if(AW_USE_OPENGL)
 endif()
 
 set(HEADER_FILES ${HEADER_FILES}
-    ${CMAKE_CURRENT_SOURCE_DIR}/loader.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/commonTypes.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/opengl.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/openglExt.hpp

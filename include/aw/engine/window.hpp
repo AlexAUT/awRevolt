@@ -39,9 +39,6 @@ public:
   bool hasFocus() const;
 
 private:
-  void loadOpenGLFunctions();
-
-private:
   sf::Window mWindow;
 
   bool mHasFocus{true};
