@@ -37,6 +37,8 @@ Settings Settings::loadFromFile(const std::string& path)
       settings.frameLimit = rootNode.get("frameLimit", settings.frameLimit).asUInt();
       settings.grabCursor = rootNode.get("grabCursor", settings.grabCursor).asBool();
       settings.cursorVisible = rootNode.get("cursorVisible", settings.cursorVisible).asBool();
+      settings.sleepOnFocusLossAndroid =
+          rootNode.get("sleepOnFocusLossAndroid", settings.sleepOnFocusLossAndroid).asFloat();
     }
     else
     {
@@ -96,6 +98,7 @@ std::ostream& operator<<(std::ostream& stream, const Settings& settings)
   stream << PRINT_MEMBER(frameLimit);
   stream << PRINT_MEMBER(grabCursor);
   stream << PRINT_MEMBER(cursorVisible);
+  stream << PRINT_MEMBER(sleepOnFocusLossAndroid);
 
   return stream;
 }

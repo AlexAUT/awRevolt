@@ -24,6 +24,7 @@ struct Settings
   unsigned frameLimit{0};
   bool grabCursor{false};
   bool cursorVisible{true};
+  float sleepOnFocusLossAndroid{2}; // On Android sleep 2 seconds if in background (each tick)
 
   static Settings loadFromFile(const std::string& path = path::getConfigPath() + "engine.json");
   bool save(const std::string& path = path::getConfigPath() + "engine.json") const;

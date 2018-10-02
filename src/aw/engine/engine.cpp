@@ -19,11 +19,14 @@ int Engine::run()
     handleEvents();
     update(mUpdateTimer.restart<Seconds>());
     render();
-    if (!mWindow.hasFocus())
+#ifdef AW_ANDROID
+    if (!mWindow.hasFocus() && mSettings.sleepOnFocusLossAndroid > 0)
     {
-      LogTemp() << "In background sleep for 1 sec!";
-      std::this_thread::sleep_for(std::chrono::seconds(1));
+      LogTemp() << "In background sleep for " << mSettings.sleepOnFocusLossAndroid << " sec!";
+      const auto sleepDuration = std::chrono::seconds(mSettings.sleepOnFocusLossAndroid);
+      std::this_thread::sleep_for(sleepDuration);
     }
+#endif
   }
   return mReturnCode;
 }
@@ -46,8 +49,10 @@ void Engine::update(float delta)
 
 void Engine::render()
 {
+#ifdef AW_ANDROID
   if (!mWindow.hasFocus())
     return;
+#endif
   mStateMachine.render();
 
   mWindow.getSFMLWindow().display();

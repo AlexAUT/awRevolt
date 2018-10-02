@@ -1,7 +1,7 @@
 #OPENGL only when AW_USE_OPENGL is defined
 if(AW_USE_OPENGL)
   set(IMPL_HEADER_FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/impl/gl_core_3_3.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/impl/gl.hpp
     )
 endif()
 
