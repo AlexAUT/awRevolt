@@ -17,10 +17,7 @@ typedef int32_t int32_t;
 typedef std::ptrdiff_t ptrdiff;
 
 typedef std::size_t size_t;
-#ifdef AW_DESKTOP
-typedef std::byte byte;
-#else
+
 typedef uint8 byte;
-#endif
 
 } // namespace aw

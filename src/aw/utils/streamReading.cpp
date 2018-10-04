@@ -9,7 +9,7 @@ std::string toString(std::istream& stream, size_t chunkSize)
   std::string stringBuffer;
   stringBuffer.resize(chunkSize);
   size_t cursor = 0;
-  while (stream.read(reinterpret_cast<char*>(stringBuffer.data() + cursor), chunkSize))
+  while (stream.read(const_cast<char*>(stringBuffer.data() + cursor), chunkSize))
   {
     cursor += chunkSize;
     stringBuffer.resize(cursor + chunkSize);
