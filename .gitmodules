@@ -1,0 +1,12 @@
+[submodule "dependencies/sfml"]
+	path = dependencies/sfml
+	url = https://github.com/alexaut/sfml
+[submodule "dependencies/glm"]
+	path = dependencies/glm
+	url = https://github.com/g-truc/glm
+[submodule "dependencies/assimp"]
+	path = dependencies/assimp
+	url = https://github.com/alexaut/assimp
+[submodule "dependencies/jsoncpp"]
+	path = dependencies/jsoncpp
+	url = https://github.com/open-source-parsers/jsoncpp
