@@ -70,10 +70,10 @@ target_include_directories(awUtils PUBLIC ${INC_DIR})
 target_include_directories(awUtils PUBLIC ${SRC_DIR})
 
 # Compile time defines
-if(AW_USE_OPENGL)
-  add_definitions(-DAW_USE_OPENGL)
-else(AW_USE_GLES)
-  add_definitions(-DAW_USE_GLES)
+if(AW_USE_OPENGL AND AW_BUILD_GRAPHICS)
+  target_compile_definitions(awGraphics PUBLIC AW_USE_OPENGL)
+else(AW_USE_GLES AND AW_BUILD_GRAPHICS)
+  target_compile_definitions(awGraphics PUBLIC AW_USE_GLES)
 endif()
 #OS detection, since everything depends on awUtils just set it there PUBLIC
 if(AW_DESKTOP)
