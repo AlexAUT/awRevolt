@@ -32,6 +32,15 @@ void Window::handleEvents(/*const EventHandlers& eventHandlers*/)
   }
 }
 
+void Window::clear(ClearType targets)
+{
+  unsigned val = static_cast<unsigned>(targets);
+  GLbitfield toClear = (val & static_cast<unsigned>(ClearType::Color) ? GL_COLOR_BUFFER_BIT : GL_NONE) |
+                       (val & static_cast<unsigned>(ClearType::Depth) ? GL_DEPTH_BUFFER_BIT : GL_NONE) |
+                       (val & static_cast<unsigned>(ClearType::Stencil) ? GL_STENCIL_BUFFER_BIT : GL_NONE);
+  GL_CHECK(glClear(toClear));
+}
+
 void Window::swapBuffers()
 {
   mWindow.display();
@@ -110,6 +119,11 @@ Vec2u Window::getSize() const
 bool Window::hasFocus() const
 {
   return mHasFocus;
+}
+
+void Window::setClearColor(aw::Color color)
+{
+  GL_CHECK(glClearColor(color.r, color.g, color.b, color.a));
 }
 
 } // namespace aw
