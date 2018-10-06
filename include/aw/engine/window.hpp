@@ -12,7 +12,7 @@
 namespace aw
 {
 
-class Settings;
+struct Settings;
 
 typedef sf::Event WindowEvent;
 

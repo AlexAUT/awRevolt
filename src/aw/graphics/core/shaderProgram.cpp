@@ -31,7 +31,7 @@ bool ShaderProgram::link(const ShaderStage& vertexShader, const ShaderStage& fra
 
 bool ShaderProgram::link(const std::vector<std::reference_wrapper<const ShaderStage>>& shaderStages)
 {
-  mProgram = GL_CHECK(glCreateProgram());
+  GL_CHECK(mProgram = glCreateProgram());
 
   for (auto stage : shaderStages)
     GL_CHECK(glAttachShader(mProgram, stage.get().getId()));

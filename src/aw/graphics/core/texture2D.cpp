@@ -60,7 +60,7 @@ void Texture2D::setMinFilter(MinFilter type)
     break;
   }
 
-  GL_CHECK(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, glType));
+  GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, glType));
 }
 
 void Texture2D::setMagFilter(MagFilter type)
@@ -78,7 +78,7 @@ void Texture2D::setMagFilter(MagFilter type)
     glType = GL_NEAREST;
     break;
   }
-  GL_CHECK(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, glType));
+  GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, glType));
 }
 
 GLenum wrapModeToGLType(Texture2D::WrapMode mode)
@@ -111,13 +111,13 @@ void Texture2D::setWrapMode(WrapMode mode)
 void Texture2D::setWrapModeS(WrapMode mode)
 {
   auto glType = wrapModeToGLType(mode);
-  GL_CHECK(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, glType));
+  GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, glType));
 }
 
 void Texture2D::setWrapModeT(WrapMode mode)
 {
   auto glType = wrapModeToGLType(mode);
-  GL_CHECK(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, glType));
+  GL_CHECK(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, glType));
 }
 
 void Texture2D::bind(unsigned int textureUnit) const

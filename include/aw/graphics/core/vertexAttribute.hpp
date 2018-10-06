@@ -5,13 +5,14 @@
 namespace aw
 {
 typedef unsigned GLenum;
+typedef unsigned char GLboolean;
 
 struct VertexAttribute
 {
   int index;
   int size;
   GLenum type;
-  GLenum normalized;
+  GLboolean normalized;
   int stride;
   const void* offset;
 };

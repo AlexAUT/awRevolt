@@ -37,7 +37,7 @@ GLenum glCheckError(const char* stmt, const char* file, int line);
   {                                                                                                                    \
     stmt;                                                                                                              \
     aw::opengl::priv::glCheckError(#stmt, __FILE__, __LINE__);                                                         \
-  } while (0)
+  } while (false)
 #else
 #define GL_CHECK(stmt) stmt
 #endif

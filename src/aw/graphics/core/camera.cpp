@@ -7,6 +7,8 @@
 
 #include <glm/gtc/matrix_access.hpp>
 
+#include <algorithm>
+
 namespace aw
 {
 

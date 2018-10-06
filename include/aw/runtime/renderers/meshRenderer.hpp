@@ -7,7 +7,7 @@ namespace aw
 class MeshNode;
 class Camera;
 class ShaderProgram;
-class DirectionalLight;
+struct DirectionalLight;
 class Texture2D;
 
 class MeshRenderer

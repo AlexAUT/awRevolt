@@ -4,6 +4,8 @@
 
 #include <aw/utils/math/constants.hpp>
 using namespace aw::constantsF;
+
+#include <algorithm>
 #include <cmath>
 
 #include <aw/utils/log.hpp>
@@ -57,6 +59,7 @@ void OrbitCameraController::zoom(float units)
 
 void OrbitCameraController::update(float delta)
 {
+  (void)delta;
   if (!mCamera)
     return;
   // Move camera to right point

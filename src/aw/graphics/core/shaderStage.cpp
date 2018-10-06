@@ -36,7 +36,7 @@ bool ShaderStage::loadFromStream(std::istream& stream)
 
 bool ShaderStage::loadFromMemory(const char* content)
 {
-  mId = GL_CHECK(glCreateShader(getGLType()));
+  GL_CHECK(mId = glCreateShader(getGLType()));
 
   const char* prefix = "";
   // Add a prefix to make shaders compatible between opengl and opengl es

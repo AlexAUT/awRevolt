@@ -9,7 +9,7 @@
 namespace aw
 {
 class MeshInstance;
-class MeshAnimationChannel;
+struct MeshAnimationChannel;
 class MeshSkeletonNode;
 
 class MeshPose
