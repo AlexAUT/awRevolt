@@ -15,6 +15,8 @@ public:
   virtual bool processEvent(const WindowEvent& event) override;
   virtual void render(Vec2 parentPos) override;
 
+  virtual void updateLayout();
+
   void setChild(Widget::SPtr child);
   void setPadding(Padding padding);
 

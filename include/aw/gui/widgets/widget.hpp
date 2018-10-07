@@ -30,8 +30,7 @@ public:
 
   const GUI& getGUI() const { return mGUI; }
 
-  void setParent(SPtr parent) { mParent = parent; }
-  void setPreferedSize(Vec2 size) { mPreferedSize = size; }
+  void setPreferedSize(Vec2 size);
 
   SPtr getParent() const { return mParent; }
   Vec2 getSize() const { return mSize; }
@@ -39,16 +38,25 @@ public:
   Vec2 getRelativePosition() const { return mRelativePosition; }
   Vec2 getGlobalPosition() const { return mGlobalPosition; }
 
+  bool isLayoutDirty() const { return mIsLayoutDirty; }
+  virtual void updateLayout() { mIsLayoutDirty = false; }
+
 public:
   // These should be called by the layouter, calling them may result in wrong rendering
-  void setSize(Vec2 size) { mSize = size; }
-  void setRelativePosition(Vec2 pos) { mRelativePosition = pos; }
-  void setGlobalPosition(Vec2 pos) { mGlobalPosition = pos; }
+  void setParent(SPtr parent);
+
+  void setSize(Vec2 size);
+  void setRelativePosition(Vec2 pos);
+  void setGlobalPosition(Vec2 pos);
+
+  virtual void invalidLayout();
 
 private:
 private:
   const GUI& mGUI;
   SPtr mParent{nullptr};
+
+  bool mIsLayoutDirty{true};
 
   Vec2 mPreferedSize{0.f};
   Vec2 mSize{0.f};

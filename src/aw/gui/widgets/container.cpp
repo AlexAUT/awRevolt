@@ -29,4 +29,25 @@ bool Container::processEvent(const WindowEvent& event)
 
   return false;
 }
+
+void Container::updateLayout()
+{
+  if (!isLayoutDirty())
+    return;
+
+  for (auto& child : mChildren)
+    child->updateLayout();
+
+  Widget::updateLayout();
+}
+
+void Container::invalidLayout()
+{
+  if (isLayoutDirty())
+    return;
+
+  Widget::invalidLayout();
+  for (auto& child : mChildren)
+    child->invalidLayout();
+}
 } // namespace aw::gui

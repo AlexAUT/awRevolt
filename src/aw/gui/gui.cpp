@@ -2,6 +2,12 @@
 
 namespace aw::gui
 {
+void GUI::updateLayout()
+{
+  for (auto& screen : mScreens)
+    screen->updateLayout();
+}
+
 void GUI::update(float delta)
 {
   for (auto& screen : mScreens)
@@ -12,6 +18,7 @@ bool GUI::processEvent(const WindowEvent& event)
 {
   for (auto& screen : mScreens)
   {
+    screen->updateLayout();
     if (screen->processEvent(event))
       return true;
   }
@@ -23,7 +30,10 @@ void GUI::render()
 {
   mRenderer.beginFrame();
   for (auto& screen : mScreens)
+  {
+    updateLayout();
     screen->render({0.f, 0.f});
+  }
   mRenderer.endFrame();
 }
 

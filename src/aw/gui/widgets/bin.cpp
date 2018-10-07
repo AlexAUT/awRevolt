@@ -27,8 +27,21 @@ void Bin::render(Vec2 parentPos)
     mChild->render(getGlobalPosition());
 }
 
+void Bin::updateLayout()
+{
+  if (!isLayoutDirty())
+    return;
+
+  if (mChild)
+    mChild->updateLayout();
+  Widget::updateLayout();
+}
+
 void Bin::setChild(Widget::SPtr ptr)
 {
+  if (mChild == ptr)
+    return;
+
   if (mChild)
     mChild->setParent(nullptr);
 

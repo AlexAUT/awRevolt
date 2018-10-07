@@ -14,6 +14,8 @@ class GUI
 public:
   using ScreenVector = std::vector<Screen::SPtr>;
 
+  void updateLayout();
+
   void update(float delta);
   bool processEvent(const WindowEvent& event);
   void render();

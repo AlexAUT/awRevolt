@@ -21,6 +21,10 @@ public:
   virtual void render(Vec2 parentPos) override;
   virtual bool processEvent(const WindowEvent& event) override;
 
+  virtual void updateLayout();
+
+  virtual void invalidLayout() override;
+
 private:
 protected:
   ChildVector mChildren;
