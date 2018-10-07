@@ -12,12 +12,13 @@ public:
   using ChildVector = std::vector<Widget::SPtr>;
 
 public:
+  Container(const GUI& gui) : Widget(gui) {}
   virtual ~Container() = default;
 
   const ChildVector& getChildren() const;
 
   virtual void update(float delta) override;
-  virtual void render(NanovgRenderer& renderer, Vec2 parentPos) override;
+  virtual void render(Vec2 parentPos) override;
   virtual bool processEvent(const WindowEvent& event) override;
 
 private:

@@ -4,18 +4,11 @@
 
 #include <memory>
 
-namespace sf
-{
-class Event;
-}
-namespace aw
-{
-using WindowEvent = sf::Event;
-}
+#include <aw/engine/windowEventForward.hpp>
 
 namespace aw::gui
 {
-class NanovgRenderer;
+class GUI;
 
 class Widget : public std::enable_shared_from_this<Widget>
 {
@@ -24,18 +17,18 @@ public:
   using CSPtr = std::shared_ptr<const Widget>;
 
 public:
+  Widget(const GUI& gui) : mGUI(gui) {}
   virtual ~Widget() = default;
 
   SPtr getSharedPtr() { return shared_from_this(); }
   CSPtr getConstSharedPtr() { return shared_from_this(); }
 
   virtual void update(float delta) {}
-  virtual void render(NanovgRenderer& renderer, Vec2 parentPos)
-  {
-    setGlobalPosition(getRelativePosition() + parentPos);
-  }
+  virtual void render(Vec2 parentPos) { setGlobalPosition(getRelativePosition() + parentPos); }
 
   virtual bool processEvent(const WindowEvent& event) { return false; }
+
+  const GUI& getGUI() const { return mGUI; }
 
   void setParent(SPtr parent) { mParent = parent; }
   void setPreferedSize(Vec2 size) { mPreferedSize = size; }
@@ -54,6 +47,7 @@ public:
 
 private:
 private:
+  const GUI& mGUI;
   SPtr mParent{nullptr};
 
   Vec2 mPreferedSize{0.f};

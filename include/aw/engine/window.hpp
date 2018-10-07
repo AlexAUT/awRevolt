@@ -1,5 +1,6 @@
 #pragma once
 
+#include <aw/engine/windowEventForward.hpp>
 #include <aw/graphics/core/color.hpp>
 #include <aw/utils/math/vector.hpp>
 
@@ -13,10 +14,7 @@
 
 namespace aw
 {
-
 struct Settings;
-
-using WindowEvent = sf::Event;
 
 class Window
 {

@@ -7,6 +7,7 @@ namespace aw::gui
 class FloatingContainer : public Container
 {
 public:
+  FloatingContainer(const GUI& gui) : Container(gui) {}
   ~FloatingContainer() = default;
 
   void addChild(const Widget::SPtr& ptr, Vec2 pos, Vec2 size)

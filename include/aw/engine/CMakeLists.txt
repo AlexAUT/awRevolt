@@ -5,4 +5,6 @@ set(HEADER_FILES_ENGINE ${HEADER_FILES_ENGINE}
     ${CMAKE_CURRENT_SOURCE_DIR}/logCategories.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/settings.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/window.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/windowEvent.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/windowEventForward.hpp
     PARENT_SCOPE)

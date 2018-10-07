@@ -10,7 +10,7 @@ public:
   using SPtr = std::shared_ptr<Screen>;
 
 public:
-  Screen(Vec2 pos, Vec2 size);
+  Screen(const GUI& gui, Vec2 pos, Vec2 size);
 
 private:
 private:

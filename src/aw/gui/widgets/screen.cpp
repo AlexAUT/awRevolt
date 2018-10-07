@@ -2,7 +2,7 @@
 
 namespace aw::gui
 {
-Screen::Screen(Vec2 pos, Vec2 size)
+Screen::Screen(const GUI& gui, Vec2 pos, Vec2 size) : FloatingContainer(gui)
 {
   setRelativePosition(pos);
   setGlobalPosition(pos);

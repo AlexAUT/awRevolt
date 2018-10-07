@@ -21,6 +21,8 @@ public:
   Screen::SPtr addScreen(Vec2 pos, Vec2 size);
   const ScreenVector getScreens() const { return mScreens; }
 
+  const NanovgRenderer& getRenderer() const { return mRenderer; }
+
 public:
 private:
 private:

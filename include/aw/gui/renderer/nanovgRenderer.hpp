@@ -14,7 +14,7 @@ public:
   void endFrame();
 
   template <typename WidgetType>
-  void render(const WidgetType& widget);
+  void render(const WidgetType& widget) const;
 
 private:
 private:

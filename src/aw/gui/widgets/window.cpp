@@ -1,5 +1,6 @@
 #include <aw/gui/widgets/window.hpp>
 
+#include <aw/gui/gui.hpp>
 #include <aw/gui/renderer/nanovgRenderer.hpp>
 
 #include <aw/engine/window.hpp>
@@ -39,10 +40,11 @@ bool Window::processEvent(const WindowEvent& event)
   return false;
 }
 
-void Window::render(NanovgRenderer& renderer, Vec2 pos)
+void Window::render(Vec2 pos)
 {
-  Widget::render(renderer, pos);
-  renderer.render(*this);
+  Widget::render(pos);
+  getGUI().getRenderer().render(*this);
+  Bin::render(pos);
 }
 
 bool Window::hitTitleBar(Vec2 point)

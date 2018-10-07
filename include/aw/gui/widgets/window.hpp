@@ -1,17 +1,17 @@
 #pragma once
 
-#include <aw/gui/widgets/widget.hpp>
+#include <aw/gui/widgets/bin.hpp>
 
 namespace aw::gui
 {
-class Window : public Widget
+class Window : public Bin
 {
 public:
-  Window(std::string title) : mTitle(std::move(title)) {}
+  Window(const GUI& gui, std::string title) : Bin(gui, {32.f, 2.f, 2.f, 2.f}), mTitle(std::move(title)) {}
   virtual ~Window() = default;
 
   virtual bool processEvent(const WindowEvent& event) override;
-  virtual void render(NanovgRenderer& renderer, Vec2 parentPos) override;
+  virtual void render(Vec2 parentPos) override;
 
   void setTitle(std::string title) { mTitle = std::move(title); }
 

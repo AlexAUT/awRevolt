@@ -1,4 +1,6 @@
 set(SOURCE_FILES_GUI ${SOURCE_FILES_GUI}
+  ${CMAKE_CURRENT_SOURCE_DIR}/bin.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/button.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/container.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/floatingContainer.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/screen.cpp

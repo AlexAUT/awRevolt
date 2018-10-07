@@ -2,6 +2,7 @@
 
 #include "nanovgDrawHelper.hpp"
 
+#include <aw/graphics/core/color.hpp>
 #include <aw/gui/widgets/widgets.hpp>
 #include <aw/opengl/opengl.hpp>
 #include <aw/utils/log.hpp>
@@ -37,10 +38,19 @@ void NanovgRenderer::endFrame()
 }
 
 template <>
-void NanovgRenderer::render(const Window& window)
+void NanovgRenderer::render(const Window& window) const
 {
   auto pos = window.getGlobalPosition();
   auto size = window.getSize();
   drawWindow(mContext, window.getTitle().c_str(), pos.x, pos.y, size.x, size.y);
+}
+
+template <>
+void NanovgRenderer::render(const Button& button) const
+{
+  auto pos = button.getGlobalPosition();
+  auto size = button.getSize();
+  NVGcolor color = nvgRGBA(0, 96, 128, 255);
+  drawButton(mContext, 0, button.getText().c_str(), pos.x, pos.y, size.x, size.y, color);
 }
 } // namespace aw::gui

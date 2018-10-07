@@ -1,6 +1,6 @@
 #include <aw/gui/widgets/container.hpp>
 
-#include <aw/engine/window.hpp>
+#include <aw/gui/utils/eventConvert.hpp>
 
 namespace aw::gui
 {
@@ -10,29 +10,17 @@ void Container::update(float delta)
     child->update(delta);
 }
 
-void Container::render(NanovgRenderer& renderer, Vec2 pos)
+void Container::render(Vec2 pos)
 {
-  Widget::render(renderer, pos);
+  Widget::render(pos);
 
-  auto localPos = pos - getRelativePosition();
   for (auto& child : mChildren)
-    child->render(renderer, localPos);
+    child->render(getGlobalPosition());
 }
 
 bool Container::processEvent(const WindowEvent& event)
 {
-  auto localEvent = event;
-  if (event.type == WindowEvent::MouseMoved)
-  {
-    localEvent.mouseMove.x -= static_cast<int>(getRelativePosition().x);
-    localEvent.mouseMove.y -= static_cast<int>(getRelativePosition().y);
-  }
-  if (event.type == WindowEvent::MouseButtonPressed || event.type == WindowEvent::MouseButtonReleased)
-  {
-    localEvent.mouseButton.x -= static_cast<int>(getRelativePosition().x);
-    localEvent.mouseButton.y -= static_cast<int>(getRelativePosition().y);
-  }
-
+  auto localEvent = convertToLocalEvent(event, *this);
   for (auto& child : mChildren)
   {
     if (child->processEvent(localEvent))
