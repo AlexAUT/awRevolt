@@ -10,3 +10,6 @@
 [submodule "dependencies/jsoncpp"]
 	path = dependencies/jsoncpp
 	url = https://github.com/open-source-parsers/jsoncpp
+[submodule "dependencies/nanovg"]
+	path = dependencies/nanovg
+	url = https://github.com/memononen/nanovg
