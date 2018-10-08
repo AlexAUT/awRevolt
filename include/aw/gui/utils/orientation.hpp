@@ -4,7 +4,7 @@ namespace aw::gui
 {
 enum class Orientation
 {
-  Vertical,
-  Horizontal
+  Vertical = 0,
+  Horizontal = 1
 };
 }

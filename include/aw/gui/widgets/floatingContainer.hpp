@@ -25,14 +25,17 @@ public:
 
   void addChild(const Widget::SPtr& ptr, Vec2 pos, Vec2 size)
   {
-    mChildren.push_back(ptr);
-    ptr->setParent(getSharedPtr());
-    ptr->setRelativePosition(pos);
-    ptr->setSize(size);
+    mChildren.push_back(std::move(ptr));
+    mChildren.back()->setParent(getSharedPtr());
+    mChildren.back()->setRelativePosition(pos);
+    mChildren.back()->setSize(size);
   }
 
   void setBoundsPolicy(BoundsPolicy policy);
-  BoundsPolicy getBoundsPolicy() const { return mBoundsPolicy; }
+  BoundsPolicy getBoundsPolicy() const
+  {
+    return mBoundsPolicy;
+  }
 
 private:
 private:

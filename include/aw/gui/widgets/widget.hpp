@@ -40,6 +40,7 @@ public:
 
   bool isLayoutDirty() const { return mIsLayoutDirty; }
   virtual void updateLayout() { mIsLayoutDirty = false; }
+  virtual Vec2 getMinimalSize() const { return mPreferedSize; }
 
 public:
   // These should be called by the layouter, calling them may result in wrong rendering

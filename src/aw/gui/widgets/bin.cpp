@@ -2,6 +2,8 @@
 
 #include <aw/gui/utils/eventConvert.hpp>
 
+#include <glm/common.hpp>
+
 namespace aw::gui
 {
 void Bin::update(float delta)
@@ -35,6 +37,13 @@ void Bin::updateLayout()
   if (mChild)
     mChild->updateLayout();
   Widget::updateLayout();
+}
+
+Vec2 Bin::getMinimalSize() const
+{
+  if (mChild)
+    return glm::max(mChild->getMinimalSize(), Widget::getMinimalSize());
+  return Widget::getMinimalSize();
 }
 
 void Bin::setChild(Widget::SPtr ptr)

@@ -4,6 +4,8 @@
 
 #include <aw/gui/utils/orientation.hpp>
 
+#include <vector>
+
 namespace aw::gui
 {
 class LinearContainer : public Container
@@ -14,8 +16,12 @@ public:
 
   void addChild(Widget::SPtr newChild, float weight = 1.f);
 
+  virtual void updateLayout() override;
+
 private:
 private:
   Orientation mOrientation;
+
+  std::vector<float> mWeights;
 };
 } // namespace aw::gui
