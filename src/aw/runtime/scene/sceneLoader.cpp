@@ -103,7 +103,7 @@ bool SceneLoader::loadTexturesAndAnimations()
     loader.loadFromAssetFile(it.first, hint.c_str());
     for (auto& displayName : it.second.meshDisplayNames)
     {
-      mMeshManager.insert({displayName, loader.loadMesh(displayName, true)});
+      mMeshManager.insert(std::make_pair(displayName, loader.loadMesh(displayName, true)));
       LogTemp() << "Bone count: " << displayName << "=" << mMeshManager[displayName]->getBoneCount();
     }
     if (!it.second.animationNames.empty())
@@ -117,7 +117,7 @@ bool SceneLoader::loadTexturesAndAnimations()
           if (anim->getDisplayName() == name)
           {
             LogTemp() << "Found animation: " << name;
-            mAnimationManager.insert({name, move(anim)});
+            mAnimationManager.insert(std::make_pair(name, move(anim)));
             found = true;
             break;
           }

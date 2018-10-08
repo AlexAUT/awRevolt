@@ -4,11 +4,10 @@
 #include <string>
 #include <unordered_map>
 
-#include <aw/graphics/3d/mesh.hpp>
-
 namespace aw
 {
+class Mesh;
 
-typedef std::unordered_map<std::string, std::unique_ptr<Mesh>> MeshManager;
+using MeshManager = std::unordered_map<std::string, std::unique_ptr<Mesh>>;
 
 } // namespace aw
