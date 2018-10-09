@@ -1,7 +1,5 @@
 #include <aw/gui/widgets/floatingContainer.hpp>
 
-#include <aw/utils/log.hpp>
-
 namespace aw::gui
 {
 void FloatingContainer::updateLayout()

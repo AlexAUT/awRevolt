@@ -3,16 +3,70 @@
 #include <string>
 #include <vector>
 
+#include <aw/gui/style/alignment.hpp>
+#include <aw/gui/style/padding.hpp>
+#include <aw/gui/style/textStyle.hpp>
 #include <aw/utils/log.hpp>
+#include <aw/utils/math/vector.hpp>
 
 #include <nanovg.h>
 
+namespace aw::gui
+{
+
 // Adopted from https://github.com/memononen/nanovg/blob/master/example/demo.c
+NVGcolor convertColor(Color color);
+NVGalign convertAlignment(Alignment align);
+int isBlack(NVGcolor col);
+static char* cpToUTF8(int cp, char* str);
+void applyTextStyle(NVGcontext* vg, const TextStyle& style);
+
+Vec2 getTextSize(NVGcontext* vg, const std::string& text, const TextStyle& style);
 
 void drawWindow(NVGcontext* vg, const char* title, float x, float y, float w, float h);
 void drawButton(NVGcontext* vg, int preicon, const char* text, float x, float y, float w, float h, NVGcolor col);
 void drawEditBoxBase(NVGcontext* vg, float x, float y, float w, float h);
 void drawEditBox(NVGcontext* vg, const char* text, float x, float y, float w, float h);
+void drawEditBoxCursor(NVGcontext* vg, const std::string& text, float x, float y, float w, float h, int cursorPos);
+
+void drawText(NVGcontext* vg, const std::string& text, Vec2 pos, Vec2 containerSize, const TextStyle& style,
+              Alignment align, Padding padding);
+
+NVGcolor convertColor(Color color)
+{
+  return {{{color.r, color.g, color.b, color.a}}};
+}
+
+NVGalign convertAlignment(Alignment align)
+{
+  int alignment = 0;
+  switch (align.horizontal)
+  {
+  case AlignmentH::Left:
+    alignment |= NVG_ALIGN_LEFT;
+    break;
+  case AlignmentH::Center:
+    alignment |= NVG_ALIGN_CENTER;
+    break;
+  case AlignmentH::Right:
+    alignment |= NVG_ALIGN_RIGHT;
+    break;
+  }
+  switch (align.vertical)
+  {
+  case AlignmentV::Top:
+    alignment |= NVG_ALIGN_TOP;
+    break;
+  case AlignmentV::Middle:
+    alignment |= NVG_ALIGN_MIDDLE;
+    break;
+  case AlignmentV::Bottom:
+    alignment |= NVG_ALIGN_BOTTOM;
+    break;
+  }
+
+  return static_cast<NVGalign>(alignment);
+}
 
 int isBlack(NVGcolor col)
 {
@@ -65,6 +119,22 @@ static char* cpToUTF8(int cp, char* str)
     str[0] = static_cast<char>(cp);
   }
   return str;
+}
+
+void applyTextStyle(NVGcontext* vg, const TextStyle& style)
+{
+  nvgFontSize(vg, style.fontSize);
+  nvgFontFace(vg, style.fontName.c_str());
+  nvgFillColor(vg, convertColor(style.fontColor));
+}
+
+Vec2 getTextSize(NVGcontext* vg, const std::string& text, const TextStyle& style)
+{
+  applyTextStyle(vg, style);
+  float bounds[4];
+  nvgTextBounds(vg, 0.f, 0.f, text.c_str(), text.c_str() + text.size(), bounds);
+  LogTemp() << "Text bounds: " << (bounds[2] - bounds[0]) << ", " << (bounds[3] - bounds[1]);
+  return {bounds[2] - bounds[0], bounds[3] - bounds[1]};
 }
 
 void drawWindow(NVGcontext* vg, const char* title, float x, float y, float w, float h)
@@ -225,3 +295,28 @@ void drawEditBoxCursor(NVGcontext* vg, const std::string& text, float x, float y
   nvgTextAlign(vg, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
   nvgText(vg, cursorX, y + h * 0.5f, "|", nullptr);
 }
+
+void drawText(NVGcontext* vg, const std::string& text, Vec2 pos, Vec2 containerSize, const TextStyle& style,
+              Alignment align, Padding padding)
+{
+  applyTextStyle(vg, style);
+  nvgTextAlign(vg, convertAlignment(align));
+
+  if (align.horizontal == AlignmentH::Left)
+    pos.x += padding.left;
+  else if (align.horizontal == AlignmentH::Center)
+    pos.x += padding.left + ((containerSize.x - padding.left - padding.right) * 0.5f);
+  else if (align.horizontal == AlignmentH::Right)
+    pos.x += containerSize.x - padding.right;
+
+  if (align.vertical == AlignmentV::Top)
+    pos.y += padding.top;
+  else if (align.vertical == AlignmentV::Middle)
+    pos.y += padding.left + ((containerSize.y - padding.left - padding.right) * 0.5f);
+  else if (align.vertical == AlignmentV::Bottom)
+    pos.y += containerSize.y - padding.bottom;
+
+  nvgText(vg, pos.x, pos.y, text.c_str(), nullptr);
+}
+
+} // namespace aw::gui

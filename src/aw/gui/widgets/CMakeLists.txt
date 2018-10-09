@@ -3,7 +3,10 @@ set(SOURCE_FILES_GUI ${SOURCE_FILES_GUI}
   ${CMAKE_CURRENT_SOURCE_DIR}/button.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/container.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/floatingContainer.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/label.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/linearContainer.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/menu.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/menuItem.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/screen.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/textBox.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/widget.cpp

@@ -1,0 +1,7 @@
+set(HEADER_FILES_GUI ${HEADER_FILES_GUI}
+  ${CMAKE_CURRENT_SOURCE_DIR}/alignment.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/orientation.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/padding.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/styleManager.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/textStyle.hpp
+  PARENT_SCOPE)

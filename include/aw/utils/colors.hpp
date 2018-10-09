@@ -1,6 +1,6 @@
 #pragma once
 
-#include <aw/graphics/core/color.hpp>
+#include <aw/utils/color.hpp>
 
 namespace aw::Colors
 {

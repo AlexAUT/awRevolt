@@ -2,8 +2,8 @@
 
 #include <aw/gui/widgets/container.hpp>
 
-#include <aw/gui/utils/orientation.hpp>
-#include <aw/gui/utils/padding.hpp>
+#include <aw/gui/style/orientation.hpp>
+#include <aw/gui/style/padding.hpp>
 
 #include <vector>
 

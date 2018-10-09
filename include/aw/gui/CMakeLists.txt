@@ -1,4 +1,5 @@
 add_subdirectory(renderer)
+add_subdirectory(style)
 add_subdirectory(widgets)
 
 set(HEADER_FILES_GUI ${HEADER_FILES_GUI}

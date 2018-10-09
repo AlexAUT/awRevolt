@@ -1,6 +1,6 @@
 #pragma once
 
-#include <aw/gui/utils/padding.hpp>
+#include <aw/gui/style/padding.hpp>
 #include <aw/gui/widgets/widget.hpp>
 
 namespace aw::gui

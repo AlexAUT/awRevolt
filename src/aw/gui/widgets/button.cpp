@@ -45,4 +45,9 @@ void Button::render(Vec2 parentPos)
   Widget::render(parentPos);
   getGUI().getRenderer().render(*this);
 }
+
+void Button::setOnClick(Callback callback)
+{
+  mOnClick = std::move(callback);
+}
 } // namespace aw::gui

@@ -35,6 +35,8 @@ public:
 
   bool isInState(State state) const { return mState.test(static_cast<size_t>(state)); }
 
+  void setOnClick(Callback callback);
+
 private:
 private:
   std::string mText;

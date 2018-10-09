@@ -1,7 +1,7 @@
 #pragma once
 
-#include <aw/graphics/core/color.hpp>
 #include <aw/graphics/core/vertexLayout.hpp>
+#include <aw/utils/color.hpp>
 #include <aw/utils/math/vector.hpp>
 
 namespace aw

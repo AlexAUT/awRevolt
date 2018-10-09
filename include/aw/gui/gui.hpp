@@ -1,6 +1,7 @@
 #pragma once
 
 #include <aw/gui/renderer/nanovgRenderer.hpp>
+#include <aw/gui/style/textStyle.hpp>
 #include <aw/gui/widgets/screen.hpp>
 #include <aw/utils/math/vector.hpp>
 
@@ -25,10 +26,15 @@ public:
 
   const NanovgRenderer& getRenderer() const { return mRenderer; }
 
+  TextStyleManager& getTextStyles() { return mTextStyles; }
+  const TextStyleManager& getTextStyles() const { return mTextStyles; }
+
 public:
 private:
 private:
   NanovgRenderer mRenderer;
   ScreenVector mScreens;
+
+  TextStyleManager mTextStyles;
 };
 } // namespace aw::gui

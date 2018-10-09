@@ -4,13 +4,19 @@
 
 #include <nanovg.h>
 
+#include <string>
+
 namespace aw::gui
 {
+class TextStyle;
+
 class NanovgRenderer
 {
 public:
   NanovgRenderer();
   ~NanovgRenderer();
+
+  Vec2 calculateTextSize(const std::string& text, const TextStyle& style) const;
 
   void beginFrame();
   void endFrame();

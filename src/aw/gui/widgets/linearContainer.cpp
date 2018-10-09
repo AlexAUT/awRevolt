@@ -70,9 +70,11 @@ void LinearContainer::updateLayout()
     pos[dynamicAxis] = cursor;
     pos[staticAxis] = outerStaticPadding[0];
     child->setRelativePosition(pos);
+    // Tell the child to update his own layout
 
     cursor += childSize[dynamicAxis] + mSpaceBetweenElements;
   }
+  Container::updateLayout();
 }
 
 Vec2 LinearContainer::getOuterDynamicAxisPadding() const
@@ -90,4 +92,4 @@ Vec2 LinearContainer::getOuterStaticAxisPadding() const
   else
     return {mOuterPadding.top, mOuterPadding.bottom};
 }
-}
+} // namespace aw::gui

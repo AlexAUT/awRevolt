@@ -2,9 +2,10 @@
 
 #include "nanovgDrawHelper.hpp"
 
-#include <aw/graphics/core/color.hpp>
+#include <aw/gui/style/textStyle.hpp>
 #include <aw/gui/widgets/widgets.hpp>
 #include <aw/opengl/opengl.hpp>
+#include <aw/utils/color.hpp>
 #include <aw/utils/log.hpp>
 
 #include <nanovg_gl.h>
@@ -25,6 +26,11 @@ NanovgRenderer::~NanovgRenderer()
 {
   if (mContext)
     nvgDeleteGL3(mContext);
+}
+
+Vec2 NanovgRenderer::calculateTextSize(const std::string& text, const TextStyle& style) const
+{
+  return getTextSize(mContext, text, style);
 }
 
 void NanovgRenderer::beginFrame()
@@ -74,6 +80,15 @@ void NanovgRenderer::render(const Button& button) const
 }
 
 template <>
+void NanovgRenderer::render(const Label& label) const
+{
+  auto pos = label.getGlobalPosition();
+  auto size = label.getSize();
+
+  drawText(mContext, label.getText(), pos, size, label.getTextLayout(), label.getAlignment(), label.getPadding());
+}
+
+template <>
 void NanovgRenderer::render(const TextBox& textBox) const
 {
   auto pos = textBox.getGlobalPosition();
@@ -105,8 +120,6 @@ int NanovgRenderer::calculateCursorPosition(const TextBox& textBox, Vec2 relativ
   nvgTextAlign(mContext, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
   nvgTextGlyphPositions(mContext, size.y * 0.3f, size.y * 0.5f, text.c_str(), text.c_str() + text.size(),
                         positions.data(), (int)text.size());
-  LogTemp() << "Pos: " << relativePoint;
-  LogTemp() << "Pos2: " << textBox.getGlobalPosition();
 
   for (unsigned i = 0; i < text.size(); i++)
     LogTemp() << text[i] << " = " << positions[i].minx << ", " << positions[i].maxx;
