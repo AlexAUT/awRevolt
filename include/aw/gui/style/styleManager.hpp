@@ -42,7 +42,11 @@ bool StyleManager<StyleType>::addStyle(std::string name, const StyleType& elemen
 template <typename StyleType>
 void StyleManager<StyleType>::updateStyle(const std::string& name, const StyleType& element)
 {
-  mStyles[name] = std::make_unique<StyleType>(element);
+  auto found = mStyles.find(name);
+  if (found != mStyles.end())
+    *found->second = element;
+  else
+    addStyle(name, element);
 }
 
 template <typename StyleType>
