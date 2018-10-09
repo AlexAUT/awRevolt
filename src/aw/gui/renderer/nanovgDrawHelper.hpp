@@ -1,9 +1,18 @@
 #pragma once
 
+#include <string>
+#include <vector>
+
+#include <aw/utils/log.hpp>
+
 #include <nanovg.h>
+
+// Adopted from https://github.com/memononen/nanovg/blob/master/example/demo.c
 
 void drawWindow(NVGcontext* vg, const char* title, float x, float y, float w, float h);
 void drawButton(NVGcontext* vg, int preicon, const char* text, float x, float y, float w, float h, NVGcolor col);
+void drawEditBoxBase(NVGcontext* vg, float x, float y, float w, float h);
+void drawEditBox(NVGcontext* vg, const char* text, float x, float y, float w, float h);
 
 int isBlack(NVGcolor col)
 {
@@ -161,4 +170,50 @@ void drawButton(NVGcontext* vg, int preicon, const char* text, float x, float y,
   nvgText(vg, x + w * 0.5f - tw * 0.5f + iw * 0.25f, y + h * 0.5f - 1, text, nullptr);
   nvgFillColor(vg, nvgRGBA(255, 255, 255, 160));
   nvgText(vg, x + w * 0.5f - tw * 0.5f + iw * 0.25f, y + h * 0.5f, text, nullptr);
+}
+
+void drawEditBoxBase(NVGcontext* vg, float x, float y, float w, float h)
+{
+  NVGpaint bg;
+  // Edit
+  bg = nvgBoxGradient(vg, x + 1, y + 1 + 1.5f, w - 2, h - 2, 3, 4, nvgRGBA(255, 255, 255, 32), nvgRGBA(32, 32, 32, 32));
+  nvgBeginPath(vg);
+  nvgRoundedRect(vg, x + 1, y + 1, w - 2, h - 2, 4 - 1);
+  nvgFillPaint(vg, bg);
+  nvgFill(vg);
+
+  nvgBeginPath(vg);
+  nvgRoundedRect(vg, x + 0.5f, y + 0.5f, w - 1, h - 1, 4 - 0.5f);
+  nvgStrokeColor(vg, nvgRGBA(0, 0, 0, 48));
+  nvgStroke(vg);
+}
+
+void drawEditBox(NVGcontext* vg, const char* text, float x, float y, float w, float h)
+{
+  drawEditBoxBase(vg, x, y, w, h);
+
+  nvgFontSize(vg, 20.0f);
+  nvgFontFace(vg, "sans");
+  nvgFillColor(vg, nvgRGBA(255, 255, 255, 64));
+  nvgTextAlign(vg, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
+  nvgText(vg, x + h * 0.3f, y + h * 0.5f, text, nullptr);
+}
+
+void drawEditBoxCursor(NVGcontext* vg, const std::string& text, float x, float y, float w, float h, int cursorPos)
+{
+  static std::vector<NVGglyphPosition> positions;
+  positions.resize(text.size());
+  nvgTextGlyphPositions(vg, x + h * 0.3f, y + h * 0.5f, text.c_str(), text.c_str() + text.size(), positions.data(),
+                        static_cast<int>(cursorPos + 1));
+  float cursorX;
+  if (static_cast<size_t>(cursorPos) < text.size())
+    cursorX = positions[static_cast<size_t>(cursorPos)].minx - 2.f;
+  else
+    cursorX = positions.back().maxx - 2.f;
+
+  nvgFontSize(vg, 25.0f);
+  nvgFontFace(vg, "sans");
+  nvgFillColor(vg, nvgRGBA(255, 255, 255, 64));
+  nvgTextAlign(vg, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
+  nvgText(vg, cursorX, y + h * 0.5f, "|", nullptr);
 }

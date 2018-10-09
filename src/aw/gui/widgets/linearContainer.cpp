@@ -1,6 +1,5 @@
 #include <aw/gui/widgets/linearContainer.hpp>
 
-#include <aw/utils/log.hpp>
 #include <aw/utils/types.hpp>
 
 #include <numeric>
@@ -57,7 +56,6 @@ void LinearContainer::updateLayout()
 
   // Now share the space which is still free
   auto cursor = outerDynamicPadding[0];
-  LogTemp() << cursor;
   for (size_t i = 0; i < mChildren.size(); i++)
   {
     auto& child = mChildren[i];

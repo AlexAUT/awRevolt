@@ -23,10 +23,9 @@ public:
   SPtr getSharedPtr() { return shared_from_this(); }
   CSPtr getConstSharedPtr() { return shared_from_this(); }
 
+  virtual bool processEvent(const WindowEvent& event) { return false; }
   virtual void update(float delta) {}
   virtual void render(Vec2 parentPos) { setGlobalPosition(getRelativePosition() + parentPos); }
-
-  virtual bool processEvent(const WindowEvent& event) { return false; }
 
   const GUI& getGUI() const { return mGUI; }
 
@@ -41,6 +40,12 @@ public:
   bool isLayoutDirty() const { return mIsLayoutDirty; }
   virtual void updateLayout() { mIsLayoutDirty = false; }
   virtual Vec2 getMinimalSize() const { return mPreferedSize; }
+
+  bool isLocalPointOnWidget(Vec2 point)
+  {
+    return (point.x > mRelativePosition.x && point.x < (mRelativePosition.x + mSize.x) &&
+            point.y > mRelativePosition.y && point.y < (mRelativePosition.y + mSize.y));
+  }
 
 public:
   // These should be called by the layouter, calling them may result in wrong rendering

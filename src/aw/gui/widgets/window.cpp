@@ -9,35 +9,52 @@ namespace aw::gui
 {
 bool Window::processEvent(const WindowEvent& event)
 {
-  auto pressLeft = event.type == WindowEvent::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left;
-  if (pressLeft)
+  bool usedEvent = false;
+  if (mDrag)
   {
-    auto point = Vec2(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y));
-    if (hitTitleBar(point))
+    if (event.type == WindowEvent::MouseButtonReleased)
     {
-      mDrag = true;
-      mDrawOffset = getRelativePosition() - point;
-      return true;
+      if (event.mouseButton.button == sf::Mouse::Left)
+      {
+        if (mDrag)
+        {
+          auto point = Vec2(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y));
+          setRelativePosition(point + mDrawOffset);
+          mDrag = false;
+          usedEvent = true;
+        }
+      }
+    }
+
+    if (event.type == WindowEvent::MouseMoved)
+    {
+      auto point = Vec2(static_cast<float>(event.mouseMove.x), static_cast<float>(event.mouseMove.y));
+      setRelativePosition(point + mDrawOffset);
+      usedEvent = true;
+    }
+  }
+  else if (event.type == WindowEvent::MouseButtonPressed)
+  {
+    if (event.mouseButton.button == sf::Mouse::Left)
+    {
+      auto point = Vec2(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y));
+      if (hitTitleBar(point))
+      {
+        mDrag = true;
+        mDrawOffset = getRelativePosition() - point;
+        usedEvent = true;
+      }
     }
   }
 
-  auto releaseLeft = event.type == WindowEvent::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left;
-  if (mDrag && releaseLeft)
-  {
-    auto point = Vec2(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y));
-    setRelativePosition(point + mDrawOffset);
-    mDrag = false;
-    return true;
-  }
+  if (!usedEvent)
+    usedEvent = Bin::processEvent(event);
 
-  if (mDrag && event.type == WindowEvent::MouseMoved)
-  {
-    auto point = Vec2(static_cast<float>(event.mouseMove.x), static_cast<float>(event.mouseMove.y));
-    setRelativePosition(point + mDrawOffset);
-    return true;
-  }
+  if (!usedEvent)
+    (void)event; // TODO: check if the click was on the window body, because we should still eat that event, or
+                 // implement it inside Bin
 
-  return false;
+  return usedEvent;
 }
 
 void Window::render(Vec2 pos)
