@@ -201,15 +201,23 @@ void drawEditBox(NVGcontext* vg, const char* text, float x, float y, float w, fl
 
 void drawEditBoxCursor(NVGcontext* vg, const std::string& text, float x, float y, float w, float h, int cursorPos)
 {
-  static std::vector<NVGglyphPosition> positions;
-  positions.resize(text.size());
-  nvgTextGlyphPositions(vg, x + h * 0.3f, y + h * 0.5f, text.c_str(), text.c_str() + text.size(), positions.data(),
-                        static_cast<int>(cursorPos + 1));
   float cursorX;
-  if (static_cast<size_t>(cursorPos) < text.size())
-    cursorX = positions[static_cast<size_t>(cursorPos)].minx - 2.f;
+  if (text.empty())
+  {
+    cursorX = x + h * 0.3f;
+  }
   else
-    cursorX = positions.back().maxx - 2.f;
+  {
+    static std::vector<NVGglyphPosition> positions;
+    positions.resize(text.size());
+    nvgTextGlyphPositions(vg, x + h * 0.3f, y + h * 0.5f, text.c_str(), text.c_str() + text.size(), positions.data(),
+                          static_cast<int>(cursorPos + 1));
+
+    if (static_cast<size_t>(cursorPos) < text.size())
+      cursorX = positions[static_cast<size_t>(cursorPos)].minx - 2.f;
+    else
+      cursorX = positions.back().maxx - 2.f;
+  }
 
   nvgFontSize(vg, 25.0f);
   nvgFontFace(vg, "sans");

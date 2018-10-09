@@ -15,7 +15,7 @@ bool Button::processEvent(const WindowEvent& event)
     changeState(State::Hovered, hit);
     usedEvent = usedEvent || hit;
   }
-  if (event.type == WindowEvent::MouseButtonPressed)
+  else if (event.type == WindowEvent::MouseButtonPressed)
   {
     if (event.mouseButton.button == sf::Mouse::Left)
     {
@@ -26,7 +26,7 @@ bool Button::processEvent(const WindowEvent& event)
       }
     }
   }
-  if (event.type == WindowEvent::MouseButtonReleased)
+  else if (event.type == WindowEvent::MouseButtonReleased)
   {
     if (event.mouseButton.button == sf::Mouse::Left)
     {

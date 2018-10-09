@@ -21,7 +21,6 @@ bool TextBox::processEvent(const WindowEvent& event)
   {
     if (event.mouseButton.button == sf::Mouse::Left)
     {
-      LogTemp() << "Check pointer : " << event.mouseButton.x << "," << event.mouseButton.y;
       Vec2 mousePos = {event.mouseButton.x, event.mouseButton.y};
       if (isLocalPointOnWidget(mousePos))
       {
@@ -38,10 +37,20 @@ bool TextBox::processEvent(const WindowEvent& event)
     if (event.type == WindowEvent::TextEntered)
     {
       auto unicode = event.text.unicode;
-      if (unicode == '\b')
-        removeAtCursor(1);
+      LogTemp() << "Unicode: " << unicode;
       if (unicode > 30 && (unicode < 127 || unicode > 159))
         addCharacterAtCursor(sf::String(event.text.unicode).toAnsiString().front());
+      else if (unicode == '\b')
+        removeAtCursor(1);
+      else if (unicode == 127)
+      {
+        if (static_cast<size_t>(getCursorPosition()) < mText.size())
+        {
+          setCursorPosition(getCursorPosition() + 1);
+          removeAtCursor(1);
+        }
+      }
+      return true;
     }
     // Check for Escape, left, right
     if (event.type == WindowEvent::KeyPressed)
@@ -52,6 +61,8 @@ bool TextBox::processEvent(const WindowEvent& event)
         setCursorPosition(getCursorPosition() - 1);
       else if (event.key.code == sf::Keyboard::Right)
         setCursorPosition(getCursorPosition() + 1);
+
+      return true;
     }
   }
 
