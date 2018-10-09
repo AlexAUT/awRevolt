@@ -1,5 +1,6 @@
 #include <aw/gui/widgets/linearContainer.hpp>
 
+#include <aw/utils/log.hpp>
 #include <aw/utils/types.hpp>
 
 #include <numeric>
@@ -13,6 +14,18 @@ void LinearContainer::addChild(Widget::SPtr widget, float weight)
   mChildren.back()->setParent(getSharedPtr());
 }
 
+void LinearContainer::setSpaceBetweenElements(float space)
+{
+  mSpaceBetweenElements = space;
+  invalidLayout();
+}
+
+void LinearContainer::setOuterPadding(Padding padding)
+{
+  mOuterPadding = padding;
+  invalidLayout();
+}
+
 void LinearContainer::updateLayout()
 {
   if (!isLayoutDirty())
@@ -20,36 +33,63 @@ void LinearContainer::updateLayout()
 
   Container::updateLayout();
 
-  auto weightSum = std::accumulate(mWeights.begin(), mWeights.end(), 0.f);
-
   auto dynamicAxis = static_cast<int>(mOrientation);
   auto staticAxis = dynamicAxis ^ 1;
 
   auto freeSpace = getSize()[dynamicAxis];
   auto staticAxisValue = getSize()[staticAxis];
 
-  // In the first pass try to give everyone their minimal size
+  // In the first pass try to give everyone their minimal size + spaceBetween
   for (auto& child : mChildren)
-    freeSpace -= child->getMinimalSize()[dynamicAxis];
+    freeSpace -= (child->getMinimalSize()[dynamicAxis] + mSpaceBetweenElements);
+  // Since there are only n-1 edges between elements we need to add spacing again
+  freeSpace += mSpaceBetweenElements;
+
+  // Subtract the outer padding from the freespace and from the static axis size
+  auto outerDynamicPadding = getOuterDynamicAxisPadding();
+  auto outerStaticPadding = getOuterStaticAxisPadding();
+
+  freeSpace -= (outerDynamicPadding[0] + outerDynamicPadding[1]);
+  staticAxisValue -= (outerStaticPadding[0] + outerStaticPadding[1]);
+
+  // Used to calculate the share of each element of the remaining free space
+  auto weightSum = std::accumulate(mWeights.begin(), mWeights.end(), 0.f);
 
   // Now share the space which is still free
-  auto cursor = 0.f;
+  auto cursor = outerDynamicPadding[0];
+  LogTemp() << cursor;
   for (size_t i = 0; i < mChildren.size(); i++)
   {
     auto& child = mChildren[i];
     auto share = weightSum > 0.f ? freeSpace * (mWeights[i] / weightSum) : 0.f;
     // Calculate new size
     auto childSize = child->getMinimalSize();
-    childSize[dynamicAxis] += freeSpace * share;
+    childSize[dynamicAxis] += share;
     childSize[staticAxis] = staticAxisValue;
     child->setSize(childSize);
     // Calculate new relative position
     Vec2 pos;
     pos[dynamicAxis] = cursor;
-    pos[staticAxis] = 0.f;
+    pos[staticAxis] = outerStaticPadding[0];
     child->setRelativePosition(pos);
 
-    cursor += childSize[dynamicAxis];
+    cursor += childSize[dynamicAxis] + mSpaceBetweenElements;
   }
+}
+
+Vec2 LinearContainer::getOuterDynamicAxisPadding() const
+{
+  if (mOrientation == Orientation::Horizontal)
+    return {mOuterPadding.left, mOuterPadding.right};
+  else
+    return {mOuterPadding.top, mOuterPadding.bottom};
+}
+
+Vec2 LinearContainer::getOuterStaticAxisPadding() const
+{
+  if (mOrientation == Orientation::Vertical)
+    return {mOuterPadding.left, mOuterPadding.right};
+  else
+    return {mOuterPadding.top, mOuterPadding.bottom};
 }
 }

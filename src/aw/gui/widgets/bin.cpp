@@ -35,7 +35,11 @@ void Bin::updateLayout()
     return;
 
   if (mChild)
+  {
+    mChild->setSize(calculateChildSize());
+    mChild->setRelativePosition(calculateChildRelPosition());
     mChild->updateLayout();
+  }
   Widget::updateLayout();
 }
 
@@ -56,11 +60,7 @@ void Bin::setChild(Widget::SPtr ptr)
 
   mChild = std::move(ptr);
   if (mChild)
-  {
     mChild->setParent(getSharedPtr());
-    mChild->setSize(calculateChildSize());
-    mChild->setRelativePosition(calculateChildRelPosition());
-  }
 }
 
 Vec2 Bin::calculateChildRelPosition() const

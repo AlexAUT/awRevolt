@@ -1,6 +1,7 @@
 #pragma once
 
 #include <aw/utils/math/vector.hpp>
+#include <aw/utils/types.hpp>
 
 namespace aw::gui
 {
@@ -19,5 +20,8 @@ struct Padding
   float right{0.f};
   float bottom{0.f};
   float left{0.f};
+
+  // Order same as constructor, can be useful to avoid ifs
+  float operator[](size_t index) const { return *(&top + index); }
 };
 } // namespace aw::gui

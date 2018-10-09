@@ -30,7 +30,6 @@ void FloatingContainer::updateLayout()
     {
       // Always keep tol pixels inside the window (the user can access it)
       const float tol = 5.f;
-      LogTemp() << relPos.x << getSize().x - tol;
       relPos.x = std::max(std::min(relPos.x, getSize().x - tol), tol - size.x);
       relPos.y = std::max(std::min(relPos.y, getSize().y - tol), tol - size.y);
     }
