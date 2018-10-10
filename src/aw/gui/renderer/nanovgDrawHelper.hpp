@@ -135,7 +135,6 @@ Vec2 getTextSize(NVGcontext* vg, const std::string& text, const TextStyle& style
   applyTextStyle(vg, style);
   float bounds[4];
   nvgTextBounds(vg, 0.f, 0.f, text.c_str(), text.c_str() + text.size(), bounds);
-  LogTemp() << "Text bounds: " << (bounds[2] - bounds[0]) << ", " << (bounds[3] - bounds[1]);
   return {bounds[2] - bounds[0], bounds[3] - bounds[1]};
 }
 

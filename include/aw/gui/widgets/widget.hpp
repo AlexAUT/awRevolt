@@ -40,6 +40,10 @@ public:
   const GUI& getGUI() const { return mGUI; }
 
   void setPreferedSize(Vec2 size);
+  void changeState(State state, bool value) { mState.set(static_cast<size_t>(state), value); }
+  void enableState(State state) { mState.set(static_cast<size_t>(state)); }
+  void disableState(State state) { mState.reset(static_cast<size_t>(state)); }
+  void setConsumeEvent(bool value) { mConsumeEvent = value; }
 
   SPtr getParent() const { return mParent; }
   Vec2 getSize() const { return mSize; }
@@ -57,10 +61,6 @@ public:
             point.y > mRelativePosition.y && point.y < (mRelativePosition.y + mSize.y));
   }
 
-  void changeState(State state, bool value) { mState.set(static_cast<size_t>(state), value); }
-  void enableState(State state) { mState.set(static_cast<size_t>(state)); }
-  void disableState(State state) { mState.reset(static_cast<size_t>(state)); }
-
   bool isInState(State state) const { return mState.test(static_cast<size_t>(state)); }
 
 public:
@@ -76,6 +76,7 @@ public:
 public:
   // Callback (expose them directly to the user)
   Callback onSelect;
+  Callback onDeselect;
   Callback onMouseEnter;
   Callback onMouseLeft;
   Callback onMouseMoved;
@@ -89,11 +90,12 @@ private:
 
   bool mIsLayoutDirty{true};
 
+  bool mConsumeEvent{true};
   Vec2 mPreferedSize{0.f};
   Vec2 mSize{0.f};
 
   Vec2 mRelativePosition{0.f};
-  Vec2 mGlobalPosition{0.f};
+  mutable Vec2 mGlobalPosition{0.f};
 
   // Event stuff
 public:
@@ -101,6 +103,11 @@ public:
   {
     if (onSelect)
       onSelect(*this);
+  }
+  virtual void deselect(Vec2 mousePos)
+  {
+    if (onDeselect)
+      onDeselect(*this);
   }
   virtual void mouseEntered(Vec2 mousePos)
   {

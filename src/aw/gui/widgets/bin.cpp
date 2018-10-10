@@ -17,9 +17,10 @@ bool Bin::processEvent(const WindowEvent& event)
   if (mChild)
   {
     auto localEvent = convertToLocalEvent(event, *this);
-    return mChild->processEvent(localEvent);
+    if (mChild->processEvent(localEvent))
+      return true;
   }
-  return false;
+  return Widget::processEvent(event);
 }
 
 void Bin::render(Vec2 parentPos)

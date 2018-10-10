@@ -16,6 +16,11 @@ void GUI::update(float delta)
 
 bool GUI::processEvent(const WindowEvent& event)
 {
+  if (mSelectedWidget)
+  {
+    return mSelectedWidget->processEvent(event);
+  }
+
   for (auto& screen : mScreens)
   {
     screen->updateLayout();
@@ -33,6 +38,13 @@ void GUI::render()
   {
     updateLayout();
     screen->render({0.f, 0.f});
+  }
+  if (mSelectedWidget)
+  {
+    Vec2 parentPos{0.f, 0.f};
+    if (mSelectedWidget->getParent())
+      parentPos = mSelectedWidget->getParent()->getGlobalPosition();
+    mSelectedWidget->render(parentPos);
   }
   mRenderer.endFrame();
 }

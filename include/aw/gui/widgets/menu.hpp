@@ -11,7 +11,11 @@ public:
 
   virtual void render(Vec2 parentPos) override;
 
+  void setSelectedChild(Widget* child, Widget* caller);
+  Widget* getSelectedChild() const;
+
 private:
 private:
+  Widget::SPtr mSelectedChild;
 };
 } // namespace aw::gui

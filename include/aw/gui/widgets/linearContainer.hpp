@@ -12,6 +12,9 @@ namespace aw::gui
 class LinearContainer : public Container
 {
 public:
+  using SPtr = std::shared_ptr<LinearContainer>;
+
+public:
   LinearContainer(const GUI& gui, Orientation orientation) : Container(gui), mOrientation(orientation) {}
   virtual ~LinearContainer() = default;
 

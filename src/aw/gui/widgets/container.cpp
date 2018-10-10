@@ -23,13 +23,13 @@ void Container::render(Vec2 pos)
 bool Container::processEvent(const WindowEvent& event)
 {
   auto localEvent = convertToLocalEvent(event, *this);
+  auto usedEvent = false;
   for (auto& child : mChildren)
   {
-    if (child->processEvent(localEvent))
-      return true;
+    usedEvent = child->processEvent(localEvent) || usedEvent;
   }
 
-  return false;
+  return Widget::processEvent(event) || usedEvent;
 }
 
 void Container::updateLayout()

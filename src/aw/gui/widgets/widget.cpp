@@ -6,6 +6,9 @@ namespace aw::gui
 {
 bool Widget::processEvent(const WindowEvent& event)
 {
+  if (!mConsumeEvent)
+    return false;
+
   bool usedEvent = false;
   if (event.type == WindowEvent::MouseMoved)
   {
@@ -37,6 +40,11 @@ bool Widget::processEvent(const WindowEvent& event)
         select(mousePos);
         usedEvent = true;
       }
+      else if (isInState(State::Selected))
+      {
+        disableState(State::Selected);
+        deselect(mousePos);
+      }
     }
   }
   else if (event.type == WindowEvent::MouseButtonReleased)
@@ -58,6 +66,7 @@ bool Widget::processEvent(const WindowEvent& event)
     if (isInState(State::Selected) && event.key.code == sf::Keyboard::Escape)
     {
       disableState(State::Selected);
+      deselect({0.f, 0.f});
       usedEvent = true;
     }
   }

@@ -29,6 +29,9 @@ public:
   TextStyleManager& getTextStyles() { return mTextStyles; }
   const TextStyleManager& getTextStyles() const { return mTextStyles; }
 
+  void setSelectedWidget(Widget::SPtr widget) const { mSelectedWidget = std::move(widget); }
+  Widget* getSelectedWidget() const { return mSelectedWidget.get(); }
+
 public:
 private:
 private:
@@ -36,5 +39,7 @@ private:
   ScreenVector mScreens;
 
   TextStyleManager mTextStyles;
+
+  mutable Widget::SPtr mSelectedWidget{nullptr};
 };
 } // namespace aw::gui

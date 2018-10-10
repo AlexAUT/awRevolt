@@ -68,7 +68,6 @@ void Label::updateLayout()
   mMinimumSize.y += mPadding.top + mPadding.bottom;
 
   mMinimumSize = glm::max(mMinimumSize, getPreferedSize());
-  LogTemp() << "Minimal size: " << mText << " " << mMinimumSize;
 }
 
 Vec2 Label::getMinimalSize() const
