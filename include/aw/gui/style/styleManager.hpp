@@ -29,7 +29,6 @@ private:
 template <typename StyleType>
 StyleManager<StyleType>::StyleManager()
 {
-  addStyle("default", StyleType::defaultInstance());
 }
 
 template <typename StyleType>

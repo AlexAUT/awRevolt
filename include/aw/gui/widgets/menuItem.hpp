@@ -1,13 +1,14 @@
 #pragma once
 
-#include <aw/gui/widgets/widget.hpp>
+#include <aw/gui/widgets/label.hpp>
 
 namespace aw::gui
 {
-class MenuItem : public Widget
+class MenuItem : public Label
 {
 public:
-  MenuItem(const GUI& gui) : Widget(gui) {}
+  MenuItem(const GUI& gui, std::string text);
+  virtual ~MenuItem() = default;
 
 private:
 private:

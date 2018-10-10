@@ -7,7 +7,9 @@ namespace aw::gui
 {
 void Menu::render(Vec2 parentPos)
 {
-  LinearContainer::render(parentPos);
+  Widget::render(parentPos);
   getGUI().getRenderer().render(*this);
+  // Render childs
+  LinearContainer::render(parentPos);
 }
 }

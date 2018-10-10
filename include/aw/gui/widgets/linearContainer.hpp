@@ -24,6 +24,7 @@ public:
   float getSpaceBetweenElements() const { return mSpaceBetweenElements; }
 
   virtual void updateLayout() override;
+  virtual Vec2 getMinimalSize() const override;
 
 private:
   Vec2 getOuterDynamicAxisPadding() const;
@@ -36,5 +37,7 @@ private:
   float mSpaceBetweenElements{0.f};
 
   std::vector<float> mWeights;
+
+  mutable Vec2 mMinimalSizeCache{0.f};
 };
 } // namespace aw::gui

@@ -2,10 +2,9 @@
 
 #include <aw/gui/gui.hpp>
 #include <aw/gui/renderer/nanovgRenderer.hpp>
+#include <aw/utils/log.hpp>
 
 #include <glm/common.hpp>
-
-#include <cassert>
 
 namespace aw::gui
 {
@@ -69,6 +68,7 @@ void Label::updateLayout()
   mMinimumSize.y += mPadding.top + mPadding.bottom;
 
   mMinimumSize = glm::max(mMinimumSize, getPreferedSize());
+  LogTemp() << "Minimal size: " << mText << " " << mMinimumSize;
 }
 
 Vec2 Label::getMinimalSize() const

@@ -37,15 +37,10 @@ void Container::updateLayout()
   if (!isLayoutDirty())
     return;
 
-  Widget::updateLayout();
-
   for (auto& child : mChildren)
     child->updateLayout();
-}
 
-Vec2 Container::getMinimalSize() const
-{
-  return mMinimalSizeCache;
+  Widget::updateLayout();
 }
 
 void Container::invalidateLayout()
@@ -56,11 +51,5 @@ void Container::invalidateLayout()
   Widget::invalidateLayout();
   for (auto& child : mChildren)
     child->invalidateLayout();
-
-  // Update the minimal size cache
-  mMinimalSizeCache = Vec2{0.f};
-  for (auto& child : mChildren)
-    mMinimalSizeCache += child->getMinimalSize();
-  mMinimalSizeCache = glm::max(mMinimalSizeCache, Widget::getMinimalSize());
 }
 } // namespace aw::gui

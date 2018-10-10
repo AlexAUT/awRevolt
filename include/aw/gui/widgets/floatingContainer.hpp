@@ -21,8 +21,6 @@ public:
   }
   ~FloatingContainer() = default;
 
-  virtual void updateLayout();
-
   // If you use a floating layout inside a dynamic container (e.g. linearContainer) call gui.updateLayout() before
   // adding childs, or otherwise this container will have no size and therefore the BoundsPolicy will mess up the
   // children of this container!
@@ -37,8 +35,13 @@ public:
   void setBoundsPolicy(BoundsPolicy policy);
   BoundsPolicy getBoundsPolicy() const { return mBoundsPolicy; }
 
+  virtual void updateLayout() override;
+  virtual Vec2 getMinimalSize() const override;
+
 private:
 private:
   BoundsPolicy mBoundsPolicy;
+
+  mutable Vec2 mMinimalSizeCache{0.f};
 };
 } // namespace aw::gui

@@ -108,8 +108,10 @@ void NanovgRenderer::render(const Menu& menu) const
 {
   auto pos = menu.getGlobalPosition();
   auto size = menu.getSize();
+  const Color color{28 / 255.f, 30 / 255.f, 34 / 255.f, 255 / 255.f};
 
-  drawHeader(mContext, pos, size, 3.f);
+  drawRoundedRect(mContext, pos, size, 0.f, color);
+  drawHeaderHighlight(mContext, pos, size, color, 0.f);
 }
 
 template <>

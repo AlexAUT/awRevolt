@@ -1,5 +1,7 @@
 #include <aw/gui/widgets/floatingContainer.hpp>
 
+#include <glm/common.hpp>
+
 namespace aw::gui
 {
 void FloatingContainer::updateLayout()
@@ -32,22 +34,25 @@ void FloatingContainer::updateLayout()
       relPos.y = std::max(std::min(relPos.y, getSize().y - tol), tol - size.y);
     }
 
-    bool updateLayoutOfChild = false;
     if (child->getRelativePosition() != relPos)
-    {
       child->setRelativePosition(relPos);
-      updateLayoutOfChild = true;
-    }
     if (child->getSize() != size)
-    {
       child->setSize(size);
-      updateLayoutOfChild = true;
-    }
-    if (updateLayoutOfChild)
-      child->updateLayout();
+
+    child->updateLayout();
   }
+  // Update the minimal size cache
+  mMinimalSizeCache = Vec2{0.f};
+  for (auto& child : mChildren)
+    mMinimalSizeCache += child->getMinimalSize();
+  mMinimalSizeCache = glm::max(mMinimalSizeCache, Widget::getMinimalSize());
 
   Widget::updateLayout();
+}
+
+Vec2 FloatingContainer::getMinimalSize() const
+{
+  return mMinimalSizeCache;
 }
 
 void FloatingContainer::setBoundsPolicy(BoundsPolicy policy)

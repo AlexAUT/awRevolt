@@ -2,6 +2,8 @@
 
 #include <aw/utils/types.hpp>
 
+#include <glm/common.hpp>
+
 #include <numeric>
 
 namespace aw::gui
@@ -71,10 +73,29 @@ void LinearContainer::updateLayout()
     pos[staticAxis] = outerStaticPadding[0];
     child->setRelativePosition(pos);
     // Tell the child to update his own layout
+    child->updateLayout();
 
     cursor += childSize[dynamicAxis] + mSpaceBetweenElements;
   }
   Container::updateLayout();
+
+  // Update minimal size cache
+  mMinimalSizeCache = Vec2{0.f};
+  for (auto& child : mChildren)
+  {
+    auto size = child->getMinimalSize();
+    mMinimalSizeCache[dynamicAxis] += size[dynamicAxis] + mSpaceBetweenElements;
+    mMinimalSizeCache[staticAxis] = std::max(mMinimalSizeCache[staticAxis], size[staticAxis]);
+  }
+  mMinimalSizeCache[dynamicAxis] -= mSpaceBetweenElements; // same as above
+  mMinimalSizeCache[dynamicAxis] -= (outerDynamicPadding[0] + outerDynamicPadding[1]);
+  mMinimalSizeCache[staticAxis] -= (outerStaticPadding[0] + outerStaticPadding[1]);
+  mMinimalSizeCache = glm::max(mMinimalSizeCache, getPreferedSize());
+}
+
+Vec2 LinearContainer::getMinimalSize() const
+{
+  return mMinimalSizeCache;
 }
 
 Vec2 LinearContainer::getOuterDynamicAxisPadding() const
