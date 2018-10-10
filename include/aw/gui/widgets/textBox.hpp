@@ -19,18 +19,15 @@ public:
   void removeAtCursor(unsigned numToRemove);
   void addCharacterAtCursor(char c);
 
-  void deselect() { mSelected = false; }
-  void select();
-  void select(Vec2 relativeClickPosition);
+  virtual void select(Vec2 relativeClickPosition) override;
 
   void setCursorPosition(int position);
 
-  bool shouldRenderCursor() const { return mSelected && mShowCursor; }
+  bool shouldRenderCursor() const { return isInState(State::Selected) && mShowCursor; }
   int getCursorPosition() const { return mCursorPosition; }
 
 private:
 private:
-  bool mSelected{false};
   int mCursorPosition;
   float mCursorBlinkRate{0.5f};
   float mCursorTimer{0.f};

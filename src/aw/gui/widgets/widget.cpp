@@ -1,7 +1,70 @@
 #include <aw/gui/widgets/widget.hpp>
 
+#include <aw/engine/windowEvent.hpp>
+
 namespace aw::gui
 {
+bool Widget::processEvent(const WindowEvent& event)
+{
+  bool usedEvent = false;
+  if (event.type == WindowEvent::MouseMoved)
+  {
+    Vec2 mousePos{event.mouseButton.x, event.mouseButton.y};
+    bool hit = isLocalPointOnWidget({event.mouseMove.x, event.mouseMove.y});
+    if (hit)
+    {
+      bool entered = !isInState(State::Hovered);
+      if (entered)
+        mouseEntered(mousePos);
+      else
+        mouseMoved(mousePos);
+      usedEvent = true;
+    }
+    else if (isInState(State::Hovered))
+      mouseLeft(mousePos);
+
+    changeState(State::Hovered, hit);
+  }
+  else if (event.type == WindowEvent::MouseButtonPressed)
+  {
+    if (event.mouseButton.button == sf::Mouse::Left)
+    {
+      Vec2 mousePos{event.mouseButton.x, event.mouseButton.y};
+      if (isLocalPointOnWidget(mousePos))
+      {
+        enableState(State::Pressed);
+        enableState(State::Selected);
+        select(mousePos);
+        usedEvent = true;
+      }
+    }
+  }
+  else if (event.type == WindowEvent::MouseButtonReleased)
+  {
+    if (event.mouseButton.button == sf::Mouse::Left)
+    {
+      Vec2 mousePos{event.mouseButton.x, event.mouseButton.y};
+      if (isLocalPointOnWidget(mousePos))
+        clicked(mousePos);
+      else
+        disableState(State::Selected);
+
+      usedEvent = isInState(State::Pressed);
+      disableState(State::Pressed);
+    }
+  }
+  else if (event.type == WindowEvent::KeyPressed)
+  {
+    if (isInState(State::Selected) && event.key.code == sf::Keyboard::Escape)
+    {
+      disableState(State::Selected);
+      usedEvent = true;
+    }
+  }
+
+  return usedEvent;
+}
+
 void Widget::setParent(SPtr parent)
 {
   if (mParent == parent)

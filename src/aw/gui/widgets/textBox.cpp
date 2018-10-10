@@ -16,6 +16,7 @@ void TextBox::setText(std::string text)
 
 bool TextBox::processEvent(const WindowEvent& event)
 {
+  bool usedEvent = false;
   // Check if mouse pressed hit textBox
   if (event.type == WindowEvent::MouseButtonPressed)
   {
@@ -25,13 +26,11 @@ bool TextBox::processEvent(const WindowEvent& event)
       if (isLocalPointOnWidget(mousePos))
       {
         select(mousePos);
-        return true;
+        usedEvent = true;
       }
-      else
-        mSelected = false;
     }
   }
-  if (mSelected)
+  if (isInState(State::Selected))
   {
     // Check if text input occured
     if (event.type == WindowEvent::TextEntered)
@@ -50,28 +49,26 @@ bool TextBox::processEvent(const WindowEvent& event)
           removeAtCursor(1);
         }
       }
-      return true;
+      usedEvent = true;
     }
     // Check for Escape, left, right
     if (event.type == WindowEvent::KeyPressed)
     {
-      if (event.key.code == sf::Keyboard::Escape)
-        deselect();
-      else if (event.key.code == sf::Keyboard::Left)
+      if (event.key.code == sf::Keyboard::Left)
         setCursorPosition(getCursorPosition() - 1);
       else if (event.key.code == sf::Keyboard::Right)
         setCursorPosition(getCursorPosition() + 1);
 
-      return true;
+      usedEvent = true;
     }
   }
 
-  return false;
+  return Widget::processEvent(event) || usedEvent;
 }
 
 void TextBox::update(float delta)
 {
-  if (mSelected)
+  if (isInState(State::Selected))
   {
     mCursorTimer += delta;
     if (mCursorTimer > mCursorBlinkRate)
@@ -106,16 +103,9 @@ void TextBox::addCharacterAtCursor(char c)
   mCursorPosition++;
 }
 
-void TextBox::select()
-{
-  // Select at last character (size if always last character
-  select(getSize());
-}
-
 void TextBox::select(Vec2 clickPos)
 {
-  mSelected = true;
-  LogTemp() << "Click pos: " << clickPos << " - " << getRelativePosition();
+  enableState(State::Selected);
   mCursorPosition = getGUI().getRenderer().calculateCursorPosition(*this, clickPos - getRelativePosition());
   mCursorTimer = 0.f;
   mShowCursor = true;
