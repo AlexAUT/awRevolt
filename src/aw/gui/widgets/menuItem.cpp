@@ -25,7 +25,7 @@ MenuItem::MenuItem(const GUI& gui, Menu& menu, std::string text, bool isSubEleme
 
 MenuSubItem::SPtr MenuItem::addSubEntry(const std::string& text)
 {
-  auto newChild = std::make_shared<MenuSubItem>(getGUI(), mMenu, text, true);
+  auto newChild = std::make_shared<MenuSubItem>(getGUI(), mMenu, text);
 
   mChildContainer->addChild(newChild, 0.f);
   newChild->invalidateLayout();
@@ -51,6 +51,8 @@ bool MenuItem::processEvent(const WindowEvent& event)
 void MenuItem::render(Vec2 parentPos)
 {
   Label::render(parentPos);
+  if (isInState(State::Selected))
+    mChildContainer->render(getGlobalPosition());
 }
 
 void MenuItem::updateLayout()
@@ -74,4 +76,4 @@ void MenuItem::deselect(Vec2 mousePos)
 {
   mMenu.setSelectedChild(nullptr, this);
 }
-}
+} // namespace aw::gui

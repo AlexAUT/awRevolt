@@ -10,6 +10,45 @@ namespace aw::gui
 bool Window::processEvent(const WindowEvent& event)
 {
   bool usedEvent = false;
+
+  if (static_cast<bool>(mStyle & Style::Moveable))
+    usedEvent = handleMovement(event);
+
+  if (!usedEvent)
+    usedEvent = Bin::processEvent(event);
+
+  return usedEvent;
+}
+
+void Window::render(Vec2 pos)
+{
+  Widget::render(pos);
+  getGUI().getRenderer().render(*this);
+  Bin::render(pos);
+}
+void Window::setTitle(std::string title)
+{
+  mTitle = std::move(title);
+  invalidateLayout();
+}
+
+void Window::setStyle(Style style)
+{
+  mStyle = style;
+  invalidateLayout();
+}
+
+bool Window::hitTitleBar(Vec2 point)
+{
+  auto pos = getRelativePosition();
+  auto size = getSize();
+
+  return (point.x >= pos.x && point.x < pos.x + size.x) && (point.y >= pos.y && point.y < pos.y + 30);
+}
+
+bool Window::handleMovement(const WindowEvent& event)
+{
+  bool usedEvent = false;
   if (mDrag)
   {
     if (event.type == WindowEvent::MouseButtonReleased)
@@ -46,30 +85,6 @@ bool Window::processEvent(const WindowEvent& event)
       }
     }
   }
-
-  if (!usedEvent)
-    usedEvent = Bin::processEvent(event);
-
-  if (!usedEvent)
-    (void)event; // TODO: check if the click was on the window body, because we should still eat that event, or
-                 // implement it inside Bin
-
   return usedEvent;
 }
-
-void Window::render(Vec2 pos)
-{
-  Widget::render(pos);
-  getGUI().getRenderer().render(*this);
-  Bin::render(pos);
-}
-
-bool Window::hitTitleBar(Vec2 point)
-{
-  auto pos = getRelativePosition();
-  auto size = getSize();
-
-  return (point.x >= pos.x && point.x < pos.x + size.x) && (point.y >= pos.y && point.y < pos.y + 30);
-}
-
 } // namespace aw::gui

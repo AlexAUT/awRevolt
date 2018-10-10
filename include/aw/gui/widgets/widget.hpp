@@ -3,6 +3,7 @@
 #include <aw/utils/math/vector.hpp>
 
 #include <bitset>
+#include <functional>
 #include <memory>
 
 #include <aw/engine/windowEventForward.hpp>

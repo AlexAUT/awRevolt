@@ -14,8 +14,10 @@ public:
 public:
   MenuSubItem(const GUI& gui, Menu& menu, std::string text);
 
+  virtual void render(Vec2 parentPos) override;
+
 private:
 private:
   Menu& mMenu;
 };
-}
+} // namespace aw::gui

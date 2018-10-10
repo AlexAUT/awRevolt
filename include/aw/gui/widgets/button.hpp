@@ -3,7 +3,6 @@
 #include <aw/gui/widgets/widget.hpp>
 #include <aw/utils/types.hpp>
 
-#include <functional>
 #include <string>
 
 namespace aw::gui
