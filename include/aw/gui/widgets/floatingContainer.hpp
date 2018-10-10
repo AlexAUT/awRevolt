@@ -23,6 +23,9 @@ public:
 
   virtual void updateLayout();
 
+  // If you use a floating layout inside a dynamic container (e.g. linearContainer) call gui.updateLayout() before
+  // adding childs, or otherwise this container will have no size and therefore the BoundsPolicy will mess up the
+  // children of this container!
   void addChild(const Widget::SPtr& ptr, Vec2 pos, Vec2 size)
   {
     mChildren.push_back(std::move(ptr));
@@ -32,10 +35,7 @@ public:
   }
 
   void setBoundsPolicy(BoundsPolicy policy);
-  BoundsPolicy getBoundsPolicy() const
-  {
-    return mBoundsPolicy;
-  }
+  BoundsPolicy getBoundsPolicy() const { return mBoundsPolicy; }
 
 private:
 private:

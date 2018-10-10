@@ -18,14 +18,14 @@ Label::Label(const GUI& gui, std::string text)
 void Label::setText(std::string text)
 {
   mText = std::move(text);
-  invalidLayout();
+  invalidateLayout();
 }
 
 void Label::setTextLayout(const TextStyle* layout)
 {
   assert(layout);
   mTextLayout = layout;
-  invalidLayout();
+  invalidateLayout();
 }
 
 void Label::render(Vec2 parentPos)
@@ -38,25 +38,25 @@ void Label::render(Vec2 parentPos)
 void Label::setAlignment(Alignment alignment)
 {
   mAlignment = alignment;
-  invalidLayout();
+  invalidateLayout();
 }
 
 void Label::setAlignmentH(AlignmentH alignment)
 {
   mAlignment.horizontal = alignment;
-  invalidLayout();
+  invalidateLayout();
 }
 
 void Label::setAlignmentV(AlignmentV alignment)
 {
   mAlignment.vertical = alignment;
-  invalidLayout();
+  invalidateLayout();
 }
 
 void Label::setPadding(Padding padding)
 {
   mPadding = padding;
-  invalidLayout();
+  invalidateLayout();
 }
 
 void Label::updateLayout()

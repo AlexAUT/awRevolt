@@ -104,6 +104,15 @@ void NanovgRenderer::render(const TextBox& textBox) const
 }
 
 template <>
+void NanovgRenderer::render(const Menu& menu) const
+{
+  auto pos = menu.getGlobalPosition();
+  auto size = menu.getSize();
+
+  drawHeader(mContext, pos, size, 3.f);
+}
+
+template <>
 int NanovgRenderer::calculateCursorPosition(const TextBox& textBox, Vec2 relativePoint) const
 {
   const auto& text = textBox.getText();

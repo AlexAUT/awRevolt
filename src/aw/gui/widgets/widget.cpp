@@ -8,7 +8,11 @@ void Widget::setParent(SPtr parent)
     return;
 
   mParent = std::move(parent);
-  invalidLayout();
+  invalidateLayout();
+  // Since invalid layout skips if it is already dirty, we need to apply it on the new parent manually here, not nice
+  // but avoids doing it every time in invalidateLayout
+  if (mParent)
+    mParent->invalidateLayout();
 }
 
 void Widget::setPreferedSize(Vec2 size)
@@ -16,7 +20,7 @@ void Widget::setPreferedSize(Vec2 size)
   if (mPreferedSize == size)
     return;
   mPreferedSize = size;
-  invalidLayout();
+  invalidateLayout();
 }
 
 void Widget::setSize(Vec2 size)
@@ -24,7 +28,7 @@ void Widget::setSize(Vec2 size)
   if (mSize == size)
     return;
   mSize = size;
-  invalidLayout();
+  invalidateLayout();
 }
 
 void Widget::setRelativePosition(Vec2 pos)
@@ -32,7 +36,7 @@ void Widget::setRelativePosition(Vec2 pos)
   if (mRelativePosition == pos)
     return;
   mRelativePosition = pos;
-  invalidLayout();
+  invalidateLayout();
 }
 
 void Widget::setGlobalPosition(Vec2 pos)
@@ -40,13 +44,13 @@ void Widget::setGlobalPosition(Vec2 pos)
   mGlobalPosition = pos;
 }
 
-void Widget::invalidLayout()
+void Widget::invalidateLayout()
 {
   if (isLayoutDirty())
     return;
 
   mIsLayoutDirty = true;
   if (mParent)
-    mParent->invalidLayout();
+    mParent->invalidateLayout();
 }
 } // namespace aw::gui

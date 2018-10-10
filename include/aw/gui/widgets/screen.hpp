@@ -1,10 +1,10 @@
 #pragma once
 
-#include <aw/gui/widgets/floatingContainer.hpp>
+#include <aw/gui/widgets/bin.hpp>
 
 namespace aw::gui
 {
-class Screen : public FloatingContainer
+class Screen : public Bin
 {
 public:
   using SPtr = std::shared_ptr<Screen>;

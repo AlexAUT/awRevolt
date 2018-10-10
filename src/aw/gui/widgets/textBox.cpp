@@ -11,7 +11,7 @@ namespace aw::gui
 void TextBox::setText(std::string text)
 {
   mText = std::move(text);
-  invalidLayout();
+  invalidateLayout();
 }
 
 bool TextBox::processEvent(const WindowEvent& event)

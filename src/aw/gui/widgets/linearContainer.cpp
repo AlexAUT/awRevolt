@@ -16,13 +16,13 @@ void LinearContainer::addChild(Widget::SPtr widget, float weight)
 void LinearContainer::setSpaceBetweenElements(float space)
 {
   mSpaceBetweenElements = space;
-  invalidLayout();
+  invalidateLayout();
 }
 
 void LinearContainer::setOuterPadding(Padding padding)
 {
   mOuterPadding = padding;
-  invalidLayout();
+  invalidateLayout();
 }
 
 void LinearContainer::updateLayout()

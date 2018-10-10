@@ -53,7 +53,7 @@ void FloatingContainer::updateLayout()
 void FloatingContainer::setBoundsPolicy(BoundsPolicy policy)
 {
   mBoundsPolicy = policy;
-  invalidLayout();
+  invalidateLayout();
 }
 
 } // namespace aw::gui

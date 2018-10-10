@@ -55,13 +55,13 @@ Vec2 Container::getMinimalSize() const
   return mMinimalSizeCache;
 }
 
-void Container::invalidLayout()
+void Container::invalidateLayout()
 {
   if (isLayoutDirty())
     return;
 
-  Widget::invalidLayout();
+  Widget::invalidateLayout();
   for (auto& child : mChildren)
-    child->invalidLayout();
+    child->invalidateLayout();
 }
 } // namespace aw::gui

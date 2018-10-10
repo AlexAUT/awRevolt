@@ -31,6 +31,7 @@ void drawEditBoxCursor(NVGcontext* vg, const std::string& text, float x, float y
 
 void drawText(NVGcontext* vg, const std::string& text, Vec2 pos, Vec2 containerSize, const TextStyle& style,
               Alignment align, Padding padding);
+void drawHeader(NVGcontext* vg, Vec2 pos, Vec2 size, float cornerRadius);
 
 NVGcolor convertColor(Color color)
 {
@@ -141,7 +142,6 @@ void drawWindow(NVGcontext* vg, const char* title, float x, float y, float w, fl
 {
   float cornerRadius = 3.0f;
   NVGpaint shadowPaint;
-  NVGpaint headerPaint;
 
   nvgSave(vg);
   //	nvgClearState(vg);
@@ -163,16 +163,7 @@ void drawWindow(NVGcontext* vg, const char* title, float x, float y, float w, fl
   nvgFill(vg);
 
   // Header
-  headerPaint = nvgLinearGradient(vg, x, y, x, y + 15, nvgRGBA(255, 255, 255, 8), nvgRGBA(0, 0, 0, 16));
-  nvgBeginPath(vg);
-  nvgRoundedRect(vg, x + 1, y + 1, w - 2, 30, cornerRadius - 1);
-  nvgFillPaint(vg, headerPaint);
-  nvgFill(vg);
-  nvgBeginPath(vg);
-  nvgMoveTo(vg, x + 0.5f, y + 0.5f + 30);
-  nvgLineTo(vg, x + 0.5f + w - 1, y + 0.5f + 30);
-  nvgStrokeColor(vg, nvgRGBA(0, 0, 0, 32));
-  nvgStroke(vg);
+  drawHeader(vg, {x, y}, {w, 30}, 3.f);
 
   nvgFontSize(vg, 30.0f);
   nvgFontFace(vg, "sans-bold");
@@ -317,6 +308,22 @@ void drawText(NVGcontext* vg, const std::string& text, Vec2 pos, Vec2 containerS
     pos.y += containerSize.y - padding.bottom;
 
   nvgText(vg, pos.x, pos.y, text.c_str(), nullptr);
+}
+
+void drawHeader(NVGcontext* vg, Vec2 pos, Vec2 size, float cornerRadius)
+{
+  // Header
+  auto headerPaint =
+      nvgLinearGradient(vg, pos.x, pos.y, pos.x, pos.y + 15, nvgRGBA(255, 255, 255, 8), nvgRGBA(0, 0, 0, 16));
+  nvgBeginPath(vg);
+  nvgRoundedRect(vg, pos.x + 1, pos.y + 1, size.x - 2, size.y, cornerRadius - 1);
+  nvgFillPaint(vg, headerPaint);
+  nvgFill(vg);
+  nvgBeginPath(vg);
+  nvgMoveTo(vg, pos.x + 0.5f, pos.y + 0.5f + size.y);
+  nvgLineTo(vg, pos.x + 0.5f + size.x - 1, pos.y + 0.5f + size.y);
+  nvgStrokeColor(vg, nvgRGBA(0, 0, 0, 32));
+  nvgStroke(vg);
 }
 
 } // namespace aw::gui

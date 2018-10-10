@@ -24,7 +24,7 @@ public:
   virtual void updateLayout() override;
   virtual Vec2 getMinimalSize() const override;
 
-  virtual void invalidLayout() override;
+  virtual void invalidateLayout() override;
 
 private:
 protected:

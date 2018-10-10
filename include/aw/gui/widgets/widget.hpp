@@ -55,7 +55,7 @@ public:
   void setRelativePosition(Vec2 pos);
   void setGlobalPosition(Vec2 pos);
 
-  virtual void invalidLayout();
+  virtual void invalidateLayout();
 
 private:
 private:
