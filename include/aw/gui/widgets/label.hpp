@@ -18,6 +18,7 @@ public:
 
 public:
   Label(const GUI& gui, std::string text);
+  virtual ~Label() = default;
 
   void setText(std::string text);
 

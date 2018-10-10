@@ -117,20 +117,11 @@ void NanovgRenderer::render(const Menu& menu) const
 template <>
 void NanovgRenderer::render(const MenuItem& menuItem) const
 {
-  if (menuItem.isSubEntry())
-  {
-    auto pos = menuItem.getGlobalPosition();
-    auto size = menuItem.getSize();
-    const Color color{28 / 255.f, 30 / 255.f, 34 / 255.f, 255 / 255.f};
+}
 
-    drawRoundedRect(mContext, pos, size, 0.f, color);
-    drawHeaderHighlight(mContext, pos, size, color, 0.f);
-  }
-  render(static_cast<const Label&>(menuItem));
-
-  // Rework in the future to avoid const_cast
-  if (menuItem.isInState(Widget::State::Selected))
-    const_cast<LinearContainer&>(menuItem.getChildContainer()).render(menuItem.getGlobalPosition());
+template <>
+void NanovgRenderer::render(const MenuSubItem& menuItem) const
+{
 }
 
 template <>

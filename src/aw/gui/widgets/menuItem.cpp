@@ -15,7 +15,7 @@ MenuItem::MenuItem(const GUI& gui, Menu& menu, std::string text, bool isSubEleme
     : Label(gui, std::move(text)), mMenu(menu), mIsSubElement(isSubElement),
       mChildContainer(std::make_shared<LinearContainer>(gui, Orientation::Vertical))
 {
-  setAlignment({AlignmentH::Left, AlignmentV::Middle});
+  setAlignment({AlignmentH::Center, AlignmentV::Middle});
   setPadding({4.f, 10.f});
 
   auto style = getGUI().getTextStyles().getStyle("menuItem");
@@ -23,9 +23,9 @@ MenuItem::MenuItem(const GUI& gui, Menu& menu, std::string text, bool isSubEleme
   setTextLayout(style);
 }
 
-auto MenuItem::addSubEntry(const std::string& text) -> SPtr
+MenuSubItem::SPtr MenuItem::addSubEntry(const std::string& text)
 {
-  auto newChild = std::make_shared<MenuItem>(getGUI(), mMenu, text, true);
+  auto newChild = std::make_shared<MenuSubItem>(getGUI(), mMenu, text, true);
 
   mChildContainer->addChild(newChild, 0.f);
   newChild->invalidateLayout();
@@ -50,8 +50,7 @@ bool MenuItem::processEvent(const WindowEvent& event)
 
 void MenuItem::render(Vec2 parentPos)
 {
-  Widget::render(parentPos);
-  getGUI().getRenderer().render(*this);
+  Label::render(parentPos);
 }
 
 void MenuItem::updateLayout()

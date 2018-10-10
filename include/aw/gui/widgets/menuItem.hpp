@@ -3,6 +3,7 @@
 #include <aw/gui/widgets/label.hpp>
 
 #include <aw/gui/widgets/linearContainer.hpp>
+#include <aw/gui/widgets/menuSubItem.hpp>
 
 namespace aw::gui
 {
@@ -17,7 +18,7 @@ public:
   MenuItem(const GUI& gui, Menu& menu, std::string text, bool isSubElement = false);
   virtual ~MenuItem() = default;
 
-  SPtr addSubEntry(const std::string& text);
+  MenuSubItem::SPtr addSubEntry(const std::string& text);
 
   bool isSubEntry() const { return mIsSubElement; }
 

@@ -1,0 +1,17 @@
+#include <aw/gui/widgets/menuSubItem.hpp>
+
+#include <aw/gui/gui.hpp>
+#include <aw/gui/renderer/nanovgRenderer.hpp>
+
+namespace aw::gui
+{
+MenuSubItem::MenuSubItem(const GUI& gui, Menu& menu, std::string text) : Label(gui, text), mMenu(menu)
+{
+  setAlignment({AlignmentH::Center, AlignmentV::Middle});
+  setPadding({4.f, 10.f});
+
+  auto style = getGUI().getTextStyles().getStyle("menuItem");
+  assert(style);
+  setTextLayout(style);
+}
+}
