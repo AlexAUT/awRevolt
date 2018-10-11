@@ -5,8 +5,6 @@
 #include <aw/gui/utils/eventConvert.hpp>
 #include <aw/gui/widgets/menu.hpp>
 
-#include <aw/utils/log.hpp>
-
 namespace aw::gui
 {
 TextStyle defaultStyle{"sans", 10.f, Color(0.5f, 0.5f, 0.5f, 1.0f)};
@@ -19,6 +17,9 @@ MenuItem::MenuItem(const GUI& gui, Menu& menu, std::string text, bool isSubEleme
 
   setAlignment({AlignmentH::Center, AlignmentV::Middle});
   setPadding({4.f, 10.f});
+
+  setSelectable(true);
+  setConsumeClickOnDeselect(true);
 
   auto style = getGUI().getTextStyles().getStyle("menuItem");
   assert(style);
@@ -75,12 +76,24 @@ void MenuItem::updateLayout()
 
 void MenuItem::select(Vec2 mousePos)
 {
+  Widget::select(mousePos);
   mMenu.setSelectedChild(this, this);
-  LogTemp() << "I am now in charge: " << this;
 }
 
 void MenuItem::deselect(Vec2 mousePos)
 {
+  Widget::deselect(mousePos);
   mMenu.setSelectedChild(nullptr, this);
+}
+
+void MenuItem::mouseEntered(Vec2 mousePos)
+{
+  Widget::mouseEntered(mousePos);
+  // Check if some menu entry is select, if yes, steal it from him
+  if (mMenu.getSelectedChild())
+  {
+    mMenu.getSelectedChild()->deselect({0.f, 0.f});
+    select({0.f, 0.f});
+  }
 }
 } // namespace aw::gui

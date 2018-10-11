@@ -10,5 +10,4 @@ void Button::render(Vec2 parentPos)
   Widget::render(parentPos);
   getGUI().getRenderer().render(*this);
 }
-
 } // namespace aw::gui

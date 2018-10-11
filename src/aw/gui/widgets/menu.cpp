@@ -22,6 +22,9 @@ void Menu::setSelectedChild(Widget* child, Widget* caller)
   if (!child && caller != mSelectedChild.get())
     return;
 
+  if (mSelectedChild && caller != mSelectedChild.get())
+    mSelectedChild->deselect({0.f, 0.f});
+
   if (child)
   {
     mSelectedChild = child->getSharedPtr();

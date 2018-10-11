@@ -187,12 +187,9 @@ int NanovgRenderer::calculateCursorPosition(const TextBox& textBox, Vec2 relativ
                         positions.data(), (int)text.size());
 
   for (unsigned i = 0; i < text.size(); i++)
-    LogTemp() << text[i] << " = " << positions[i].minx << ", " << positions[i].maxx;
-  for (unsigned i = 0; i < text.size(); i++)
   {
     if (positions[i].maxx >= relativePoint.x)
     {
-      LogTemp() << "Inside character: " << i;
       auto span = positions[i].maxx - positions[i].minx;
       if (relativePoint.x <= (positions[i].minx + (0.5 * span)))
         return static_cast<int>(i);

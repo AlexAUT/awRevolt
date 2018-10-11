@@ -63,7 +63,6 @@ void Window::applySettings(const Settings& settings)
   else
     mWindow.setFramerateLimit(settings.frameLimit);
 
-  LogTemp() << "Grab cursor: " << settings.grabCursor;
   mWindow.setMouseCursorGrabbed(settings.grabCursor);
   mWindow.setMouseCursorVisible(settings.cursorVisible);
 

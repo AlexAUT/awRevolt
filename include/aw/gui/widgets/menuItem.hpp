@@ -31,6 +31,7 @@ public:
 
   virtual void select(Vec2 mousePos) override;
   virtual void deselect(Vec2 mousePos) override;
+  virtual void mouseEntered(Vec2 mousePos) override;
 
 private:
 private:

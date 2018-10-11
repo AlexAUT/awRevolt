@@ -25,8 +25,6 @@ bool Widget::processEvent(const WindowEvent& event)
     }
     else if (isInState(State::Hovered))
       mouseLeft(mousePos);
-
-    changeState(State::Hovered, hit);
   }
   else if (event.type == WindowEvent::MouseButtonPressed)
   {
@@ -36,14 +34,13 @@ bool Widget::processEvent(const WindowEvent& event)
       if (isLocalPointOnWidget(mousePos))
       {
         enableState(State::Pressed);
-        enableState(State::Selected);
         select(mousePos);
         usedEvent = true;
       }
       else if (isInState(State::Selected))
       {
-        disableState(State::Selected);
         deselect(mousePos);
+        usedEvent = usedEvent | mConsumeClickOnDeselect;
       }
     }
   }
@@ -52,12 +49,12 @@ bool Widget::processEvent(const WindowEvent& event)
     if (event.mouseButton.button == sf::Mouse::Left)
     {
       Vec2 mousePos{event.mouseButton.x, event.mouseButton.y};
-      if (isLocalPointOnWidget(mousePos))
+      if (isInState(State::Pressed) && isLocalPointOnWidget(mousePos))
+      {
         clicked(mousePos);
-      else
-        disableState(State::Selected);
+        usedEvent = true;
+      }
 
-      usedEvent = isInState(State::Pressed);
       disableState(State::Pressed);
     }
   }
@@ -65,7 +62,6 @@ bool Widget::processEvent(const WindowEvent& event)
   {
     if (isInState(State::Selected) && event.key.code == sf::Keyboard::Escape)
     {
-      disableState(State::Selected);
       deselect({0.f, 0.f});
       usedEvent = true;
     }

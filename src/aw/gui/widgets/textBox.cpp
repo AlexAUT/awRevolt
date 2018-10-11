@@ -12,6 +12,8 @@ void TextBox::setText(std::string text)
 {
   mText = std::move(text);
   invalidateLayout();
+
+  setSelectable(true);
 }
 
 bool TextBox::processEvent(const WindowEvent& event)
@@ -105,10 +107,13 @@ void TextBox::addCharacterAtCursor(char c)
 
 void TextBox::select(Vec2 clickPos)
 {
-  enableState(State::Selected);
-  mCursorPosition = getGUI().getRenderer().calculateCursorPosition(*this, clickPos - getRelativePosition());
-  mCursorTimer = 0.f;
-  mShowCursor = true;
+  Widget::select(clickPos);
+  if (isInState(State::Selected))
+  {
+    mCursorPosition = getGUI().getRenderer().calculateCursorPosition(*this, clickPos - getRelativePosition());
+    mCursorTimer = 0.f;
+    mShowCursor = true;
+  }
 }
 
 void TextBox::setCursorPosition(int position)

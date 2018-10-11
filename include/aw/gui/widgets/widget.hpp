@@ -44,7 +44,9 @@ public:
   void changeState(State state, bool value) { mState.set(static_cast<size_t>(state), value); }
   void enableState(State state) { mState.set(static_cast<size_t>(state)); }
   void disableState(State state) { mState.reset(static_cast<size_t>(state)); }
+  void setSelectable(bool value) { mSelectable = value; }
   void setConsumeEvent(bool value) { mConsumeEvent = value; }
+  void setConsumeClickOnDeselect(bool value) { mConsumeClickOnDeselect = value; }
 
   SPtr getParent() const { return mParent; }
   Vec2 getSize() const { return mSize; }
@@ -91,7 +93,9 @@ private:
 
   bool mIsLayoutDirty{true};
 
+  bool mSelectable{false};
   bool mConsumeEvent{true};
+  bool mConsumeClickOnDeselect{false};
   Vec2 mPreferedSize{0.f};
   Vec2 mSize{0.f};
 
@@ -102,26 +106,32 @@ private:
 public:
   virtual void select(Vec2 mousePos)
   {
+    if (mSelectable)
+      enableState(State::Selected);
     if (onSelect)
       onSelect(*this);
   }
   virtual void deselect(Vec2 mousePos)
   {
+    disableState(State::Selected);
     if (onDeselect)
       onDeselect(*this);
   }
   virtual void mouseEntered(Vec2 mousePos)
   {
+    enableState(State::Hovered);
     if (onMouseEnter)
       onMouseEnter(*this);
   }
   virtual void mouseLeft(Vec2 mousePos)
   {
+    disableState(State::Hovered);
     if (onMouseLeft)
       onMouseLeft(*this);
   }
   virtual void mouseMoved(Vec2 mousePos)
   {
+    enableState(State::Hovered); // Safety reasons
     if (onMouseMoved)
       onMouseMoved(*this);
   }
