@@ -23,15 +23,16 @@ void applyTextStyle(NVGcontext* vg, const TextStyle& style);
 
 Vec2 getTextSize(NVGcontext* vg, const std::string& text, const TextStyle& style);
 
-void drawWindow(NVGcontext* vg, const char* title, float x, float y, float w, float h);
 void drawButton(NVGcontext* vg, int preicon, const char* text, float x, float y, float w, float h, NVGcolor col);
 void drawEditBoxBase(NVGcontext* vg, float x, float y, float w, float h);
 void drawEditBox(NVGcontext* vg, const char* text, float x, float y, float w, float h);
 void drawEditBoxCursor(NVGcontext* vg, const std::string& text, float x, float y, float w, float h, int cursorPos);
 
-void drawRoundedRect(NVGcontext* vg, Vec2 pos, Vec2 size, float radius, Color fillColor);
+void drawRoundedRect(NVGcontext* vg, Vec2 pos, Vec2 size, float radius, Color fillColor, float dropShadowSize = 0.f);
 void drawText(NVGcontext* vg, const std::string& text, Vec2 pos, Vec2 containerSize, const TextStyle& style,
               Alignment align, Padding padding);
+void drawTextBlurred(NVGcontext* vg, const std::string& text, Vec2 pos, Vec2 containerSize, const TextStyle& style,
+                     Alignment align, Padding padding);
 void drawHeaderHighlight(NVGcontext* vg, Vec2 pos, Vec2 size, Color color, float cornerRadius);
 
 NVGcolor convertColor(Color color)
@@ -136,50 +137,6 @@ Vec2 getTextSize(NVGcontext* vg, const std::string& text, const TextStyle& style
   float bounds[4];
   nvgTextBounds(vg, 0.f, 0.f, text.c_str(), text.c_str() + text.size(), bounds);
   return {bounds[2] - bounds[0], bounds[3] - bounds[1]};
-}
-
-void drawWindow(NVGcontext* vg, const char* title, float x, float y, float w, float h)
-{
-  float cornerRadius = 3.0f;
-  NVGpaint shadowPaint;
-
-  nvgSave(vg);
-  //	nvgClearState(vg);
-
-  // Window
-  drawRoundedRect(vg, {x, y}, {w, h}, cornerRadius, {28 / 255.f, 30 / 255.f, 34 / 255.f, 192 / 255.f});
-  /*  nvgBeginPath(vg);
-    nvgRoundedRect(vg, x, y, w, h, cornerRadius);
-    nvgFillColor(vg, nvgRGBA(28, 30, 34, 192));
-    //	nvgFillColor(vg, nvgRGBA(0,0,0,128));
-    nvgFill(vg);
-    */
-
-  // Drop shadow
-  shadowPaint = nvgBoxGradient(vg, x, y + 2, w, h, cornerRadius * 2, 10, nvgRGBA(0, 0, 0, 128), nvgRGBA(0, 0, 0, 0));
-  nvgBeginPath(vg);
-  nvgRect(vg, x - 10, y - 10, w + 20, h + 30);
-  nvgRoundedRect(vg, x, y, w, h, cornerRadius);
-  nvgPathWinding(vg, NVG_HOLE);
-  nvgFillPaint(vg, shadowPaint);
-  nvgFill(vg);
-
-  // Header
-  drawHeaderHighlight(vg, {x, y}, {w, 30}, Color{28 / 255.f, 30 / 255.f, 34 / 255.f, 192 / 255.f}, 3.f);
-
-  nvgFontSize(vg, 30.0f);
-  nvgFontFace(vg, "sans-bold");
-  nvgTextAlign(vg, NVG_ALIGN_CENTER | NVG_ALIGN_MIDDLE);
-
-  nvgFontBlur(vg, 2);
-  nvgFillColor(vg, nvgRGBA(0, 0, 0, 128));
-  nvgText(vg, x + w / 2, y + 16 + 1, title, nullptr);
-
-  nvgFontBlur(vg, 0);
-  nvgFillColor(vg, nvgRGBA(220, 220, 220, 160));
-  nvgText(vg, x + w / 2, y + 16, title, nullptr);
-
-  nvgRestore(vg);
 }
 
 void drawButton(NVGcontext* vg, int preicon, const char* text, float x, float y, float w, float h, NVGcolor col)
@@ -289,13 +246,29 @@ void drawEditBoxCursor(NVGcontext* vg, const std::string& text, float x, float y
   nvgText(vg, cursorX, y + h * 0.5f, "|", nullptr);
 }
 
-void drawRoundedRect(NVGcontext* vg, Vec2 pos, Vec2 size, float radius, Color fillColor)
+void drawRoundedRect(NVGcontext* vg, Vec2 pos, Vec2 size, float radius, Color fillColor, float dropShadowSize)
 {
   nvgBeginPath(vg);
   nvgRoundedRect(vg, pos.x, pos.y, size.x, size.y, radius);
   nvgFillColor(vg, convertColor(fillColor));
   //	nvgFillColor(vg, nvgRGBA(0,0,0,128));
   nvgFill(vg);
+
+  if (dropShadowSize > 0.f)
+  {
+    // Drop shadow
+    auto shadowPaint = nvgBoxGradient(vg, pos.x, pos.y + 2, size.x, size.y, radius * 2, 10, nvgRGBA(0, 0, 0, 128),
+                                      nvgRGBA(0, 0, 0, 0));
+    nvgBeginPath(vg);
+    float nOffset = dropShadowSize * 0.25f;
+    float xPOffset = dropShadowSize * 0.5f;
+    float yPOffset = dropShadowSize * 0.75f;
+    nvgRect(vg, pos.x - nOffset, pos.y - nOffset, size.x + xPOffset, size.y + yPOffset);
+    nvgRoundedRect(vg, pos.x, pos.y, size.x, size.y, radius);
+    nvgPathWinding(vg, NVG_HOLE);
+    nvgFillPaint(vg, shadowPaint);
+    nvgFill(vg);
+  }
 }
 
 void drawText(NVGcontext* vg, const std::string& text, Vec2 pos, Vec2 containerSize, const TextStyle& style,
@@ -318,6 +291,35 @@ void drawText(NVGcontext* vg, const std::string& text, Vec2 pos, Vec2 containerS
   else if (align.vertical == AlignmentV::Bottom)
     pos.y += containerSize.y - padding.bottom;
 
+  nvgText(vg, pos.x, pos.y, text.c_str(), nullptr);
+}
+
+void drawTextBlurred(NVGcontext* vg, const std::string& text, Vec2 pos, Vec2 containerSize, const TextStyle& style,
+                     Alignment align, Padding padding)
+{
+  applyTextStyle(vg, style);
+  nvgTextAlign(vg, convertAlignment(align));
+
+  if (align.horizontal == AlignmentH::Left)
+    pos.x += padding.left;
+  else if (align.horizontal == AlignmentH::Center)
+    pos.x += padding.left + ((containerSize.x - padding.left - padding.right) * 0.5f);
+  else if (align.horizontal == AlignmentH::Right)
+    pos.x += containerSize.x - padding.right;
+
+  if (align.vertical == AlignmentV::Top)
+    pos.y += padding.top;
+  else if (align.vertical == AlignmentV::Middle)
+    pos.y += padding.left + ((containerSize.y - padding.left - padding.right) * 0.5f);
+  else if (align.vertical == AlignmentV::Bottom)
+    pos.y += containerSize.y - padding.bottom;
+
+  nvgFontBlur(vg, 2);
+  nvgFillColor(vg, nvgRGBA(0, 0, 0, 128));
+  nvgText(vg, pos.x, pos.y, text.c_str(), nullptr);
+
+  nvgFontBlur(vg, 0);
+  nvgFillColor(vg, convertColor(style.fontColor));
   nvgText(vg, pos.x, pos.y, text.c_str(), nullptr);
 }
 

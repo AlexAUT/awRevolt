@@ -9,6 +9,7 @@
 #include <aw/gui/widgets/menu.hpp>
 #include <aw/gui/widgets/menuItem.hpp>
 #include <aw/gui/widgets/menuSubItem.hpp>
+#include <aw/gui/widgets/panel.hpp>
 #include <aw/gui/widgets/screen.hpp>
 #include <aw/gui/widgets/textBox.hpp>
 #include <aw/gui/widgets/widget.hpp>

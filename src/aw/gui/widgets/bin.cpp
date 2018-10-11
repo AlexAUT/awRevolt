@@ -64,6 +64,12 @@ void Bin::setChild(Widget::SPtr ptr)
     mChild->setParent(getSharedPtr());
 }
 
+void Bin::setPadding(Padding padding)
+{
+  mPadding = padding;
+  invalidateLayout();
+}
+
 Vec2 Bin::calculateChildRelPosition() const
 {
   return {mPadding.left, mPadding.top};

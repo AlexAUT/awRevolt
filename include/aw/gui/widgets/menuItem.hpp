@@ -4,6 +4,7 @@
 
 #include <aw/gui/widgets/linearContainer.hpp>
 #include <aw/gui/widgets/menuSubItem.hpp>
+#include <aw/gui/widgets/panel.hpp>
 
 namespace aw::gui
 {
@@ -38,6 +39,7 @@ private:
   bool mIsSubElement{false};
   bool mShowChilds{false};
 
+  Panel::SPtr mChildPanel;
   LinearContainer::SPtr mChildContainer;
 };
 } // namespace aw::gui

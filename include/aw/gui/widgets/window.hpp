@@ -6,22 +6,20 @@
 
 namespace aw::gui
 {
+class TextStyle;
+
 class Window : public Bin
 {
 public:
   enum class Style
   {
     None = 0,
-    Titlebar = 1,
-    Moveable = 2,
-    Default = Titlebar | Moveable,
+    Moveable = 1,
+    Default = Moveable,
   };
 
 public:
-  Window(const GUI& gui, std::string title, Style style = Style::Default)
-      : Bin(gui, {32.f, 2.f, 2.f, 2.f}), mTitle(std::move(title)), mStyle(style)
-  {
-  }
+  Window(const GUI& gui, std::string title, Style style = Style::Default);
   virtual ~Window() = default;
 
   virtual bool processEvent(const WindowEvent& event) override;
@@ -29,11 +27,13 @@ public:
 
   void setTitle(std::string title);
   void setStyle(Style style);
+  void setTitleTextStyle(const TextStyle* style);
 
-  const std::string& getTitle();
-  Style getStyle();
+  const std::string& getTitle() const { return mTitle; }
+  Style getStyle() const { return mStyle; }
+  const TextStyle& getTitleTextStyle() const { return *mTextStyle; }
 
-  virtual void updateLayout();
+  virtual void updateLayout() override;
 
 private:
   bool hitTitleBar(Vec2 point);
@@ -44,6 +44,9 @@ private:
   std::string mTitle;
   Style mStyle;
 
+  const TextStyle* mTextStyle;
+
+  float mTitleBarHeight{0.f};
   bool mDrag{false};
   Vec2 mDrawOffset{0.f};
 };

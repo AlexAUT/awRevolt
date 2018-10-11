@@ -2,7 +2,6 @@
 
 #include <aw/gui/gui.hpp>
 #include <aw/gui/renderer/nanovgRenderer.hpp>
-#include <aw/utils/log.hpp>
 
 namespace aw::gui
 {
@@ -18,7 +17,7 @@ MenuSubItem::MenuSubItem(const GUI& gui, Menu& menu, std::string text) : Label(g
 
 void MenuSubItem::render(Vec2 parentPos)
 {
-  LogTemp() << "Render sub item: " << getText();
-  Label::render(parentPos);
+  Widget::render(parentPos);
+  getGUI().getRenderer().render(*this);
 }
 } // namespace aw::gui

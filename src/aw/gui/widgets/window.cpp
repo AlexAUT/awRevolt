@@ -7,6 +7,11 @@
 
 namespace aw::gui
 {
+Window::Window(const GUI& gui, std::string title, Style style)
+    : Bin(gui), mTitle(std::move(title)), mStyle(style), mTextStyle(getGUI().getTextStyles().getStyle("headline"))
+{
+}
+
 bool Window::processEvent(const WindowEvent& event)
 {
   bool usedEvent = false;
@@ -36,6 +41,20 @@ void Window::setStyle(Style style)
 {
   mStyle = style;
   invalidateLayout();
+}
+
+void Window::setTitleTextStyle(const TextStyle* textStyle)
+{
+  assert(textStyle);
+  mTextStyle = textStyle;
+  invalidateLayout();
+}
+
+void Window::updateLayout()
+{
+  mTitleBarHeight = getGUI().getRenderer().calculateTextSize(mTitle, *mTextStyle).y;
+  setPadding({mTitleBarHeight, 0.f, 0.f, 0.f});
+  Bin::updateLayout();
 }
 
 bool Window::hitTitleBar(Vec2 point)

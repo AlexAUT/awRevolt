@@ -12,9 +12,11 @@ namespace aw::gui
 TextStyle defaultStyle{"sans", 10.f, Color(0.5f, 0.5f, 0.5f, 1.0f)};
 
 MenuItem::MenuItem(const GUI& gui, Menu& menu, std::string text, bool isSubElement)
-    : Label(gui, std::move(text)), mMenu(menu), mIsSubElement(isSubElement),
+    : Label(gui, std::move(text)), mMenu(menu), mIsSubElement(isSubElement), mChildPanel(std::make_shared<Panel>(gui)),
       mChildContainer(std::make_shared<LinearContainer>(gui, Orientation::Vertical))
 {
+  mChildPanel->setChild(mChildContainer);
+
   setAlignment({AlignmentH::Center, AlignmentV::Middle});
   setPadding({4.f, 10.f});
 
@@ -29,9 +31,9 @@ MenuSubItem::SPtr MenuItem::addSubEntry(const std::string& text)
 
   mChildContainer->addChild(newChild, 0.f);
   newChild->invalidateLayout();
-  mChildContainer->updateLayout();
-  mChildContainer->setSize(mChildContainer->getMinimalSize());
-  mChildContainer->updateLayout();
+  mChildPanel->updateLayout();
+  mChildPanel->setSize(mChildContainer->getMinimalSize());
+  mChildPanel->updateLayout();
   invalidateLayout();
 
   return newChild;
@@ -42,7 +44,7 @@ bool MenuItem::processEvent(const WindowEvent& event)
   if (isInState(State::Selected))
   {
     auto localEvent = convertToLocalEvent(event, *this);
-    if (mChildContainer->processEvent(localEvent))
+    if (mChildPanel->processEvent(localEvent))
       return true;
   }
   return Label::processEvent(event);
@@ -50,9 +52,14 @@ bool MenuItem::processEvent(const WindowEvent& event)
 
 void MenuItem::render(Vec2 parentPos)
 {
-  Label::render(parentPos);
+  Widget::render(parentPos);
+  getGUI().getRenderer().render(*this);
+
   if (isInState(State::Selected))
-    mChildContainer->render(getGlobalPosition());
+  {
+    getGUI().getRenderer().render(*this);
+    mChildPanel->render(getGlobalPosition());
+  }
 }
 
 void MenuItem::updateLayout()
@@ -62,8 +69,8 @@ void MenuItem::updateLayout()
   // calculate child container position
   auto pos = getSize();
   pos.x = 0;
-  mChildContainer->setRelativePosition(pos);
-  mChildContainer->updateLayout();
+  mChildPanel->setRelativePosition(pos);
+  mChildPanel->updateLayout();
 }
 
 void MenuItem::select(Vec2 mousePos)

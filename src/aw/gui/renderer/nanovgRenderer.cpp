@@ -44,11 +44,32 @@ void NanovgRenderer::endFrame()
 }
 
 template <>
+void NanovgRenderer::render(const Panel& panel) const
+{
+  auto pos = panel.getGlobalPosition();
+  auto size = panel.getSize();
+
+  Color bgColor{28 / 255.f, 30 / 255.f, 34 / 255.f, 192 / 255.f};
+  float dropShadowSize = 20.f;
+
+  drawRoundedRect(mContext, pos, size, 4.f, bgColor, dropShadowSize);
+}
+
+template <>
 void NanovgRenderer::render(const Window& window) const
 {
   auto pos = window.getGlobalPosition();
   auto size = window.getSize();
-  drawWindow(mContext, window.getTitle().c_str(), pos.x, pos.y, size.x, size.y);
+  // Window
+  Color bgColor{28 / 255.f, 30 / 255.f, 34 / 255.f, 192 / 255.f};
+  float dropShadowSize = 40.f;
+  drawRoundedRect(mContext, pos, size, 3.f, bgColor, dropShadowSize);
+
+  // Header
+  drawHeaderHighlight(mContext, pos, {size.x, 30.f}, bgColor, 3.f);
+
+  drawTextBlurred(mContext, window.getTitle(), pos, {size.x, 30.f}, window.getTitleTextStyle(),
+                  {AlignmentH::Center, AlignmentV::Middle}, Padding{0.f});
 }
 
 void tintColor(NVGcolor& color, float amount)
@@ -117,11 +138,34 @@ void NanovgRenderer::render(const Menu& menu) const
 template <>
 void NanovgRenderer::render(const MenuItem& menuItem) const
 {
+  if (menuItem.isInState(Widget::State::Selected))
+  {
+    auto pos = menuItem.getGlobalPosition();
+    auto size = menuItem.getSize();
+    const Color color{28 / 255.f, 30 / 255.f, 255 / 255.f, 255 / 255.f};
+
+    auto lineThickness = size.y * 0.1f;
+    pos.y += (size.y - lineThickness) - 2;
+    size.y = lineThickness;
+
+    drawRoundedRect(mContext, pos, size, 0.f, color);
+  }
+  render(static_cast<const Label&>(menuItem));
 }
 
 template <>
-void NanovgRenderer::render(const MenuSubItem& menuItem) const
+void NanovgRenderer::render(const MenuSubItem& menuSubItem) const
 {
+  using State = Widget::State;
+  if (menuSubItem.isInState(State::Hovered) || menuSubItem.isInState(State::Selected))
+  {
+    auto pos = menuSubItem.getGlobalPosition();
+    auto size = menuSubItem.getSize();
+    const Color color{28 / 255.f, 30 / 255.f, 255 / 255.f, 255 / 255.f};
+    drawRoundedRect(mContext, pos, size, 3.f, color);
+    drawHeaderHighlight(mContext, pos, size, color, 0.f);
+  }
+  render(static_cast<const Label&>(menuSubItem));
 }
 
 template <>
