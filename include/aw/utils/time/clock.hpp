@@ -2,7 +2,7 @@
 
 #include <chrono>
 
-#include <aw/utils/time.hpp>
+#include <aw/utils/time/time.hpp>
 
 namespace aw
 {

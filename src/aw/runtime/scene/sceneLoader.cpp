@@ -3,7 +3,7 @@
 #include <aw/runtime/loaders/assimpLoader.hpp>
 #include <aw/runtime/scene/meshNode.hpp>
 
-#include <aw/utils/assetInputStream.hpp>
+#include <aw/utils/file/assetInputStream.hpp>
 #include <aw/utils/log.hpp>
 #include <aw/utils/math/vector.hpp>
 

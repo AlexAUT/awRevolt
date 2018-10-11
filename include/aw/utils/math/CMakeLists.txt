@@ -2,6 +2,7 @@ set(HEADER_FILES_UTILS ${HEADER_FILES_UTILS}
     ${CMAKE_CURRENT_SOURCE_DIR}/constants.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/frustum.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/matrix.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/rect.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/vector.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/quaternion.hpp
     PARENT_SCOPE)

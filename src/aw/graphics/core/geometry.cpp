@@ -1,7 +1,5 @@
 #include <aw/graphics/core/geometry.hpp>
 
-#include <aw/utils/rect.hpp>
-
 #include <glm/geometric.hpp>
 
 namespace aw

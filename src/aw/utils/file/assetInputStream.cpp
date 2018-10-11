@@ -1,4 +1,4 @@
-#include <aw/utils/assetInputStream.hpp>
+#include <aw/utils/file/assetInputStream.hpp>
 
 #ifdef AW_ANDROID
 #include <aw/utils/impl/androidAssetBuffer.hpp>

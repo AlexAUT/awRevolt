@@ -2,7 +2,7 @@
 
 #include <aw/opengl/opengl.hpp>
 
-#include <aw/utils/assetInputStream.hpp>
+#include <aw/utils/file/assetInputStream.hpp>
 #include <aw/utils/log.hpp>
 #include <aw/utils/streamReading.hpp>
 
@@ -39,7 +39,7 @@ bool ShaderStage::loadFromMemory(const char* content)
   GL_CHECK(mId = glCreateShader(getGLType()));
 
   const char* prefix = "";
-  // Add a prefix to make shaders compatible between opengl and opengl es
+// Add a prefix to make shaders compatible between opengl and opengl es
 #ifdef AW_DESKTOP
   if (mType == Type::Vertex)
     prefix = "#version 330\n";

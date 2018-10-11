@@ -1,5 +1,7 @@
 #include <aw/gui/gui.hpp>
 
+#include <aw/engine/windowEvent.hpp>
+
 namespace aw::gui
 {
 void GUI::updateLayout()
@@ -16,6 +18,9 @@ void GUI::update(float delta)
 
 bool GUI::processEvent(const WindowEvent& event)
 {
+  // Check for resize events
+  updateSize(event);
+
   if (mSelectedWidget)
   {
     return mSelectedWidget->processEvent(event);
@@ -49,9 +54,25 @@ void GUI::render()
   mRenderer.endFrame();
 }
 
-Screen::SPtr GUI::addScreen(Vec2 pos, Vec2 size)
+void GUI::setScreenSize(Vec2 size)
 {
-  mScreens.push_back(std::make_shared<Screen>(*this, pos, size));
+  mScreenSize = size;
+  for (auto& screen : mScreens)
+    screen->setSize(mScreenSize);
+}
+
+Screen::SPtr GUI::addScreen()
+{
+  mScreens.push_back(std::make_shared<Screen>(*this, Vec2{0.f, 0.f}, mScreenSize));
   return mScreens.back();
 }
+
+void GUI::updateSize(const WindowEvent& event)
+{
+  if (event.type == WindowEvent::Resized)
+  {
+    setScreenSize(Vec2{event.size.width, event.size.height});
+  }
+}
+
 } // namespace aw::gui

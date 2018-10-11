@@ -4,7 +4,7 @@
 #include <aw/engine/settings.hpp>
 #include <aw/engine/window.hpp>
 
-#include <aw/utils/clock.hpp>
+#include <aw/utils/time/clock.hpp>
 
 namespace aw
 {

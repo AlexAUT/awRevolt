@@ -16,12 +16,10 @@ public:
   using SPtr = std::shared_ptr<MenuItem>;
 
 public:
-  MenuItem(const GUI& gui, Menu& menu, std::string text, bool isSubElement = false);
+  MenuItem(const GUI& gui, Menu& menu, std::string text);
   virtual ~MenuItem() = default;
 
   MenuSubItem::SPtr addSubEntry(const std::string& text);
-
-  bool isSubEntry() const { return mIsSubElement; }
 
   const LinearContainer& getChildContainer() const { return *mChildContainer; }
 
@@ -37,7 +35,6 @@ private:
 private:
   Menu& mMenu;
 
-  bool mIsSubElement{false};
   bool mShowChilds{false};
 
   Panel::SPtr mChildPanel;

@@ -9,8 +9,8 @@ namespace aw::gui
 {
 TextStyle defaultStyle{"sans", 10.f, Color(0.5f, 0.5f, 0.5f, 1.0f)};
 
-MenuItem::MenuItem(const GUI& gui, Menu& menu, std::string text, bool isSubElement)
-    : Label(gui, std::move(text)), mMenu(menu), mIsSubElement(isSubElement), mChildPanel(std::make_shared<Panel>(gui)),
+MenuItem::MenuItem(const GUI& gui, Menu& menu, std::string text)
+    : Label(gui, std::move(text)), mMenu(menu), mChildPanel(std::make_shared<Panel>(gui)),
       mChildContainer(std::make_shared<LinearContainer>(gui, Orientation::Vertical))
 {
   mChildPanel->setChild(mChildContainer);

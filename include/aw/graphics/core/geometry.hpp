@@ -2,8 +2,8 @@
 
 #include <aw/graphics/core/vertex.hpp>
 #include <aw/utils/math/constants.hpp>
+#include <aw/utils/math/rect.hpp>
 #include <aw/utils/math/vector.hpp>
-#include <aw/utils/rect.hpp>
 
 #include <array>
 #include <cmath>

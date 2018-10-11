@@ -13,3 +13,6 @@
 [submodule "dependencies/nanovg"]
 	path = dependencies/nanovg
 	url = https://github.com/memononen/nanovg
+[submodule "dependencies/tinyfd"]
+	path = dependencies/tinyfd
+	url = http://git.code.sf.net/p/tinyfiledialogs/code

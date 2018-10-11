@@ -6,7 +6,7 @@
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
 
-#include <aw/utils/assetInputStream.hpp>
+#include <aw/utils/file/assetInputStream.hpp>
 #include <aw/utils/log.hpp>
 #include <aw/utils/streamReading.hpp>
 

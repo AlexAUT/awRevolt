@@ -2,7 +2,7 @@
 
 #include <aw/graphics/core/geometry.hpp>
 
-#include <aw/utils/typeChecks.hpp>
+#include <aw/utils/typeHelper/typeChecks.hpp>
 
 namespace aw
 {

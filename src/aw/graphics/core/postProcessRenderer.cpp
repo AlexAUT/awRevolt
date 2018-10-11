@@ -5,7 +5,7 @@
 #include <aw/graphics/core/texture2D.hpp>
 #include <aw/graphics/core/vertex.hpp>
 
-#include <aw/utils/assetInputStream.hpp>
+#include <aw/utils/file/assetInputStream.hpp>
 
 #include <aw/opengl/opengl.hpp>
 

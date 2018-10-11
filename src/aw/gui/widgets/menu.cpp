@@ -4,10 +4,15 @@
 #include <aw/gui/renderer/nanovgRenderer.hpp>
 #include <aw/gui/utils/eventConvert.hpp>
 
-#include <aw/utils/log.hpp>
-
 namespace aw::gui
 {
+MenuItem::SPtr Menu::addMenuEntry(std::string text)
+{
+  auto item = std::make_shared<MenuItem>(getGUI(), *this, std::move(text));
+  addChild(item, 0);
+  return item;
+}
+
 void Menu::render(Vec2 parentPos)
 {
   Widget::render(parentPos);

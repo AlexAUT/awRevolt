@@ -1,6 +1,6 @@
 #pragma once
 
-#include <aw/utils/path.hpp>
+#include <aw/utils/file/path.hpp>
 
 #include <functional>
 #include <iostream>
@@ -48,10 +48,7 @@ private:
 // Output will look like: (E) DATE (TestPretty): Hallo Welt
 #define DEFINE_LOG_CATEGORY(Name, Type, DisplayName)                                                                   \
   const aw::log::LogModule logModule##Name{Type, #DisplayName};                                                        \
-  aw::log::LogInstance Log##Name()                                                                                     \
-  {                                                                                                                    \
-    return aw::LOG(logModule##Name);                                                                                   \
-  }
+  aw::log::LogInstance Log##Name() { return aw::LOG(logModule##Name); }
 } // namespace log
 
 bool LOG_INITIALIZE(log::LogLevel console = log::Debug, log::LogLevel filesystem = log::Verbose,

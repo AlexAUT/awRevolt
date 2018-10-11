@@ -2,7 +2,7 @@
 
 #include <aw/gui/widgets/bin.hpp>
 
-#include <aw/utils/enumClassBitmask.hpp>
+#include <aw/utils/typeHelper/enumClassBitmask.hpp>
 
 namespace aw::gui
 {

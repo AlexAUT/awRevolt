@@ -15,13 +15,17 @@ class GUI
 public:
   using ScreenVector = std::vector<Screen::SPtr>;
 
+  GUI(Vec2 screenSize) : mScreenSize{screenSize} {}
+
   void updateLayout();
 
   void update(float delta);
   bool processEvent(const WindowEvent& event);
   void render();
 
-  Screen::SPtr addScreen(Vec2 pos, Vec2 size);
+  void setScreenSize(Vec2 size);
+
+  Screen::SPtr addScreen();
   const ScreenVector getScreens() const { return mScreens; }
 
   const NanovgRenderer& getRenderer() const { return mRenderer; }
@@ -34,7 +38,11 @@ public:
 
 public:
 private:
+  void updateSize(const WindowEvent& event);
+
 private:
+  Vec2 mScreenSize{0.f};
+
   NanovgRenderer mRenderer;
   ScreenVector mScreens;
 
