@@ -1,5 +1,6 @@
 add_subdirectory(file)
 add_subdirectory(math)
+add_subdirectory(messageBus)
 add_subdirectory(spatial)
 add_subdirectory(time)
 add_subdirectory(typeHelper)
