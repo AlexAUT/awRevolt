@@ -2,6 +2,7 @@
 
 #include <aw/graphics/3d/mesh.hpp>
 #include <aw/graphics/3d/meshAnimation.hpp>
+#include <aw/utils/file/path.hpp>
 
 #include <assimp/Importer.hpp>
 
@@ -18,6 +19,8 @@ namespace aw
 class AssimpLoader
 {
 public:
+  void setAssetPath(std::string assetPath) { mAssetRoot = std::move(assetPath); }
+
   bool loadFromStream(const std::string& fileName, std::istream& stream, const char* hint = "");
   bool loadFromAssetFile(const std::string& assetPath, const char* hint = "");
 
@@ -38,6 +41,8 @@ private:
 private:
   std::string mFileName;
   Assimp::Importer mImporter;
+
+  std::string mAssetRoot{path::getAssetPath()};
 
   unsigned mBoneCount;
 };

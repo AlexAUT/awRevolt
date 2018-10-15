@@ -257,7 +257,7 @@ bool AssimpLoader::parseMaterial(aw::Mesh& mesh, const aiMaterial* assimpMat)
     auto texName = path.substr(pos);
     slot.texName = texName;
     LogAssimpV() << "Loading diffuse texture: " << texName;
-    aw::AssetInputStream texFile("textures/meshes/" + texName);
+    aw::AssetInputStream texFile("textures/meshes/" + texName, mAssetRoot);
     aw::Image img;
     if (!img.loadFromStream(texFile))
     {

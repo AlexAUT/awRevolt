@@ -12,20 +12,20 @@ class TypeCounter
 {
 public:
   template <typename T>
-  CounterType getId()
+  CounterType getId() const
   {
     return generateId<typename std::decay<T>::type>();
   }
 
 private:
   template <typename T>
-  CounterType generateId()
+  CounterType generateId() const
   {
     static CounterType typeId = mCounter.fetch_add(1);
     return typeId;
   }
 
 private:
-  std::atomic<CounterType> mCounter{0};
+  mutable std::atomic<CounterType> mCounter{0};
 };
-}
+} // namespace aw

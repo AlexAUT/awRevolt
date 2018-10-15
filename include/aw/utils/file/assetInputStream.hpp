@@ -11,7 +11,7 @@ namespace aw
 class AssetInputStream : public std::istream
 {
 public:
-  AssetInputStream(std::string path);
+  AssetInputStream(std::string path, std::string assetsRoot = path::getAssetPath());
   ~AssetInputStream();
 
   bool isOpen() const;

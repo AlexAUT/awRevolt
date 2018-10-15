@@ -7,9 +7,9 @@
 namespace aw
 {
 
-AssetInputStream::AssetInputStream(std::string path) : std::istream(nullptr)
+AssetInputStream::AssetInputStream(std::string path, std::string assetPath) : std::istream(nullptr)
 {
-  path = path::getAssetPath() + path;
+  path = assetPath + path;
 #ifdef AW_DESKTOP
   mFileStream.open(path.c_str(), std::ios::binary);
   mIsOpen = mFileStream.is_open();

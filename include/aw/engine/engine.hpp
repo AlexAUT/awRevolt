@@ -4,6 +4,7 @@
 #include <aw/engine/settings.hpp>
 #include <aw/engine/window.hpp>
 
+#include <aw/utils/messageBus/messageBus.hpp>
 #include <aw/utils/time/clock.hpp>
 
 namespace aw
@@ -20,6 +21,8 @@ public:
 
   void terminate(int returnCode = 0);
 
+  MessageBus& getMessageBus() { return mMsgBus; }
+  const MessageBus& getMessageBus() const { return mMsgBus; }
   const Settings& getSettings() const;
   StateMachine& getStateMachine();
   const StateMachine& getStateMachine() const;
@@ -32,6 +35,7 @@ private:
   void render();
 
 private:
+  MessageBus mMsgBus;
   Settings mSettings;
   StateMachine mStateMachine;
   Window mWindow;
