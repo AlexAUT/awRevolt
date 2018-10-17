@@ -26,8 +26,8 @@ public:
   SceneNode* getParent() const;
   const std::vector<SceneNode*>& getChildren() const;
   SceneNode* findNodeByName(const std::string& name) const;
-  void traverseChilds(std::function<void(SceneNode*)>& callback);
-  void traverseChilds(std::function<void(const SceneNode*)>& callback) const;
+  void traverseChilds(const std::function<void(SceneNode*)>& callback);
+  void traverseChilds(const std::function<void(const SceneNode*)>& callback) const;
 
   // Transform
   Transform& localTransform();

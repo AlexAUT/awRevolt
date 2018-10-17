@@ -2,12 +2,12 @@
 
 namespace aw
 {
-SceneNode::SceneNode() : mLocalTransform(std::bind(&SceneNode::invalidGlobalTransformCache, this))
-{
-}
+SceneNode::SceneNode() : mLocalTransform(std::bind(&SceneNode::invalidGlobalTransformCache, this)) {}
 
 SceneNode::~SceneNode()
 {
+  for (auto& child : mChildren)
+    delete child;
 }
 
 void SceneNode::setName(const std::string& name)
@@ -53,14 +53,14 @@ SceneNode* SceneNode::findNodeByName(const std::string& name) const
   }
   return nullptr;
 }
-void SceneNode::traverseChilds(std::function<void(SceneNode*)>& callback)
+void SceneNode::traverseChilds(const std::function<void(SceneNode*)>& callback)
 {
   callback(this);
   for (auto& child : mChildren)
     child->traverseChilds(callback);
 }
 
-void SceneNode::traverseChilds(std::function<void(const SceneNode*)>& callback) const
+void SceneNode::traverseChilds(const std::function<void(const SceneNode*)>& callback) const
 {
   callback(this);
   for (auto& child : mChildren)

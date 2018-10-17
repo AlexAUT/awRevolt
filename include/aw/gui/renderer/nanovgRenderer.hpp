@@ -18,7 +18,7 @@ public:
 
   Vec2 calculateTextSize(const std::string& text, const TextStyle& style) const;
 
-  void beginFrame();
+  void beginFrame(Vec2 windowResolution);
   void endFrame();
 
   template <typename WidgetType>

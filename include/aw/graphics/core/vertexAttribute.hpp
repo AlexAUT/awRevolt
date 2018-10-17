@@ -9,7 +9,7 @@ typedef unsigned char GLboolean;
 
 struct VertexAttribute
 {
-  int index;
+  unsigned index;
   int size;
   GLenum type;
   GLboolean normalized;

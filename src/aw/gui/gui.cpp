@@ -38,7 +38,7 @@ bool GUI::processEvent(const WindowEvent& event)
 
 void GUI::render()
 {
-  mRenderer.beginFrame();
+  mRenderer.beginFrame(mScreenSize);
   for (auto& screen : mScreens)
   {
     updateLayout();
@@ -58,7 +58,10 @@ void GUI::setScreenSize(Vec2 size)
 {
   mScreenSize = size;
   for (auto& screen : mScreens)
+  {
     screen->setSize(mScreenSize);
+    screen->updateLayout();
+  }
 }
 
 Screen::SPtr GUI::addScreen()

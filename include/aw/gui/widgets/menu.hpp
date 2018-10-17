@@ -9,7 +9,7 @@ namespace aw::gui
 class Menu : public LinearContainer
 {
 public:
-  Menu(const GUI& gui) : LinearContainer(gui, Orientation::Horizontal) {}
+  Menu(const GUI& gui) : LinearContainer(gui, Orientation::Horizontal) { setConsumeEvent(true); }
 
   MenuItem::SPtr addMenuEntry(std::string text);
 

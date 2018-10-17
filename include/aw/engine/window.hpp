@@ -43,6 +43,7 @@ public:
   sf::Window& getSFMLWindow();
   const sf::Window& getSFMLWindow() const;
   Vec2u getSize() const;
+  float getAspectRatio() const;
 
   bool hasFocus() const;
 

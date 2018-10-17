@@ -15,7 +15,16 @@ class IndicesBuffer;
 class VertexArrayObject
 {
 public:
+  using DrawBufferBindings = std::tuple<const VertexBuffer*, const IndicesBuffer*>;
+  using BindPair = std::pair<DrawBufferBindings, VertexAttribute>;
+
+public:
+#ifdef AW_USE_OPENGL
+  VertexArrayObject();
+  ~VertexArrayObject();
+#else
   VertexArrayObject() = default;
+#endif
   VertexArrayObject(const VertexArrayObject&) = delete;
   VertexArrayObject operator=(const VertexArrayObject&) = delete;
 
@@ -29,11 +38,15 @@ public:
   void addVertexAttributes(const VertexBuffer* buffer, const VertexLayout<T>& layout);
 
 private:
-  bool indexInUse(int index) const;
+  bool indexInUse(unsigned index) const;
+
+  void applyVertexAttribute(const BindPair& bufferAttribute);
 
 private:
-  typedef std::tuple<const VertexBuffer*, const IndicesBuffer*> DrawBufferBindings;
-  std::vector<std::pair<DrawBufferBindings, const VertexAttribute>> mAttributes;
+  std::vector<BindPair> mAttributes;
+#ifdef AW_USE_OPENGL
+  unsigned mVAOHandle;
+#endif
 };
 
 template <size_t T>

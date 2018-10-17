@@ -7,9 +7,7 @@
 
 namespace aw
 {
-Engine::Engine(aw::Settings settings) : mSettings(settings), mWindow(mSettings), mRunning(true)
-{
-}
+Engine::Engine(aw::Settings settings) : mSettings(settings), mWindow(mSettings), mRunning(true) {}
 
 int Engine::run()
 {

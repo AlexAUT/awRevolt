@@ -9,24 +9,34 @@
 
 namespace aw
 {
+#ifdef AW_USE_OPENGL
+VertexArrayObject::VertexArrayObject()
+{
+  GL_CHECK(glGenVertexArrays(1, &mVAOHandle));
+}
+
+VertexArrayObject::~VertexArrayObject()
+{
+  GL_CHECK(glDeleteVertexArrays(1, &mVAOHandle));
+}
+#endif
 void VertexArrayObject::bind() const
 {
+#ifdef AW_USE_OPENGL
+  GL_CHECK(glBindVertexArray(mVAOHandle));
+#else
   for (auto& bufferAttrib : mAttributes)
   {
-    const auto& vbo = std::get<0>(bufferAttrib.first);
-    if (vbo)
-      vbo->bind();
-    const auto& ibo = std::get<1>(bufferAttrib.first);
-    if (ibo)
-      ibo->bind();
-    const auto& attrib = bufferAttrib.second;
-    glEnableVertexAttribArray(attrib.index);
-    glVertexAttribPointer(attrib.index, attrib.size, attrib.type, attrib.normalized, attrib.stride, attrib.offset);
+    applyVertexAttribute(bufferAttrib);
   }
+#endif
 }
 
 void VertexArrayObject::unbind() const
 {
+#ifdef AW_USE_OPENGL
+  GL_CHECK(glBindVertexArray(0));
+#else
   for (auto& bufferAttrib : mAttributes)
   {
     const auto& vbo = std::get<0>(bufferAttrib.first);
@@ -38,6 +48,7 @@ void VertexArrayObject::unbind() const
     const auto& attrib = bufferAttrib.second;
     glDisableVertexAttribArray(attrib.index);
   }
+#endif
 }
 
 void VertexArrayObject::addVertexAttribute(const VertexBuffer* buffer, VertexAttribute attribute)
@@ -51,9 +62,13 @@ void VertexArrayObject::addVertexAttribute(const VertexBuffer* buffer, const Ind
   assert(!indexInUse(attribute.index) && "You cannot insert a vertex attribute with the same index more than once!");
   assert(buffer && "VertexAttribute should not have a nullptr as buffer!");
   mAttributes.push_back({{buffer, indices}, attribute});
+#ifdef AW_USE_OPENGL
+  bind();
+  applyVertexAttribute(mAttributes.back());
+#endif
 }
 
-bool VertexArrayObject::indexInUse(int index) const
+bool VertexArrayObject::indexInUse(unsigned index) const
 {
   for (auto& a : mAttributes)
   {
@@ -61,6 +76,19 @@ bool VertexArrayObject::indexInUse(int index) const
       return true;
   }
   return false;
+}
+
+void VertexArrayObject::applyVertexAttribute(const BindPair& attribute)
+{
+  const auto& vbo = std::get<0>(attribute.first);
+  if (vbo)
+    vbo->bind();
+  const auto& ibo = std::get<1>(attribute.first);
+  if (ibo)
+    ibo->bind();
+  const auto& attrib = attribute.second;
+  glEnableVertexAttribArray(attrib.index);
+  glVertexAttribPointer(attrib.index, attrib.size, attrib.type, attrib.normalized, attrib.stride, attrib.offset);
 }
 
 } // namespace aw

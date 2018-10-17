@@ -12,7 +12,7 @@ public:
   using ChildVector = std::vector<Widget::SPtr>;
 
 public:
-  Container(const GUI& gui) : Widget(gui) {}
+  Container(const GUI& gui) : Widget(gui) { setConsumeEvent(false); }
   virtual ~Container() = default;
 
   const ChildVector& getChildren() const { return mChildren; }

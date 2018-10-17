@@ -12,9 +12,7 @@ using namespace aw::constantsF;
 
 namespace aw
 {
-OrbitCameraController::OrbitCameraController(aw::Camera* camera) : mCamera(camera)
-{
-}
+OrbitCameraController::OrbitCameraController(aw::Camera* camera) : mCamera(camera) {}
 
 void OrbitCameraController::setCamera(aw::Camera* camera)
 {
@@ -43,17 +41,17 @@ void OrbitCameraController::setViewAtPoint(Vec3 point)
 
 void OrbitCameraController::rotateHorizontal(float radians)
 {
-  mHorizontalRotation += radians * mHorizontalSensibility;
+  mHorizontalRotation += radians;
 }
 
 void OrbitCameraController::rotateVertical(float radians)
 {
-  mVerticalRotation += radians * mVerticalSensibility;
+  mVerticalRotation += radians;
 }
 
 void OrbitCameraController::zoom(float units)
 {
-  mDistance += units * mZoomSensibility;
+  mDistance += units;
   mDistance = std::max(0.f, mDistance);
 }
 
@@ -81,6 +79,11 @@ float OrbitCameraController::getHorizontalRotation() const
 float OrbitCameraController::getVerticalRotation() const
 {
   return mVerticalRotation;
+}
+
+float OrbitCameraController::getDistanceToViewPoint() const
+{
+  return mDistance;
 }
 
 } // namespace aw

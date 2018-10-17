@@ -4,6 +4,8 @@
 
 namespace aw
 {
+class SceneNode;
+using Scene = SceneNode;
 class MeshNode;
 class Camera;
 class ShaderProgram;
@@ -13,6 +15,8 @@ class Texture2D;
 class MeshRenderer
 {
 public:
+  void analyzeScene(const aw::Scene& scene);
+
   void registerMesh(const MeshNode* mesh);
 
   void renderForwardPass(const Camera& camera, ShaderProgram& shader);

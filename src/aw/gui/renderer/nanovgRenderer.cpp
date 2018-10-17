@@ -33,9 +33,10 @@ Vec2 NanovgRenderer::calculateTextSize(const std::string& text, const TextStyle&
   return getTextSize(mContext, text, style);
 }
 
-void NanovgRenderer::beginFrame()
+void NanovgRenderer::beginFrame(Vec2 windowResolution)
 {
-  nvgBeginFrame(mContext, 800.f, 600.f, 1.f);
+  nvgBeginFrame(mContext, windowResolution.x, windowResolution.y, 1.f);
+  glViewport(0, 0, static_cast<int>(windowResolution.x), static_cast<int>(windowResolution.y));
 }
 
 void NanovgRenderer::endFrame()

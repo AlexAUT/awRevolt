@@ -27,6 +27,7 @@ public:
 
   float getHorizontalRotation() const;
   float getVerticalRotation() const;
+  float getDistanceToViewPoint() const;
 
 private:
 private:
@@ -34,12 +35,8 @@ private:
 
   float mHorizontalRotation{0.f};
   float mVerticalRotation{0.f};
-  float mDistance{1.f};
+  float mDistance{20.f};
   Vec3 mLookAt{0.f};
-
-  float mHorizontalSensibility{0.005f};
-  float mVerticalSensibility{0.005f};
-  float mZoomSensibility{1.f};
 };
 
 } // namespace aw

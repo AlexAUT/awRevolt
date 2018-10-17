@@ -29,7 +29,7 @@ bool Container::processEvent(const WindowEvent& event)
     usedEvent = child->processEvent(localEvent) || usedEvent;
   }
 
-  return Widget::processEvent(event) || usedEvent;
+  return usedEvent || Widget::processEvent(event);
 }
 
 void Container::updateLayout()

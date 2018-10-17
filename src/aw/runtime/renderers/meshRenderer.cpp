@@ -5,12 +5,27 @@
 #include <aw/graphics/core/shaderProgram.hpp>
 #include <aw/graphics/core/texture2D.hpp>
 
+#include <aw/opengl/opengl.hpp>
+
 #include <aw/runtime/scene/meshNode.hpp>
+#include <aw/runtime/scene/scene.hpp>
 
 #include <aw/utils/log.hpp>
 
 namespace aw
 {
+void MeshRenderer::analyzeScene(const aw::Scene& scene)
+{
+  mMeshes.clear();
+  scene.traverseChilds([this](const auto* node) {
+    auto meshNode = dynamic_cast<const MeshNode*>(node);
+    if (meshNode)
+    {
+      mMeshes.push_back(meshNode);
+    }
+  });
+}
+
 void MeshRenderer::registerMesh(const MeshNode* meshNode)
 {
   mMeshes.push_back(meshNode);
@@ -71,6 +86,10 @@ void MeshRenderer::renderForwardPassWithShadow(const Camera& camera, const Camer
 void MeshRenderer::renderForwardPass(const Camera& camera, ShaderProgram& shader)
 {
   shader.bind();
+
+  glEnable(GL_DEPTH_TEST);
+  glDisable(GL_STENCIL_TEST);
+  glDisable(GL_BLEND);
 
   auto vp = camera.getVPMatrix();
   auto v = camera.getViewMatrix();

@@ -5,5 +5,5 @@
 namespace aw
 {
 // For now just a typedef, may be converted to a separate class in the future
-typedef SceneNode Scene;
+using Scene = SceneNode;
 } // namespace aw

@@ -28,6 +28,9 @@ std::array<float, (vertexCount + 2) * 3> circle(float centerX, float centerY, fl
 
 template <typename VertexType>
 std::array<VertexType, 6 * 6> cube(Vec3 center, Vec3 size);
+
+template <typename VertexIterator>
+void cube(Vec3 center, Vec3 size, VertexIterator begin, VertexIterator end);
 // Make it quadratic, to calculate normals more easily (use scale afterwards to
 // create non quadratic)
 std::array<Vertex, 8 * 3> octahedron(Vec3 center, float radius);

@@ -49,13 +49,19 @@ void Window::swapBuffers()
 void Window::applySettings(const Settings& settings)
 {
   sf::VideoMode videoMode{
-      settings.resolution.x, settings.resolution.y, settings.bitsPerPixel,
+      settings.resolution.x,
+      settings.resolution.y,
+      settings.bitsPerPixel,
   };
 
-  sf::ContextSettings contextSettings{
-      settings.depthBits, settings.stencilBits, settings.antialiasing, settings.openglMajor, settings.openglMinor,
-      static_cast<unsigned>(sf::ContextSettings::Default | (settings.coreContext ? sf::ContextSettings::Core : 0) |
-                            (settings.debugContext ? sf::ContextSettings::Debug : 0))};
+  sf::ContextSettings contextSettings{settings.depthBits,
+                                      settings.stencilBits,
+                                      settings.antialiasing,
+                                      settings.openglMajor,
+                                      settings.openglMinor,
+                                      static_cast<unsigned>(sf::ContextSettings::Default |
+                                                            (settings.coreContext ? sf::ContextSettings::Core : 0) |
+                                                            (settings.debugContext ? sf::ContextSettings::Debug : 0))};
 
   mWindow.create(videoMode, settings.applicationName, sf::Style::Default, contextSettings);
   if (settings.vsync)
@@ -107,6 +113,12 @@ Vec2u Window::getSize() const
 {
   auto size = mWindow.getSize();
   return {static_cast<unsigned>(size.x), static_cast<unsigned>(size.y)};
+}
+
+float Window::getAspectRatio() const
+{
+  auto size = mWindow.getSize();
+  return static_cast<float>(size.x) / static_cast<float>(size.y);
 }
 
 bool Window::hasFocus() const
