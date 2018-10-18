@@ -23,9 +23,6 @@ public:
   void setTextLayout(const TextStyle* layout);
   const TextStyle& getTextLayout() const { return *mTextLayout; }
 
-  void setPadding(Padding padding);
-  Padding getPadding() const { return mPadding; }
-
   virtual void updateLayout() override;
   virtual Vec2 getMinimalSize() const override;
 
@@ -34,7 +31,6 @@ private:
   std::string mText;
 
   const TextStyle* mTextLayout{nullptr};
-  Padding mPadding{5.f, 5.f};
   Vec2 mMinimumSize{0.f};
 };
 } // namespace aw::gui

@@ -91,6 +91,12 @@ void Widget::setPreferedSize(Vec2 size)
   invalidateLayout();
 }
 
+void Widget::setPadding(Padding padding)
+{
+  mPadding = padding;
+  invalidateLayout();
+}
+
 void Widget::setSize(Vec2 size)
 {
   if (mSize == size)

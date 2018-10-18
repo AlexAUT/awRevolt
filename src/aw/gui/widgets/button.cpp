@@ -14,6 +14,7 @@ Button::Button(const GUI& gui, std::string text)
     : Widget(gui), mText(std::move(text)), mTextLayout(getGUI().getTextStyles().getStyle("default"))
 {
   assert(mTextLayout);
+  setPadding({5.f});
 }
 
 void Button::render(Vec2 parentPos)
@@ -29,12 +30,6 @@ void Button::setTextLayout(const TextStyle* layout)
   invalidateLayout();
 }
 
-void Button::setPadding(Padding padding)
-{
-  mPadding = padding;
-  invalidateLayout();
-}
-
 void Button::updateLayout()
 {
   Widget::updateLayout();
@@ -42,8 +37,9 @@ void Button::updateLayout()
   // (textsize + padding) or prefered size
   mMinimumSize = getGUI().getRenderer().calculateTextSize(mText, *mTextLayout);
   LogTemp() << "mMinimumSize : " << mMinimumSize;
-  mMinimumSize.x += mPadding.left + mPadding.right;
-  mMinimumSize.y += mPadding.top + mPadding.bottom;
+  auto& padding = getPadding();
+  mMinimumSize.x += padding.left + padding.right;
+  mMinimumSize.y += padding.top + padding.bottom;
   LogTemp() << "mMinimumSize after: " << mMinimumSize;
 
   mMinimumSize = glm::max(mMinimumSize, getPreferedSize());

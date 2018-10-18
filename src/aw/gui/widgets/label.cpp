@@ -52,20 +52,15 @@ void Label::setAlignmentV(AlignmentV alignment)
   invalidateLayout();
 }
 
-void Label::setPadding(Padding padding)
-{
-  mPadding = padding;
-  invalidateLayout();
-}
-
 void Label::updateLayout()
 {
   Widget::updateLayout();
   // Update the cached minimum size
   // (textsize + padding) or prefered size
   mMinimumSize = getGUI().getRenderer().calculateTextSize(mText, *mTextLayout);
-  mMinimumSize.x += mPadding.left + mPadding.right;
-  mMinimumSize.y += mPadding.top + mPadding.bottom;
+  auto& padding = getPadding();
+  mMinimumSize.x += padding.left + padding.right;
+  mMinimumSize.y += padding.top + padding.bottom;
 
   mMinimumSize = glm::max(mMinimumSize, getPreferedSize());
 }

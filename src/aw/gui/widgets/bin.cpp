@@ -46,9 +46,11 @@ void Bin::updateLayout()
 
 Vec2 Bin::getMinimalSize() const
 {
+  auto padding = getPadding();
+  Vec2 advance{padding.left + padding.right, padding.top + padding.bottom};
   if (mChild)
-    return glm::max(mChild->getMinimalSize(), Widget::getMinimalSize());
-  return Widget::getMinimalSize();
+    return glm::max(mChild->getMinimalSize(), Widget::getMinimalSize()) + advance;
+  return Widget::getMinimalSize() + advance;
 }
 
 void Bin::setChild(Widget::SPtr ptr)
@@ -64,20 +66,15 @@ void Bin::setChild(Widget::SPtr ptr)
     mChild->setParent(getSharedPtr());
 }
 
-void Bin::setPadding(Padding padding)
-{
-  mPadding = padding;
-  invalidateLayout();
-}
-
 Vec2 Bin::calculateChildRelPosition() const
 {
-  return {mPadding.left, mPadding.top};
+  return {getPadding().left, getPadding().top};
 }
 
 Vec2 Bin::calculateChildSize() const
 {
   auto size = getSize();
-  return {size.x - mPadding.left - mPadding.right, size.y - mPadding.top - mPadding.bottom};
+  auto& padding = getPadding();
+  return {size.x - padding.left - padding.right, size.y - padding.top - padding.bottom};
 }
 } // namespace aw::gui

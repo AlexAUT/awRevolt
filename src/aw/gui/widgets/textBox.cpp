@@ -8,6 +8,14 @@
 
 namespace aw::gui
 {
+TextBox::TextBox(const GUI& gui, std::string text)
+    : Widget(gui), mText(std::move(text)), mTextStyle(gui.getTextStyles().getStyle("default"))
+{
+  assert(mTextStyle);
+  setSelectable(true);
+  setPadding({3.f});
+}
+
 void TextBox::setText(std::string text)
 {
   mText = std::move(text);
@@ -20,18 +28,6 @@ bool TextBox::processEvent(const WindowEvent& event)
 {
   bool usedEvent = false;
   // Check if mouse pressed hit textBox
-  if (event.type == WindowEvent::MouseButtonPressed)
-  {
-    if (event.mouseButton.button == sf::Mouse::Left)
-    {
-      Vec2 mousePos = {event.mouseButton.x, event.mouseButton.y};
-      if (isLocalPointOnWidget(mousePos))
-      {
-        select(mousePos);
-        usedEvent = true;
-      }
-    }
-  }
   if (isInState(State::Selected))
   {
     // Check if text input occured
@@ -108,6 +104,7 @@ void TextBox::addCharacterAtCursor(char c)
 void TextBox::select(Vec2 clickPos)
 {
   Widget::select(clickPos);
+  LogTemp() << "Text box selected!" << isInState(State::Selected);
   if (isInState(State::Selected))
   {
     mCursorPosition = getGUI().getRenderer().calculateCursorPosition(*this, clickPos - getRelativePosition());
@@ -122,4 +119,28 @@ void TextBox::setCursorPosition(int position)
   mShowCursor = true;
   mCursorPosition = std::max(std::min(position, static_cast<int>(mText.size())), 0);
 }
+
+void TextBox::setTextStyle(const TextStyle* textStyle)
+{
+  assert(textStyle);
+  mTextStyle = textStyle;
+  invalidateLayout();
 }
+
+void TextBox::updateLayout()
+{
+  auto textSize = getGUI().getRenderer().calculateTextSize("A", *mTextStyle);
+  mMinimalSize.x = std::max(getPreferedSize().x, textSize.x * mMinWidthInCharacter);
+  mMinimalSize.y = std::max(getPreferedSize().y, textSize.y);
+
+  mMinimalSize.x += getPadding().left + getPadding().right;
+  mMinimalSize.y += getPadding().top + getPadding().bottom;
+
+  Widget::updateLayout();
+}
+
+Vec2 TextBox::getMinimalSize() const
+{
+  return mMinimalSize;
+}
+} // namespace aw::gui

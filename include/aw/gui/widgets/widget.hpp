@@ -1,5 +1,6 @@
 #pragma once
 
+#include <aw/gui/style/padding.hpp>
 #include <aw/utils/math/vector.hpp>
 
 #include <bitset>
@@ -41,6 +42,7 @@ public:
   const GUI& getGUI() const { return mGUI; }
 
   void setPreferedSize(Vec2 size);
+  void setPadding(Padding padding);
   void changeState(State state, bool value) { mState.set(static_cast<size_t>(state), value); }
   void enableState(State state) { mState.set(static_cast<size_t>(state)); }
   void disableState(State state) { mState.reset(static_cast<size_t>(state)); }
@@ -53,6 +55,7 @@ public:
   Vec2 getPreferedSize() const { return mPreferedSize; }
   Vec2 getRelativePosition() const { return mRelativePosition; }
   Vec2 getGlobalPosition() const { return mGlobalPosition; }
+  const Padding& getPadding() const { return mPadding; }
 
   bool isLayoutDirty() const { return mIsLayoutDirty; }
   virtual void updateLayout() { mIsLayoutDirty = false; }
@@ -101,6 +104,8 @@ private:
 
   Vec2 mRelativePosition{0.f};
   mutable Vec2 mGlobalPosition{0.f};
+
+  Padding mPadding;
 
   // Event stuff
 public:

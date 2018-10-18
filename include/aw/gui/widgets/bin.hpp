@@ -1,6 +1,5 @@
 #pragma once
 
-#include <aw/gui/style/padding.hpp>
 #include <aw/gui/widgets/widget.hpp>
 
 namespace aw::gui
@@ -8,7 +7,7 @@ namespace aw::gui
 class Bin : public Widget
 {
 public:
-  Bin(const GUI& gui, Padding padding = {0.f}) : Widget(gui), mPadding(padding) {}
+  Bin(const GUI& gui) : Widget(gui) {}
   virtual ~Bin() = default;
 
   virtual void update(float delta) override;
@@ -19,17 +18,14 @@ public:
   virtual Vec2 getMinimalSize() const override;
 
   void setChild(Widget::SPtr child);
-  void setPadding(Padding padding);
 
   const Widget::SPtr& getChild() const { return mChild; }
-  Padding getPadding() const { return mPadding; }
 
 private:
   Vec2 calculateChildRelPosition() const;
   Vec2 calculateChildSize() const;
 
 private:
-  Padding mPadding;
   Widget::SPtr mChild{nullptr};
 };
 } // namespace aw::gui

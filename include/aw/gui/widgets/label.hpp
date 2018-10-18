@@ -3,7 +3,6 @@
 #include <aw/gui/widgets/widget.hpp>
 
 #include <aw/gui/style/alignment.hpp>
-#include <aw/gui/style/padding.hpp>
 
 #include <string>
 
@@ -32,12 +31,10 @@ public:
   void setAlignment(Alignment alignment);
   void setAlignmentH(AlignmentH alignment);
   void setAlignmentV(AlignmentV alignment);
-  void setPadding(Padding padding);
 
   Alignment getAlignment() const { return mAlignment; }
   AlignmentH getAlignmentH() const { return mAlignment.horizontal; }
   AlignmentV getAlignmentV() const { return mAlignment.vertical; }
-  Padding getPadding() const { return mPadding; }
 
   virtual void updateLayout() override;
   virtual Vec2 getMinimalSize() const override;
@@ -46,7 +43,6 @@ private:
 private:
   std::string mText;
   Alignment mAlignment;
-  Padding mPadding;
 
   const TextStyle* mTextLayout{nullptr};
 

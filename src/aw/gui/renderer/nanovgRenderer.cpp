@@ -92,9 +92,6 @@ void NanovgRenderer::render(const Button& button) const
 {
   auto pos = button.getGlobalPosition();
   auto size = button.getSize();
-  LogTemp() << "Min size:" << button.getMinimalSize() << "WTF?";
-  LogTemp() << "What?";
-  LogTemp() << "Button size: " << size;
   NVGcolor color = nvgRGBA(0, 96, 128, 255);
   using State = Button::State;
   if (button.isInState(State::Pressed))
@@ -125,7 +122,14 @@ void NanovgRenderer::render(const TextBox& textBox) const
   auto size = textBox.getSize();
   const auto& text = textBox.getText();
 
-  drawEditBox(mContext, text.c_str(), pos.x, pos.y, size.x, size.y);
+  drawEditBoxBase(mContext, pos.x, pos.y, size.x, size.y);
+
+  // To counter the drop shadow, otherwise the text looks too high and not centered
+  pos.y += 1;
+  pos.x += textBox.getPadding().left;
+  // size -= Vec2{p.left + p.right, p.top + p.bottom};
+  using namespace aw::gui;
+  drawText(mContext, text, pos, size, *textBox.getTextStyle(), {AlignmentH::Left, AlignmentV::Middle}, {});
 
   if (textBox.shouldRenderCursor())
   {
