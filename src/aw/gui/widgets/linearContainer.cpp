@@ -53,6 +53,8 @@ void LinearContainer::updateLayout()
   freeSpace -= (outerDynamicPadding[0] + outerDynamicPadding[1]);
   staticAxisValue -= (outerStaticPadding[0] + outerStaticPadding[1]);
 
+  freeSpace = std::max(0.f, freeSpace);
+
   // Used to calculate the share of each element of the remaining free space
   auto weightSum = std::accumulate(mWeights.begin(), mWeights.end(), 0.f);
 
@@ -62,6 +64,7 @@ void LinearContainer::updateLayout()
   {
     auto& child = mChildren[i];
     auto share = weightSum > 0.f ? freeSpace * (mWeights[i] / weightSum) : 0.f;
+    assert(share >= 0.f);
     // Calculate new size
     auto childSize = child->getMinimalSize();
     childSize[dynamicAxis] += share;
@@ -88,8 +91,8 @@ void LinearContainer::updateLayout()
     mMinimalSizeCache[staticAxis] = std::max(mMinimalSizeCache[staticAxis], size[staticAxis]);
   }
   mMinimalSizeCache[dynamicAxis] -= mSpaceBetweenElements; // same as above
-  mMinimalSizeCache[dynamicAxis] -= (outerDynamicPadding[0] + outerDynamicPadding[1]);
-  mMinimalSizeCache[staticAxis] -= (outerStaticPadding[0] + outerStaticPadding[1]);
+  mMinimalSizeCache[dynamicAxis] += (outerDynamicPadding[0] + outerDynamicPadding[1]);
+  mMinimalSizeCache[staticAxis] += (outerStaticPadding[0] + outerStaticPadding[1]);
   mMinimalSizeCache = glm::max(mMinimalSizeCache, getPreferedSize());
 }
 

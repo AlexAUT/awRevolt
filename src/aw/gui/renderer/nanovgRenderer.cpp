@@ -92,6 +92,9 @@ void NanovgRenderer::render(const Button& button) const
 {
   auto pos = button.getGlobalPosition();
   auto size = button.getSize();
+  LogTemp() << "Min size:" << button.getMinimalSize() << "WTF?";
+  LogTemp() << "What?";
+  LogTemp() << "Button size: " << size;
   NVGcolor color = nvgRGBA(0, 96, 128, 255);
   using State = Button::State;
   if (button.isInState(State::Pressed))
@@ -99,6 +102,11 @@ void NanovgRenderer::render(const Button& button) const
   else if (button.isInState(State::Hovered))
     shadeColor(color, 0.1f);
   drawButton(mContext, 0, button.getText().c_str(), pos.x, pos.y, size.x, size.y, color);
+
+  using namespace aw::gui;
+  const auto a = Alignment{AlignmentH::Center, AlignmentV::Middle};
+  const auto p = Padding(0.f);
+  drawText(mContext, button.getText(), pos, size, button.getTextLayout(), a, p);
 }
 
 template <>

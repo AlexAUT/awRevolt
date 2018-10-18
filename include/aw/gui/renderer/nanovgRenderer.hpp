@@ -8,7 +8,7 @@
 
 namespace aw::gui
 {
-class TextStyle;
+struct TextStyle;
 
 class NanovgRenderer
 {

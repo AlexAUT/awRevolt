@@ -2,7 +2,9 @@
 
 namespace aw
 {
-SceneNode::SceneNode() : mLocalTransform(std::bind(&SceneNode::invalidGlobalTransformCache, this)) {}
+SceneNode::SceneNode() : mLocalTransform(std::bind(&SceneNode::invalidGlobalTransformCache, this))
+{
+}
 
 SceneNode::~SceneNode()
 {
@@ -63,7 +65,7 @@ void SceneNode::traverseChilds(const std::function<void(SceneNode*)>& callback)
 void SceneNode::traverseChilds(const std::function<void(const SceneNode*)>& callback) const
 {
   callback(this);
-  for (auto& child : mChildren)
+  for (const auto* child : mChildren)
     child->traverseChilds(callback);
 }
 
