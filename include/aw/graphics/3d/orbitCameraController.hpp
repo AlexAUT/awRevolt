@@ -35,7 +35,7 @@ private:
 
   float mHorizontalRotation{0.f};
   float mVerticalRotation{0.f};
-  float mDistance{20.f};
+  float mDistance{2.f};
   Vec3 mLookAt{0.f};
 };
 

@@ -14,7 +14,7 @@
 
 namespace aw::gui
 {
-NanovgRenderer::NanovgRenderer() : mContext(nvgCreateGL3(NVG_STENCIL_STROKES | NVG_DEBUG))
+NanovgRenderer::NanovgRenderer() : mContext(nvgCreateGL3(NVG_STENCIL_STROKES)) //| NVG_DEBUG))
 {
   assert(mContext);
 

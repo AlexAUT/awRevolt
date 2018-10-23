@@ -2,6 +2,7 @@
 
 #include <aw/graphics/3d/meshPose.hpp>
 #include <aw/graphics/3d/transform.hpp>
+#include <aw/graphics/core/renderer.hpp>
 
 #include <aw/utils/math/vector.hpp>
 
@@ -37,5 +38,7 @@ private:
   MeshPose mPose;
 
   std::vector<Mat4> mBoneTransforms;
+
+  Renderer mRenderer;
 };
 } // namespace aw

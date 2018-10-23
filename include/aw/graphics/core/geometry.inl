@@ -2,6 +2,7 @@
 
 #include <aw/graphics/core/geometry.hpp>
 
+#include <aw/utils/log.hpp>
 #include <aw/utils/typeHelper/typeChecks.hpp>
 
 #include <algorithm>

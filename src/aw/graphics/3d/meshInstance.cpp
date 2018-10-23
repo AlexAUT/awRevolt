@@ -7,7 +7,8 @@
 
 namespace aw
 {
-MeshInstance::MeshInstance(const Mesh& mesh) : mMesh(mesh)
+MeshInstance::MeshInstance(const Mesh& mesh)
+    : mMesh(mesh), mRenderer(Renderer::PrimitiveType::Triangles, Renderer::IndicesType::UnsignedInt)
 {
   mPose.setMeshInstance(this);
   mBoneTransforms.resize(mesh.getBoneCount());
@@ -29,7 +30,7 @@ void MeshInstance::render(const ShaderProgram& shader) const
   if (mBoneTransforms.size() > 0)
   {
     shader.setUniform("has_bones", true);
-    shader.setUniformArrayMat4("bones[0]", mBoneTransforms.size(),
+    shader.setUniformArrayMat4("bones[0]", static_cast<unsigned>(mBoneTransforms.size()),
                                reinterpret_cast<const float*>(mBoneTransforms.data()));
   }
   else
@@ -37,7 +38,7 @@ void MeshInstance::render(const ShaderProgram& shader) const
     shader.setUniform("has_bones", false);
   }
 
-  const unsigned meshCount = mMesh.getObjectCount();
+  const unsigned meshCount = static_cast<const unsigned>(mMesh.getObjectCount());
   for (unsigned i = 0; i < meshCount; i++)
   {
     const auto& meshObject = mMesh.getObject(i);
@@ -53,7 +54,8 @@ void MeshInstance::render(const ShaderProgram& shader) const
     shader.setUniform("enableDecalTex", material.getDiffseSlotCount() > 1);
     if (material.getDiffseSlotCount() > 1)
       material.getDiffuseSlot(1).texture2D->bind(1);
-    GL_CHECK(glDrawElements(GL_TRIANGLES, meshObject.indices.size(), GL_UNSIGNED_INT, (void*)0));
+    mRenderer.renderElements(static_cast<int>(meshObject.indices.size()));
+    // GL_CHECK(glDrawElements(GL_TRIANGLES, meshObject.indices.size(), GL_UNSIGNED_INT, (void*)0));
   }
 }
 
@@ -62,7 +64,8 @@ void MeshInstance::setBoneTransformation(const std::string& name, const Mat4& tr
   int boneIndex = mMesh.getBoneIndex(name);
   if (boneIndex >= 0)
   {
-    mBoneTransforms[boneIndex] = mMesh.getGlobalInverseTransform() * transform * mMesh.getBoneOffset(name);
+    auto index = static_cast<size_t>(boneIndex);
+    mBoneTransforms[index] = mMesh.getGlobalInverseTransform() * transform * mMesh.getBoneOffset(name);
   }
 }
 

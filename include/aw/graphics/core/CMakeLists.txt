@@ -9,6 +9,7 @@ set(HEADER_FILES_GRAPHICS ${HEADER_FILES_GRAPHICS}
     ${CMAKE_CURRENT_SOURCE_DIR}/intermediateRenderer.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/intermediateRenderer.inl
     ${CMAKE_CURRENT_SOURCE_DIR}/postProcessRenderer.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/renderer.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/renderBuffer.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/shaderProgram.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/shaderStage.hpp

@@ -6,4 +6,4 @@ namespace aw::gui
 {
 class GUI;
 void applyDefaultStyles(GUI& gui);
-}
+} // namespace aw::gui

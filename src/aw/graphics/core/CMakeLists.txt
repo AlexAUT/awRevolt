@@ -7,6 +7,7 @@ set(SOURCE_FILES_GRAPHICS ${SOURCE_FILES_GRAPHICS}
     ${CMAKE_CURRENT_SOURCE_DIR}/image.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/indicesBuffer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/postProcessRenderer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/renderer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/renderBuffer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/shaderProgram.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/shaderStage.cpp

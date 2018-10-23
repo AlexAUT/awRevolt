@@ -2,14 +2,13 @@
 
 #include <aw/graphics/core/intermediateRenderer.hpp>
 
-#include <aw/opengl/opengl.hpp>
-
 #include <cassert>
 
 namespace aw
 {
 template <typename VertexType>
-IntermediateRenderer<VertexType>::IntermediateRenderer(size_t bufferCount) : mBuffer(bufferCount)
+IntermediateRenderer<VertexType>::IntermediateRenderer(size_t bufferCount)
+    : mBuffer(bufferCount), mRenderer(Renderer::PrimitiveType::Triangles)
 {
   assert(bufferCount > 0);
   mVBO.bind();
@@ -63,7 +62,7 @@ void IntermediateRenderer<VertexType>::render()
   mVBO.setSubData(mBuffer.data(), mBufferCursor * sizeof(VertexType), 0);
   mVBO.unbind();
 
-  GL_CHECK(glDrawArrays(GL_TRIANGLES, 0, mBufferCursor));
+  mRenderer.renderArrays(0, static_cast<int>(mBufferCursor));
 
   mVAO.unbind();
   mBufferCursor = 0;
