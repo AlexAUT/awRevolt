@@ -11,10 +11,11 @@
 
 namespace aw
 {
-template <typename VertexType>
+template <typename VertexType_>
 class PrimitiveRenderer
 {
 public:
+  using VertexType = VertexType_;
   using VertexContainer = std::vector<VertexType>;
   using Iterator = typename VertexContainer::iterator;
   using PrimitiveType = Renderer::PrimitiveType;
@@ -22,7 +23,7 @@ public:
 public:
   PrimitiveRenderer(PrimitiveType primitiveType = PrimitiveType::Triangles);
 
-  std::tuple<Iterator, Iterator> allocate(size_t count);
+  Iterator allocate(size_t count);
 
   void clear();
   void render();
@@ -46,11 +47,11 @@ PrimitiveRenderer<VertexType>::PrimitiveRenderer(PrimitiveType primitiveType) : 
 }
 
 template <typename VertexType>
-auto PrimitiveRenderer<VertexType>::allocate(size_t count) -> std::tuple<Iterator, Iterator>
+auto PrimitiveRenderer<VertexType>::allocate(size_t count) -> Iterator
 {
   auto currentSize = mCPUBuffer.size();
   mCPUBuffer.resize(currentSize + count);
-  return {mCPUBuffer.begin() + currentSize, mCPUBuffer.end()};
+  return mCPUBuffer.begin() + currentSize;
 }
 
 template <typename VertexType>
@@ -64,6 +65,7 @@ void PrimitiveRenderer<VertexType>::render()
 {
   if (mCPUBuffer.empty())
     return;
+
   mGPUBuffer.bind();
   if (mGPUBufferSize < mCPUBuffer.size())
   {

@@ -24,9 +24,10 @@ bool Container::processEvent(const WindowEvent& event)
 {
   auto localEvent = convertToLocalEvent(event, *this);
   auto usedEvent = false;
-  for (auto& child : mChildren)
+  // No range based loop, because events may change the children
+  for (size_t i = 0; i < mChildren.size(); i++)
   {
-    usedEvent = child->processEvent(localEvent) || usedEvent;
+    usedEvent = mChildren[i]->processEvent(localEvent) || usedEvent;
   }
 
   return usedEvent || Widget::processEvent(event);

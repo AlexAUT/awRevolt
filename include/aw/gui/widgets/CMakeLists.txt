@@ -4,6 +4,8 @@ set(HEADER_FILES_GUI ${HEADER_FILES_GUI}
   ${CMAKE_CURRENT_SOURCE_DIR}/floatingContainer.hpp
   ${CMAKE_CURRENT_SOURCE_DIR}/label.hpp
   ${CMAKE_CURRENT_SOURCE_DIR}/linearContainer.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/list.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/listItem.hpp
   ${CMAKE_CURRENT_SOURCE_DIR}/menu.hpp
   ${CMAKE_CURRENT_SOURCE_DIR}/menuItem.hpp
   ${CMAKE_CURRENT_SOURCE_DIR}/menuSubItem.hpp

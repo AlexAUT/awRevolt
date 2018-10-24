@@ -182,6 +182,24 @@ void NanovgRenderer::render(const MenuSubItem& menuSubItem) const
 }
 
 template <>
+void NanovgRenderer::render(const ListItem& listItem) const
+{
+  using State = Widget::State;
+  if (listItem.isInState(State::Hovered) || listItem.isInState(State::Selected))
+  {
+    auto pos = listItem.getGlobalPosition();
+    auto size = listItem.getSize();
+    Color color{28 / 255.f, 30 / 255.f, 255 / 255.f, 255 / 255.f};
+    if (!listItem.isInState(State::Selected))
+      color.shade(0.25f);
+
+    drawRoundedRect(mContext, pos, size, 3.f, color);
+    drawHeaderHighlight(mContext, pos, size, color, 0.f);
+  }
+  render(static_cast<const Label&>(listItem));
+}
+
+template <>
 int NanovgRenderer::calculateCursorPosition(const TextBox& textBox, Vec2 relativePoint) const
 {
   const auto& text = textBox.getText();

@@ -30,7 +30,14 @@ template <typename VertexType>
 std::array<VertexType, 6 * 6> cube(Vec3 center, Vec3 size);
 
 template <typename VertexIterator>
-void cube(Vec3 center, Vec3 size, VertexIterator begin, VertexIterator end);
+void cube(Vec3 center, Vec3 size, VertexIterator begin);
+
+template <typename VertexIterator>
+void cubePoints(Vec3 center, Vec3 size, VertexIterator begin);
+
+template <typename VertexIterator>
+void cubeLines(Vec3 center, Vec3 size, VertexIterator begin);
+
 // Make it quadratic, to calculate normals more easily (use scale afterwards to
 // create non quadratic)
 std::array<Vertex, 8 * 3> octahedron(Vec3 center, float radius);

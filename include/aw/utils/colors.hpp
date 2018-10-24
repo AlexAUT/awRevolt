@@ -50,6 +50,7 @@ const Color DEEPPINK = {1.000f, 0.078f, 0.576f, 1.000f};
 const Color DEEPSKYBLUE = {0.000f, 0.749f, 1.000f, 1.000f};
 const Color DIMGRAY = {0.412f, 0.412f, 0.412f, 1.000f};
 const Color DIMGREY = {0.412f, 0.412f, 0.412f, 1.000f};
+const Color DIMSLATEGREY = {0.2, 0.2, 0.2, 1.000f};
 const Color DODGERBLUE = {0.118f, 0.565f, 1.000f, 1.000f};
 const Color FIREBRICK = {0.698f, 0.133f, 0.133f, 1.000f};
 const Color FLORALWHITE = {1.000f, 0.980f, 0.941f, 1.000f};

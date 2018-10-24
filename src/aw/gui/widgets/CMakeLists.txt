@@ -5,6 +5,8 @@ set(SOURCE_FILES_GUI ${SOURCE_FILES_GUI}
   ${CMAKE_CURRENT_SOURCE_DIR}/floatingContainer.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/label.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/linearContainer.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/list.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/listItem.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/menu.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/menuItem.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/menuSubItem.cpp

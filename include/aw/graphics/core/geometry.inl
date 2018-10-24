@@ -36,15 +36,13 @@ template <typename VertexType>
 std::array<VertexType, 6 * 6> cube(Vec3 center, Vec3 size)
 {
   std::array<VertexType, 6 * 6> result;
-  cube(center, size, result.begin(), result.end());
+  cube(center, size, result.begin());
   return result;
 }
 
 template <typename VertexIterator>
-void cube(Vec3 center, Vec3 size, VertexIterator begin, VertexIterator end)
+void cube(Vec3 center, Vec3 size, VertexIterator begin)
 {
-  assert(std::distance(begin, end) == 36);
-
   const float hW = size.x / 2.f;
   const float hH = size.y / 2.f;
   const float hD = size.z / 2.f;
@@ -107,6 +105,75 @@ void cube(Vec3 center, Vec3 size, VertexIterator begin, VertexIterator end)
   priv::setVertex(begin++, {left, top, back}, leftFaceNormal, texLeftTop);
   priv::setVertex(begin++, {left, bottom, back}, leftFaceNormal, texLeftBot);
   priv::setVertex(begin++, {left, bottom, front}, leftFaceNormal, texRightBot);
+}
+
+template <typename VertexIterator>
+void cubePoints(Vec3 center, Vec3 size, VertexIterator begin)
+{
+  const float hW = size.x / 2.f;
+  const float hH = size.y / 2.f;
+  const float hD = size.z / 2.f;
+  const float left = center.x - hW;
+  const float right = center.x + hW;
+  const float top = center.y + hH;
+  const float bottom = center.y - hH;
+  const float back = center.z - hD;
+  const float front = center.z + hD;
+
+  const Vec3 null{0.f, 0.f, 0.f};
+  // Front face points
+  priv::setVertex(begin++, {left, bottom, front}, null, null);
+  priv::setVertex(begin++, {right, bottom, front}, null, null);
+  priv::setVertex(begin++, {left, top, front}, null, null);
+  priv::setVertex(begin++, {right, top, front}, null, null);
+  // Back face points
+  priv::setVertex(begin++, {left, bottom, back}, null, null);
+  priv::setVertex(begin++, {right, bottom, back}, null, null);
+  priv::setVertex(begin++, {left, top, back}, null, null);
+  priv::setVertex(begin++, {right, top, back}, null, null);
+}
+
+template <typename VertexIterator>
+void cubeLines(Vec3 center, Vec3 size, VertexIterator begin)
+{
+  const float hW = size.x / 2.f;
+  const float hH = size.y / 2.f;
+  const float hD = size.z / 2.f;
+  const float left = center.x - hW;
+  const float right = center.x + hW;
+  const float top = center.y + hH;
+  const float bottom = center.y - hH;
+  const float back = center.z - hD;
+  const float front = center.z + hD;
+
+  const Vec3 null{0.f, 0.f, 0.f};
+  // Front face lines
+  priv::setVertex(begin++, {left, bottom, front}, null, null);
+  priv::setVertex(begin++, {right, bottom, front}, null, null);
+  priv::setVertex(begin++, {right, bottom, front}, null, null);
+  priv::setVertex(begin++, {right, top, front}, null, null);
+  priv::setVertex(begin++, {right, top, front}, null, null);
+  priv::setVertex(begin++, {left, top, front}, null, null);
+  priv::setVertex(begin++, {left, top, front}, null, null);
+  priv::setVertex(begin++, {left, bottom, front}, null, null);
+  // Back face lines
+  priv::setVertex(begin++, {left, bottom, back}, null, null);
+  priv::setVertex(begin++, {right, bottom, back}, null, null);
+  priv::setVertex(begin++, {right, bottom, back}, null, null);
+  priv::setVertex(begin++, {right, top, back}, null, null);
+  priv::setVertex(begin++, {right, top, back}, null, null);
+  priv::setVertex(begin++, {left, top, back}, null, null);
+  priv::setVertex(begin++, {left, top, back}, null, null);
+  priv::setVertex(begin++, {left, bottom, back}, null, null);
+  // Connecting front and back faces
+  priv::setVertex(begin++, {left, bottom, back}, null, null);
+  priv::setVertex(begin++, {left, bottom, front}, null, null);
+  priv::setVertex(begin++, {right, bottom, back}, null, null);
+  priv::setVertex(begin++, {right, bottom, front}, null, null);
+  priv::setVertex(begin++, {right, top, back}, null, null);
+  priv::setVertex(begin++, {right, top, front}, null, null);
+  priv::setVertex(begin++, {left, top, back}, null, null);
+  priv::setVertex(begin++, {left, top, front}, null, null);
 }
 } // namespace geo
 } // namespace aw
