@@ -1,17 +1,15 @@
 #SFML
-set(SFML_BUILD_AUDIO OFF)
-set(SFML_BUILD_NETWORK OFF)
-add_subdirectory(dependencies/sfml)
+if(AW_ANDROID)
+  set(SFML_DIR "${THIRD_PARTY_DIR}/sfml/lib/${ANDROID_ABI}/cmake/SFML")
+else(AW_ANDROID)
+  set(SFML_DIR "${THIRD_PARTY_DIR}//lib/cmake/SFML")
+endif(AW_ANDROID)
+
+find_package(SFML 2 COMPONENTS window system REQUIRED)
 
 #Assimp
-set(ASSIMP_BUILD_ALL_IMPORTERS_BY_DEFAULT OFF CACHE BOOL "a")
-set(ASSIMP_BUILD_TESTS OFF CACHE BOOL "a")
-set(ASSIMP_BUILD_SAMPLES OFF CACHE BOOL "a")
-set(ASSIMP_BUILD_ASSIMP_TOOLS OFF CACHE BOOL "a")
-set(ASSIMP_BUILD_FBX_IMPORTER ON CACHE BOOL "a")
-set(ASSIMP_BUILD_OBJ_IMPORTER ON CACHE BOOL "a")
-set(ASSIMP_BUILD_COLLADA_IMPORTER ON CACHE BOOL "a")
-add_subdirectory(dependencies/assimp)
+set(assimp_DIR "${THIRD_PARTY_DIR}/lib/${ANDROID_ABI}/cmake/assimp-4.1")
+find_package(assimp REQUIRED)
 
-set(awGraphicsDependencies awUtils sfml-graphics sfml-window sfml-system assimp)
+set(awGraphicsDependencies awUtils sfml-window sfml-system assimp::assimp)
 

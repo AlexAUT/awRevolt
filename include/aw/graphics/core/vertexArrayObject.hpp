@@ -40,7 +40,7 @@ public:
 private:
   bool indexInUse(unsigned index) const;
 
-  void applyVertexAttribute(const BindPair& bufferAttribute);
+  void applyVertexAttribute(const BindPair& bufferAttribute) const;
 
 private:
   std::vector<BindPair> mAttributes;

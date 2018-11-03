@@ -5,3 +5,4 @@ config/*
 extlibs/
 log.txt
 .ycm*
+dependencies/built

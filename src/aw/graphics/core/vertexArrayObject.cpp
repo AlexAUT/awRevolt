@@ -78,7 +78,7 @@ bool VertexArrayObject::indexInUse(unsigned index) const
   return false;
 }
 
-void VertexArrayObject::applyVertexAttribute(const BindPair& attribute)
+void VertexArrayObject::applyVertexAttribute(const BindPair& attribute) const
 {
   const auto& vbo = std::get<0>(attribute.first);
   if (vbo)

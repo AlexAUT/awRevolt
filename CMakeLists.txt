@@ -1,6 +1,4 @@
-cmake_minimum_required(VERSION 3.9)
-
-set(CMAKE_CXX_STANDARD 17)
+cmake_minimum_required(VERSION 3.6)
 include(cmake/enableWarnings.cmake)
 
 # OS DETECTION
@@ -10,9 +8,16 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
 elseif(${CMAKE_SYSTEM_NAME} MATCHES "Android")
   set(AW_ANDROID true)
   set(AW_USE_GLES true)
+  set(THIRD_PARTY_DIR "${CMAKE_ANDROID_NDK}/sources/third_party")
 else()
   set(AW_DESKTOP true)
   set(AW_USE_OPENGL true)
+  set(THIRD_PARTY_DIR "${CMAKE_CURRENT_SOURCE_DIR}/dependencies/built")
+endif()
+
+#Android cmake is too old for 17, so android will pass it as CXX_FLAGS
+if(NOT AW_ANDROID)
+  set(CMAKE_CXX_STANDARD 17)
 endif()
 
 #VARIABLES TO ENABLE/DISABLE MODULES
@@ -45,7 +50,7 @@ add_subdirectory(${SRC_DIR_AW})
 
 function(defineTarget targetName files)
   set(AW_ENABLED_TARGETS "${AW_ENABLED_TARGETS}${targetName} ")
-  add_library(${targetName} SHARED ${files})
+  add_library(${targetName} STATIC ${files})
   include(cmake/${targetName}Dependencies.cmake)
   target_link_libraries(${targetName} ${${targetName}Dependencies})
   set_target_properties(${targetName} PROPERTIES SOVERSION 1)
@@ -55,6 +60,7 @@ endfunction()
 if(AW_BUILD_UTILS)
   defineTarget(awUtils "${SOURCE_FILES_UTILS};${HEADER_FILES_UTILS}")
 endif()
+
 if(AW_BUILD_GRAPHICS)
   defineTarget(awGraphics "${SOURCE_FILES_GRAPHICS};${HEADER_FILES_GRAPHICS}")
 endif()
@@ -72,6 +78,8 @@ endif()
 #Since all awRevolt modules share the folder this will add all headers
 target_include_directories(awUtils PUBLIC ${INC_DIR})
 target_include_directories(awUtils PUBLIC ${SRC_DIR})
+
+
 
 # Compile time defines
 if(AW_USE_OPENGL AND AW_BUILD_GRAPHICS)

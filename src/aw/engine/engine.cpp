@@ -17,14 +17,14 @@ int Engine::run()
     handleEvents();
     update(mUpdateTimer.restart<Seconds>());
     render();
-#ifdef AW_ANDROID
+    //#ifdef AW_ANDROID
     if (!mWindow.hasFocus() && mSettings.sleepOnFocusLossAndroid > 0)
     {
       LogTemp() << "In background sleep for " << mSettings.sleepOnFocusLossAndroid << " sec!";
-      const auto sleepDuration = std::chrono::seconds(mSettings.sleepOnFocusLossAndroid);
+      const auto sleepDuration = std::chrono::seconds(static_cast<int>(mSettings.sleepOnFocusLossAndroid));
       std::this_thread::sleep_for(sleepDuration);
     }
-#endif
+    //#endif
   }
   return mReturnCode;
 }
