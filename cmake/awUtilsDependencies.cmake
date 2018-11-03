@@ -7,13 +7,14 @@ add_library(tinyfd STATIC ${TINYFD_SOURCES})
 set_target_properties(tinyfd PROPERTIES SOVERSION 1)
 target_include_directories(tinyfd PUBLIC "dependencies/tinyfd")
 
-set(awUtilsDependencies tinyfd)
-
+#SFML network (logging)
 if(AW_ANDROID)
-  #On android we depend on sfml system, for native activity (path)
   set(SFML_DIR "${THIRD_PARTY_DIR}/sfml/lib/${ANDROID_ABI}/cmake/SFML")
-  find_package(SFML 2 COMPONENTS system REQUIRED)
-  set(awUtilsDependencies ${awUtilsDependencies} sfml-system)
- 
+else(AW_ANDROID)
+  set(SFML_DIR "${THIRD_PARTY_DIR}//lib/cmake/SFML")
 endif(AW_ANDROID)
+
+find_package(SFML 2 COMPONENTS network system REQUIRED)
+
+set(awUtilsDependencies sfml-network sfml-system tinyfd)
 

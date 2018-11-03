@@ -35,7 +35,7 @@ mkdir -p $ASSIMP_BUILD_DIR && cd $ASSIMP_BUILD_DIR
 for buildType in Debug Release; do
   mkdir -p $ASSIMP_BUILD_DIR/$buildType && cd $ASSIMP_BUILD_DIR/$buildType
 
-  echo "Configure Assimp $buildType may take a while..."
+  echo "Configure Assimp $buildType..."
   cmake $ROOT_DIR/assimp -DCMAKE_BUILD_TYPE=$buildType \
                          $CMAKE_PARAMS \
                          -DASSIMP_BUILD_ALL_IMPORTERS_BY_DEFAULT=True \
@@ -47,7 +47,7 @@ for buildType in Debug Release; do
                          -DASSIMP_BUILD_ASSIMP_TOOLS=False \
                          &>> $LOG_FILE
 
-  echo "Build Assimp $buildType..."
+  echo "Build Assimp $buildType may take a while..."
   make -j &>> $LOG_FILE
   echo "Install Assimp $buildType..."
   make install &>> $LOG_FILE

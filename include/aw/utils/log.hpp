@@ -15,8 +15,8 @@ enum LogLevel
   Error,
   Warning,
   Debug,
-  Verbose, // only visible in log files not in console
-  None,    // Should only be used for output level, not for logging itself
+  Verbose,
+  None, // Should only be used for output level, not for logging itself
 };
 struct LogModule
 {

@@ -104,35 +104,3 @@ done
 
 cd $ROOT_DIR
 
-exit
-
-# JSONCPP
-mkdir -p extlibs/jsoncpp/buildAndroid
-cd extlibs/jsoncpp/buildAndroid
-mkdir release
-cd release
-cmake ../.. -DCMAKE_BUILD_TYPE=Release \
-         -DCMAKE_INSTALL_PREFIX=$ANDROID_NDK/sources/third_party \
-         -DCMAKE_SYSTEM_NAME=Android \
-         -DCMAKE_ANDROID_NDK=$ANDROID_NDK \
-         -DCMAKE_ANDROID_STL_TYPE=c++_shared -DCMAKE_ANDROID_NDK_TOOLCHAIN_VERSION=clang \
-         -DBUILD_SHARED_LIBS=True \
-         -DBUILD_STATIC_LIBS=False \
-         -DJSONCPP_WITHPOST_BUILD_UNITTEST=False \
-         -DJSONCPP_WITH_TESTS=False
-make -j 8 && make install
-
-cd ..
-mkdir -p debug
-cd debug
-cmake ../.. -DCMAKE_BUILD_TYPE=Debug \
-         -DCMAKE_INSTALL_PREFIX=../../../ \
-         -DDEBUG_LIBNAME_SUFFIX=-d \
-         -DCMAKE_SYSTEM_NAME=Android \
-         -DCMAKE_ANDROID_NDK=$ANDROID_NDK \
-         -DCMAKE_ANDROID_STL_TYPE=c++_shared -DCMAKE_ANDROID_NDK_TOOLCHAIN_VERSION=clang \
-         -DJSONCPP_WITHPOST_BUILD_UNITTEST=False \
-         -DJSONCPP_WITH_TESTS=False
-make -j 8 && make install
-
-cd ../../../../
