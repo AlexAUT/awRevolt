@@ -4,6 +4,7 @@
 
 #include <functional>
 #include <iostream>
+#include <sstream>
 #include <string>
 
 namespace aw
@@ -34,8 +35,12 @@ public:
   LogInstance& operator<<(const T& toOutput);
 
 private:
+  void writeToServer(std::string text);
+
+private:
   bool mWriteToConsole;
   bool mWriteToFileSystem;
+  bool mWriteToRemoteServer;
   std::ostream& mConsoleStream;
   std::ostream& mFileStream;
 };
@@ -52,7 +57,8 @@ private:
 } // namespace log
 
 bool LOG_INITIALIZE(log::LogLevel console = log::Debug, log::LogLevel filesystem = log::Verbose,
-                    std::string logFilePath = path::getInternal() + "log.txt");
+                    std::string logFilePath = path::getInternal() + "log.txt", log::LogLevel remote = log::Error,
+                    std::string address = "188.68.48.23", int port = 15909);
 aw::log::LogInstance LOG(log::LogLevel level, std::string moduleName);
 aw::log::LogInstance LOG(const log::LogModule& logModule);
 } // namespace aw
@@ -69,6 +75,12 @@ LogInstance& LogInstance::operator<<(const T& toOutput)
     mConsoleStream << toOutput;
   if (mWriteToFileSystem)
     mFileStream << toOutput;
+  if (mWriteToRemoteServer)
+  {
+    std::stringstream sstr;
+    sstr << toOutput;
+    writeToServer(sstr.str());
+  }
   return *this;
 }
 } // namespace log

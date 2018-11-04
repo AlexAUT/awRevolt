@@ -5,6 +5,9 @@
 #include <cassert>
 #include <fstream>
 #include <memory>
+#include <sstream>
+
+#include <SFML/Network/Http.hpp>
 
 #ifdef AW_ANDROID
 #include <aw/utils/impl/androidStreamBuffer.hpp>
@@ -16,9 +19,12 @@ namespace aw
 bool initialized = false;
 log::LogLevel logOutputLevelConsole = log::Debug;
 log::LogLevel logOutputLevelFile = log::Verbose;
+log::LogLevel logOUtputLevelRemote = log::Error;
 
 std::ostream* consoleStream{nullptr};
 std::ostream* fileStream{nullptr};
+
+sf::Http httpClient;
 
 namespace log
 {
@@ -63,7 +69,7 @@ std::string logLevelToString(LogLevel level)
 
 LogInstance::LogInstance(LogLevel level, const std::string& module, std::ostream& console, std::ostream& file)
     : mWriteToConsole(level <= logOutputLevelConsole), mWriteToFileSystem(level <= logOutputLevelFile),
-      mConsoleStream(console), mFileStream(file)
+      mWriteToRemoteServer(level <= logOUtputLevelRemote), mConsoleStream(console), mFileStream(file)
 {
   auto prefix = colorPrefix(level) + logLevelToString(level);
   auto timestamp = date::getDateTime();
@@ -81,9 +87,24 @@ LogInstance::~LogInstance()
     mFileStream << std::endl;
 }
 
+void LogInstance::writeToServer(std::string text)
+{
+  sf::Http::Request getAll;
+  getAll.setUri("/logSessions");
+  getAll.setMethod(sf::Http::Request::Method::Post);
+  getAll.setHttpVersion(1, 1);
+  getAll.setBody("content=" + text);
+
+  auto response = httpClient.sendRequest(getAll);
+
+  LogTemp() << "Response: " << response.getStatus();
+  LogTemp() << "Content: " << response.getBody();
+}
+
 } // namespace log
 
-bool LOG_INITIALIZE(log::LogLevel console, log::LogLevel filesystem, std::string logFilePath)
+bool LOG_INITIALIZE(log::LogLevel console, log::LogLevel filesystem, std::string logFilePath, log::LogLevel remote,
+                    std::string address, int port)
 {
   assert(!initialized && "For now you can only call initialize once!");
   initialized = true;
@@ -110,6 +131,10 @@ bool LOG_INITIALIZE(log::LogLevel console, log::LogLevel filesystem, std::string
       logOutputLevelFile = log::None;
       std::cout << "Failed to open log output file!" << std::endl;
     }
+  }
+  if (logOUtputLevelRemote != log::None)
+  {
+    httpClient.setHost(address, port);
   }
   return true;
 }
