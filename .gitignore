@@ -6,3 +6,5 @@ extlibs/
 log.txt
 .ycm*
 dependencies/built
+dependencies/precompiledDependencies
+dependencies/linuxBuild

@@ -16,3 +16,6 @@
 [submodule "dependencies/tinyfd"]
 	path = dependencies/tinyfd
 	url = http://git.code.sf.net/p/tinyfiledialogs/code
+[submodule "dependencies/Catch2"]
+	path = dependencies/Catch2
+	url = https://github.com/catchorg/Catch2

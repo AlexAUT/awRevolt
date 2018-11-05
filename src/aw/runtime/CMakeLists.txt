@@ -1,4 +1,5 @@
 #
+add_subdirectory(entitySystem)
 add_subdirectory(loaders)
 add_subdirectory(renderers)
 add_subdirectory(scene)

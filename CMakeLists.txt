@@ -12,7 +12,7 @@ elseif(${CMAKE_SYSTEM_NAME} MATCHES "Android")
 else()
   set(AW_DESKTOP true)
   set(AW_USE_OPENGL true)
-  set(THIRD_PARTY_DIR "${CMAKE_CURRENT_SOURCE_DIR}/dependencies/built")
+  set(THIRD_PARTY_DIR "${CMAKE_CURRENT_SOURCE_DIR}/dependencies/precompiledDependencies")
 endif()
 
 #Android cmake is too old for 17, so android will pass it as CXX_FLAGS
@@ -27,6 +27,8 @@ set(AW_BUILD_GRAPHICS ON CACHE BOOL "Builds the graphics module")
 set(AW_BUILD_ENGINE ON CACHE BOOL "Builds the engine module")
 set(AW_BUILD_REFLECTION ON CACHE BOOL "Builds the reflection module")
 set(AW_BUILD_GUI ON CACHE BOOL "Builds the gui module")
+
+set(AW_BUILD_ALL_TESTS ON CACHE BOOL "Builds tests for all modules")
 
 set(INC_DIR "include")
 set(SRC_DIR "src")
@@ -48,8 +50,10 @@ set(SOURCE_FILES_GUI)
 add_subdirectory(${INC_DIR_AW})
 add_subdirectory(${SRC_DIR_AW})
 
-function(defineTarget targetName files)
-  set(AW_ENABLED_TARGETS "${AW_ENABLED_TARGETS}${targetName} ")
+function(defineTarget targetName files targetList)
+  #Add target to targetList
+  set(${targetList} ${${targetList}} ${targetName} PARENT_SCOPE)
+
   add_library(${targetName} STATIC ${files})
   include(cmake/${targetName}Dependencies.cmake)
   target_link_libraries(${targetName} ${${targetName}Dependencies})
@@ -58,20 +62,20 @@ endfunction()
 
 #GENERATE LIST WITH ENABLED TARGET NAMES
 if(AW_BUILD_UTILS)
-  defineTarget(awUtils "${SOURCE_FILES_UTILS};${HEADER_FILES_UTILS}")
+  defineTarget(awUtils "${SOURCE_FILES_UTILS};${HEADER_FILES_UTILS}" AW_ENABLED_TARGETS)
 endif()
 
 if(AW_BUILD_GRAPHICS)
-  defineTarget(awGraphics "${SOURCE_FILES_GRAPHICS};${HEADER_FILES_GRAPHICS}")
+  defineTarget(awGraphics "${SOURCE_FILES_GRAPHICS};${HEADER_FILES_GRAPHICS}" AW_ENABLED_TARGETS)
 endif()
 if(AW_BUILD_ENGINE)
-  defineTarget(awEngine "${SOURCE_FILES_ENGINE};${HEADER_FILES_ENGINE}")
+  defineTarget(awEngine "${SOURCE_FILES_ENGINE};${HEADER_FILES_ENGINE}" AW_ENABLED_TARGETS)
 endif()
 if(AW_BUILD_REFLECTION)
-  defineTarget(awReflection "${SOURCE_FILES_REFLECTION};${HEADER_FILES_REFLECTION}")
+  defineTarget(awReflection "${SOURCE_FILES_REFLECTION};${HEADER_FILES_REFLECTION}" AW_ENABLED_TARGETS)
 endif()
 if(AW_BUILD_GUI)
-  defineTarget(awGUI "${SOURCE_FILES_GUI};${HEADER_FILES_GUI}")
+  defineTarget(awGUI "${SOURCE_FILES_GUI};${HEADER_FILES_GUI}" AW_ENABLED_TARGETS)
 endif()
 
 #We only set this once, since every other target depends on awUtils
@@ -96,3 +100,17 @@ elseif(AW_EMSCRIPTEN)
   target_compile_definitions(awUtils PUBLIC AW_EMSCRIPTEN)
 endif()
 
+# TEST FRAMEWORK
+if(AW_BUILD_ALL_TESTS)
+  set(TEST_DIR "tests")
+  set(HEADER_FILES_TESTS)
+  set(SOURCE_FILES_TESTS)
+  add_subdirectory(${TEST_DIR})
+
+  add_executable(awTests ${HEADER_FILES_TESTS} ${SOURCE_FILES_TESTS})
+  target_link_libraries(awTests ${AW_ENABLED_TARGETS})
+  message(STATUS "Deps: ${AW_ENABLED_TARGETS}")
+  #Add external dependencies
+  include(cmake/awTestsDependencies.cmake)
+  target_link_libraries(awTests ${awTestsDependencies})
+endif()

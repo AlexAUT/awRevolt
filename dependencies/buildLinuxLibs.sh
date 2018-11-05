@@ -1,9 +1,9 @@
 ROOT_DIR="$( cd "$(dirname "$0")" ; pwd -P )"
 
-INSTALL_DIR=$ROOT_DIR/built
+INSTALL_DIR=$ROOT_DIR/precompiledDependencies
 mkdir -p built
 
-BUILD_DIR=/tmp/linuxBuild
+BUILD_DIR=$ROOT_DIR/linuxBuild
 mkdir -p $BUILD_DIR
 
 #cleanup old build log
@@ -97,6 +97,23 @@ for buildType in Debug Release; do
   make install &>> $LOG_FILE
 
 done
+
+#CATCH2
+CATCH2_BUILD_DIR=$BUILD_DIR/Catch2
+mkdir -p $CATCH2_BUILD_DIR && cd $CATCH2_BUILD_DIR
+echo "Configure Catch2..."
+cmake $ROOT_DIR/Catch2 -DCMAKE_BUILD_TYPE=Debug \
+                       $CMAKE_PARAMS \
+                       -DBUILD_TESTING=False \
+                       -DCATCH_INSTALL_DOCS=False \
+                       -DCATCH_INSTALL_HELPERS=False \
+                       -DCMAKE_BUILD_TESTING=False \
+                       &>> $LOG_FILE
+echo "Build Catch2..."
+make -j &>> $LOG_FILE
+echo "Install Catch2..."
+make install &>> $LOG_FILE
+cd $ROOT_DIR
 
 cd $ROOT_DIR
 
