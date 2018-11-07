@@ -8,8 +8,8 @@ Entity EntitySystem::createEntity()
 {
   if (mFreeList.empty())
   {
-    assert(mEntities.size() < Entity::maxId);
-    mEntities.emplace_back(this, mEntities.size(), 0);
+    assert(mEntities.size() < EntityId::maxId);
+    mEntities.emplace_back(this, &mComponentManagers, mEntities.size(), 0);
     return mEntities.back();
   }
   else
@@ -18,7 +18,7 @@ Entity EntitySystem::createEntity()
     mFreeList.pop();
     // Check for errors in the freelist
     assert(!mEntities[index].isValid());
-    mEntities[index] = Entity(this, mEntities[index].getId(), mEntities[index].getIdVersion() + 1);
+    mEntities[index] = Entity(this, &mComponentManagers, mEntities[index].getId(), mEntities[index].getIdVersion() + 1);
     return mEntities[index];
   }
 }

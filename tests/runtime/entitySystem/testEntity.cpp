@@ -47,3 +47,26 @@ TEST_CASE("Entity simple lifetime")
     }
   }
 }
+
+TEST_CASE("Multiple entities lifetimes")
+{
+  aw::EntitySystem system;
+  auto e1 = system.createEntity();
+  auto e2 = system.createEntity();
+
+  REQUIRE(e1.isValid());
+  REQUIRE(e2.isValid());
+
+  SECTION("Kill one should not kill the other")
+  {
+    REQUIRE(e1.destroy());
+    REQUIRE(!e1.isValid());
+    REQUIRE(e2.isValid());
+  }
+  SECTION("Kill the second should not the kill the first")
+  {
+    REQUIRE(e2.destroy());
+    REQUIRE(!e2.isValid());
+    REQUIRE(e1.isValid());
+  }
+}
