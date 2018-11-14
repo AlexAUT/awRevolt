@@ -32,7 +32,7 @@ TEST_CASE("Component add")
     REQUIRE(e.has<Transform>());
   }
 
-  SECTION("Ass component value constructed")
+  SECTION("Add component value constructed")
   {
     Transform transform{1.f, 2.f};
     e.assign<Transform>(transform);
