@@ -38,7 +38,7 @@ for buildType in Debug Release; do
   echo "Configure Assimp $buildType..."
   cmake $ROOT_DIR/assimp -DCMAKE_BUILD_TYPE=$buildType \
                          $CMAKE_PARAMS \
-                         -DASSIMP_BUILD_ALL_IMPORTERS_BY_DEFAULT=True \
+                         -DASSIMP_BUILD_ALL_IMPORTERS_BY_DEFAULT=False \
                          -DASSIMP_BUILD_TESTS=False \
                          -DASSIMP_BUILD_SAMPLES=False \
                          -DASSIMP_BUILD_OBJ_IMPORTER=True \
