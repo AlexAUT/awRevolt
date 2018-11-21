@@ -2,7 +2,7 @@
 
 #include <memory>
 
-namespace aw
+namespace aw::ecs
 {
 /* Childs should implement:
 Component* create(uint32 id);
@@ -20,4 +20,4 @@ public:
 public:
   virtual ~ComponentManager() = default;
 };
-} // namespace aw
+} // namespace aw::ecs

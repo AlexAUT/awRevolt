@@ -5,10 +5,11 @@
 #include <aw/runtime/entitySystem/entity.hpp>
 
 #include <cassert>
+#include <iostream>
 #include <utility>
 #include <vector>
 
-namespace aw
+namespace aw::ecs
 {
 template <typename Component>
 class DirectComponentManager : public ComponentManager
@@ -23,42 +24,48 @@ public:
 public:
   virtual ~DirectComponentManager() = default;
 
+  size_t size() const { return mAliveObjects; }
+
   template <typename... Args>
   ComponentReference add(Entity e, Args... args)
   {
-    if (e.getId() >= mComponents.size())
+    auto index = e.getId().getIndex();
+    if (index >= mComponents.size())
     {
-      mComponents.resize(e.getId() + 1);
-      auto missingCount = 1 + e.getId() - mIdFlags.size();
-      mIdFlags.assign(missingCount, false);
+      mComponents.resize(index + 1);
+      auto missingCount = 1 + index - mIdFlags.size();
+      mIdFlags.insert(mIdFlags.end(), missingCount, false);
       assert(mComponents.size() == mIdFlags.size());
     }
 
-    assert(!mIdFlags[e.getId()] && "This manager does not support multiple components for one entity!");
+    assert(!mIdFlags[index] && "This manager does not support multiple components for one entity!");
 
-    mComponents[e.getId()] = Component{std::forward<Args>(args)...};
-    mIdFlags[e.getId()] = true;
+    mComponents[index] = Component{std::forward<Args>(args)...};
+    mIdFlags[index] = true;
 
-    return {e.getId(), this};
+    mAliveObjects++;
+    return {index, this};
   }
 
   bool remove(Entity e)
   {
-    assert(mIdFlags.size() > e.getId());
+    assert(mIdFlags.size() > e.getId().getIndex());
     bool ret = false;
-    std::swap(mIdFlags[e.getId()], ret);
+    std::swap(mIdFlags[e.getId().getIndex()], ret);
+    if (ret)
+      mAliveObjects--;
     return ret;
   }
 
   bool has(Entity e) const
   {
-    auto id = e.getId();
+    auto id = e.getId().getIndex();
     return mComponents.size() > id && mIdFlags[id];
   }
 
   ComponentReference get(Entity e)
   {
-    auto id = e.getId();
+    auto id = e.getId().getIndex();
     if (mIdFlags[id])
       return {id, this};
     return {};
@@ -66,9 +73,17 @@ public:
 
   const ComponentReference get(Entity e) const
   {
-    auto id = e.getId();
+    auto id = e.getId().getIndex();
     if (mIdFlags[id])
       return {id, this};
+    return {};
+  }
+
+  ComponentReference get(EntityId id)
+  {
+    auto index = id.getIndex();
+    if (mIdFlags[index])
+      return {index, this};
     return {};
   }
 
@@ -79,9 +94,31 @@ public:
     return nullptr;
   }
 
+  EntityId begin()
+  {
+    for (size_t i = 0; i < mIdFlags.size(); i++)
+    {
+      if (mIdFlags[i])
+        return EntityId(i, 0);
+    }
+    return {};
+    ;
+  }
+
+  EntityId next(EntityId entityId)
+  {
+    for (size_t i = entityId.getIndex() + 1; i < mIdFlags.size(); i++)
+    {
+      if (mIdFlags[i])
+        return EntityId(i, 0);
+    }
+    return {};
+  }
+
 private:
 private:
   ComponentContainer mComponents;
   FlagContainer mIdFlags;
+  size_t mAliveObjects{0};
 };
-} // namespace aw
+} // namespace aw::ecs

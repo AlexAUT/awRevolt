@@ -10,7 +10,7 @@
 #include <limits>
 #include <vector>
 
-namespace aw
+namespace aw::ecs
 {
 class EntitySystem;
 
@@ -27,8 +27,7 @@ public:
   {
   }
 
-  uint32 getId() const { return mId.getId(); }
-  uint32 getIdVersion() const { return mId.getIdVersion(); };
+  EntityId getId() const { return mId; }
 
   bool destroy();
   bool isValid() const { return mId.isValid() && mEntitySystem; }
@@ -37,10 +36,10 @@ public:
   inline bool has() const;
 
   template <typename Component>
-  inline aw::ComponentRef<Component> get();
+  inline ComponentRef<Component> get();
 
   template <typename Component>
-  inline aw::ComponentRef<const Component> get() const;
+  inline ComponentRef<const Component> get() const;
 
   template <typename Component, typename... Args>
   inline ComponentRef<Component> assign(Args&&... args);
@@ -65,9 +64,9 @@ private:
   ComponentManagers* mComponentManagers;
   EntityId mId;
 };
-} // namespace aw
+} // namespace aw::ecs
 
-namespace aw
+namespace aw::ecs
 {
 template <typename Component>
 bool Entity::has() const
@@ -82,7 +81,7 @@ bool Entity::has() const
 }
 
 template <typename Component>
-aw::ComponentRef<Component> Entity::get()
+ComponentRef<Component> Entity::get()
 {
   if (isValid())
   {
@@ -94,7 +93,7 @@ aw::ComponentRef<Component> Entity::get()
 }
 
 template <typename Component>
-aw::ComponentRef<const Component> Entity::get() const
+ComponentRef<const Component> Entity::get() const
 {
   if (isValid())
   {
@@ -161,6 +160,6 @@ inline bool Entity::remove()
 
 bool Entity::operator==(Entity rhs) const
 {
-  return getId() == rhs.getId() && getIdVersion() == rhs.getIdVersion();
+  return getId() == rhs.getId() && mEntitySystem == rhs.mEntitySystem;
 }
-} // namespace aw
+} // namespace aw::ecs

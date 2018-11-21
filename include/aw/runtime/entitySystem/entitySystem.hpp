@@ -2,6 +2,7 @@
 
 #include <aw/runtime/entitySystem/componentManager.hpp>
 #include <aw/runtime/entitySystem/componentRef.hpp>
+#include <aw/runtime/entitySystem/componentView.hpp>
 #include <aw/runtime/entitySystem/entity.hpp>
 #include <aw/utils/typeHelper/typeCounter.hpp>
 #include <aw/utils/types.hpp>
@@ -10,7 +11,7 @@
 #include <unordered_map>
 #include <vector>
 
-namespace aw
+namespace aw::ecs
 {
 class EntitySystem
 {
@@ -26,12 +27,22 @@ public:
   // Call this to avoid allocations during runtime, give a good upperbound estimate
   void reserve(size_t count);
 
+  template <typename... Components>
+  ComponentsView<Components...> getView();
+
 private:
   template <typename Component>
   uint32 getComponentId();
 
   template <typename Component>
-  typename Component::Manager* getManager();
+  typename Component::Manager* getManager()
+  {
+    auto index = mTypeCounter.getId<Component>();
+    if (index >= mComponentManagers.size())
+      return nullptr;
+    auto* m = mComponentManagers[index].get();
+    return static_cast<typename Component::Manager*>(m);
+  }
 
 private:
   EntityContainer mEntities;
@@ -47,4 +58,10 @@ uint32 EntitySystem::getComponentId()
   return mTypeCounter.getId<Component>();
 }
 
-} // namespace aw
+template <typename... Components>
+ComponentsView<Components...> EntitySystem::getView()
+{
+  return ComponentsView<Components...>(getManager<Components>()...);
+}
+
+} // namespace aw::ecs

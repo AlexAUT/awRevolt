@@ -2,12 +2,13 @@
 
 #include <aw/utils/types.hpp>
 
-namespace aw
+namespace aw::ecs
 {
 template <typename Component>
 class ComponentRef
 {
 public:
+  using ComponentType = Component;
   using ComponentManager = typename Component::Manager;
   using ComponentId = typename ComponentManager::ComponentId;
 
@@ -25,4 +26,4 @@ private:
   ComponentId mId;
   ComponentManager* mManager{nullptr};
 };
-} // namespace aw
+} // namespace aw::ecs

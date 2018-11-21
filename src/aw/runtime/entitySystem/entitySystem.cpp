@@ -2,13 +2,13 @@
 
 #include <cassert>
 
-namespace aw
+namespace aw::ecs
 {
 Entity EntitySystem::createEntity()
 {
   if (mFreeList.empty())
   {
-    assert(mEntities.size() < EntityId::maxId);
+    assert(mEntities.size() < EntityId::maxIndex);
     mEntities.emplace_back(this, &mComponentManagers, mEntities.size(), 0);
     return mEntities.back();
   }
@@ -18,17 +18,18 @@ Entity EntitySystem::createEntity()
     mFreeList.pop();
     // Check for errors in the freelist
     assert(!mEntities[index].isValid());
-    mEntities[index] = Entity(this, &mComponentManagers, mEntities[index].getId(), mEntities[index].getIdVersion() + 1);
+    auto id = mEntities[index].getId();
+    mEntities[index] = Entity(this, &mComponentManagers, id.getIndex(), id.getVersion() + 1);
     return mEntities[index];
   }
 }
 
 bool EntitySystem::destroyEntity(Entity& entity)
 {
-  auto id = entity.getId();
-  if (entity.isValid() && mEntities.size() > id && mEntities[id] == entity)
+  auto entityIndex = entity.getId().getIndex();
+  if (entity.isValid() && mEntities.size() > entityIndex && mEntities[entityIndex] == entity)
   {
-    mEntities[id] = Entity();
+    mEntities[entityIndex] = Entity();
     entity = Entity();
     return true;
   }
@@ -40,4 +41,4 @@ void EntitySystem::reserve(size_t count)
   mEntities.reserve(count);
 }
 
-} // namespace aw
+} // namespace aw::ecs

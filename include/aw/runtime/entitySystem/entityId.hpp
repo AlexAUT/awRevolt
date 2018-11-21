@@ -4,29 +4,31 @@
 
 #include <limits>
 
-namespace aw
+namespace aw::ecs
 {
 class EntityId
 {
 public:
-  static constexpr int idBits = 24;
+  static constexpr int indexBits = 24;
   static constexpr int versionBits = 8;
-  static_assert((idBits + versionBits) == 32);
+  static_assert((indexBits + versionBits) == 32);
 
-  static constexpr uint32 invalidId = (std::numeric_limits<uint32>::max() << versionBits) >> versionBits;
-  static constexpr uint32 maxId = invalidId - 1;
+  static constexpr uint32 invalidIndex = (std::numeric_limits<uint32>::max() << versionBits) >> versionBits;
+  static constexpr uint32 maxIndex = invalidIndex - 1;
 
 public:
-  EntityId() : mId{(invalidId << versionBits) >> versionBits} {}
-  EntityId(uint32 id, uint32 version) : mId{id}, mVersion{version} {}
+  EntityId() : mIndex{(invalidIndex << versionBits) >> versionBits}, mVersion{0} {}
+  EntityId(uint32 index, uint32 version) : mIndex{index}, mVersion{version} {}
 
-  uint32 getId() const { return mId; }
-  uint32 getIdVersion() const { return mVersion; };
+  uint32 getIndex() const { return mIndex; }
+  uint32 getVersion() const { return mVersion; };
 
-  bool isValid() const { return mId != invalidId; }
+  bool isValid() const { return mIndex != invalidIndex; }
+
+  bool operator==(EntityId rhs) { return mIndex == rhs.mIndex && mVersion == rhs.mVersion; }
 
 private:
-  uint32 mId : idBits;
+  uint32 mIndex : indexBits;
   uint32 mVersion : versionBits;
 };
-} // namespace aw
+} // namespace aw::ecs

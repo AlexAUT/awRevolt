@@ -4,13 +4,16 @@
 
 TEST_CASE("Default constructed entity should always be invalid")
 {
-  aw::Entity e;
+  using namespace aw::ecs;
+  Entity e;
   REQUIRE(!e.isValid());
 }
 
 TEST_CASE("Entity simple lifetime")
 {
-  aw::EntitySystem entitySystem;
+  using namespace aw::ecs;
+
+  EntitySystem entitySystem;
   auto entity = entitySystem.createEntity();
   INFO("First entity of the system should never fail");
   REQUIRE(entity.isValid());
@@ -50,7 +53,8 @@ TEST_CASE("Entity simple lifetime")
 
 TEST_CASE("Multiple entities lifetimes")
 {
-  aw::EntitySystem system;
+  using namespace aw::ecs;
+  EntitySystem system;
   auto e1 = system.createEntity();
   auto e2 = system.createEntity();
 

@@ -4,7 +4,7 @@
 
 #include <cassert>
 
-namespace aw
+namespace aw::ecs
 {
 bool Entity::destroy()
 {
@@ -12,4 +12,4 @@ bool Entity::destroy()
     return mEntitySystem->destroyEntity(*this);
   return false;
 }
-} // namespace aw
+} // namespace aw::ecs

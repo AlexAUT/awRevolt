@@ -9,7 +9,7 @@ struct Transform
 
   bool operator==(const Transform& rhs) const { return x == rhs.x && y == rhs.y; }
 
-  using Manager = aw::DirectComponentManager<Transform>;
+  using Manager = aw::ecs::DirectComponentManager<Transform>;
 };
 
 struct Motion
@@ -18,13 +18,15 @@ struct Motion
 
   bool operator==(const Motion& rhs) const { return vX == rhs.vX && vY == rhs.vY; }
 
-  using Manager = aw::DirectComponentManager<Motion>;
+  using Manager = aw::ecs::DirectComponentManager<Motion>;
 };
 
 TEST_CASE("Component add")
 {
-  aw::EntitySystem entitySystem;
-  aw::Entity e = entitySystem.createEntity();
+  using namespace aw::ecs;
+
+  EntitySystem entitySystem;
+  Entity e = entitySystem.createEntity();
 
   SECTION("Add component default constructed")
   {
@@ -69,8 +71,9 @@ TEST_CASE("Component add")
 
 TEST_CASE("Modifying component")
 {
-  aw::EntitySystem entitySystem;
-  aw::Entity e = entitySystem.createEntity();
+  using namespace aw::ecs;
+  EntitySystem entitySystem;
+  Entity e = entitySystem.createEntity();
 
   Transform transform{1.f, 2.f};
   e.assign<Transform>(transform);
@@ -110,8 +113,10 @@ TEST_CASE("Modifying component")
 
 TEST_CASE("Multiple components")
 {
-  aw::EntitySystem entitySystem;
-  aw::Entity e = entitySystem.createEntity();
+  using namespace aw::ecs;
+
+  EntitySystem entitySystem;
+  Entity e = entitySystem.createEntity();
 
   Transform refTransform{1.f, 2.f};
   e.assign<Transform>(refTransform);
