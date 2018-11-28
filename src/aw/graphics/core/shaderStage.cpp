@@ -2,7 +2,8 @@
 
 #include <aw/opengl/opengl.hpp>
 
-#include <aw/utils/file/assetInputStream.hpp>
+#include <aw/utils/file/fileInputStream.hpp>
+#include <aw/utils/file/path.hpp>
 #include <aw/utils/log.hpp>
 #include <aw/utils/streamReading.hpp>
 
@@ -10,17 +11,15 @@ DEFINE_LOG_CATEGORY(ShaderStageE, aw::log::Error, ShaderStage)
 
 namespace aw
 {
-std::unique_ptr<ShaderStage> ShaderStage::loadFromAssetFile(Type type, const std::string& path)
+std::unique_ptr<ShaderStage> ShaderStage::loadFromPath(Type type, const Path& path)
 {
   auto result = std::make_unique<ShaderStage>(type);
-  aw::AssetInputStream stream(path);
+  aw::FileInputStream stream(path);
   result->loadFromStream(stream);
   return result;
 }
 
-ShaderStage::ShaderStage(Type type) : mType(type), mId(0)
-{
-}
+ShaderStage::ShaderStage(Type type) : mType(type), mId(0) {}
 
 ShaderStage::~ShaderStage()
 {

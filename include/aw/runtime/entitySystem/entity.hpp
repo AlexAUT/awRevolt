@@ -124,6 +124,7 @@ typename Component::Manager* Entity::getManager()
   auto componentId = ComponentIndexer::getId<Component>();
   if (componentId >= mComponentManagers->size())
     return nullptr;
+
   auto* opaqueManager = (*mComponentManagers)[componentId].get();
   return static_cast<typename Component::Manager*>(opaqueManager);
 }
@@ -142,8 +143,9 @@ template <typename Component>
 typename Component::Manager* Entity::createManager()
 {
   auto componentId = ComponentIndexer::getId<Component>();
-  if (componentId >= mComponentManagers->size())
-    mComponentManagers->resize(componentId + 1);
+  // TODO: look into how to use resize/assign to initialize the new slots with nullptr
+  while (componentId >= mComponentManagers->size())
+    mComponentManagers->emplace_back(nullptr);
   assert(!(*mComponentManagers)[componentId]);
   (*mComponentManagers)[componentId] = std::make_unique<typename Component::Manager>();
   return static_cast<typename Component::Manager*>((*mComponentManagers)[componentId].get());

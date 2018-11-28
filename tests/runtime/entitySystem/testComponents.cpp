@@ -1,27 +1,12 @@
 #include <catch2/catch.hpp>
 
-#include <aw/runtime/entitySystem/directComponentManager.hpp>
+//#include <aw/runtime/entitySystem/directComponentManager.hpp>
 #include <aw/runtime/entitySystem/entitySystem.hpp>
 
-struct Transform
-{
-  float x, y;
+#include "components.hpp"
 
-  bool operator==(const Transform& rhs) const { return x == rhs.x && y == rhs.y; }
-
-  using Manager = aw::ecs::DirectComponentManager<Transform>;
-};
-
-struct Motion
-{
-  float vX, vY;
-
-  bool operator==(const Motion& rhs) const { return vX == rhs.vX && vY == rhs.vY; }
-
-  using Manager = aw::ecs::DirectComponentManager<Motion>;
-};
-
-TEST_CASE("Component add")
+template <typename Transform>
+void testComponentAdd()
 {
   using namespace aw::ecs;
 
@@ -69,7 +54,17 @@ TEST_CASE("Component add")
   }
 }
 
-TEST_CASE("Modifying component")
+TEST_CASE("Component add (direct)")
+{
+  testComponentAdd<TransformDirectManaged>();
+}
+TEST_CASE("Component add (indirect)")
+{
+  testComponentAdd<TransformIndirectManaged>();
+}
+
+template <typename Transform>
+void testModifyingComponent()
 {
   using namespace aw::ecs;
   EntitySystem entitySystem;
@@ -111,7 +106,17 @@ TEST_CASE("Modifying component")
   }
 }
 
-TEST_CASE("Multiple components")
+TEST_CASE("Modifying component (direct)")
+{
+  testModifyingComponent<TransformDirectManaged>();
+}
+TEST_CASE("Modifying component (indirect)")
+{
+  testModifyingComponent<TransformIndirectManaged>();
+}
+
+template <typename Transform, typename Motion>
+void testMultipleComponents()
 {
   using namespace aw::ecs;
 
@@ -147,4 +152,20 @@ TEST_CASE("Multiple components")
     REQUIRE(!e.has<Motion>());
     REQUIRE(e.has<Transform>());
   }
+}
+TEST_CASE("Multiple components (direct/direct")
+{
+  testMultipleComponents<TransformDirectManaged, MotionDirectManaged>();
+}
+TEST_CASE("Multiple components (direct/indirect")
+{
+  testMultipleComponents<TransformDirectManaged, MotionIndirectManaged>();
+}
+TEST_CASE("Multiple components (indirect/direct")
+{
+  testMultipleComponents<TransformIndirectManaged, MotionDirectManaged>();
+}
+TEST_CASE("Multiple components (indirect/indirect")
+{
+  testMultipleComponents<TransformIndirectManaged, MotionIndirectManaged>();
 }

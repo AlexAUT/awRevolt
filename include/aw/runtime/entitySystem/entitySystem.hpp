@@ -30,32 +30,30 @@ public:
   template <typename... Components>
   ComponentsView<Components...> getView();
 
-private:
-  template <typename Component>
-  uint32 getComponentId();
-
   template <typename Component>
   typename Component::Manager* getManager()
   {
-    auto index = mTypeCounter.getId<Component>();
+    auto index = Entity::ComponentIndexer::getId<Component>();
     if (index >= mComponentManagers.size())
       return nullptr;
     auto* m = mComponentManagers[index].get();
     return static_cast<typename Component::Manager*>(m);
   }
 
+  template <typename Component>
+  uint32 getComponentId();
+
 private:
   EntityContainer mEntities;
   FreeListQueue mFreeList;
 
-  aw::TypeCounter<struct ComponentSystem, uint32> mTypeCounter;
   ComponentManagers mComponentManagers;
 };
 
 template <typename Component>
 uint32 EntitySystem::getComponentId()
 {
-  return mTypeCounter.getId<Component>();
+  return Entity::ComponentIndexer::getId<Component>();
 }
 
 template <typename... Components>

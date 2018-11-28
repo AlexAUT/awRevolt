@@ -16,13 +16,15 @@ struct aiNode;
 
 namespace aw
 {
+class Path;
+
 class AssimpLoader
 {
 public:
   void setAssetPath(std::string assetPath) { mAssetRoot = std::move(assetPath); }
 
   bool loadFromStream(const std::string& fileName, std::istream& stream, const char* hint = "");
-  bool loadFromAssetFile(const std::string& assetPath, const char* hint = "");
+  bool loadFromPath(const Path& path, const char* hint = "");
 
   std::unique_ptr<aw::Mesh> loadMesh(const std::string& displyName, bool withSkeleton = false);
 
@@ -42,7 +44,7 @@ private:
   std::string mFileName;
   Assimp::Importer mImporter;
 
-  std::string mAssetRoot{path::getAssetPath()};
+  std::string mAssetRoot{Path::getAssetPath()};
 
   unsigned mBoneCount;
 };

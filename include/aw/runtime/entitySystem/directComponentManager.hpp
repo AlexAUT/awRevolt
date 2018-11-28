@@ -22,8 +22,6 @@ public:
   using ConstComponentReference = ComponentRef<const Component>;
 
 public:
-  virtual ~DirectComponentManager() = default;
-
   size_t size() const { return mAliveObjects; }
 
   template <typename... Args>

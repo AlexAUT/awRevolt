@@ -1,27 +1,12 @@
 #include <catch2/catch.hpp>
 
-#include <aw/runtime/entitySystem/directComponentManager.hpp>
 #include <aw/runtime/entitySystem/entitySystem.hpp>
+#include <aw/runtime/entitySystem/indirectComponentManager.hpp>
 
-struct Transform
-{
-  float x, y;
+#include "components.hpp"
 
-  bool operator==(const Transform& rhs) const { return x == rhs.x && y == rhs.y; }
-
-  using Manager = aw::ecs::DirectComponentManager<Transform>;
-};
-
-struct Motion
-{
-  float vX, vY;
-
-  bool operator==(const Motion& rhs) const { return vX == rhs.vX && vY == rhs.vY; }
-
-  using Manager = aw::ecs::DirectComponentManager<Motion>;
-};
-
-TEST_CASE("Single component test")
+template <typename Transform, typename Motion>
+void testSingleComponentView()
 {
   using namespace aw::ecs;
 
@@ -119,7 +104,25 @@ TEST_CASE("Single component test")
   }
 }
 
-TEST_CASE("Updated components with view")
+TEST_CASE("Single component (Direct/Direct)")
+{
+  testSingleComponentView<TransformDirectManaged, MotionIndirectManaged>();
+}
+TEST_CASE("Single component (Direct/Indirect)")
+{
+  testSingleComponentView<TransformDirectManaged, MotionDirectManaged>();
+}
+TEST_CASE("Single component (Indirect/Direct)")
+{
+  testSingleComponentView<TransformIndirectManaged, MotionDirectManaged>();
+}
+TEST_CASE("Single component (Indirect/Indirect)")
+{
+  testSingleComponentView<TransformIndirectManaged, MotionIndirectManaged>();
+}
+
+template <typename Transform, typename Motion>
+void testUpdateComponentsWithView()
 {
   using namespace aw::ecs;
   EntitySystem system;
@@ -141,4 +144,21 @@ TEST_CASE("Updated components with view")
   REQUIRE(e1.get<Transform>()->y == 3.f);
   REQUIRE(e2.get<Transform>()->x == 15.f);
   REQUIRE(e2.get<Transform>()->y == 10.f);
+}
+
+TEST_CASE("Updated components with view (Direct/Direct)")
+{
+  testUpdateComponentsWithView<TransformDirectManaged, MotionDirectManaged>();
+}
+TEST_CASE("Updated components with view (Direct/Indirect)")
+{
+  testUpdateComponentsWithView<TransformDirectManaged, MotionIndirectManaged>();
+}
+TEST_CASE("Updated components with view (Indirect/Direct)")
+{
+  testUpdateComponentsWithView<TransformIndirectManaged, MotionDirectManaged>();
+}
+TEST_CASE("Updated components with view (Indirect/Indirect)")
+{
+  testUpdateComponentsWithView<TransformIndirectManaged, MotionIndirectManaged>();
 }

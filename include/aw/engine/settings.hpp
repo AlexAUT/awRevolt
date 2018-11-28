@@ -26,8 +26,8 @@ struct Settings
   bool cursorVisible{true};
   float sleepOnFocusLossAndroid{2}; // On Android sleep 2 seconds if in background (each tick)
 
-  static Settings loadFromFile(const std::string& path = path::getConfigPath() + "engine.json");
-  bool save(const std::string& path = path::getConfigPath() + "engine.json") const;
+  static Settings loadFromFile(const std::string& path = Path::getConfigPath() + "engine.json");
+  bool save(const std::string& path = Path::getConfigPath() + "engine.json") const;
 };
 
 std::ostream& operator<<(std::ostream& stream, const Settings& settings);

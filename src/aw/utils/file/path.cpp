@@ -7,9 +7,7 @@
 
 namespace aw
 {
-namespace path
-{
-std::string getAssetPath()
+std::string Path::getAssetPath()
 {
 #ifdef AW_DESKTOP
   return "assets/";
@@ -17,7 +15,7 @@ std::string getAssetPath()
   return "";
 }
 
-std::string getInternal()
+std::string Path::getInternal()
 {
 #ifdef AW_DESKTOP
   return "";
@@ -27,7 +25,7 @@ std::string getInternal()
 #endif
   return "";
 }
-std::string getExternal()
+std::string Path::getExternal()
 {
 #ifdef AW_DESKTOP
   return "";
@@ -38,7 +36,7 @@ std::string getExternal()
   return "";
 }
 
-std::string getConfigPath()
+std::string Path::getConfigPath()
 {
 #ifdef AW_DESKTOP
   return "config/";
@@ -48,5 +46,21 @@ std::string getConfigPath()
   return "";
 }
 
-} // namespace path
+std::string Path::getBasePath(Type type)
+{
+  switch (type)
+  {
+  case Type::Asset:
+    return getAssetPath();
+  case Type::Internal:
+    return getInternal();
+  case Type::External:
+    return getExternal();
+  case Type::Config:
+    return getConfigPath();
+  default:
+    return "";
+  }
+}
+
 } // namespace aw

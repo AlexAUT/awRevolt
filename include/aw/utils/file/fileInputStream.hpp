@@ -8,15 +8,22 @@
 namespace aw
 {
 
-class AssetInputStream : std::istream
+class FileInputStream : public std::istream
 {
 public:
-  AssetInputStream(std::string path);
-  ~AssetInputStream();
+  FileInputStream(Path path);
+  ~FileInputStream();
+
+  bool isOpen() const;
 
 private:
 private:
   std::ifstream mFileStream;
+  bool mIsOpen;
+
+#ifdef AW_ANDROID
+  bool mIsAssetFile{false};
+#endif
 };
 
 } // namespace aw

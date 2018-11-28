@@ -5,7 +5,7 @@
 namespace aw
 {
 class SceneNode;
-using Scene = SceneNode;
+class Scene;
 class MeshNode;
 class Camera;
 class ShaderProgram;

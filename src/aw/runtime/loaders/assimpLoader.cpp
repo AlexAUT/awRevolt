@@ -2,13 +2,13 @@
 
 #include <aw/graphics/core/image.hpp>
 #include <aw/graphics/core/texture2D.hpp>
+#include <aw/utils/file/fileInputStream.hpp>
+#include <aw/utils/file/path.hpp>
+#include <aw/utils/log.hpp>
+#include <aw/utils/streamReading.hpp>
 
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
-
-#include <aw/utils/file/assetInputStream.hpp>
-#include <aw/utils/log.hpp>
-#include <aw/utils/streamReading.hpp>
 
 DEFINE_LOG_CATEGORY(AssimpD, aw::log::Debug, AssimpLoader)
 DEFINE_LOG_CATEGORY(AssimpE, aw::log::Error, AssimpLoader)
@@ -75,15 +75,17 @@ bool AssimpLoader::loadFromStream(const std::string& fileName, std::istream& str
   return true;
 }
 
-bool AssimpLoader::loadFromAssetFile(const std::string& assetPath, const char* hint)
+bool AssimpLoader::loadFromPath(const Path& assetPath, const char* hint)
 {
-  aw::AssetInputStream file(assetPath);
-  return loadFromStream(assetPath, file, hint);
+  aw::FileInputStream file(assetPath);
+  return loadFromStream(assetPath.getAbsolutePath(), file, hint);
 }
 
 std::unique_ptr<aw::Mesh> AssimpLoader::loadMesh(const std::string& displayName, bool withSkeleton)
 {
   auto scene = getScene();
+  if (!scene)
+    return nullptr;
 
   auto mesh = std::make_unique<aw::Mesh>(mFileName, displayName);
 
@@ -257,11 +259,12 @@ bool AssimpLoader::parseMaterial(aw::Mesh& mesh, const aiMaterial* assimpMat)
     auto texName = path.substr(pos);
     slot.texName = texName;
     LogAssimpV() << "Loading diffuse texture: " << texName;
-    aw::AssetInputStream texFile("textures/meshes/" + texName, mAssetRoot);
+    Path texturePath(Path::Type::Absolute, mAssetRoot + "textures/meshes/" + texName);
+    aw::FileInputStream texFile(texturePath);
     aw::Image img;
     if (!img.loadFromStream(texFile))
     {
-      LogAssimpE() << "FAILED TO LOAD IMAGE";
+      LogAssimpE() << "Failed to load mesh texture: " << texturePath.getAbsolutePath();
       return false;
     }
     auto tex2D = std::make_shared<aw::Texture2D>();

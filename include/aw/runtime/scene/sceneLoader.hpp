@@ -1,8 +1,8 @@
 #pragma once
 
-#include <aw/runtime/managers/MeshAnimationManager.hpp>
-#include <aw/runtime/managers/MeshManager.hpp>
-#include <aw/runtime/managers/TextureManager.hpp>
+#include <aw/runtime/managers/meshAnimationManager.hpp>
+#include <aw/runtime/managers/meshManager.hpp>
+#include <aw/runtime/managers/textureManager.hpp>
 #include <aw/runtime/scene/scene.hpp>
 
 #include <json/value.h>
@@ -12,12 +12,13 @@
 namespace aw
 {
 class MeshNode;
+class Path;
 
 class SceneLoader
 {
 public:
-  static bool loadFromAssetFile(const std::string& assetPath, Scene& scene, TextureManager& textureManager,
-                                MeshManager& meshManager, MeshAnimationManager& animationManager);
+  static bool loadFromPath(const Path& path, Scene& scene, TextureManager& textureManager, MeshManager& meshManager,
+                           MeshAnimationManager& animationManager);
   static bool loadFromStream(std::istream& stream, Scene& scene, TextureManager& textureManager,
                              MeshManager& meshManager, MeshAnimationManager& animationManager);
 

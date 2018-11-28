@@ -13,11 +13,11 @@ namespace log
 {
 enum LogLevel
 {
+  None, // Should only be used for output level, not for logging itself
   Error,
   Warning,
   Debug,
   Verbose,
-  None, // Should only be used for output level, not for logging itself
 };
 struct LogModule
 {
@@ -57,7 +57,7 @@ private:
 } // namespace log
 
 bool LOG_INITIALIZE(log::LogLevel console = log::Debug, log::LogLevel filesystem = log::Verbose,
-                    std::string logFilePath = path::getInternal() + "log.txt", log::LogLevel remote = log::Error,
+                    std::string logFilePath = Path::getInternal() + "log.txt", log::LogLevel remote = log::None,
                     std::string address = "188.68.48.23", int port = 15909);
 aw::log::LogInstance LOG(log::LogLevel level, std::string moduleName);
 aw::log::LogInstance LOG(const log::LogModule& logModule);

@@ -36,11 +36,9 @@ void Button::updateLayout()
   // Update the cached minimum size
   // (textsize + padding) or prefered size
   mMinimumSize = getGUI().getRenderer().calculateTextSize(mText, *mTextLayout);
-  LogTemp() << "mMinimumSize : " << mMinimumSize;
   auto& padding = getPadding();
   mMinimumSize.x += padding.left + padding.right;
   mMinimumSize.y += padding.top + padding.bottom;
-  LogTemp() << "mMinimumSize after: " << mMinimumSize;
 
   mMinimumSize = glm::max(mMinimumSize, getPreferedSize());
 }

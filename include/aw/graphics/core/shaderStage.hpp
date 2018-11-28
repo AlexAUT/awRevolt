@@ -8,6 +8,8 @@ typedef unsigned GLenum;
 
 namespace aw
 {
+class Path;
+
 class ShaderStage
 {
 public:
@@ -18,7 +20,7 @@ public:
   };
 
 public:
-  static std::unique_ptr<ShaderStage> loadFromAssetFile(Type type, const std::string& path);
+  static std::unique_ptr<ShaderStage> loadFromPath(Type type, const Path& path);
 
 public:
   ShaderStage(Type type);

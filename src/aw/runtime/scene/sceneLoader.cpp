@@ -3,7 +3,8 @@
 #include <aw/runtime/loaders/assimpLoader.hpp>
 #include <aw/runtime/scene/meshNode.hpp>
 
-#include <aw/utils/file/assetInputStream.hpp>
+#include <aw/utils/file/fileInputStream.hpp>
+#include <aw/utils/file/path.hpp>
 #include <aw/utils/log.hpp>
 #include <aw/utils/math/vector.hpp>
 
@@ -22,10 +23,10 @@ aw::Vec3 jsonArrayToVec3(const Json::Value& array)
 
 namespace aw
 {
-bool SceneLoader::loadFromAssetFile(const std::string& assetPath, Scene& scene, TextureManager& textureManager,
-                                    MeshManager& meshManager, MeshAnimationManager& animationManager)
+bool SceneLoader::loadFromPath(const Path& path, Scene& scene, TextureManager& textureManager, MeshManager& meshManager,
+                               MeshAnimationManager& animationManager)
 {
-  aw::AssetInputStream stream(assetPath);
+  aw::FileInputStream stream(path);
   if (!stream.isOpen())
     return false;
   return loadFromStream(stream, scene, textureManager, meshManager, animationManager);
@@ -58,7 +59,7 @@ SceneLoader::SceneLoader(const Json::Value& rootNode, Scene& scene, TextureManag
   assert(scene.getChildren().size() <= 1);
   if (!scene.getChildren().empty())
   {
-    scene = *scene.getChildren()[0];
+    // scene = *scene.getChildren()[0];
     scene.setParent(nullptr);
   }
 }
@@ -78,7 +79,7 @@ bool SceneLoader::loadTexturesAndAnimations()
     for (auto iter = meshLib.begin(); iter != meshLib.end(); ++iter)
     {
       LogSceneLoaderDebug() << iter.key().asString() << ": " << iter->asString();
-      if (mMeshManager.count(iter->asString()) == 0)
+      if (!mMeshManager.has(iter->asString()))
         loadList[iter->asString()].meshDisplayNames.push_back(iter.key().asString());
     }
   }
@@ -100,11 +101,11 @@ bool SceneLoader::loadTexturesAndAnimations()
     auto foundLastPoint = it.first.find_last_of(".");
     auto hint = it.first.substr(foundLastPoint + 1);
     LogSceneLoaderDebug() << "Hint: " << hint;
-    loader.loadFromAssetFile(it.first, hint.c_str());
+    loader.loadFromPath(createAssetPath(it.first), hint.c_str());
     for (auto& displayName : it.second.meshDisplayNames)
     {
-      mMeshManager.insert(std::make_pair(displayName, loader.loadMesh(displayName, true)));
-      LogTemp() << "Bone count: " << displayName << "=" << mMeshManager[displayName]->getBoneCount();
+      AssimpLoader loader;
+      loader.loadFromPath(createAssetPath(it.first));
     }
     if (!it.second.animationNames.empty())
     {
@@ -168,14 +169,14 @@ bool SceneLoader::parseMeshNode(const Json::Value& node, SceneNode& parent, Mesh
     return false;
   }
   auto meshName = meshObject["name"].asString();
-  auto meshIter = mMeshManager.find(meshName);
+  auto* mesh = mMeshManager.get(meshName);
   LogTemp() << "Looking for mesh: " << meshName;
-  if (meshIter == mMeshManager.end())
+  if (!mesh)
   {
     LogSceneLoaderError() << "Mesh \"" << meshName << "\" could not be found in mesh library!";
     return false;
   }
-  meshNode = new MeshNode(*meshIter->second);
+  meshNode = new MeshNode(*mesh);
 
   if (node.isMember("animation"))
   {

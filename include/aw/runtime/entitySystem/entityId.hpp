@@ -9,6 +9,8 @@ namespace aw::ecs
 class EntityId
 {
 public:
+  using StorageType = uint32;
+
   static constexpr int indexBits = 24;
   static constexpr int versionBits = 8;
   static_assert((indexBits + versionBits) == 32);
@@ -20,15 +22,15 @@ public:
   EntityId() : mIndex{(invalidIndex << versionBits) >> versionBits}, mVersion{0} {}
   EntityId(uint32 index, uint32 version) : mIndex{index}, mVersion{version} {}
 
-  uint32 getIndex() const { return mIndex; }
-  uint32 getVersion() const { return mVersion; };
+  StorageType getIndex() const { return mIndex; }
+  StorageType getVersion() const { return mVersion; };
 
   bool isValid() const { return mIndex != invalidIndex; }
 
   bool operator==(EntityId rhs) { return mIndex == rhs.mIndex && mVersion == rhs.mVersion; }
 
 private:
-  uint32 mIndex : indexBits;
-  uint32 mVersion : versionBits;
+  StorageType mIndex : indexBits;
+  StorageType mVersion : versionBits;
 };
 } // namespace aw::ecs

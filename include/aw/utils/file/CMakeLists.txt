@@ -1,5 +1,4 @@
 set(HEADER_FILES_UTILS ${HEADER_FILES_UTILS}
-  ${CMAKE_CURRENT_SOURCE_DIR}/assetInputStream.hpp
   ${CMAKE_CURRENT_SOURCE_DIR}/fileDialog.hpp
   ${CMAKE_CURRENT_SOURCE_DIR}/fileInputStream.hpp
   ${CMAKE_CURRENT_SOURCE_DIR}/path.hpp

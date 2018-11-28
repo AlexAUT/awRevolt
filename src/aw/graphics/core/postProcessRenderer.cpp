@@ -1,13 +1,13 @@
 #include <aw/graphics/core/postProcessRenderer.hpp>
-
 #include <aw/graphics/core/shaderProgram.hpp>
 #include <aw/graphics/core/shaderStage.hpp>
 #include <aw/graphics/core/texture2D.hpp>
 #include <aw/graphics/core/vertex.hpp>
-
-#include <aw/utils/file/assetInputStream.hpp>
-
 #include <aw/opengl/opengl.hpp>
+#include <aw/utils/file/path.hpp>
+#include <aw/utils/log.hpp>
+
+DEFINE_LOG_CATEGORY(PostProcessE, aw::log::Error, PostProcessRenderer);
 
 namespace aw
 {
@@ -53,18 +53,15 @@ PostProcessRenderer& PostProcessRenderer::getInstance()
 
 void PostProcessRenderer::loadDefaultShader()
 {
-  AssetInputStream vShaderFile("shaders/postProcess.vert");
-  ShaderStage vShader(ShaderStage::Vertex);
-  vShader.loadFromStream(vShaderFile);
+  auto vShader = ShaderStage::loadFromPath(ShaderStage::Vertex, createAssetPath("shaders/postProcess.vert"));
+  auto fShader = ShaderStage::loadFromPath(ShaderStage::Fragment, createAssetPath("shaders/postProcess.frag"));
 
-  AssetInputStream fShaderFile("shaders/postProcess.frag");
-  ShaderStage fShader(ShaderStage::Fragment);
-  fShader.loadFromStream(fShaderFile);
-
-  mDefaultShader.bind();
-  mDefaultShader.link(vShader, fShader);
-  //  mDefaultShader.setUniform("postProcess_tex", 0);
-  mDefaultShader.unbind();
+  if (vShader && fShader)
+  {
+    mDefaultShader.bind();
+    mDefaultShader.link(*vShader, *fShader);
+    mDefaultShader.unbind();
+  }
 }
 
 } // namespace aw

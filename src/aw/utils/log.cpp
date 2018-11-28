@@ -19,7 +19,7 @@ namespace aw
 bool initialized = false;
 log::LogLevel logOutputLevelConsole = log::Debug;
 log::LogLevel logOutputLevelFile = log::Verbose;
-log::LogLevel logOUtputLevelRemote = log::Error;
+log::LogLevel logOutputLevelRemote = log::Error;
 
 std::ostream* consoleStream{nullptr};
 std::ostream* fileStream{nullptr};
@@ -69,7 +69,7 @@ std::string logLevelToString(LogLevel level)
 
 LogInstance::LogInstance(LogLevel level, const std::string& module, std::ostream& console, std::ostream& file)
     : mWriteToConsole(level <= logOutputLevelConsole), mWriteToFileSystem(level <= logOutputLevelFile),
-      mWriteToRemoteServer(level <= logOUtputLevelRemote), mConsoleStream(console), mFileStream(file)
+      mWriteToRemoteServer(level <= logOutputLevelRemote), mConsoleStream(console), mFileStream(file)
 {
   auto prefix = colorPrefix(level) + logLevelToString(level);
   auto timestamp = date::getDateTime();
@@ -111,6 +111,7 @@ bool LOG_INITIALIZE(log::LogLevel console, log::LogLevel filesystem, std::string
 
   logOutputLevelConsole = console;
   logOutputLevelFile = filesystem;
+  logOutputLevelRemote = remote;
 
 #ifdef AW_ANDROID
   // Redirect cout to logcat on android
@@ -132,7 +133,7 @@ bool LOG_INITIALIZE(log::LogLevel console, log::LogLevel filesystem, std::string
       std::cout << "Failed to open log output file!" << std::endl;
     }
   }
-  if (logOUtputLevelRemote != log::None)
+  if (logOutputLevelFile != log::None)
   {
     httpClient.setHost(address, port);
   }
