@@ -18,7 +18,7 @@ namespace aw::gui
 NVGcolor convertColor(Color color);
 NVGalign convertAlignment(Alignment align);
 int isBlack(NVGcolor col);
-static char* cpToUTF8(int cp, char* str);
+// static char* cpToUTF8(int cp, char* str);
 void applyTextStyle(NVGcontext* vg, const TextStyle& style);
 
 Vec2 getTextSize(NVGcontext* vg, const std::string& text, const TextStyle& style);

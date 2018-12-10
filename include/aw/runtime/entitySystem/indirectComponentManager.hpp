@@ -16,13 +16,13 @@ template <class Component>
 class IndirectComponentManager : public ComponentManager
 {
 public:
-  using ComponentId = std::tuple<EntityId, std::size_t>;
+  using ComponentId = std::tuple<EntityId, size_t>;
   using ComponentReference = ComponentRef<Component>;
   using IdComponentTuple = std::tuple<EntityId, Component>;
   using ConstComponentReference = ComponentRef<const Component>;
 
   using ComponentContainer = std::vector<IdComponentTuple>;
-  using LinkContainer = std::unordered_map<EntityId::StorageType, bool>;
+  using LinkContainer = std::unordered_map<EntityId::StorageType, size_t>;
 
 public:
   size_t size() const
@@ -47,19 +47,17 @@ public:
   {
     if (has(e))
     {
-      auto index = mResolveTable[e.getId().getIndex()];
-      if (index == mComponents.size() - 1)
-      {
-        mComponents.pop_back();
-        mResolveTable.erase(index);
-      }
-      else
+      auto entityIndex = e.getId().getIndex();
+      auto componentIndex = mResolveTable[entityIndex];
+      assert(entityIndex == std::get<0>(mComponents[componentIndex]).getIndex());
+      if (componentIndex != mComponents.size() - 1)
       {
         // Swap with last element
-        std::swap(mComponents[index], mComponents.back());
-        mResolveTable[std::get<EntityId>(mComponents[index]).getIndex()] = index;
-        mResolveTable.erase(index);
+        std::swap(mComponents[componentIndex], mComponents.back());
+        mResolveTable[std::get<EntityId>(mComponents[componentIndex]).getIndex()] = componentIndex;
       }
+      mComponents.pop_back();
+      mResolveTable.erase(entityIndex);
       return true;
     }
     return false;

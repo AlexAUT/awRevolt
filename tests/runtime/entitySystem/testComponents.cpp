@@ -153,19 +153,19 @@ void testMultipleComponents()
     REQUIRE(e.has<Transform>());
   }
 }
-TEST_CASE("Multiple components (direct/direct")
+TEST_CASE("Multiple components (direct/direct)")
 {
   testMultipleComponents<TransformDirectManaged, MotionDirectManaged>();
 }
-TEST_CASE("Multiple components (direct/indirect")
+TEST_CASE("Multiple components (direct/indirect)")
 {
   testMultipleComponents<TransformDirectManaged, MotionIndirectManaged>();
 }
-TEST_CASE("Multiple components (indirect/direct")
+TEST_CASE("Multiple components (indirect/direct)")
 {
   testMultipleComponents<TransformIndirectManaged, MotionDirectManaged>();
 }
-TEST_CASE("Multiple components (indirect/indirect")
+TEST_CASE("Multiple components (indirect/indirect)")
 {
   testMultipleComponents<TransformIndirectManaged, MotionIndirectManaged>();
 }
