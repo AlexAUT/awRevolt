@@ -15,14 +15,14 @@ void testComponentAdd()
 
   SECTION("Add component default constructed")
   {
-    e.assign<Transform>();
+    e.add<Transform>();
     REQUIRE(e.has<Transform>());
   }
 
   SECTION("Add component value constructed")
   {
     Transform transform{1.f, 2.f};
-    e.assign<Transform>(transform);
+    e.add<Transform>(transform);
     REQUIRE(e.has<Transform>());
 
     SECTION("Check if component is created with custom constructor")
@@ -39,7 +39,7 @@ void testComponentAdd()
   SECTION("Add component custom custructed")
   {
     Transform transform{1.f, 2.f};
-    e.assign<Transform>(transform.x, transform.y);
+    e.add<Transform>(transform.x, transform.y);
     REQUIRE(e.has<Transform>());
 
     SECTION("Check if component is created with custom constructor")
@@ -71,7 +71,7 @@ void testModifyingComponent()
   Entity e = entitySystem.createEntity();
 
   Transform transform{1.f, 2.f};
-  e.assign<Transform>(transform);
+  e.add<Transform>(transform);
 
   SECTION("Change component")
   {
@@ -95,7 +95,7 @@ void testModifyingComponent()
   {
     REQUIRE(e.remove<Transform>());
     Transform newTrans{100.f, 100.f};
-    REQUIRE(e.assign<Transform>(newTrans));
+    REQUIRE(e.add<Transform>(newTrans));
     REQUIRE(e.has<Transform>());
     REQUIRE(*e.get<Transform>() == newTrans);
 
@@ -124,10 +124,10 @@ void testMultipleComponents()
   Entity e = entitySystem.createEntity();
 
   Transform refTransform{1.f, 2.f};
-  e.assign<Transform>(refTransform);
+  e.add<Transform>(refTransform);
 
   Motion refMotion{3.f, 4.f};
-  e.assign<Motion>(refMotion);
+  e.add<Motion>(refMotion);
 
   REQUIRE(e.has<Transform>());
   REQUIRE(e.has<Motion>());

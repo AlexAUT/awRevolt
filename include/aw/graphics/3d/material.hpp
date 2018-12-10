@@ -10,6 +10,7 @@
 
 namespace aw
 {
+class ShaderProgram;
 
 struct TextureSlot
 {
@@ -24,6 +25,9 @@ struct TextureSlot
 
 class Material
 {
+public:
+  static void assignToShader(const Material& material, const ShaderProgram& shader, std::string_view uniformName);
+
 public:
   explicit Material(std::string name);
 

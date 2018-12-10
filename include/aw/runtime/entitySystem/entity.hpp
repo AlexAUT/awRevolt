@@ -42,7 +42,7 @@ public:
   inline ComponentRef<const Component> get() const;
 
   template <typename Component, typename... Args>
-  inline ComponentRef<Component> assign(Args&&... args);
+  inline ComponentRef<Component> add(Args&&... args);
 
   template <typename Component>
   inline bool remove();
@@ -105,7 +105,7 @@ ComponentRef<const Component> Entity::get() const
 }
 
 template <typename Component, typename... Args>
-ComponentRef<Component> Entity::assign(Args&&... args)
+ComponentRef<Component> Entity::add(Args&&... args)
 {
   if (isValid())
   {

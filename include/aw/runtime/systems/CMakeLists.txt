@@ -1,3 +1,3 @@
 set(HEADER_FILES_ENGINE ${HEADER_FILES_ENGINE}
-    ${CMAKE_CURRENT_SOURCE_DIR}/primitiveRenderer.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/meshRendererSystem.hpp
     PARENT_SCOPE)

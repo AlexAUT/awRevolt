@@ -4,9 +4,7 @@
 
 namespace aw
 {
-Transform::Transform(std::function<void()> listenerCallback) : mChangeListener(listenerCallback)
-{
-}
+Transform::Transform(std::function<void()> listenerCallback) : mChangeListener(listenerCallback) {}
 
 void Transform::setOrigin(Vec3 origin)
 {
@@ -107,6 +105,11 @@ const Mat4& Transform::getTransform() const
     mCachedTransformVersion = mVersion;
   }
   return mTransform;
+}
+
+const Mat4& Transform::getGlobalTransform() const
+{
+  return getTransform();
 }
 
 unsigned Transform::getVersionNumber() const

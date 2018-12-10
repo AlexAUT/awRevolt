@@ -36,3 +36,27 @@ struct MotionDirectManaged
 
   using Manager = aw::ecs::DirectComponentManager<MotionDirectManaged>;
 };
+
+inline std::ostream& operator<<(std::ostream& os, TransformDirectManaged const& value)
+{
+  os << value.x << ", " << value.y;
+  return os;
+};
+
+inline std::ostream& operator<<(std::ostream& os, TransformIndirectManaged const& value)
+{
+  os << value.x << ", " << value.y;
+  return os;
+};
+
+inline std::ostream& operator<<(std::ostream& os, MotionDirectManaged const& value)
+{
+  os << value.vX << ", " << value.vY;
+  return os;
+};
+
+inline std::ostream& operator<<(std::ostream& os, MotionIndirectManaged const& value)
+{
+  os << value.vX << ", " << value.vY;
+  return os;
+};

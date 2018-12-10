@@ -1,4 +1,5 @@
 set(HEADER_FILES_ENGINE ${HEADER_FILES_ENGINE}
-  ${CMAKE_CURRENT_SOURCE_DIR}/meshComponent.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/meshRendererComponent.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/meshProvider.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/meshRenderer.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/transform.hpp
     PARENT_SCOPE)

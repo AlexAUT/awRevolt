@@ -1,8 +1,6 @@
 set(HEADER_FILES_ENGINE ${HEADER_FILES_ENGINE}
-    ${CMAKE_CURRENT_SOURCE_DIR}/meshNode.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/scene.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/sceneLoader.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/sceneNode.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/sceneWriter.hpp
+    #${CMAKE_CURRENT_SOURCE_DIR}/sceneLoader.hpp
+    #${CMAKE_CURRENT_SOURCE_DIR}/sceneWriter.hpp
     PARENT_SCOPE)
 

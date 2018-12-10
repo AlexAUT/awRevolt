@@ -27,7 +27,7 @@ void testSingleComponentView()
   }
 
   auto e1 = system.createEntity();
-  e1.assign<Transform>(1.f, 2.f);
+  e1.add<Transform>(1.f, 2.f);
 
   SECTION("One entity with one component")
   {
@@ -49,7 +49,7 @@ void testSingleComponentView()
     REQUIRE(found == 0);
   }
 
-  e1.assign<Motion>(3.f, 4.f);
+  e1.add<Motion>(3.f, 4.f);
   SECTION("View on two components single entity")
   {
     int counter = 0;
@@ -64,7 +64,7 @@ void testSingleComponentView()
   }
 
   auto e2 = system.createEntity();
-  e2.assign<Transform>();
+  e2.add<Transform>();
   SECTION("Two entities one shared component and one only by one")
   {
     SECTION("View on shared component")
@@ -94,7 +94,7 @@ void testSingleComponentView()
     }
   }
 
-  e2.assign<Motion>();
+  e2.add<Motion>();
   SECTION("View two components multiple entities")
   {
     int counter = 0;
@@ -129,10 +129,10 @@ void testUpdateComponentsWithView()
 
   auto e1 = system.createEntity();
   auto e2 = system.createEntity();
-  e2.assign<Motion>(5.f, 0.f);
-  e1.assign<Transform>(1.f, 1.f);
-  e1.assign<Motion>(1.f, 2.f);
-  e2.assign<Transform>(10.f, 10.f);
+  e2.add<Motion>(5.f, 0.f);
+  e1.add<Transform>(1.f, 1.f);
+  e1.add<Motion>(1.f, 2.f);
+  e2.add<Transform>(10.f, 10.f);
 
   for (auto transMotion : system.getView<Motion, Transform>())
   {

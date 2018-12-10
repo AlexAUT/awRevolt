@@ -33,6 +33,7 @@ public:
   Vec3 getRotationEuler() const;
 
   const Mat4& getTransform() const;
+  const Mat4& getGlobalTransform() const;
 
   // This can be used to poll for changes, but you have to reset it yourself (first param)
   // Use this function to reset and get the old value of hasReset

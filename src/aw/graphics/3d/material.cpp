@@ -1,10 +1,26 @@
 #include <aw/graphics/3d/material.hpp>
 
+#include <aw/graphics/core/shaderProgram.hpp>
+
 namespace aw
 {
-Material::Material(std::string name) : mName(name)
+void Material::assignToShader(const Material& material, const ShaderProgram& shader, std::string_view uniformName)
 {
+  shader.bind();
+
+  shader.setUniform("diffuseColor", material.getDiffuseColor());
+  shader.setUniform("ambientColor", material.getAmbientColor());
+  shader.setUniform("specularColor", Vec4(material.getSpecularColor(), 10));
+  shader.setUniform("enableDiffuseTex", material.getDiffseSlotCount() > 0);
+
+  if (material.getDiffseSlotCount() > 0)
+    material.getDiffuseSlot(0).texture2D->bind();
+  shader.setUniform("enableDecalTex", material.getDiffseSlotCount() > 1);
+  if (material.getDiffseSlotCount() > 1)
+    material.getDiffuseSlot(1).texture2D->bind(1);
 }
+
+Material::Material(std::string name) : mName(name) {}
 
 void Material::setAmbientColor(Vec3 color)
 {

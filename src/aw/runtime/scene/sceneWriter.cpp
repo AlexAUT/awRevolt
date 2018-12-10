@@ -10,7 +10,7 @@
 
 namespace aw
 {
-void setNodeTypeIfNotSet(Json::Value& node, std::string type)
+/*void setNodeTypeIfNotSet(Json::Value& node, std::string type)
 {
   if (!node.isMember("type"))
     node["type"] = type;
@@ -110,5 +110,5 @@ void SceneWriter::addAnimationToLibrary(const std::string& fileName, const std::
     animLib[displayName] = fileName;
   }
 }
-
+*/
 } // namespace aw

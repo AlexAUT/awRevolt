@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cassert>
 #include <unordered_map>
 #include <vector>
 
@@ -24,7 +25,11 @@ public:
   using LinkContainer = std::unordered_map<EntityId::StorageType, bool>;
 
 public:
-  size_t size() const { return mResolveTable.size(); }
+  size_t size() const
+  {
+    assert(mResolveTable.size() == mComponents.size());
+    return mResolveTable.size();
+  }
 
   template <typename... Args>
   ComponentReference add(Entity e, Args... args)
