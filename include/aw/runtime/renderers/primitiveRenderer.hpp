@@ -71,18 +71,15 @@ void PrimitiveRenderer<VertexType>::render()
   {
     mGPUBuffer.setData(mCPUBuffer.data(), sizeof(VertexType) * mCPUBuffer.size());
     mGPUBufferSize = mCPUBuffer.size();
-    LogTemp() << "New data buffer";
   }
   else
   {
     mGPUBuffer.setSubData(mCPUBuffer.data(), sizeof(VertexType) * mCPUBuffer.size(), 0);
-    LogTemp() << "Update buffer";
   }
   mGPUBuffer.unbind();
 
   mVAO.bind();
 
-  LogTemp() << "Render: " << mCPUBuffer.size();
   mRenderer.renderArrays(0, mCPUBuffer.size());
   mVAO.unbind();
 }

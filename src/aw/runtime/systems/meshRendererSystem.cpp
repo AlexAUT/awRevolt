@@ -53,6 +53,7 @@ void MeshRendererSystem::render(const Camera& camera)
       const auto& meshObject = mesh->getObject(i);
       meshObject.vao.bind();
       const auto& material = mesh->getMaterial(meshObject.materialIndex);
+      Material::assignToShader(material, *shader, "material[0]");
       shader->setUniform("diffuseColor", material.getDiffuseColor());
       shader->setUniform("ambientColor", material.getAmbientColor());
       shader->setUniform("specularColor", Vec4(material.getSpecularColor(), 10));

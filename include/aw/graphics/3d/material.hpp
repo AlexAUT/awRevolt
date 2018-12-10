@@ -26,6 +26,7 @@ struct TextureSlot
 class Material
 {
 public:
+  // TODO: Refactor, this does not belong here...
   static void assignToShader(const Material& material, const ShaderProgram& shader, std::string_view uniformName);
 
 public:
