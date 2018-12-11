@@ -14,5 +14,6 @@
 #include <aw/gui/widgets/panel.hpp>
 #include <aw/gui/widgets/screen.hpp>
 #include <aw/gui/widgets/textBox.hpp>
+#include <aw/gui/widgets/typedTextBox.hpp>
 #include <aw/gui/widgets/widget.hpp>
 #include <aw/gui/widgets/window.hpp>

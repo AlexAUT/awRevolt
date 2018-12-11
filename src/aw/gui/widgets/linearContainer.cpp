@@ -21,12 +21,6 @@ void LinearContainer::setSpaceBetweenElements(float space)
   invalidateLayout();
 }
 
-void LinearContainer::setOuterPadding(Padding padding)
-{
-  mOuterPadding = padding;
-  invalidateLayout();
-}
-
 void LinearContainer::updateLayout()
 {
   if (!isLayoutDirty())
@@ -47,8 +41,8 @@ void LinearContainer::updateLayout()
   freeSpace += mSpaceBetweenElements;
 
   // Subtract the outer padding from the freespace and from the static axis size
-  auto outerDynamicPadding = getOuterDynamicAxisPadding();
-  auto outerStaticPadding = getOuterStaticAxisPadding();
+  auto outerDynamicPadding = getDynamicAxisPadding();
+  auto outerStaticPadding = getStaticAxisPadding();
 
   freeSpace -= (outerDynamicPadding[0] + outerDynamicPadding[1]);
   staticAxisValue -= (outerStaticPadding[0] + outerStaticPadding[1]);
@@ -101,19 +95,19 @@ Vec2 LinearContainer::getMinimalSize() const
   return mMinimalSizeCache;
 }
 
-Vec2 LinearContainer::getOuterDynamicAxisPadding() const
+Vec2 LinearContainer::getDynamicAxisPadding() const
 {
   if (mOrientation == Orientation::Horizontal)
-    return {mOuterPadding.left, mOuterPadding.right};
+    return {getPadding().left, getPadding().right};
   else
-    return {mOuterPadding.top, mOuterPadding.bottom};
+    return {getPadding().top, getPadding().bottom};
 }
 
-Vec2 LinearContainer::getOuterStaticAxisPadding() const
+Vec2 LinearContainer::getStaticAxisPadding() const
 {
   if (mOrientation == Orientation::Vertical)
-    return {mOuterPadding.left, mOuterPadding.right};
+    return {getPadding().left, getPadding().right};
   else
-    return {mOuterPadding.top, mOuterPadding.bottom};
+    return {getPadding().top, getPadding().bottom};
 }
 } // namespace aw::gui

@@ -8,10 +8,14 @@
 
 namespace aw::gui
 {
-TextBox::TextBox(const GUI& gui, std::string text)
-    : Widget(gui), mText(std::move(text)), mTextStyle(gui.getTextStyles().getStyle("default"))
+TextBox::TextBox(const GUI& gui, std::string text) :
+    Widget(gui),
+    mText(std::move(text)),
+    mSelectedTextStyle(gui.getTextStyles().getStyle("default")),
+    mDeselectedTextStyle(gui.getTextStyles().getStyle("defaultMuted"))
 {
-  assert(mTextStyle);
+  assert(mSelectedTextStyle);
+  assert(mDeselectedTextStyle);
   setSelectable(true);
   setPadding({3.f});
 }
@@ -19,9 +23,7 @@ TextBox::TextBox(const GUI& gui, std::string text)
 void TextBox::setText(std::string text)
 {
   mText = std::move(text);
-  invalidateLayout();
-
-  setSelectable(true);
+  changedText();
 }
 
 bool TextBox::processEvent(const WindowEvent& event)
@@ -90,6 +92,8 @@ void TextBox::removeAtCursor(unsigned numToRemove)
     auto removeAt = std::min(static_cast<size_t>(mCursorPosition - 1), mText.size() - 1);
     mText.erase(removeAt, numToRemove);
     mCursorPosition--;
+
+    changedText();
   }
 }
 
@@ -99,6 +103,8 @@ void TextBox::addCharacterAtCursor(char c)
     mText.push_back(c);
   mText.insert(static_cast<size_t>(mCursorPosition), 1, c);
   mCursorPosition++;
+
+  changedText();
 }
 
 void TextBox::select(Vec2 clickPos)
@@ -119,16 +125,31 @@ void TextBox::setCursorPosition(int position)
   mCursorPosition = std::max(std::min(position, static_cast<int>(mText.size())), 0);
 }
 
-void TextBox::setTextStyle(const TextStyle* textStyle)
+void TextBox::setSelectedTextStyle(const TextStyle* textStyle)
 {
   assert(textStyle);
-  mTextStyle = textStyle;
+  mSelectedTextStyle = textStyle;
   invalidateLayout();
+}
+
+void TextBox::setDeselectedTextStyle(const TextStyle* textStyle)
+{
+  assert(textStyle);
+  mDeselectedTextStyle = textStyle;
+  invalidateLayout();
+}
+
+const TextStyle* TextBox::getCurrentTextStyle() const
+{
+  if (isInState(State::Selected))
+    return mSelectedTextStyle;
+  else
+    return mDeselectedTextStyle;
 }
 
 void TextBox::updateLayout()
 {
-  auto textSize = getGUI().getRenderer().calculateTextSize("A", *mTextStyle);
+  auto textSize = getGUI().getRenderer().calculateTextSize("A", *getSelectedTextStyle());
   mMinimalSize.x = std::max(getPreferedSize().x, textSize.x * mMinWidthInCharacter);
   mMinimalSize.y = std::max(getPreferedSize().y, textSize.y);
 
@@ -141,5 +162,11 @@ void TextBox::updateLayout()
 Vec2 TextBox::getMinimalSize() const
 {
   return mMinimalSize;
+}
+
+void TextBox::changedText()
+{
+  if (onTextChange)
+    onTextChange(*this);
 }
 } // namespace aw::gui

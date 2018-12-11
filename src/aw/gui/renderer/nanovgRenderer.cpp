@@ -129,13 +129,20 @@ void NanovgRenderer::render(const TextBox& textBox) const
   pos.x += textBox.getPadding().left;
   // size -= Vec2{p.left + p.right, p.top + p.bottom};
   using namespace aw::gui;
-  const auto& textStyle = *textBox.getTextStyle();
+  const auto& textStyle = *textBox.getCurrentTextStyle();
   drawText(mContext, text, pos, size, textStyle, {AlignmentH::Left, AlignmentV::Middle}, {});
 
   if (textBox.shouldRenderCursor())
   {
-    drawEditBoxCursor(mContext, textStyle, text.c_str(), pos.x, pos.y, size.x, size.y, textBox.getCursorPosition());
+    drawEditBoxCursor(mContext, *textBox.getSelectedTextStyle(), text.c_str(), pos.x, pos.y, size.x, size.y,
+                      textBox.getCursorPosition());
   }
+}
+
+template <>
+void NanovgRenderer::render(const TypedTextBox& typedTextBox) const
+{
+  render(static_cast<const TextBox&>(typedTextBox));
 }
 
 template <>
