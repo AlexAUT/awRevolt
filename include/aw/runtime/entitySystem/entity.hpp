@@ -48,6 +48,7 @@ public:
   inline bool remove();
 
   inline bool operator==(Entity rhs) const;
+  explicit operator bool() const { return isValid(); }
 
 private:
   template <typename Component>

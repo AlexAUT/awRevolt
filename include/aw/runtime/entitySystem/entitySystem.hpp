@@ -27,6 +27,8 @@ public:
   // Call this to avoid allocations during runtime, give a good upperbound estimate
   void reserve(size_t count);
 
+  inline Entity getEntity(EntityId id) const;
+
   template <typename... Components>
   ComponentsView<Components...> getView();
 
@@ -45,6 +47,14 @@ private:
 
   ComponentManagers mComponentManagers;
 };
+
+Entity EntitySystem::getEntity(EntityId id) const
+{
+  auto index = id.getIndex();
+  if (index < mEntities.size())
+    return mEntities[index];
+  return Entity();
+}
 
 template <typename Component>
 uint32 EntitySystem::getComponentId()

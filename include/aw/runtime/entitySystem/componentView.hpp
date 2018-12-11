@@ -30,6 +30,7 @@ class ComponentsIterator
 public:
   using ManagerArray = std::array<ComponentManager*, sizeof...(Components)>;
   using ComponentRefTuple = std::tuple<ComponentRef<Components>...>;
+  using EntityIdComponentsTuple = std::tuple<EntityId, ComponentRef<Components>...>;
 
   explicit constexpr operator bool() const { return mEntityId.isValid(); }
 
@@ -41,15 +42,18 @@ public:
   }
 
   template <typename Component, typename... Rest>
-  constexpr auto getValues(size_t index = 0)
+  constexpr auto getComponentsTuple(size_t index = 0)
   {
     if constexpr (sizeof...(Rest) > 0)
-      return std::tuple_cat(std::make_tuple(getComponentRef<Component>(index)), getValues<Rest...>(index + 1));
+      return std::tuple_cat(std::make_tuple(getComponentRef<Component>(index)), getComponentsTuple<Rest...>(index + 1));
     else
       return std::make_tuple(getComponentRef<Component>(index));
   }
 
-  ComponentRefTuple operator*() { return getValues<Components...>(); }
+  EntityIdComponentsTuple operator*()
+  {
+    return std::tuple_cat(std::make_tuple(mEntityId), getComponentsTuple<Components...>());
+  }
 
   ComponentsIterator operator++(int)
   {
@@ -67,13 +71,12 @@ public:
   bool operator==(const ComponentsIterator& rhs) { return (!(*this) && !rhs) || (mEntityId == rhs.mEntityId); }
   bool operator!=(const ComponentsIterator& rhs) { return !(*this == rhs); }
 
-public:
   ComponentsIterator(EntityId entityId, ManagerArray managers, std::function<EntityId(EntityId)> func = {})
       : mEntityId(entityId), mManagers(managers), mNextFunction(func)
   {
   }
 
-public:
+private:
   EntityId mEntityId;
   ManagerArray mManagers;
   std::function<EntityId(EntityId)> mNextFunction;

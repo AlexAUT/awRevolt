@@ -29,6 +29,9 @@ public:
 
   bool operator==(EntityId rhs) { return mIndex == rhs.mIndex && mVersion == rhs.mVersion; }
 
+  // To use it as key
+  bool operator<(EntityId rhs) { return mIndex < rhs.mIndex; }
+
 private:
   StorageType mIndex : indexBits;
   StorageType mVersion : versionBits;

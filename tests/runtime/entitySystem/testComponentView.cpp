@@ -33,9 +33,9 @@ void testSingleComponentView()
   SECTION("One entity with one component")
   {
     int counter = 0;
-    for (auto comp : system.getView<Transform>())
+    for (auto [id, transform] : system.getView<Transform>())
     {
-      CHECK(std::get<0>(comp).get() == e1.get<Transform>().get());
+      CHECK(transform.get() == e1.get<Transform>().get());
       counter++;
       CHECK(counter == 1);
     }
@@ -54,10 +54,10 @@ void testSingleComponentView()
   SECTION("View on two components single entity")
   {
     int counter = 0;
-    for (auto comp : system.getView<Transform, Motion>())
+    for (auto [id, transform, motion] : system.getView<Transform, Motion>())
     {
-      CHECK(std::get<0>(comp).get() == e1.get<Transform>().get());
-      CHECK(std::get<1>(comp).get() == e1.get<Motion>().get());
+      CHECK(transform.get() == e1.get<Transform>().get());
+      CHECK(motion.get() == e1.get<Motion>().get());
       counter++;
       REQUIRE(counter == 1);
     }
@@ -136,9 +136,8 @@ void testOutOfOrderComponents()
   e1.add<Motion>(1.f, 2.f);
 
   int found = 0;
-  for (auto e : system.getView<Transform, Motion>())
+  for (auto [id, transform, motion] : system.getView<Transform, Motion>())
   {
-    auto [transform, motion] = unpack(e);
     INFO("Order is not specified, therefore compare the values directly (makes no sense but tests if the component "
          "order is not mixed up");
     REQUIRE(transform->x == motion->vX);
@@ -179,9 +178,8 @@ void testUpdateComponentsWithView()
   e1.add<Motion>(1.f, 2.f);
   e2.add<Transform>(10.f, 10.f);
 
-  for (auto transMotion : system.getView<Motion, Transform>())
+  for (auto [id, motion, trans] : system.getView<Motion, Transform>())
   {
-    auto& [motion, trans] = transMotion;
     trans->x += motion->vX;
     trans->y += motion->vY;
   }

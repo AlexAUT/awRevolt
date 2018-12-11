@@ -26,10 +26,9 @@ void MeshRendererSystem::render(const Camera& camera)
   auto v = camera.getViewMatrix();
 
   using namespace aw::ecs::components;
-  for (auto e : mEntitySystem.getView<Transform, MeshRenderer, MeshProvider>())
+  auto view = mEntitySystem.getView<Transform, MeshRenderer, MeshProvider>();
+  for (auto [entityId, transform, meshRenderer, meshProvider] : view)
   {
-    auto [transform, meshRenderer, meshProvider] = aw::ecs::unpack(e);
-
     assert(meshRenderer);
     auto* shader = meshRenderer->shader.get();
     assert(shader);

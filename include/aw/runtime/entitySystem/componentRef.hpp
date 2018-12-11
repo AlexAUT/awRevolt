@@ -20,6 +20,7 @@ public:
   Component* operator->() const { return get(); }
   Component& operator*() const { return *get(); }
 
+  bool operator==(const ComponentRef& rhs) { return mId == rhs.mId && mManager == rhs.mManager; }
   explicit operator bool() const { return get(); }
 
 private:
