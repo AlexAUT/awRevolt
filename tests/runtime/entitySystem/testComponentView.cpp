@@ -2,6 +2,7 @@
 
 #include <aw/runtime/entitySystem/entitySystem.hpp>
 #include <aw/runtime/entitySystem/indirectComponentManager.hpp>
+#include <aw/runtime/entitySystem/unpackComponents.hpp>
 
 #include "components.hpp"
 
@@ -119,6 +120,50 @@ TEST_CASE("Single component (Indirect/Direct)")
 TEST_CASE("Single component (Indirect/Indirect)")
 {
   testSingleComponentView<TransformIndirectManaged, MotionIndirectManaged>();
+}
+
+template <typename Transform, typename Motion>
+void testOutOfOrderComponents()
+{
+  using namespace aw::ecs;
+  EntitySystem system;
+  auto e1 = system.createEntity();
+  auto e2 = system.createEntity();
+
+  e1.add<Transform>(1.f, 2.f);
+  e2.add<Transform>(3.f, 4.f);
+  e2.add<Motion>(3.f, 4.f);
+  e1.add<Motion>(1.f, 2.f);
+
+  int found = 0;
+  for (auto e : system.getView<Transform, Motion>())
+  {
+    auto [transform, motion] = unpack(e);
+    INFO("Order is not specified, therefore compare the values directly (makes no sense but tests if the component "
+         "order is not mixed up");
+    REQUIRE(transform->x == motion->vX);
+    REQUIRE(transform->y == motion->vY);
+    found++;
+  }
+  INFO("There should be exactly two entites with the specified components");
+  REQUIRE(found == 2);
+}
+
+TEST_CASE("Out of order components (Direct/Direct)")
+{
+  testOutOfOrderComponents<TransformDirectManaged, MotionDirectManaged>();
+}
+TEST_CASE("Out of order components (Direct/Indirect)")
+{
+  testOutOfOrderComponents<TransformDirectManaged, MotionIndirectManaged>();
+}
+TEST_CASE("Out of order components (Indirect/Direct)")
+{
+  testOutOfOrderComponents<TransformIndirectManaged, MotionDirectManaged>();
+}
+TEST_CASE("Out of order components (Indirect/Indirect)")
+{
+  testOutOfOrderComponents<TransformIndirectManaged, MotionIndirectManaged>();
 }
 
 template <typename Transform, typename Motion>
