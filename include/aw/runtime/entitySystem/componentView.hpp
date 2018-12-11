@@ -112,7 +112,7 @@ ComponentsIterator<Components...> ComponentsView<Components...>::begin()
     using Component = typename std::tuple_element<index, std::tuple<Components...>>::type;
     auto* m = static_cast<typename Component::Manager*>(mManagers[index]);
 
-    auto size = m ? m->size() : 0;
+    auto size = m ? m->getSize() : 0;
     if (size < minCount)
     {
       minCount = size;

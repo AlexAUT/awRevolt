@@ -26,7 +26,7 @@ public:
     Selected = 2,
   };
 
-  using Callback = std::function<void(const Widget&)>;
+  using Callback = std::function<void(Widget&)>;
 
 public:
   Widget(const GUI& gui) : mGUI(gui) {}
@@ -88,6 +88,9 @@ public:
   Callback onMouseMoved;
   Callback onClick;
 
+protected:
+  bool mDeselectByEvents{true};
+
 private:
   const GUI& mGUI;
   SPtr mParent{nullptr};
@@ -109,14 +112,16 @@ private:
 
   // Event stuff
 public:
-  virtual void select(Vec2 mousePos)
+  virtual void select(Vec2 mousePos = {})
   {
-    if (mSelectable)
+    if (mSelectable && !isInState(State::Selected))
+    {
       enableState(State::Selected);
-    if (onSelect)
-      onSelect(*this);
+      if (onSelect)
+        onSelect(*this);
+    }
   }
-  virtual void deselect(Vec2 mousePos)
+  virtual void deselect(Vec2 mousePos = {})
   {
     disableState(State::Selected);
     if (onDeselect)

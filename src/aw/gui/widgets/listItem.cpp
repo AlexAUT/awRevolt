@@ -8,6 +8,7 @@ namespace aw::gui
 ListItem::ListItem(const GUI& gui, std::string text, std::string id) : Label(gui, text), mId(id)
 {
   setSelectable(true);
+  mDeselectByEvents = false;
 }
 
 void ListItem::render(Vec2 parentPos)

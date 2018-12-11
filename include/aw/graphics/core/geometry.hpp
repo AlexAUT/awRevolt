@@ -4,6 +4,7 @@
 #include <aw/utils/math/constants.hpp>
 #include <aw/utils/math/rect.hpp>
 #include <aw/utils/math/vector.hpp>
+#include <aw/utils/spatial/AABB.hpp>
 
 #include <array>
 #include <cmath>
@@ -31,6 +32,18 @@ std::array<VertexType, 6 * 6> cube(Vec3 center, Vec3 size);
 
 template <typename VertexIterator>
 void cube(Vec3 center, Vec3 size, VertexIterator begin);
+
+template <typename VertexType>
+std::array<VertexType, 6 * 6> cube(AABB aabb)
+{
+  return cube<VertexType>(aabb.getCenter(), aabb.getSize());
+}
+
+template <typename VertexIterator>
+void cube(AABB aabb, VertexIterator begin)
+{
+  return cube(aabb.getCenter(), aabb.getSize(), begin);
+}
 
 template <typename VertexIterator>
 void cubePoints(Vec3 center, Vec3 size, VertexIterator begin);

@@ -104,7 +104,6 @@ void TextBox::addCharacterAtCursor(char c)
 void TextBox::select(Vec2 clickPos)
 {
   Widget::select(clickPos);
-  LogTemp() << "Text box selected!" << isInState(State::Selected);
   if (isInState(State::Selected))
   {
     mCursorPosition = getGUI().getRenderer().calculateCursorPosition(*this, clickPos - getRelativePosition());

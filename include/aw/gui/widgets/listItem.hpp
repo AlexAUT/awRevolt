@@ -17,6 +17,8 @@ public:
 
   virtual void render(Vec2 parentPos) override;
 
+  std::string_view getId() const { return mId; }
+
 private:
   std::string mId;
 };

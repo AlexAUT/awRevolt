@@ -25,7 +25,7 @@ public:
   using LinkContainer = std::unordered_map<EntityId::StorageType, size_t>;
 
 public:
-  size_t size() const
+  size_t getSize() const
   {
     assert(mResolveTable.size() == mComponents.size());
     return mResolveTable.size();

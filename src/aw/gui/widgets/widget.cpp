@@ -37,7 +37,7 @@ bool Widget::processEvent(const WindowEvent& event)
         select(mousePos);
         usedEvent = true;
       }
-      else if (isInState(State::Selected))
+      else if (mDeselectByEvents && isInState(State::Selected))
       {
         deselect(mousePos);
         usedEvent = usedEvent | mConsumeClickOnDeselect;
@@ -60,7 +60,7 @@ bool Widget::processEvent(const WindowEvent& event)
   }
   else if (event.type == WindowEvent::KeyPressed)
   {
-    if (isInState(State::Selected) && event.key.code == sf::Keyboard::Escape)
+    if (mDeselectByEvents && isInState(State::Selected) && event.key.code == sf::Keyboard::Escape)
     {
       deselect({0.f, 0.f});
       usedEvent = true;

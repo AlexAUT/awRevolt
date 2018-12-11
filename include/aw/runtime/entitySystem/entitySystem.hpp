@@ -31,14 +31,10 @@ public:
   ComponentsView<Components...> getView();
 
   template <typename Component>
-  typename Component::Manager* getManager()
-  {
-    auto index = Entity::ComponentIndexer::getId<Component>();
-    if (index >= mComponentManagers.size())
-      return nullptr;
-    auto* m = mComponentManagers[index].get();
-    return static_cast<typename Component::Manager*>(m);
-  }
+  typename Component::Manager* getManager();
+
+  template <typename Component>
+  size_t getComponentCount();
 
   template <typename Component>
   uint32 getComponentId();
@@ -60,6 +56,23 @@ template <typename... Components>
 ComponentsView<Components...> EntitySystem::getView()
 {
   return ComponentsView<Components...>(getManager<Components>()...);
+}
+
+template <typename Component>
+typename Component::Manager* EntitySystem::getManager()
+{
+  auto index = Entity::ComponentIndexer::getId<Component>();
+  if (index >= mComponentManagers.size())
+    return nullptr;
+  auto* m = mComponentManagers[index].get();
+  return static_cast<typename Component::Manager*>(m);
+}
+
+template <typename Component>
+size_t EntitySystem::getComponentCount()
+{
+  auto* manager = getManager<Component>();
+  return manager ? manager->getSize() : 0;
 }
 
 } // namespace aw::ecs

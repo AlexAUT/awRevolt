@@ -22,7 +22,7 @@ public:
   using ConstComponentReference = ComponentRef<const Component>;
 
 public:
-  size_t size() const { return mAliveObjects; }
+  size_t getSize() const { return mAliveObjects; }
 
   template <typename... Args>
   ComponentReference add(Entity e, Args... args)
