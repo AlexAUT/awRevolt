@@ -26,7 +26,8 @@ Vec2 getTextSize(NVGcontext* vg, const std::string& text, const TextStyle& style
 void drawButton(NVGcontext* vg, int preicon, const char* text, float x, float y, float w, float h, NVGcolor col);
 void drawEditBoxBase(NVGcontext* vg, float x, float y, float w, float h);
 void drawEditBox(NVGcontext* vg, const char* text, float x, float y, float w, float h);
-void drawEditBoxCursor(NVGcontext* vg, const std::string& text, float x, float y, float w, float h, int cursorPos);
+void drawEditBoxCursor(NVGcontext* vg, const TextStyle& textStyle, const std::string& text, float x, float y, float w,
+                       float h, int cursorPos);
 
 void drawRoundedRect(NVGcontext* vg, Vec2 pos, Vec2 size, float radius, Color fillColor, float dropShadowSize = 0.f);
 void drawText(NVGcontext* vg, const std::string& text, Vec2 pos, Vec2 containerSize, const TextStyle& style,
@@ -178,18 +179,20 @@ void drawEditBoxBase(NVGcontext* vg, float x, float y, float w, float h)
   nvgStroke(vg);
 }
 
-void drawEditBoxCursor(NVGcontext* vg, const std::string& text, float x, float y, float w, float h, int cursorPos)
+void drawEditBoxCursor(NVGcontext* vg, const TextStyle& textStyle, const std::string& text, float x, float y, float w,
+                       float h, int cursorPos)
 {
+  applyTextStyle(vg, textStyle);
   float cursorX;
   if (text.empty())
   {
-    cursorX = x + h * 0.3f;
+    cursorX = x;
   }
   else
   {
     static std::vector<NVGglyphPosition> positions;
     positions.resize(text.size());
-    nvgTextGlyphPositions(vg, x + h * 0.3f, y + h * 0.5f, text.c_str(), text.c_str() + text.size(), positions.data(),
+    nvgTextGlyphPositions(vg, x, y + h * 0.5f, text.c_str(), text.c_str() + text.size(), positions.data(),
                           static_cast<int>(cursorPos + 1));
 
     if (static_cast<size_t>(cursorPos) < text.size())
@@ -198,11 +201,8 @@ void drawEditBoxCursor(NVGcontext* vg, const std::string& text, float x, float y
       cursorX = positions.back().maxx - 2.f;
   }
 
-  nvgFontSize(vg, 25.0f);
-  nvgFontFace(vg, "sans");
-  nvgFillColor(vg, nvgRGBA(255, 255, 255, 64));
-  nvgTextAlign(vg, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
-  nvgText(vg, cursorX, y + h * 0.5f, "|", nullptr);
+  nvgFontSize(vg, textStyle.fontSize * 1.25);
+  nvgText(vg, cursorX, y + h * 0.48f, "|", nullptr);
 }
 
 void drawRoundedRect(NVGcontext* vg, Vec2 pos, Vec2 size, float radius, Color fillColor, float dropShadowSize)
