@@ -92,53 +92,73 @@ class MessageBus
 public:
   using TypeIDs = TypeCounter<struct Anonym>;
 
+public:
+  MessageBus() = default;
+  MessageBus(const MessageBus&) = delete;
+  MessageBus operator=(const MessageBus&) = delete;
+
   template <typename EventType>
   typename Channel<EventType>::SubscriptionType subscribeToChannel(typename Channel<EventType>::Callback callback)
   {
-    auto channelId = TypeIDs::getId<EventType>();
-    if (mChannels.size() <= channelId)
-      mChannels.resize(channelId + 1);
-
-    using EventChannel = Channel<EventType>;
-    if (!mChannels[channelId])
-      mChannels[channelId] = std::make_unique<EventChannel>();
-
-    return static_cast<EventChannel&>(*mChannels[channelId]).subscribeSafely(std::move(callback));
+    auto& channel = getAndCreateChannel<EventType>();
+    return channel.subscribeSafely(std::move(callback));
   }
 
   template <typename EventType>
   int subscribeToChannelUnsafe(typename Channel<EventType>::Callback callback)
   {
-    auto channelId = TypeIDs::getId<EventType>();
-    if (mChannels.size() <= channelId)
-      mChannels.resize(channelId + 1);
-
-    using EventChannel = Channel<EventType>;
-    if (!mChannels[channelId])
-      mChannels[channelId] = std::make_unique<EventChannel>();
-
-    return static_cast<EventChannel&>(*mChannels[channelId]).subscribe(std::move(callback));
+    auto& channel = getAndCreateChannel<EventType>();
+    return channel.subscribe(std::move(callback));
   }
 
   template <typename EventType>
   void unsubscribeFromChannel(int id)
   {
-    using EventChannel = Channel<EventType>;
-    auto channelId = TypeIDs::getId<EventType>();
-    if (mChannels.size() > channelId || mChannels[channelId])
-      static_cast<EventChannel&>(*mChannels[channelId]).unsubscribe(id);
+    auto* channel = getChannel<EventType>();
+    if (channel)
+      channel->unsubscribe(id);
   }
 
   template <typename EventType>
   void broadcast(const EventType& eventType) const
   {
-    using EventChannel = Channel<EventType>;
-    auto channelId = TypeIDs::getId<EventType>();
-    if (mChannels.size() > channelId && mChannels[channelId])
-      static_cast<const EventChannel&>(*mChannels[channelId]).broadcast(eventType);
+    auto* channel = getChannel<EventType>();
+    if (channel)
+      channel->broadcast(eventType);
   }
 
 private:
+  template <typename EventType>
+  Channel<EventType>& getAndCreateChannel()
+  {
+    using EventChannel = Channel<EventType>;
+    auto* channel = getChannel<EventType>();
+
+    if (!channel)
+    {
+      auto channelId = TypeIDs::getId<EventType>();
+      while (mChannels.size() <= channelId)
+        mChannels.emplace_back(nullptr);
+      if (!mChannels[channelId])
+        mChannels[channelId] = std::make_unique<EventChannel>();
+
+      channel = static_cast<EventChannel*>(mChannels[channelId].get());
+    }
+
+    assert(channel);
+    return *channel;
+  }
+
+  template <typename EventType>
+  Channel<EventType>* getChannel() const
+  {
+    auto channelId = TypeIDs::getId<EventType>();
+    if (channelId >= mChannels.size())
+      return nullptr;
+    using EventChannel = Channel<EventType>;
+    return mChannels[channelId] ? static_cast<EventChannel*>(mChannels[channelId].get()) : nullptr;
+  }
+
 private:
   std::vector<std::unique_ptr<ChannelWrapper>> mChannels;
 };
