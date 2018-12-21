@@ -95,7 +95,7 @@ public:
   template <typename EventType>
   typename Channel<EventType>::SubscriptionType subscribeToChannel(typename Channel<EventType>::Callback callback)
   {
-    auto channelId = mTypeIDs.getId<EventType>();
+    auto channelId = TypeIDs::getId<EventType>();
     if (mChannels.size() <= channelId)
       mChannels.resize(channelId + 1);
 
@@ -109,7 +109,7 @@ public:
   template <typename EventType>
   int subscribeToChannelUnsafe(typename Channel<EventType>::Callback callback)
   {
-    auto channelId = mTypeIDs.getId<EventType>();
+    auto channelId = TypeIDs::getId<EventType>();
     if (mChannels.size() <= channelId)
       mChannels.resize(channelId + 1);
 
@@ -124,7 +124,7 @@ public:
   void unsubscribeFromChannel(int id)
   {
     using EventChannel = Channel<EventType>;
-    auto channelId = mTypeIDs.getId<EventType>();
+    auto channelId = TypeIDs::getId<EventType>();
     if (mChannels.size() > channelId || mChannels[channelId])
       static_cast<EventChannel&>(*mChannels[channelId]).unsubscribe(id);
   }
@@ -133,14 +133,13 @@ public:
   void broadcast(const EventType& eventType) const
   {
     using EventChannel = Channel<EventType>;
-    auto channelId = mTypeIDs.getId<EventType>();
+    auto channelId = TypeIDs::getId<EventType>();
     if (mChannels.size() > channelId && mChannels[channelId])
       static_cast<const EventChannel&>(*mChannels[channelId]).broadcast(eventType);
   }
 
 private:
 private:
-  TypeIDs mTypeIDs;
   std::vector<std::unique_ptr<ChannelWrapper>> mChannels;
 };
 } // namespace aw

@@ -1,36 +1,37 @@
-#include <aw/gui/widgets/typedTextBox.hpp>
+#include <aw/gui/widgets/checkedTextBox.hpp>
 
 #include <aw/gui/gui.hpp>
 
 namespace aw::gui
 {
-TypedTextBox::TypedTextBox(const aw::gui::GUI& gui, std::string text) :
+CheckedTextBox::CheckedTextBox(const aw::gui::GUI& gui, std::string text) :
     TextBox(gui, text),
     mInvalidTextStyle(gui.getTextStyles().getStyle("defaultFail"))
 {
 }
 
-void TypedTextBox::deselect(Vec2 mousePos)
+void CheckedTextBox::deselect(Vec2 mousePos)
 {
   if (!mUpdateDuringTyping)
     updateValue();
 
   TextBox::deselect(mousePos);
 }
-void TypedTextBox::changedText()
+void CheckedTextBox::changedText()
 {
   if (mUpdateDuringTyping)
     updateValue();
+  TextBox::changedText();
 }
 
-const TextStyle* TypedTextBox::getCurrentTextStyle() const
+const TextStyle* CheckedTextBox::getCurrentTextStyle() const
 {
   if (!isTextValid())
     return mInvalidTextStyle;
   return TextBox::getCurrentTextStyle();
 }
 
-void TypedTextBox::render(Vec2 parentPos)
+void CheckedTextBox::render(Vec2 parentPos)
 {
   assert(!isLayoutDirty());
   Widget::render(parentPos);

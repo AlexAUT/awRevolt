@@ -41,7 +41,7 @@ public:
 public:
   Widget::Callback onTextChange;
 
-private:
+protected:
   virtual void changedText();
 
 private:

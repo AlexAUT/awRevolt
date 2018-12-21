@@ -140,7 +140,7 @@ void NanovgRenderer::render(const TextBox& textBox) const
 }
 
 template <>
-void NanovgRenderer::render(const TypedTextBox& typedTextBox) const
+void NanovgRenderer::render(const CheckedTextBox& typedTextBox) const
 {
   render(static_cast<const TextBox&>(typedTextBox));
 }

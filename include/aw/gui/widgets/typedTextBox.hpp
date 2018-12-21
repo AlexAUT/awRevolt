@@ -1,64 +1,44 @@
 #pragma once
 
-#include <aw/gui/widgets/textBox.hpp>
+#include <aw/gui/widgets/checkedTextBox.hpp>
+#include <aw/utils/regex.hpp>
+#include <aw/utils/stringConverter.hpp>
+#include <aw/utils/stringFormat.hpp>
 
-#include <regex>
 #include <sstream>
 
 namespace aw::gui
 {
-class TypedTextBox : public TextBox
+template <typename Type, typename ConvOp = aw::StringConverter<Type>>
+class TypedTextBox;
+
+// Typedefs
+using TextBoxInt = TypedTextBox<int>;
+using TextBoxFloat = TypedTextBox<float>;
+using TextBoxDouble = TypedTextBox<double>;
+
+template <typename Type, typename ConvOp>
+class TypedTextBox final : public CheckedTextBox
 {
 public:
-  TypedTextBox(const aw::gui::GUI& gui, std::string text);
-  virtual ~TypedTextBox() = default;
+  TypedTextBox(const aw::gui::GUI& gui, Type value) : CheckedTextBox(gui, stringFormat::toPrettyString(value)) {}
+  ~TypedTextBox() = default;
 
-  virtual void deselect(Vec2 mousePos = {}) override;
-  virtual void changedText() override;
-
-  void changeCheckWhileTyping(bool value) { mUpdateDuringTyping = value; }
-  bool isTextValid() const { return mValid; }
-
-  void setInvalidTextStyle(const TextStyle* invalidTextStyle) { mInvalidTextStyle = invalidTextStyle; }
-  const TextStyle& getInvalidTextStyle() const { return *mInvalidTextStyle; }
-
-  virtual const TextStyle* getCurrentTextStyle() const override;
-  virtual void render(Vec2 parentPos) override;
-
-protected:
-  void changeValidState(bool valid) { mValid = valid; }
-  virtual void updateValue() = 0;
-
-private:
-  bool mValid{true};
-  bool mUpdateDuringTyping{true};
-
-  const TextStyle* mInvalidTextStyle{nullptr};
-};
-
-class TextBoxFloat final : public TypedTextBox
-{
-public:
-  TextBoxFloat(const aw::gui::GUI& gui, float value) : TypedTextBox(gui, std::to_string(value)) {}
-  ~TextBoxFloat() = default;
-
-  float getValue() const { return mValue; }
+  Type getValue() const { return mValue; }
 
 protected:
   void updateValue() override
   {
-    std::regex regex("[+-]?(?=[.]?[0-9])[0-9]*(?:[.][0-9]*)?(?:[Ee][+-]?[0-9]+)?");
-    auto match = std::regex_match(getText(), regex);
+    auto match = regex::checkStringForType<Type>(getText());
     changeValidState(match);
     if (match)
     {
-      mValue = std::stof(getText().c_str());
+      mValue = ConvOp()(getText());
     }
   }
 
 private:
-  float mValue;
-
-}; // namespace aw::gui
+  Type mValue;
+};
 
 } // namespace aw::gui

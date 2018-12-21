@@ -1,7 +1,6 @@
-add_subdirectory(runtime)
-add_subdirectory(utils)
-
 set(HEADER_FILES_TESTS ${HEADER_FILES_TESTS} PARENT_SCOPE)
+
 set(SOURCE_FILES_TESTS ${SOURCE_FILES_TESTS}
-  ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/testStringFormat.cpp
   PARENT_SCOPE)
+
