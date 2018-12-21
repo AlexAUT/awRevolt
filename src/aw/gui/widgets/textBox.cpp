@@ -4,8 +4,6 @@
 #include <aw/gui/gui.hpp>
 #include <aw/gui/renderer/nanovgRenderer.hpp>
 
-#include <aw/utils/log.hpp>
-
 namespace aw::gui
 {
 TextBox::TextBox(const GUI& gui, std::string text) :
@@ -36,7 +34,6 @@ bool TextBox::processEvent(const WindowEvent& event)
     if (event.type == WindowEvent::TextEntered)
     {
       auto unicode = event.text.unicode;
-      LogTemp() << "Unicode: " << unicode;
       if (unicode > 30 && (unicode < 127 || unicode > 159))
         addCharacterAtCursor(sf::String(event.text.unicode).toAnsiString().front());
       else if (unicode == '\b')
