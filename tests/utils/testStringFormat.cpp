@@ -69,15 +69,24 @@ TEST_CASE("makeNumberStringPretty")
     }
   }
 }
+#include <iostream>
 
 TEST_CASE("toPrettyString")
 {
+  // Only simple tests here, because it only uses std::to_string (no testing) and makeNumberStringPretty which is tested
+  // above
+  using namespace aw::stringFormat;
   SECTION("int")
   {
-    INFO("Valid numbers should stay the same");
-    using namespace aw::stringFormat;
     CHECK(toPrettyString<int>(0) == "0");
     CHECK(toPrettyString<int>(1234) == "1234");
     CHECK(toPrettyString<int>(-1234) == "-1234");
+  }
+
+  SECTION("float")
+  {
+    CHECK(toPrettyString<float>(0.0f) == "0.0");
+    CHECK(toPrettyString<float>(1234.f) == "1234.0");
+    CHECK(toPrettyString<float>(-1234.f) == "-1234.0");
   }
 }
