@@ -81,7 +81,7 @@ int isBlack(NVGcolor col)
   return 0;
 }
 
-static char* cpToUTF8(int cp, char* str)
+/*static char* cpToUTF8(int cp, char* str)
 {
   int n = 0;
   if (cp < 0x80)
@@ -123,7 +123,7 @@ static char* cpToUTF8(int cp, char* str)
     str[0] = static_cast<char>(cp);
   }
   return str;
-}
+}*/
 
 void applyTextStyle(NVGcontext* vg, const TextStyle& style)
 {

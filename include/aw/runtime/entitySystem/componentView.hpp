@@ -24,20 +24,21 @@ constexpr void static_for(Func&& f)
   static_for_impl(std::forward<Func>(f), std::make_index_sequence<iterations>{});
 }
 
-template <typename... Components>
+template <typename... ComponentManagers>
 class ComponentsIterator
 {
 public:
-  using ManagerArray = std::array<ComponentManager*, sizeof...(Components)>;
-  using ComponentRefTuple = std::tuple<ComponentRef<Components>...>;
-  using EntityIdComponentsTuple = std::tuple<EntityId, ComponentRef<Components>...>;
+  using ManagerArray = std::array<const ComponentManager*, sizeof...(ComponentManagers)>;
+  using ComponentRefTuple = std::tuple<ComponentRef<typename ComponentManagers::ComponentType>...>;
+  using EntityIdComponentsTuple = std::tuple<EntityId, ComponentRef<typename ComponentManagers::ComponentType>...>;
 
   explicit constexpr operator bool() const { return mEntityId.isValid(); }
 
   template <typename Component>
   constexpr ComponentRef<Component> getComponentRef(size_t index)
   {
-    auto* m = static_cast<typename Component::Manager*>(mManagers[index]);
+    auto* m =
+        const_cast<typename Component::Manager*>(static_cast<const typename Component::Manager*>(mManagers[index]));
     return m->get(mEntityId);
   }
 
@@ -52,7 +53,8 @@ public:
 
   EntityIdComponentsTuple operator*()
   {
-    return std::tuple_cat(std::make_tuple(mEntityId), getComponentsTuple<Components...>());
+    return std::tuple_cat(std::make_tuple(mEntityId),
+                          getComponentsTuple<typename ComponentManagers::ComponentType...>());
   }
 
   ComponentsIterator operator++(int)
@@ -71,8 +73,10 @@ public:
   bool operator==(const ComponentsIterator& rhs) { return (!(*this) && !rhs) || (mEntityId == rhs.mEntityId); }
   bool operator!=(const ComponentsIterator& rhs) { return !(*this == rhs); }
 
-  ComponentsIterator(EntityId entityId, ManagerArray managers, std::function<EntityId(EntityId)> func = {})
-      : mEntityId(entityId), mManagers(managers), mNextFunction(func)
+  ComponentsIterator(EntityId entityId, ManagerArray managers, std::function<EntityId(EntityId)> func = {}) :
+      mEntityId(entityId),
+      mManagers(managers),
+      mNextFunction(func)
   {
   }
 
@@ -82,38 +86,35 @@ private:
   std::function<EntityId(EntityId)> mNextFunction;
 };
 
-template <typename... Components>
+template <typename... ComponentManagers>
 class ComponentsView
 {
 public:
-  using ComponentTuple = std::tuple<Components...>;
-  using ManagerArray = std::array<ComponentManager*, sizeof...(Components)>;
+  using ComponentTuple = std::tuple<typename ComponentManagers::ComponentType...>;
+  using ManagerArray = std::array<const ComponentManager*, sizeof...(ComponentManagers)>;
 
 public:
-  template <typename... Managers>
-  ComponentsView(Managers... managers) : mManagers({std::forward<Managers>(managers)...})
-  {
-  }
+  ComponentsView(ComponentManagers*... managers) : mManagers({managers...}) {}
 
-  ComponentsIterator<Components...> begin();
-  ComponentsIterator<Components...> end();
+  ComponentsIterator<ComponentManagers...> begin();
+  ComponentsIterator<ComponentManagers...> end();
 
 private:
 private:
   ManagerArray mManagers;
 };
 
-template <typename... Components>
-ComponentsIterator<Components...> ComponentsView<Components...>::begin()
+template <typename... ComponentManagers>
+ComponentsIterator<ComponentManagers...> ComponentsView<ComponentManagers...>::begin()
 {
   size_t minCount = std::numeric_limits<size_t>::max();
   size_t foundIndex = 0;
   EntityId id{};
   std::function<EntityId(EntityId)> nextFunction;
   // EntityId entity;
-  static_for<std::tuple_size<std::tuple<Components...>>::value>([&](auto index) {
-    using Component = typename std::tuple_element<index, std::tuple<Components...>>::type;
-    auto* m = static_cast<typename Component::Manager*>(mManagers[index]);
+  static_for<std::tuple_size<std::tuple<typename ComponentManagers::ComponentType...>>::value>([&](auto index) {
+    using ComponentManager = typename std::tuple_element<index, std::tuple<ComponentManagers...>>::type;
+    auto* m = const_cast<ComponentManager*>(static_cast<const ComponentManager*>(mManagers[index]));
 
     auto size = m ? m->getSize() : 0;
     if (size < minCount)
@@ -131,12 +132,12 @@ ComponentsIterator<Components...> ComponentsView<Components...>::begin()
       }
     }
   });
-  return ComponentsIterator<Components...>(id, mManagers, nextFunction);
+  return ComponentsIterator<ComponentManagers...>(id, mManagers, nextFunction);
 } // namespace aw::ecs
 
-template <typename... Components>
-ComponentsIterator<Components...> ComponentsView<Components...>::end()
+template <typename... ComponentManagers>
+ComponentsIterator<ComponentManagers...> ComponentsView<ComponentManagers...>::end()
 {
-  return ComponentsIterator<Components...>(EntityId(), mManagers);
+  return ComponentsIterator<ComponentManagers...>(EntityId(), mManagers);
 }
 } // namespace aw::ecs

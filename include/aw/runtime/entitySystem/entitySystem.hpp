@@ -30,16 +30,22 @@ public:
   inline Entity getEntity(EntityId id) const;
 
   template <typename... Components>
-  ComponentsView<Components...> getView();
+  ComponentsView<typename Components::Manager...> getView();
+
+  template <typename... Components>
+  ComponentsView<const typename Components::Manager...> getView() const;
 
   template <typename Component>
   typename Component::Manager* getManager();
 
   template <typename Component>
-  size_t getComponentCount();
+  const typename Component::Manager* getManager() const;
 
   template <typename Component>
-  uint32 getComponentId();
+  size_t getComponentCount() const;
+
+  template <typename Component>
+  uint32 getComponentId() const;
 
 private:
   EntityContainer mEntities;
@@ -57,29 +63,41 @@ Entity EntitySystem::getEntity(EntityId id) const
 }
 
 template <typename Component>
-uint32 EntitySystem::getComponentId()
+uint32 EntitySystem::getComponentId() const
 {
   return Entity::ComponentIndexer::getId<Component>();
 }
 
 template <typename... Components>
-ComponentsView<Components...> EntitySystem::getView()
+ComponentsView<typename Components::Manager...> EntitySystem::getView()
 {
-  return ComponentsView<Components...>(getManager<Components>()...);
+  return ComponentsView<typename Components::Manager...>(getManager<Components>()...);
+}
+
+template <typename... Components>
+ComponentsView<const typename Components::Manager...> EntitySystem::getView() const
+{
+  return ComponentsView<const typename Components::Manager...>(getManager<Components>()...);
 }
 
 template <typename Component>
 typename Component::Manager* EntitySystem::getManager()
 {
+  return const_cast<typename Component::Manager*>(static_cast<const EntitySystem*>(this)->getManager<Component>());
+}
+
+template <typename Component>
+const typename Component::Manager* EntitySystem::getManager() const
+{
   auto index = Entity::ComponentIndexer::getId<Component>();
   if (index >= mComponentManagers.size())
     return nullptr;
   auto* m = mComponentManagers[index].get();
-  return static_cast<typename Component::Manager*>(m);
+  return static_cast<const typename Component::Manager*>(m);
 }
 
 template <typename Component>
-size_t EntitySystem::getComponentCount()
+size_t EntitySystem::getComponentCount() const
 {
   auto* manager = getManager<Component>();
   return manager ? manager->getSize() : 0;

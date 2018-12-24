@@ -15,6 +15,7 @@ template <typename Component>
 class DirectComponentManager : public ComponentManager
 {
 public:
+  using ComponentType = Component;
   using ComponentContainer = std::vector<Component>;
   using FlagContainer = std::vector<bool>;
   using ComponentId = uint32;
@@ -69,7 +70,7 @@ public:
     return {};
   }
 
-  const ComponentReference get(Entity e) const
+  ConstComponentReference get(Entity e) const
   {
     auto id = e.getId().getIndex();
     if (mIdFlags[id])
@@ -85,14 +86,27 @@ public:
     return {};
   }
 
+  ConstComponentReference get(EntityId id) const
+  {
+    auto index = id.getIndex();
+    if (mIdFlags[index])
+      return {index, this};
+    return {};
+  }
+
   Component* get(ComponentId id)
+  {
+    return const_cast<Component*>(static_cast<const DirectComponentManager*>(this)->get(id));
+  }
+
+  const Component* get(ComponentId id) const
   {
     if (mComponents.size() > id && mIdFlags[id])
       return &mComponents[id];
     return nullptr;
   }
 
-  EntityId begin()
+  EntityId begin() const
   {
     for (size_t i = 0; i < mIdFlags.size(); i++)
     {
@@ -103,7 +117,7 @@ public:
     ;
   }
 
-  EntityId next(EntityId entityId)
+  EntityId next(EntityId entityId) const
   {
     for (size_t i = entityId.getIndex() + 1; i < mIdFlags.size(); i++)
     {

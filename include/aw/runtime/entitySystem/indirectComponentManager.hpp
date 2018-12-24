@@ -16,10 +16,11 @@ template <class Component>
 class IndirectComponentManager : public ComponentManager
 {
 public:
+  using ComponentType = Component;
   using ComponentId = std::tuple<EntityId, size_t>;
   using ComponentReference = ComponentRef<Component>;
-  using IdComponentTuple = std::tuple<EntityId, Component>;
   using ConstComponentReference = ComponentRef<const Component>;
+  using IdComponentTuple = std::tuple<EntityId, Component>;
 
   using ComponentContainer = std::vector<IdComponentTuple>;
   using LinkContainer = std::unordered_map<EntityId::StorageType, size_t>;
@@ -67,8 +68,7 @@ public:
   bool has(EntityId id) const { return mResolveTable.find(id.getIndex()) != mResolveTable.end(); }
 
   ComponentReference get(Entity e) { return get(e.getId()); }
-
-  const ComponentReference get(Entity e) const { return get(e.getId()); }
+  ConstComponentReference get(Entity e) const { return get(e.getId()); }
 
   ComponentReference get(EntityId id)
   {
@@ -78,8 +78,22 @@ public:
       return {{id, index}, this};
     return {};
   }
+  // We need to define this again for const, no const_cast hack possible
+  ConstComponentReference get(EntityId id) const
+  {
+    auto index = id.getIndex();
+    auto found = mResolveTable.find(id.getIndex());
+    // TODO: enable_if in compRef to remove const_cast
+    if (found != mResolveTable.end())
+      return {{id, index}, const_cast<IndirectComponentManager*>(this)};
+    return {};
+  }
 
   Component* get(ComponentId id)
+  {
+    return const_cast<Component*>(static_cast<const IndirectComponentManager*>(this)->get(id));
+  }
+  const Component* get(ComponentId id) const
   {
     auto componentIndex = std::get<std::size_t>(id);
     auto entityId = std::get<EntityId>(id);
@@ -88,26 +102,34 @@ public:
       return &std::get<Component>(mComponents[componentIndex]);
     // Get the new location
     if (has(entityId))
-      return &std::get<Component>(mComponents[mResolveTable[entityId.getIndex()]]);
+    {
+      auto found = mResolveTable.find(entityId.getIndex());
+      if (found != mResolveTable.end())
+        return &std::get<Component>(mComponents[found->second]);
+    }
 
     return nullptr;
   }
 
-  EntityId begin()
+  EntityId begin() const
   {
     if (mComponents.empty())
       return {};
     return std::get<EntityId>(mComponents[0]);
   }
 
-  EntityId next(EntityId entityId)
+  EntityId next(EntityId entityId) const
   {
     if (has(entityId))
     {
-      auto index = mResolveTable[entityId.getIndex()] + 1u;
-      if (index < mComponents.size())
+      auto found = mResolveTable.find(entityId.getIndex());
+      if (found != mResolveTable.end())
       {
-        return std::get<EntityId>(mComponents[index]);
+        auto index = found->second + 1u;
+        if (index < mComponents.size())
+        {
+          return std::get<EntityId>(mComponents[index]);
+        }
       }
     }
     return {};
