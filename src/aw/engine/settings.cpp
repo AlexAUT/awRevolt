@@ -81,7 +81,9 @@ bool Settings::save(const std::string& path) const
   }
   return false;
 }
-std::ostream& operator<<(std::ostream& stream, const Settings& settings)
+} // namespace aw
+
+std::ostream& operator<<(std::ostream& stream, const aw::Settings& settings)
 {
 #define PRINT_MEMBER(x) "\tx: " << settings.x
   stream << PRINT_MEMBER(applicationName);
@@ -102,4 +104,3 @@ std::ostream& operator<<(std::ostream& stream, const Settings& settings)
 
   return stream;
 }
-} // namespace aw

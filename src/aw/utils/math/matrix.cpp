@@ -2,10 +2,7 @@
 
 #include <iomanip>
 
-namespace aw
-{
-
-std::ostream& operator<<(std::ostream& stream, const Mat2& matrix)
+std::ostream& operator<<(std::ostream& stream, const aw::Mat2& matrix)
 {
   stream << "Mat2(";
   for (int i = 0; i < 2; i++)
@@ -23,7 +20,7 @@ std::ostream& operator<<(std::ostream& stream, const Mat2& matrix)
   return stream;
 }
 
-std::ostream& operator<<(std::ostream& stream, const Mat3& matrix)
+std::ostream& operator<<(std::ostream& stream, const aw::Mat3& matrix)
 {
   stream << "Mat3(";
   for (int i = 0; i < 3; i++)
@@ -41,7 +38,7 @@ std::ostream& operator<<(std::ostream& stream, const Mat3& matrix)
   return stream;
 }
 
-std::ostream& operator<<(std::ostream& stream, const Mat4& matrix)
+std::ostream& operator<<(std::ostream& stream, const aw::Mat4& matrix)
 {
   stream << "Mat4(";
   for (int i = 0; i < 4; i++)
@@ -58,4 +55,3 @@ std::ostream& operator<<(std::ostream& stream, const Mat4& matrix)
   stream << "\n)";
   return stream;
 }
-} // namespace aw

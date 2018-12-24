@@ -2,23 +2,11 @@
 
 namespace aw
 {
-AABB::AABB(float size) : min(-0.5f * size), max(0.5f * size)
-{
-}
+AABB::AABB(float size) : min(-0.5f * size), max(0.5f * size) {}
 
-AABB::AABB(Vec3 size) : min(-0.5f * size), max(0.5f * size)
-{
-}
+AABB::AABB(Vec3 size) : min(-0.5f * size), max(0.5f * size) {}
 
-AABB::AABB(Vec3 origin, Vec3 extend) : min(origin - extend), max(origin + extend)
-{
-}
-
-std::ostream& operator<<(std::ostream& stream, const AABB& box)
-{
-  stream << "AABB{ min: " << box.min << ", max: " << box.max << "}";
-  return stream;
-}
+AABB::AABB(Vec3 origin, Vec3 extend) : min(origin - extend), max(origin + extend) {}
 
 // Static factories
 
@@ -42,3 +30,9 @@ AABB AABB::createFromTransform(const AABB& box, const Mat4& transform)
 }
 
 } // namespace aw
+
+std::ostream& operator<<(std::ostream& stream, const aw::AABB& box)
+{
+  stream << "AABB{ min: " << box.min << ", max: " << box.max << "}";
+  return stream;
+}

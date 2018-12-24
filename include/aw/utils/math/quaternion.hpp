@@ -7,6 +7,6 @@
 namespace aw
 {
 typedef glm::quat Quaternion;
-
-std::ostream& operator<<(std::ostream& stream, const Quaternion& vec);
 } // namespace aw
+
+std::ostream& operator<<(std::ostream& stream, const aw::Quaternion& vec);

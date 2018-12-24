@@ -24,20 +24,11 @@ public:
   Vec3 min{std::numeric_limits<float>::max()};
   Vec3 max{std::numeric_limits<float>::lowest()};
 
-  Vec3 getSize() const
-  {
-    return max - min;
-  }
+  Vec3 getSize() const { return max - min; }
 
-  Vec3 getExtend() const
-  {
-    return getSize() * 0.5f;
-  }
+  Vec3 getExtend() const { return getSize() * 0.5f; }
 
-  Vec3 getCenter() const
-  {
-    return min + getExtend();
-  }
+  Vec3 getCenter() const { return min + getExtend(); }
 
   void operator+=(const Vec3& point)
   {
@@ -45,12 +36,10 @@ public:
     max = glm::max(max, point);
   }
 
-  void addPoint(const Vec3& point)
-  {
-    (*this) += point;
-  }
+  void addPoint(const Vec3& point) { (*this) += point; }
 
 private:
 };
-std::ostream& operator<<(std::ostream& stream, const AABB& box);
 } // namespace aw
+
+std::ostream& operator<<(std::ostream& stream, const aw::AABB& box);

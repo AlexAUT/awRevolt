@@ -21,6 +21,9 @@ template <typename Type, typename ConvOp>
 class TypedTextBox final : public CheckedTextBox
 {
 public:
+  using SPtr = std::shared_ptr<TypedTextBox<Type, ConvOp>>;
+
+public:
   TypedTextBox(const aw::gui::GUI& gui, Type value) : CheckedTextBox(gui, stringFormat::toPrettyString(value)) {}
   ~TypedTextBox() = default;
 

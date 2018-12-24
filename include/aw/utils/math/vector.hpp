@@ -26,15 +26,14 @@ typedef glm::bvec3 Vec3b;
 typedef glm::ivec4 Vec4i;
 typedef glm::uvec4 Vec4u;
 typedef glm::dvec4 Vec4d;
-
-std::ostream& operator<<(std::ostream& stream, const Vec2& vec);
-std::ostream& operator<<(std::ostream& stream, const Vec2i& vec);
-std::ostream& operator<<(std::ostream& stream, const Vec2u& vec);
-
-std::ostream& operator<<(std::ostream& stream, const Vec3& vec);
-std::ostream& operator<<(std::ostream& stream, const Vec3i& vec);
-
-std::ostream& operator<<(std::ostream& stream, const Vec4& vec);
-std::ostream& operator<<(std::ostream& stream, const Vec4i& vec);
-
 } // namespace aw
+
+std::ostream& operator<<(std::ostream& stream, const aw::Vec2& vec);
+std::ostream& operator<<(std::ostream& stream, const aw::Vec2i& vec);
+std::ostream& operator<<(std::ostream& stream, const aw::Vec2u& vec);
+
+std::ostream& operator<<(std::ostream& stream, const aw::Vec3& vec);
+std::ostream& operator<<(std::ostream& stream, const aw::Vec3i& vec);
+
+std::ostream& operator<<(std::ostream& stream, const aw::Vec4& vec);
+std::ostream& operator<<(std::ostream& stream, const aw::Vec4i& vec);

@@ -6,6 +6,8 @@
 #include <aw/utils/math/quaternion.hpp>
 #include <aw/utils/math/vector.hpp>
 
+#include <ostream>
+
 namespace aw::ecs::components
 {
 class Transform
@@ -17,8 +19,8 @@ public:
   Vec3 getPosition() const { return mPosition; }
   Vec3 getScale() const { return mScale; }
   Quaternion getRotiation() const { return mRotation; }
-  const Mat4 getTransform() const { return Mat4{1.f}; }
-  const Mat4 getGlobalTransform() const { return Mat4{1.f}; }
+  Mat4 getTransform() const;
+  Mat4 getGlobalTransform() const { return Mat4{1.f}; }
 
   inline void setPosition(Vec3 postion);
   inline void setScale(Vec3 scale);
@@ -32,7 +34,7 @@ public:
 private:
   Vec3 mPosition{0.f};
   Vec3 mScale{1.f};
-  Quaternion mRotation{0.f, 0.f, 0.f, 1.f};
+  Quaternion mRotation{Vec3(0.f)};
   int mVersion{0};
 };
 
@@ -82,3 +84,5 @@ void Transform::rotate(Quaternion rotation)
 }
 
 } // namespace aw::ecs::components
+
+std::ostream& operator<<(std::ostream& stream, const aw::ecs::components::Transform& transform);

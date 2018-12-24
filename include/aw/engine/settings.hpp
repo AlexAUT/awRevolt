@@ -30,6 +30,6 @@ struct Settings
   bool save(const std::string& path = Path::getConfigPath() + "engine.json") const;
 };
 
-std::ostream& operator<<(std::ostream& stream, const Settings& settings);
-
 } // namespace aw
+
+std::ostream& operator<<(std::ostream& stream, const aw::Settings& settings);
