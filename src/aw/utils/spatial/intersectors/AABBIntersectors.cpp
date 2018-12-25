@@ -1,4 +1,4 @@
-#include <aw/utils/spatial/AABBTriangleIntersector.hpp>
+#include <aw/utils/spatial/intersectors/AABBIntersectors.hpp>
 
 #include <aw/utils/spatial/AABB.hpp>
 
@@ -10,7 +10,7 @@
 namespace aw
 {
 
-bool AABBTriangleIntersector::operator()(const AABB& bounds, Vec3 t1, Vec3 t2, Vec3 t3)
+bool AABBTriangleIntersector::operator()(AABB bounds, Vec3 t1, Vec3 t2, Vec3 t3)
 {
   // Move the bbox into the origin
   const auto bExt = bounds.getSize() * 0.5f;

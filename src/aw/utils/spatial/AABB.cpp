@@ -6,7 +6,7 @@ AABB::AABB(float size) : min(-0.5f * size), max(0.5f * size) {}
 
 AABB::AABB(Vec3 size) : min(-0.5f * size), max(0.5f * size) {}
 
-AABB::AABB(Vec3 origin, Vec3 extend) : min(origin - extend), max(origin + extend) {}
+AABB::AABB(Vec3 origin, Vec3 size) : min(origin - size * 0.5f), max(origin + size * 0.5f) {}
 
 // Static factories
 

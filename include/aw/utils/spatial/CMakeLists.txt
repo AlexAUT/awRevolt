@@ -1,8 +1,9 @@
+add_subdirectory(intersectors)
 
 set(HEADER_FILES_UTILS ${HEADER_FILES_UTILS}
   ${CMAKE_CURRENT_SOURCE_DIR}/AABB.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/AABBIntersectors.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/AABBTriangleIntersector.hpp
   ${CMAKE_CURRENT_SOURCE_DIR}/octree.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/ray.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/intersectors.hpp
   PARENT_SCOPE)
 

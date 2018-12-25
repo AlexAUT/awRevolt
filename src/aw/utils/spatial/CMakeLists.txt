@@ -1,5 +1,7 @@
+add_subdirectory(intersectors)
+
 set(SOURCE_FILES_UTILS ${SOURCE_FILES_UTILS}
     ${CMAKE_CURRENT_SOURCE_DIR}/AABB.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/AABBTriangleIntersector.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ray.cpp
     PARENT_SCOPE)
 

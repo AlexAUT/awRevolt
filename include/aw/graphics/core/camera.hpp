@@ -3,6 +3,7 @@
 #include <aw/utils/math/matrix.hpp>
 #include <aw/utils/math/quaternion.hpp>
 #include <aw/utils/math/vector.hpp>
+#include <aw/utils/spatial/ray.hpp>
 
 namespace aw
 {
@@ -61,6 +62,14 @@ public:
   Vec3 getViewDirection() const;
   Vec3 getUpDirection() const;
   Vec3 getLeftDirection() const;
+
+  // [0,0] is left top corner
+  Vec3 getPointOnNearPlane(Vec2 relPosition) const;
+  Vec3 getPointOnFarPlane(Vec2 relPosition) const;
+  Vec3 getPointInDistance(Vec2 relPosition, float distance) const;
+
+  Ray createRayFromScreenspace(Vec2 relPosition) const;
+  Ray createCenteredRay() const;
 
   Vec3 getPosition() const;
   Quaternion getRotation() const;

@@ -19,7 +19,7 @@ public:
   AABB() = default;
   explicit AABB(float size);
   explicit AABB(Vec3 size);
-  AABB(Vec3 origin, Vec3 extend);
+  AABB(Vec3 origin, Vec3 size);
 
   Vec3 min{std::numeric_limits<float>::max()};
   Vec3 max{std::numeric_limits<float>::lowest()};

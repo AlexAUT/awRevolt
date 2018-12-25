@@ -1,11 +1,11 @@
 #include <aw/graphics/core/camera.hpp>
 
+#include <aw/utils/log.hpp>
 #include <aw/utils/math/constants.hpp>
 
+#include <glm/gtc/matrix_access.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/quaternion.hpp>
-
-#include <glm/gtc/matrix_access.hpp>
 
 #include <algorithm>
 
@@ -193,6 +193,48 @@ Vec3 Camera::getUpDirection() const
 Vec3 Camera::getLeftDirection() const
 {
   return glm::column(getViewMatrix(), 0);
+}
+
+Vec3 Camera::getPointOnNearPlane(Vec2 relPosition) const
+{
+  return getPointInDistance(relPosition, mNear);
+}
+
+Vec3 Camera::getPointOnFarPlane(Vec2 relPosition) const
+{
+  return getPointInDistance(relPosition, mFar);
+}
+
+Vec3 Camera::getPointInDistance(Vec2 relPosition, float distance) const
+{
+  Vec3 point;
+  if (mProjectionType == ProjectionType::Perspective)
+  {
+    float tanFov = glm::tan(mFieldOfView * 0.5f);
+    float nearHalfHeight = tanFov * distance;
+    float nearHalfWidth = nearHalfHeight * mAspectRatio;
+    point = {-nearHalfWidth + relPosition.x * nearHalfWidth * 2.f,
+             nearHalfHeight - relPosition.y * nearHalfHeight * 2.f, -distance};
+  }
+  else if (mProjectionType == ProjectionType::Orthographic)
+  {
+    auto orthoHeight = mOrthoWidth * (1.f / mFieldOfView);
+    point = {relPosition.x * mOrthoWidth - mOrthoWidth * 0.5f, relPosition.y * orthoHeight - orthoHeight * 0.5f,
+             distance};
+  }
+
+  return glm::inverse(getViewMatrix()) * aw::Vec4(point, 1.f);
+}
+
+Ray Camera::createRayFromScreenspace(Vec2 relPosition) const
+{
+  auto targetPoint = getPointOnFarPlane(relPosition);
+  return {getPosition(), glm::normalize(targetPoint - getPosition())};
+}
+
+Ray Camera::createCenteredRay() const
+{
+  return createRayFromScreenspace(Vec2{0.5f, 0.5f});
 }
 
 Vec3 Camera::getPosition() const
