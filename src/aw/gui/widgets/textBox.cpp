@@ -20,8 +20,11 @@ TextBox::TextBox(const GUI& gui, std::string text) :
 
 void TextBox::setText(std::string text)
 {
-  mText = std::move(text);
-  changedText();
+  if (mText != text)
+  {
+    mText = std::move(text);
+    changedText();
+  }
 }
 
 bool TextBox::processEvent(const WindowEvent& event)

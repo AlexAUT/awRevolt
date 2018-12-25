@@ -25,6 +25,18 @@ ListItem::SPtr List::addItem(std::string text, std::string id)
   return newChild;
 }
 
+void List::selectItem(std::string_view id)
+{
+  for (auto& child : mChildContainer->getChildren())
+  {
+    auto* item = static_cast<aw::gui::ListItem*>(child.get());
+    if (item->getId() == id)
+    {
+      item->select();
+    }
+  }
+}
+
 void List::selectedChild(Widget& widget)
 {
   deselectOtherChilds(&widget);

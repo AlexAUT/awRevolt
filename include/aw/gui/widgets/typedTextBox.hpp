@@ -27,6 +27,7 @@ public:
   TypedTextBox(const aw::gui::GUI& gui, Type value) : CheckedTextBox(gui, stringFormat::toPrettyString(value)) {}
   ~TypedTextBox() = default;
 
+  void setValue(const Type& value) { setText(stringFormat::toPrettyString(value)); }
   Type getValue() const { return mValue; }
 
 protected:
