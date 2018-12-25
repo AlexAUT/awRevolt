@@ -229,7 +229,7 @@ Vec3 Camera::getPointInDistance(Vec2 relPosition, float distance) const
 Ray Camera::createRayFromScreenspace(Vec2 relPosition) const
 {
   auto targetPoint = getPointOnFarPlane(relPosition);
-  return {getPosition(), glm::normalize(targetPoint - getPosition())};
+  return {getPosition(), targetPoint - getPosition()};
 }
 
 Ray Camera::createCenteredRay() const

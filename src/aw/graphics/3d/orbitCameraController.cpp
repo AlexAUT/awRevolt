@@ -19,12 +19,12 @@ void OrbitCameraController::setCamera(aw::Camera* camera)
   mCamera = camera;
 }
 
-void OrbitCameraController::setRotationHorizontal(float radians)
+void OrbitCameraController::setHorizontalRotation(float radians)
 {
   mHorizontalRotation = radians;
 }
 
-void OrbitCameraController::setRotationVertical(float radians)
+void OrbitCameraController::setVerticalRotation(float radians)
 {
   mVerticalRotation = radians;
 }

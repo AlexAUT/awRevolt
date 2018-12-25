@@ -14,8 +14,8 @@ public:
 
   void setCamera(aw::Camera* camera);
 
-  void setRotationHorizontal(float radians);
-  void setRotationVertical(float radians);
+  void setHorizontalRotation(float radians);
+  void setVerticalRotation(float radians);
   void setDistanceToViewPoint(float units);
   void setViewAtPoint(Vec3 point);
 
