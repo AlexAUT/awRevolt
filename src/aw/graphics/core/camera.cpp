@@ -182,17 +182,17 @@ float Camera::getFieldOfView() const
 
 Vec3 Camera::getViewDirection() const
 {
-  return -glm::column(getViewMatrix(), 2);
+  return -glm::column(getInverseViewMatrix(), 2);
 }
 
 Vec3 Camera::getUpDirection() const
 {
-  return glm::column(getViewMatrix(), 1);
+  return glm::column(getInverseViewMatrix(), 1);
 }
 
-Vec3 Camera::getLeftDirection() const
+Vec3 Camera::getRightDirection() const
 {
-  return glm::column(getViewMatrix(), 0);
+  return glm::column(getInverseViewMatrix(), 0);
 }
 
 Vec3 Camera::getPointOnNearPlane(Vec2 relPosition) const
@@ -218,9 +218,11 @@ Vec3 Camera::getPointInDistance(Vec2 relPosition, float distance) const
   }
   else if (mProjectionType == ProjectionType::Orthographic)
   {
-    auto orthoHeight = mOrthoWidth * (1.f / mFieldOfView);
-    point = {relPosition.x * mOrthoWidth - mOrthoWidth * 0.5f, relPosition.y * orthoHeight - orthoHeight * 0.5f,
-             distance};
+    auto w = mOrthoWidth;
+    auto halfW = w * 0.5f;
+    auto h = w / mAspectRatio;
+    auto halfH = h * 0.5f;
+    point = {-halfW + relPosition.x * w, halfH - relPosition.y * h, distance};
   }
 
   return glm::inverse(getViewMatrix()) * aw::Vec4(point, 1.f);
@@ -228,8 +230,21 @@ Vec3 Camera::getPointInDistance(Vec2 relPosition, float distance) const
 
 Ray Camera::createRayFromScreenspace(Vec2 relPosition) const
 {
-  auto targetPoint = getPointOnFarPlane(relPosition);
-  return {getPosition(), targetPoint - getPosition()};
+  if (mProjectionType == ProjectionType::Perspective)
+  {
+    auto targetPoint = getPointOnFarPlane(relPosition);
+    return {getPosition(), targetPoint - getPosition()};
+  }
+  else if (mProjectionType == ProjectionType::Orthographic)
+  {
+    auto startPoint = getPointOnNearPlane(relPosition);
+    return {startPoint, getViewDirection()};
+  }
+  else
+  {
+    assert("Generating rays from custom projection not possible!");
+    return {aw::Vec3{0.f}, aw::Vec3{1.f}};
+  }
 }
 
 Ray Camera::createCenteredRay() const
@@ -250,6 +265,12 @@ Quaternion Camera::getRotation() const
 Vec3 Camera::getRotationEuler() const
 {
   return glm::eulerAngles(mRotation);
+}
+
+const Mat4& Camera::getInverseViewMatrix() const
+{
+  updateViewMatrix();
+  return mInverseViewMatrix;
 }
 
 const Mat4& Camera::getViewMatrix() const
@@ -288,8 +309,9 @@ void Camera::updateViewMatrix() const
   {
     mViewDirty = false;
 
-    Mat4 rotationMatrix = glm::mat4_cast(glm::inverse(mRotation));
-    mViewMatrix = rotationMatrix * glm::translate(Mat4(1.f), -mPosition);
+    Mat4 rotationMatrix = glm::mat4_cast(mRotation);
+    mInverseViewMatrix = glm::translate(Mat4(1.f), mPosition) * rotationMatrix;
+    mViewMatrix = glm::inverse(mInverseViewMatrix);
   }
 }
 

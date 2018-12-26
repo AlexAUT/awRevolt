@@ -52,7 +52,7 @@ public:
   void rotateEuler(Vec3 rotation);
 
   // Getter of properties
-  ProjectionType getProjectionType() const;
+  ProjectionType getProjectionType() const { return mProjectionType; }
 
   float getNearPlane() const;
   float getFarPlane() const;
@@ -61,7 +61,7 @@ public:
   float getFieldOfView() const;
   Vec3 getViewDirection() const;
   Vec3 getUpDirection() const;
-  Vec3 getLeftDirection() const;
+  Vec3 getRightDirection() const;
 
   // [0,0] is left top corner
   Vec3 getPointOnNearPlane(Vec2 relPosition) const;
@@ -76,6 +76,7 @@ public:
   Vec3 getRotationEuler() const;
 
   // Getter of matrices
+  const Mat4& getInverseViewMatrix() const;
   const Mat4& getViewMatrix() const;
   const Mat4& getProjectionMatrix() const;
   const Mat4& getVPMatrix() const;
@@ -105,6 +106,7 @@ private:
   mutable bool mViewDirty{true};
   mutable bool mProjectionDirty{true};
   mutable bool mViewProjectionDirty{true};
+  mutable Mat4 mInverseViewMatrix;
   mutable Mat4 mViewMatrix;
   mutable Mat4 mProjectionMatrix;
   mutable Mat4 mViewProjectionMatrix;

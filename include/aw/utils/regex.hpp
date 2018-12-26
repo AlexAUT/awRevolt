@@ -5,16 +5,26 @@
 namespace aw::regex
 {
 template <typename Type>
+inline const std::regex& getRegex();
+
+template <typename Type>
 inline const char* getRegexString();
 
 template <typename Type>
 inline bool checkStringForType(const std::string& toCheck);
 
-// Specializations
+// Implementations/Specializations
 template <typename Type>
 inline bool checkStringForType(const std::string& toCheck)
 {
-  return std::regex_match(toCheck, std::regex(getRegexString<Type>()));
+  return std::regex_match(toCheck, getRegex<Type>());
+}
+
+template <typename Type>
+inline const std::regex& getRegex()
+{
+  static std::regex regex(getRegexString<Type>());
+  return regex;
 }
 
 template <>

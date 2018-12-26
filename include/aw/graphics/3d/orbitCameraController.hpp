@@ -13,6 +13,7 @@ public:
   explicit OrbitCameraController(aw::Camera* camera);
 
   void setCamera(aw::Camera* camera);
+  aw::Camera* getCamera() const { return mCamera; }
 
   void setHorizontalRotation(float radians);
   void setVerticalRotation(float radians);
