@@ -1,9 +1,11 @@
 #pragma once
 
+#include <aw/runtime/entitySystem/componentIterator.hpp>
 #include <aw/runtime/entitySystem/componentManager.hpp>
 #include <aw/runtime/entitySystem/componentRef.hpp>
 #include <aw/runtime/entitySystem/componentView.hpp>
 #include <aw/runtime/entitySystem/entity.hpp>
+#include <aw/runtime/entitySystem/multiComponentView.hpp>
 #include <aw/utils/typeHelper/typeCounter.hpp>
 #include <aw/utils/types.hpp>
 
@@ -30,10 +32,10 @@ public:
   inline Entity getEntity(EntityId id) const;
 
   template <typename... Components>
-  ComponentsView<typename Components::Manager...> getView();
+  auto getView();
 
-  template <typename... Components>
-  ComponentsView<const typename Components::Manager...> getView() const;
+  template <typename Component>
+  ComponentIterator<Component> getComponentIterator();
 
   template <typename Component>
   typename Component::Manager* getManager();
@@ -69,15 +71,12 @@ uint32 EntitySystem::getComponentId() const
 }
 
 template <typename... Components>
-ComponentsView<typename Components::Manager...> EntitySystem::getView()
+auto EntitySystem::getView()
 {
-  return ComponentsView<typename Components::Manager...>(getManager<Components>()...);
-}
-
-template <typename... Components>
-ComponentsView<const typename Components::Manager...> EntitySystem::getView() const
-{
-  return ComponentsView<const typename Components::Manager...>(getManager<Components>()...);
+  if constexpr (sizeof...(Components) == 1)
+    return ComponentView<Components...>(getManager<Components>()...);
+  else
+    return MultiComponentView<Components...>({getManager<Components>()...});
 }
 
 template <typename Component>
@@ -100,7 +99,15 @@ template <typename Component>
 size_t EntitySystem::getComponentCount() const
 {
   auto* manager = getManager<Component>();
-  return manager ? manager->getSize() : 0;
+  return manager ? manager->getComponentCount() : 0;
 }
 
+template <typename Component>
+ComponentIterator<Component> EntitySystem::getComponentIterator()
+{
+  auto* manager = getManager<Component>();
+  if (manager)
+    return {this, manager->begin()};
+  return {this, {}};
+}
 } // namespace aw::ecs

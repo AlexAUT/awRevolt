@@ -6,7 +6,6 @@
 #include <aw/runtime/components/meshRenderer.hpp>
 #include <aw/runtime/components/transform.hpp>
 #include <aw/runtime/entitySystem/entitySystem.hpp>
-#include <aw/runtime/entitySystem/unpackComponents.hpp>
 
 #include <aw/opengl/opengl.hpp>
 

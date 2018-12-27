@@ -2,7 +2,6 @@
 
 #include <aw/runtime/entitySystem/entitySystem.hpp>
 #include <aw/runtime/entitySystem/indirectComponentManager.hpp>
-#include <aw/runtime/entitySystem/unpackComponents.hpp>
 
 #include "components.hpp"
 

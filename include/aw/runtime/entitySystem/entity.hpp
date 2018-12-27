@@ -22,8 +22,10 @@ public:
 
 public:
   Entity() = default;
-  Entity(EntitySystem* system, ComponentManagers* compManagers, uint32 id, uint32 version)
-      : mEntitySystem{system}, mComponentManagers{compManagers}, mId{id, version}
+  Entity(EntitySystem* system, ComponentManagers* compManagers, uint32 id, uint32 version) :
+      mEntitySystem{system},
+      mComponentManagers{compManagers},
+      mId{id, version}
   {
   }
 
@@ -76,7 +78,7 @@ bool Entity::has() const
   {
     auto* manager = getManager<Component>();
     if (manager)
-      return manager->has(*this);
+      return manager->has(getId());
   }
   return false;
 }
@@ -88,7 +90,7 @@ ComponentRef<Component> Entity::get()
   {
     auto* manager = getManager<Component>();
     if (manager)
-      return manager->get(*this);
+      return manager->get(getId());
   }
   return {};
 }
@@ -100,7 +102,7 @@ ComponentRef<const Component> Entity::get() const
   {
     auto* manager = getManager<Component>();
     if (manager)
-      return manager->get(*this);
+      return manager->get(getId());
   }
   return {};
 }
@@ -114,7 +116,7 @@ ComponentRef<Component> Entity::add(Args&&... args)
     if (!manager)
       manager = createManager<Component>();
     assert(manager);
-    return manager->add(*this, std::forward<Args>(args)...);
+    return manager->add(getId(), std::forward<Args>(args)...);
   }
   return {};
 }
@@ -157,7 +159,7 @@ inline bool Entity::remove()
 {
   auto* manager = getManager<Component>();
   if (manager)
-    return manager->remove(*this);
+    return manager->remove(getId());
   return false;
 }
 
