@@ -27,10 +27,11 @@ public:
 
   bool isValid() const { return mIndex != invalidIndex; }
 
-  bool operator==(EntityId rhs) { return mIndex == rhs.mIndex && mVersion == rhs.mVersion; }
+  bool operator==(const EntityId rhs) const { return mIndex == rhs.mIndex && mVersion == rhs.mVersion; }
+  bool operator!=(const EntityId rhs) const { return mIndex != rhs.mIndex || mVersion != rhs.mVersion; }
 
   // To use it as key
-  bool operator<(EntityId rhs) { return mIndex < rhs.mIndex; }
+  bool operator<(const EntityId rhs) const { return mIndex < rhs.mIndex; }
 
 private:
   StorageType mIndex : indexBits;

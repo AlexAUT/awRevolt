@@ -67,9 +67,12 @@ std::string logLevelToString(LogLevel level)
   }
 }
 
-LogInstance::LogInstance(LogLevel level, const std::string& module, std::ostream& console, std::ostream& file)
-    : mWriteToConsole(level <= logOutputLevelConsole), mWriteToFileSystem(level <= logOutputLevelFile),
-      mWriteToRemoteServer(level <= logOutputLevelRemote), mConsoleStream(console), mFileStream(file)
+LogInstance::LogInstance(LogLevel level, const std::string& module, std::ostream& console, std::ostream& file) :
+    mWriteToConsole(level <= logOutputLevelConsole),
+    mWriteToFileSystem(level <= logOutputLevelFile),
+    mWriteToRemoteServer(level <= logOutputLevelRemote),
+    mConsoleStream(console),
+    mFileStream(file)
 {
   auto prefix = colorPrefix(level) + logLevelToString(level);
   auto timestamp = date::getDateTime();
@@ -87,7 +90,7 @@ LogInstance::~LogInstance()
     mFileStream << std::endl;
 }
 
-void LogInstance::writeToServer(std::string text)
+void LogInstance::writeToServer(std::string text) const
 {
   sf::Http::Request getAll;
   getAll.setUri("/logSessions");

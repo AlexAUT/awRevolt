@@ -12,15 +12,15 @@ namespace reflect
 class TypeDescriptor
 {
 public:
-  TypeDescriptor(std::string name, size_t size) : name{name}, size{size} {};
+  TypeDescriptor(std::string name, size_t size) : mName{name}, mSize{size} {};
   virtual ~TypeDescriptor(){};
 
-  virtual void debugPrint(const void* instance, int indentLevel = 0) const = 0;
-
-  std::string name;
-  size_t size;
+  std::string_view getName() const { return mName; }
+  size_t getSize() const { return mSize; }
 
 private:
+  std::string mName;
+  size_t mSize;
 };
 
 } // namespace reflect

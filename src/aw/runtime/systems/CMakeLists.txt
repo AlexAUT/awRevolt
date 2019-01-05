@@ -1,3 +1,4 @@
 set(SOURCE_FILES_ENGINE ${SOURCE_FILES_ENGINE}
     ${CMAKE_CURRENT_SOURCE_DIR}/meshRendererSystem.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/transformSystem.cpp
     PARENT_SCOPE)

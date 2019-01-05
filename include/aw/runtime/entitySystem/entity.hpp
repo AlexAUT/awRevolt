@@ -41,7 +41,7 @@ public:
   inline ComponentRef<Component> get();
 
   template <typename Component>
-  inline ComponentRef<const Component> get() const;
+  inline ConstComponentRef<Component> get() const;
 
   template <typename Component, typename... Args>
   inline ComponentRef<Component> add(Args&&... args);
@@ -49,7 +49,8 @@ public:
   template <typename Component>
   inline bool remove();
 
-  inline bool operator==(Entity rhs) const;
+  inline bool operator==(const Entity rhs) const;
+  inline bool operator!=(const Entity rhs) const;
   explicit operator bool() const { return isValid(); }
 
 private:
@@ -96,7 +97,7 @@ ComponentRef<Component> Entity::get()
 }
 
 template <typename Component>
-ComponentRef<const Component> Entity::get() const
+ConstComponentRef<Component> Entity::get() const
 {
   if (isValid())
   {
@@ -116,7 +117,7 @@ ComponentRef<Component> Entity::add(Args&&... args)
     if (!manager)
       manager = createManager<Component>();
     assert(manager);
-    return manager->add(getId(), std::forward<Args>(args)...);
+    return manager->add(*this, std::forward<Args>(args)...);
   }
   return {};
 }
@@ -166,5 +167,10 @@ inline bool Entity::remove()
 bool Entity::operator==(Entity rhs) const
 {
   return getId() == rhs.getId() && mEntitySystem == rhs.mEntitySystem;
+}
+
+bool Entity::operator!=(const Entity rhs) const
+{
+  return getId() != rhs.getId() || mEntitySystem != rhs.mEntitySystem;
 }
 } // namespace aw::ecs

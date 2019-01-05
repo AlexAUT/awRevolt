@@ -9,7 +9,8 @@ namespace module
 
 void Module::addType(reflect::TypeDescriptor* typeDescriptor)
 {
-  mTypes[typeDescriptor->name] = typeDescriptor;
+  // TODO: rework
+  mTypes[std::string(typeDescriptor->getName())] = typeDescriptor;
 }
 
 reflect::TypeDescriptor* Module::getType(std::string name) const

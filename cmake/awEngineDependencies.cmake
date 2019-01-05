@@ -8,4 +8,4 @@ endif()
 find_package(jsoncpp REQUIRED)
 
 #target_include_directories(awEngine PUBLIC dependencies/jsoncpp/include)
-set(awEngineDependencies jsoncpp_lib awGraphics awUtils)
+set(awEngineDependencies jsoncpp_lib awGraphics awReflection awUtils)

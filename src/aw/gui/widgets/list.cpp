@@ -25,6 +25,11 @@ ListItem::SPtr List::addItem(std::string text, std::string id)
   return newChild;
 }
 
+void List::deselectSelectedChild()
+{
+  deselectOtherChilds(nullptr);
+}
+
 void List::selectItem(std::string_view id)
 {
   for (auto& child : mChildContainer->getChildren())

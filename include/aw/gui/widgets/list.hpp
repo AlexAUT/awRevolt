@@ -21,6 +21,7 @@ public:
   ListItem::SPtr addItem(std::string text, std::string id);
   ListItem::SPtr getLastItem() const;
 
+  void deselectSelectedChild();
   void selectItem(std::string_view id);
 
   SelectChildCallack onChildSelect;

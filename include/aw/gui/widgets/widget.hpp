@@ -123,9 +123,12 @@ public:
   }
   virtual void deselect(Vec2 mousePos = {})
   {
-    disableState(State::Selected);
-    if (onDeselect)
-      onDeselect(*this);
+    if (isInState(State::Selected))
+    {
+      disableState(State::Selected);
+      if (onDeselect)
+        onDeselect(*this);
+    }
   }
   virtual void mouseEntered(Vec2 mousePos)
   {

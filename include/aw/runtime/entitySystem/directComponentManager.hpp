@@ -3,7 +3,7 @@
 #include <aw/runtime/entitySystem/componentIterator.hpp>
 #include <aw/runtime/entitySystem/componentManager.hpp>
 #include <aw/runtime/entitySystem/componentRef.hpp>
-#include <aw/runtime/entitySystem/entityId.hpp>
+#include <aw/runtime/entitySystem/entity.hpp>
 
 #include <cassert>
 #include <iostream>
@@ -19,9 +19,9 @@ public:
   using ComponentType = Component;
   using ComponentContainer = std::vector<Component>;
   using FlagContainer = std::vector<bool>;
-  using ComponentId = uint32;
   using ComponentReference = ComponentRef<Component>;
-  using ConstComponentReference = ComponentRef<const Component>;
+  using ConstComponentReference = ConstComponentRef<Component>;
+
   using Iterator = EntityId;
 
 public:
@@ -29,15 +29,15 @@ public:
   size_t getEntityCount() const;
 
   template <typename... Args>
-  ComponentReference add(EntityId id, Args... args);
+  ComponentReference add(Entity entity, Args... args);
   bool remove(EntityId id);
   bool has(EntityId id) const;
 
   ComponentReference get(EntityId id);
   ConstComponentReference get(EntityId id) const;
 
-  Component* get(ComponentId id);
-  const Component* get(ComponentId id) const;
+  Component* getComponentPtr(Iterator iterator);
+  const Component* getComponentPtr(Iterator iterator) const;
 
   Iterator begin() const;
   Iterator end() const;
@@ -67,8 +67,9 @@ size_t DirectComponentManager<Component>::getEntityCount() const
 
 template <typename Component>
 template <typename... Args>
-auto DirectComponentManager<Component>::add(EntityId id, Args... args) -> ComponentReference
+auto DirectComponentManager<Component>::add(Entity entity, Args... args) -> ComponentReference
 {
+  auto id = entity.getId();
   auto index = id.getIndex();
   if (index >= mComponents.size())
   {
@@ -84,7 +85,7 @@ auto DirectComponentManager<Component>::add(EntityId id, Args... args) -> Compon
   mIdFlags[index] = true;
 
   mAliveObjects++;
-  return {index, this};
+  return {id, this};
 }
 
 template <typename Component>
@@ -111,7 +112,7 @@ auto DirectComponentManager<Component>::get(EntityId id) -> ComponentReference
   assert(has(id));
   auto index = id.getIndex();
   if (id.isValid() && mIdFlags[index])
-    return {index, this};
+    return {id, this};
   return {};
 }
 
@@ -121,19 +122,20 @@ auto DirectComponentManager<Component>::get(EntityId id) const -> ConstComponent
   assert(has(id));
   auto index = id.getIndex();
   if (mIdFlags[index])
-    return {index, this};
+    return {id, this};
   return {};
 }
 
 template <typename Component>
-Component* DirectComponentManager<Component>::get(ComponentId id)
+Component* DirectComponentManager<Component>::getComponentPtr(Iterator iterator)
 {
-  return const_cast<Component*>(static_cast<const DirectComponentManager*>(this)->get(id));
+  return const_cast<Component*>(static_cast<const DirectComponentManager*>(this)->getComponentPtr(iterator));
 }
 
 template <typename Component>
-const Component* DirectComponentManager<Component>::get(ComponentId id) const
+const Component* DirectComponentManager<Component>::getComponentPtr(Iterator iterator) const
 {
+  auto id = iterator.getIndex();
   if (mComponents.size() > id && mIdFlags[id])
     return &mComponents[id];
   return nullptr;

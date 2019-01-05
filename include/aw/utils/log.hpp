@@ -32,10 +32,10 @@ public:
   ~LogInstance();
 
   template <typename T>
-  LogInstance& operator<<(const T& toOutput);
+  const LogInstance& operator<<(const T& toOutput) const;
 
 private:
-  void writeToServer(std::string text);
+  void writeToServer(std::string text) const;
 
 private:
   bool mWriteToConsole;
@@ -69,7 +69,7 @@ namespace aw
 namespace log
 {
 template <class T>
-LogInstance& LogInstance::operator<<(const T& toOutput)
+const LogInstance& LogInstance::operator<<(const T& toOutput) const
 {
   if (mWriteToConsole)
     mConsoleStream << toOutput;

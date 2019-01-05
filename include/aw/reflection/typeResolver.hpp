@@ -1,5 +1,7 @@
 #pragma once
 
+#include <aw/reflection/typeDescriptor.hpp>
+
 #include <type_traits>
 
 namespace aw
@@ -11,13 +13,22 @@ class TypeDescriptor;
 
 // Declare the function template that handles primitive types such as int, std::string, etc.:
 template <typename T>
-TypeDescriptor* getPrimitiveDescriptor();
+auto& getPrimitiveDescriptor();
+
+/*
+template <typename T>
+auto& getPrimitiveDescriptor()
+{
+  static TypeDescriptor t("t", 0);
+  return t;
+}
+*/
 
 // A helper class to find TypeDescriptors in different ways:
 struct DefaultResolver
 {
   template <typename T>
-  static char func(decltype(&T::Reflection));
+  static char func(std::add_pointer_t<decltype(T::getTypeDescriptor())>);
   template <typename T>
   static int func(...);
   template <typename T>
@@ -31,14 +42,14 @@ struct DefaultResolver
 
   // This version is called if T has a static member named "Reflection":
   template <typename T, typename std::enable_if<IsReflected<T>::value, int>::type = 0>
-  static TypeDescriptor* get()
+  static auto& get()
   {
-    return &T::reflection;
+    return T::getTypeDescriptor();
   }
 
   // This version is called otherwise:
   template <typename T, typename std::enable_if<!IsReflected<T>::value, int>::type = 0>
-  static TypeDescriptor* get()
+  static auto& get()
   {
     return getPrimitiveDescriptor<T>();
   }
@@ -48,10 +59,8 @@ template <typename T>
 class TypeResolver
 {
 public:
-  static TypeDescriptor* get()
-  {
-    return DefaultResolver::get<T>();
-  }
+  using type = decltype(DefaultResolver::get<T>());
+  static auto& get() { return DefaultResolver::get<T>(); }
 };
 
 } // namespace reflect
