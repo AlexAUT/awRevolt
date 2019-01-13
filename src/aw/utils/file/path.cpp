@@ -64,3 +64,30 @@ std::string Path::getBasePath(Type type)
 }
 
 } // namespace aw
+
+const char* typeToString(aw::Path::Type type)
+{
+  using Type = aw::Path::Type;
+  switch (type)
+  {
+  case Type::Absolute:
+    return "Absolute";
+  case Type::Asset:
+    return "Asset";
+  case Type::Config:
+    return "Config";
+  case Type::External:
+    return "External";
+  case Type::Internal:
+    return "Internal";
+  default:
+    return "Unknown path type";
+  }
+}
+
+std::ostream& operator<<(std::ostream& stream, const aw::Path& path)
+{
+  stream << "Path: { " << typeToString(path.getType()) << ": " << path.getCompletePath() << " } ";
+
+  return stream;
+}

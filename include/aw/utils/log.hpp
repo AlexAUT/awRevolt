@@ -51,9 +51,15 @@ private:
 // LogTest() << "Hallo welt";
 // This will create a log entry with module Name: Test, Type: Error
 // Output will look like: (E) DATE (TestPretty): Hallo Welt
-#define DEFINE_LOG_CATEGORY(Name, Type, DisplayName)                                                                   \
-  const aw::log::LogModule logModule##Name{Type, #DisplayName};                                                        \
+#define DEFINE_LOG_INSTANCE(Name, Type, DisplayName)                                                                   \
+  const aw::log::LogModule logModule##Name{Type, DisplayName};                                                         \
   aw::log::LogInstance Log##Name() { return aw::LOG(logModule##Name); }
+
+#define DEFINE_LOG_CATEGORIES(Name, DisplayName)                                                                       \
+  DEFINE_LOG_INSTANCE(Error##Name, aw::log::Error, DisplayName)                                                        \
+  DEFINE_LOG_INSTANCE(Warning##Name, aw::log::Warning, DisplayName)                                                    \
+  DEFINE_LOG_INSTANCE(Debug##Name, aw::log::Debug, DisplayName)                                                        \
+  DEFINE_LOG_INSTANCE(Verbose##Name, aw::log::Verbose, DisplayName)
 } // namespace log
 
 bool LOG_INITIALIZE(log::LogLevel console = log::Debug, log::LogLevel filesystem = log::Verbose,

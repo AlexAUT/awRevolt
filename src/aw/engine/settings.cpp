@@ -1,11 +1,12 @@
 #include <aw/engine/settings.hpp>
 
-#include <aw/engine/logCategories.hpp>
 #include <aw/utils/log.hpp>
 
 #include <fstream>
 
 #include <json/json.h>
+
+DEFINE_LOG_CATEGORIES(SettingsLoader, "Settings loader");
 
 namespace aw
 {
@@ -42,14 +43,14 @@ Settings Settings::loadFromFile(const std::string& path)
     }
     else
     {
-      LogEngineW() << "Config file could not be parsed fallback to "
-                      "default settings, error: "
-                   << error;
+      LogWarningSettingsLoader() << "Config file could not be parsed fallback to "
+                                    "default settings, error: "
+                                 << error;
     }
   }
   else
   {
-    LogEngineW() << "Config file could not be opened fallback to default settings";
+    LogWarningSettingsLoader() << "Config file could not be opened fallback to default settings";
   }
   return settings;
 }

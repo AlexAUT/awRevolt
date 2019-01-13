@@ -1,7 +1,7 @@
 #pragma once
 
 #include <aw/runtime/entitySystem/entitySystem.hpp>
-#include <aw/runtime/managers/meshManager.hpp>
+#include <aw/runtime/resourceManager/resourceManager.hpp>
 
 namespace aw
 {
@@ -11,8 +11,8 @@ class Scene
 public:
   virtual ~Scene() = default;
 
-  MeshManager& getMeshManager() { return mMeshManager; }
-  const MeshManager& getMeshManager() const { return mMeshManager; }
+  ResourceManager& getResourceManager() { return mResourceManager; }
+  const ResourceManager& getResourceManager() const { return mResourceManager; }
 
   aw::ecs::EntitySystem& getEntitySystem() { return mEntitySystem; };
   const aw::ecs::EntitySystem& getEntitySystem() const { return mEntitySystem; }
@@ -20,6 +20,6 @@ public:
 private:
   aw::ecs::EntitySystem mEntitySystem;
 
-  MeshManager mMeshManager;
+  ResourceManager mResourceManager;
 };
 } // namespace aw

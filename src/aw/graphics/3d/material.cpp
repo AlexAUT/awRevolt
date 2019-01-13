@@ -1,9 +1,24 @@
 #include <aw/graphics/3d/material.hpp>
 
 #include <aw/graphics/core/shaderProgram.hpp>
+#include <aw/opengl/opengl.hpp>
 
 namespace aw
 {
+Texture2D* getFallbackTexture()
+{
+  auto init = []() {
+    Texture2D* tex = new Texture2D();
+    uint8 color[] = {255, 20, 147};
+    tex->bind();
+    tex->loadFromMemory(&color, 1, 1, GL_RGB8, GL_RGB, GL_UNSIGNED_BYTE);
+    tex->unbind();
+    return tex;
+  };
+  static Texture2D* tex = init();
+  return tex;
+}
+
 void Material::assignToShader(const Material& material, const ShaderProgram& shader, std::string_view uniformName)
 {
   shader.bind();
@@ -14,10 +29,20 @@ void Material::assignToShader(const Material& material, const ShaderProgram& sha
   shader.setUniform("enableDiffuseTex", material.getDiffseSlotCount() > 0);
 
   if (material.getDiffseSlotCount() > 0)
-    material.getDiffuseSlot(0).texture2D->bind();
+  {
+    auto* tex = material.getDiffuseSlot(0).texture2D.get();
+    if (!tex)
+      tex = getFallbackTexture();
+    tex->bind();
+  }
   shader.setUniform("enableDecalTex", material.getDiffseSlotCount() > 1);
   if (material.getDiffseSlotCount() > 1)
-    material.getDiffuseSlot(1).texture2D->bind(1);
+  {
+    auto* tex = material.getDiffuseSlot(1).texture2D.get();
+    if (!tex)
+      tex = getFallbackTexture();
+    tex->bind(1);
+  }
 }
 
 Material::Material(std::string name) : mName(name) {}

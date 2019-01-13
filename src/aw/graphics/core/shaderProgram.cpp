@@ -8,8 +8,7 @@
 
 #include <cassert>
 
-DEFINE_LOG_CATEGORY(ShaderProgramE, aw::log::Error, ShaderProgram)
-DEFINE_LOG_CATEGORY(ShaderProgramW, aw::log::Warning, ShaderProgram)
+DEFINE_LOG_CATEGORIES(ShaderProgram, "Shaderprogram")
 
 namespace aw
 {
@@ -52,7 +51,7 @@ bool ShaderProgram::link(const std::vector<std::reference_wrapper<const ShaderSt
   {
     char infoLog[512];
     GL_CHECK(glGetProgramInfoLog(mProgram, 512, nullptr, infoLog));
-    LogShaderProgramE() << "Cannot link program, error: " << infoLog;
+    LogErrorShaderProgram() << "Cannot link program, error: " << infoLog;
     return false;
   }
   return true;
@@ -66,7 +65,7 @@ int ShaderProgram::getUniformLocation(std::string name) const
 
   int id = glGetUniformLocation(mProgram, name.c_str());
   if (id == -1)
-    LogShaderProgramW() << "Uniform could not be found: " << name;
+    LogWarningShaderProgram() << "Uniform could not be found: " << name;
 
   mUniformCache.insert({name, id});
   return id;
@@ -80,7 +79,7 @@ int ShaderProgram::getAttributeLocation(std::string name) const
 
   int id = glGetAttribLocation(mProgram, name.c_str());
   if (id == -1)
-    LogShaderProgramW() << "Attribute could not be found: " << name;
+    LogWarningShaderProgram() << "Attribute could not be found: " << name;
 
   mAttributeCache.insert({name, id});
   return id;

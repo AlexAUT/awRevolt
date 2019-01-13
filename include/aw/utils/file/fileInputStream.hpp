@@ -16,8 +16,11 @@ public:
 
   bool isOpen() const;
 
+  const Path& getPath() const { return mPath; }
+
 private:
 private:
+  Path mPath;
   std::ifstream mFileStream;
   bool mIsOpen;
 

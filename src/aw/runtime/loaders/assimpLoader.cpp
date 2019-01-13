@@ -2,6 +2,8 @@
 
 #include <aw/graphics/core/image.hpp>
 #include <aw/graphics/core/texture2D.hpp>
+#include <aw/runtime/resourceManager/factories/textureFactory.hpp>
+#include <aw/runtime/resourceManager/resourceManager.hpp>
 #include <aw/utils/file/fileInputStream.hpp>
 #include <aw/utils/file/path.hpp>
 #include <aw/utils/log.hpp>
@@ -10,10 +12,7 @@
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
 
-DEFINE_LOG_CATEGORY(AssimpD, aw::log::Debug, AssimpLoader)
-DEFINE_LOG_CATEGORY(AssimpE, aw::log::Error, AssimpLoader)
-DEFINE_LOG_CATEGORY(AssimpV, aw::log::Verbose, AssimpLoader)
-DEFINE_LOG_CATEGORY(AssimpW, aw::log::Warning, AssimpLoader)
+DEFINE_LOG_CATEGORIES(Assimp, "Assimp mesh loader")
 
 #include <vector>
 
@@ -53,32 +52,35 @@ inline Mat4 aiMatrix4x4ToGlm(const aiMatrix4x4* from)
   return to;
 }
 
+AssimpLoader::AssimpLoader(ResourceManager& resourceManager) : mResourceManager(resourceManager) {}
+
 bool AssimpLoader::loadFromStream(const std::string& fileName, std::istream& stream, const char* hint)
 {
   mFileName = fileName;
   auto fileContent = stream::toUint8(stream);
   if (fileContent.empty())
   {
-    LogAssimpE() << "The stream did not contain any content!: " << fileName;
+    LogErrorAssimp() << "The stream did not contain any content!: " << fileName;
     return false;
   }
   auto flags = aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs;
   const aiScene* scene = mImporter.ReadFileFromMemory(fileContent.data(), fileContent.size(), flags, hint);
   if (!scene)
   {
-    LogAssimpE() << "Error parsing file: " << mImporter.GetErrorString();
+    LogErrorAssimp() << "Error parsing file: " << mImporter.GetErrorString();
     return false;
   }
-  LogAssimpD() << "Meshes: " << scene->mNumMeshes << ", tex: " << scene->mNumTextures;
-  LogAssimpD() << "Materials: " << scene->mNumMaterials;
-  LogAssimpD() << "Animations: " << scene->mNumAnimations;
+  LogDebugAssimp() << "Meshes: " << scene->mNumMeshes << ", tex: " << scene->mNumTextures;
+  LogDebugAssimp() << "Materials: " << scene->mNumMaterials;
+  LogDebugAssimp() << "Animations: " << scene->mNumAnimations;
   return true;
 }
 
 bool AssimpLoader::loadFromPath(const Path& assetPath, const char* hint)
 {
+  mMeshPath = assetPath;
   aw::FileInputStream file(assetPath);
-  return loadFromStream(assetPath.getAbsolutePath(), file, hint);
+  return loadFromStream(assetPath.getCompletePath(), file, hint);
 }
 
 std::unique_ptr<aw::Mesh> AssimpLoader::loadMesh(const std::string& displayName, bool withSkeleton)
@@ -118,7 +120,7 @@ std::unique_ptr<aw::Mesh> AssimpLoader::loadMesh(const std::string& displayName,
 
 bool AssimpLoader::parseMesh(aw::Mesh& mesh, const aiMesh* assimpMesh)
 {
-  LogAssimpV() << "UV channels: " << assimpMesh->GetNumUVChannels() << ", " << assimpMesh->mName.C_Str();
+  LogDebugAssimp() << "UV channels: " << assimpMesh->GetNumUVChannels() << ", " << assimpMesh->mName.C_Str();
   MeshObject* part = new MeshObject();
   part->name = assimpMesh->mName.C_Str();
 
@@ -186,7 +188,30 @@ aw::Texture2D::WrapMode assimpWrapModeToAw(aiTextureMapMode mode)
 
 void outputTextureCount(const aiMaterial* assimpMat, const char* name, aiTextureType type)
 {
-  LogAssimpV() << name << ": " << assimpMat->GetTextureCount(type);
+  LogDebugAssimp() << name << ": " << assimpMat->GetTextureCount(type);
+}
+
+std::optional<Path> searchTexture(std::string_view texName, std::string_view texPath, const Path& meshPath)
+{
+  // Try default asset dir:
+  auto relativeDir = std::string("textures/meshes/") + texName.data();
+  Path assetPath = createAssetPath(relativeDir);
+  aw::FileInputStream stream(assetPath);
+  if (stream.isOpen())
+    return assetPath;
+
+  // Look if model is inside another project
+  auto mPath = meshPath.getCompletePath();
+  mPath = mPath.erase(mPath.find_last_of('/'));
+  auto dir = std::string(mPath) + "/../textures/meshes/" + texName.data();
+  Path externalPath = createAbsolutePath(dir);
+  auto externalStream = aw::FileInputStream(externalPath);
+  if (externalStream.isOpen())
+    return externalPath;
+
+  LogWarningAssimp() << "Could not find texture at locations: " << assetPath << ", " << externalPath;
+
+  return {};
 }
 
 bool AssimpLoader::parseMaterial(aw::Mesh& mesh, const aiMaterial* assimpMat)
@@ -196,36 +221,30 @@ bool AssimpLoader::parseMaterial(aw::Mesh& mesh, const aiMaterial* assimpMat)
   aiString matName;
   if (assimpMat->Get(AI_MATKEY_NAME, matName) != AI_SUCCESS)
   {
-    LogAssimpW() << "Material has no name!";
+    LogWarningAssimp() << "Material has no name!";
     return false;
   }
-  LogAssimpV() << "Material name: " << matName.C_Str();
+  LogDebugAssimp() << "Material name: " << matName.C_Str();
   Material mat(matName.C_Str());
 
   aiColor3D color;
   if (assimpMat->Get(AI_MATKEY_COLOR_DIFFUSE, color) == AI_SUCCESS)
   {
     mat.setDiffuseColor({color.r, color.g, color.b});
-    LogAssimpV() << "Diffuse: " << mat.getDiffuseColor();
   }
   if (assimpMat->Get(AI_MATKEY_COLOR_AMBIENT, color) == AI_SUCCESS)
   {
     mat.setAmbientColor({color.r, color.g, color.b});
-    LogAssimpV() << "Ambient: " << mat.getAmbientColor();
   }
   if (assimpMat->Get(AI_MATKEY_COLOR_SPECULAR, color) == AI_SUCCESS)
   {
     mat.setSpecularColor({color.r, color.g, color.b});
-    LogAssimpV() << "Specular: " << mat.getSpecularColor();
   }
 
   // Load diffuse textures
   unsigned diffuseCount = assimpMat->GetTextureCount(aiTextureType_DIFFUSE);
-  outputTextureCount(assimpMat, "Unkown: ", aiTextureType_NONE);
-  outputTextureCount(assimpMat, "Diffuse: ", aiTextureType_DIFFUSE);
-  outputTextureCount(assimpMat, "Ambient: ", aiTextureType_AMBIENT);
-  outputTextureCount(assimpMat, "Other: ", aiTextureType_NONE);
-  LogAssimpV() << "Diffuse count: " << diffuseCount;
+  // outputTextureCount(assimpMat, "Diffuse: ", aiTextureType_DIFFUSE);
+  LogDebugAssimp() << "Diffuse count: " << diffuseCount;
   for (unsigned i = 0; i < diffuseCount; i++)
   {
     // unsigned int index, aiString *path, aiTextureMapping *mapping=NULL, unsigned int *uvindex=NULL, float
@@ -238,10 +257,9 @@ bool AssimpLoader::parseMaterial(aw::Mesh& mesh, const aiMaterial* assimpMat)
     aiTextureMapMode mapMode;
 
     assimpMat->GetTexture(aiTextureType_DIFFUSE, i, &aPath, &mapping, &uvIndex, &blend, &op, &mapMode);
-    std::string path(aPath.C_Str());
     if (mapping != aiTextureMapping_UV)
     {
-      LogAssimpE() << "Only UV mapping is alowed for material!";
+      LogErrorAssimp() << "Only UV mapping is alowed for material!";
       return false;
     }
     aw::TextureSlot slot;
@@ -252,29 +270,33 @@ bool AssimpLoader::parseMaterial(aw::Mesh& mesh, const aiMaterial* assimpMat)
     slot.magFilter = aw::Texture2D::MagFilter::LINEAR;
     slot.minFilter = aw::Texture2D::MinFilter::LINEAR;
 
-    auto posForwardSlash = path.find_last_of("/") + 1;
-    auto posBackwardSlash = path.find_last_of("\\") + 1;
+    std::string texPath(aPath.C_Str());
+    auto posForwardSlash = texPath.find_last_of("/") + 1;
+    auto posBackwardSlash = texPath.find_last_of("\\") + 1;
     auto pos = std::max(posForwardSlash, posBackwardSlash);
 
-    auto texName = path.substr(pos);
+    auto texName = texPath.substr(pos);
     slot.texName = texName;
-    LogAssimpV() << "Loading diffuse texture: " << texName;
-    Path texturePath(Path::Type::Absolute, mAssetRoot + "textures/meshes/" + texName);
-    aw::FileInputStream texFile(texturePath);
-    aw::Image img;
-    if (!img.loadFromStream(texFile))
+
+    auto result = searchTexture(texName, texPath, mMeshPath);
+    if (result)
     {
-      LogAssimpE() << "Failed to load mesh texture: " << texturePath.getAbsolutePath();
-      return false;
+      auto& foundPath = *result;
+      using TexFactory = aw::factories::TextureFactory;
+      auto tex = mResourceManager.getRegistry<Texture2D>().create<TexFactory>(foundPath.getRelativePath(), foundPath);
+      if (tex)
+      {
+        tex->bind();
+        tex->setWrapModeS(slot.modeS);
+        tex->setWrapModeT(slot.modeT);
+        tex->setMinFilter(slot.minFilter);
+        tex->setMagFilter(slot.magFilter);
+      }
+      slot.texture2D = tex;
     }
-    auto tex2D = std::make_shared<aw::Texture2D>();
-    tex2D->bind();
-    tex2D->loadFromImage(img);
-    tex2D->setWrapModeS(slot.modeS);
-    tex2D->setWrapModeT(slot.modeT);
-    tex2D->setMinFilter(slot.minFilter);
-    tex2D->setMagFilter(slot.magFilter);
-    slot.texture2D = tex2D;
+    else
+      slot.texture2D = nullptr;
+
     mat.addDiffuseTexture(slot);
   }
   mesh.addMaterial(mat);
@@ -373,9 +395,9 @@ std::vector<std::unique_ptr<aw::MeshAnimation>> AssimpLoader::loadAnimations()
   {
     const auto* assimpAnimation = scene->mAnimations[i];
 
-    LogAssimpV() << "Anim name: " << assimpAnimation->mName.C_Str() << ", duration: " << assimpAnimation->mDuration;
-    LogAssimpV() << "Tick: " << assimpAnimation->mTicksPerSecond;
-    LogAssimpV() << "Channel: " << assimpAnimation->mNumChannels;
+    LogDebugAssimp() << "Anim name: " << assimpAnimation->mName.C_Str() << ", duration: " << assimpAnimation->mDuration;
+    LogDebugAssimp() << "Tick: " << assimpAnimation->mTicksPerSecond;
+    LogDebugAssimp() << "Channel: " << assimpAnimation->mNumChannels;
 
     const auto channelCount = assimpAnimation->mNumChannels;
     MeshAnimationChannels channels(channelCount);

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <ostream>
 #include <string>
 
 namespace aw
@@ -31,7 +32,7 @@ public:
 
   Type getType() const { return mType; }
   const std::string& getRelativePath() const { return mRelativePath; }
-  const std::string getAbsolutePath() const { return Path::getBasePath(mType) + getRelativePath(); }
+  const std::string getCompletePath() const { return Path::getBasePath(mType) + getRelativePath(); }
 
 private:
 private:
@@ -55,4 +56,32 @@ inline Path createConfigPath(std::string relativePath)
 {
   return Path(Path::Type::Config, relativePath);
 }
+inline Path createAbsolutePath(std::string absolutePath)
+{
+  return Path(Path::Type::Absolute, absolutePath);
+}
+namespace pathLiterals
+{
+inline Path operator"" _asset(const char* relativePath)
+{
+  return createAssetPath(relativePath);
+}
+inline Path operator"" _internal(const char* relativePath)
+{
+  return createInternalPath(relativePath);
+}
+inline Path operator"" _external(const char* relativePath)
+{
+  return createExternalPath(relativePath);
+}
+inline Path operator"" _config(const char* relativePath)
+{
+  return createConfigPath(relativePath);
+}
+inline Path operator"" _absolute(const char* absolutePath)
+{
+  return createAbsolutePath(absolutePath);
+}
+} // namespace pathLiterals
 } // namespace aw
+std::ostream& operator<<(std::ostream& stream, const aw::Path& vec);

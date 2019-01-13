@@ -57,11 +57,6 @@ void MeshRendererSystem::render(const Camera& camera)
       shader->setUniform("specularColor", Vec4(material.getSpecularColor(), 10));
       shader->setUniform("enableDiffuseTex", material.getDiffseSlotCount() > 0);
 
-      if (material.getDiffseSlotCount() > 0)
-        material.getDiffuseSlot(0).texture2D->bind();
-      shader->setUniform("enableDecalTex", material.getDiffseSlotCount() > 1);
-      if (material.getDiffseSlotCount() > 1)
-        material.getDiffuseSlot(1).texture2D->bind(1);
       mRenderer.renderElements(static_cast<int>(meshObject.indices.size()));
     }
   }

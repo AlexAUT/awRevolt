@@ -7,7 +7,7 @@
 #include <aw/utils/file/path.hpp>
 #include <aw/utils/log.hpp>
 
-DEFINE_LOG_CATEGORY(PostProcessE, aw::log::Error, PostProcessRenderer);
+DEFINE_LOG_CATEGORIES(PostProcess, "Postprocess-renderer");
 
 namespace aw
 {

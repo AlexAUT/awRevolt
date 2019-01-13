@@ -7,7 +7,7 @@
 #include <aw/utils/log.hpp>
 #include <aw/utils/streamReading.hpp>
 
-DEFINE_LOG_CATEGORY(ShaderStageE, aw::log::Error, ShaderStage)
+DEFINE_LOG_CATEGORIES(ShaderStage, "Shaderstage")
 
 namespace aw
 {
@@ -62,7 +62,7 @@ bool ShaderStage::loadFromMemory(const char* content)
     glGetShaderInfoLog(mId, 512, nullptr, infoLog);
     GL_CHECK(glDeleteShader(mId));
     mId = 0;
-    LogShaderStageE() << "Failed when compiling shader stage:\n " << infoLog << "\n\n Content: " << content;
+    LogErrorShaderStage() << "Failed when compiling shader stage:\n " << infoLog << "\n\n Content: " << content;
     return false;
   }
   return true;

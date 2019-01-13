@@ -2,18 +2,14 @@
 
 #include <aw/utils/log.hpp>
 
-DEFINE_LOG_CATEGORY(OpenGLE, aw::log::Error, Opengl)
+DEFINE_LOG_CATEGORIES(OpenGL, "OpenGL")
 
 namespace aw
 {
 
-GLException::GLException(const char* message) : std::runtime_error(message)
-{
-}
+GLException::GLException(const char* message) : std::runtime_error(message) {}
 
-GLException::GLException(const std::string& message) : std::runtime_error(message)
-{
-}
+GLException::GLException(const std::string& message) : std::runtime_error(message) {}
 
 namespace opengl
 {
@@ -58,7 +54,7 @@ GLenum glCheckError(const char* stmt, const char* file, int line)
       message = "UNKNOWN OPENGL ERROR, CODE: " + std::to_string(errorCode);
     }
     message += " at " + std::string(stmt) + " in " + std::string(file) + ":" + std::to_string(line);
-    LogOpenGLE() << message;
+    LogErrorOpenGL() << message;
     throw GLException(message);
   }
   return GL_NO_ERROR;

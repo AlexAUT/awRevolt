@@ -2,7 +2,7 @@
 
 #include <aw/utils/log.hpp>
 #include <aw/utils/streamReading.hpp>
-DEFINE_LOG_CATEGORY(ImageE, aw::log::Error, Image)
+DEFINE_LOG_CATEGORIES(Image, "Image")
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <aw/graphics/core/stb_image.hpp>
@@ -41,7 +41,7 @@ bool Image::loadFromStream(std::istream& stream, bool invertYAxis)
     return true;
   }
   else
-    LogImageE() << "Failed to load image!";
+    LogErrorImage() << "Failed to load image!";
 
   return false;
 }
