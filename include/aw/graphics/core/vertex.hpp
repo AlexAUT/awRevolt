@@ -56,6 +56,12 @@ struct VertexBones
   Vec4 boneWeights;
 
   static VertexLayout<5> Layout;
+
+  template <typename Archive>
+  void serialize(Archive& archive)
+  {
+    archive(position, normal, texCoord, boneIds, boneWeights);
+  }
 };
 
 } // namespace aw

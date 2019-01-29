@@ -53,6 +53,9 @@ public:
   inline bool operator!=(const Entity rhs) const;
   explicit operator bool() const { return isValid(); }
 
+  EntitySystem* getEntitySystem() { return mEntitySystem; }
+  const EntitySystem* getEntitySystem() const { return mEntitySystem; }
+
 private:
   template <typename Component>
   typename Component::Manager* getManager();

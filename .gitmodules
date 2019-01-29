@@ -19,3 +19,6 @@
 [submodule "dependencies/Catch2"]
 	path = dependencies/Catch2
 	url = https://github.com/catchorg/Catch2
+[submodule "dependencies/cereal"]
+	path = dependencies/cereal
+	url = https://github.com/USCiLab/cereal.git

@@ -115,5 +115,19 @@ echo "Install Catch2..."
 make install &>> $LOG_FILE
 cd $ROOT_DIR
 
+#cereal
+CEREAL_BUILD_DIR=$BUILD_DIR/cereal
+mkdir -p $CEREAL_BUILD_DIR && cd $CEREAL_BUILD_DIR
+echo "Configure cereal..."
+cmake $ROOT_DIR/cereal -DCMAKE_BUILD_TYPE=Release \
+                       $CMAKE_PARAMS \
+                       -DJUST_INSTALL_CEREAL=True \
+                       &>> $LOG_FILE
+echo "Build cereal..."
+make -j &>> $LOG_FILE
+echo "Install cereal..."
+make install &>> $LOG_FILE
+cd $ROOT_DIR
+
 cd $ROOT_DIR
 

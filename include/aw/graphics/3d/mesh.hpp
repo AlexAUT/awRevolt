@@ -70,6 +70,9 @@ public:
 
   const AABB& getBounds() const;
 
+  template <typename Archive>
+  void serialize(Archive& archive);
+
 private:
   std::string mFileName;
   std::string mDisplayName;
@@ -84,5 +87,11 @@ private:
 
   AABB mBounds{0.f};
 };
+
+template <typename Archive>
+void Mesh::serialize(Archive& archive)
+{
+  archive(mDisplayName, mObjects);
+}
 
 } // namespace aw

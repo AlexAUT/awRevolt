@@ -1,5 +1,7 @@
 #pragma once
 
+#include <aw/utils/types.hpp>
+
 #include <ostream>
 #include <string>
 
@@ -29,6 +31,11 @@ public:
   Path() = default;
   Path(Type type, std::string relativePath) : mRelativePath(std::move(relativePath)), mType(type) {}
   Path(Type type, std::string_view relativePath) : mRelativePath(relativePath), mType(type){};
+
+  Path(const Path&) = default;
+  Path(Path&&) = default;
+  Path& operator=(const Path&) = default;
+  Path& operator=(Path&&) = default;
 
   Type getType() const { return mType; }
   const std::string& getRelativePath() const { return mRelativePath; }
@@ -62,23 +69,23 @@ inline Path createAbsolutePath(std::string absolutePath)
 }
 namespace pathLiterals
 {
-inline Path operator"" _asset(const char* relativePath)
+inline Path operator"" _asset(const char* relativePath, size_t length)
 {
   return createAssetPath(relativePath);
 }
-inline Path operator"" _internal(const char* relativePath)
+inline Path operator"" _internal(const char* relativePath, size_t length)
 {
   return createInternalPath(relativePath);
 }
-inline Path operator"" _external(const char* relativePath)
+inline Path operator"" _external(const char* relativePath, size_t length)
 {
   return createExternalPath(relativePath);
 }
-inline Path operator"" _config(const char* relativePath)
+inline Path operator"" _config(const char* relativePath, size_t length)
 {
   return createConfigPath(relativePath);
 }
-inline Path operator"" _absolute(const char* absolutePath)
+inline Path operator"" _absolute(const char* absolutePath, size_t length)
 {
   return createAbsolutePath(absolutePath);
 }

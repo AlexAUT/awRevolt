@@ -2,6 +2,7 @@
 
 #include <aw/utils/types.hpp>
 
+#include <functional>
 #include <limits>
 
 namespace aw::ecs
@@ -38,3 +39,12 @@ private:
   StorageType mVersion : versionBits;
 };
 } // namespace aw::ecs
+
+namespace std
+{
+template <>
+struct hash<aw::ecs::EntityId>
+{
+  size_t operator()(const aw::ecs::EntityId& k) const { return hash<aw::ecs::EntityId::StorageType>()(k.getVersion()); }
+};
+} // namespace std

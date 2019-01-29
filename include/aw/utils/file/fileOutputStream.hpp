@@ -7,20 +7,19 @@
 namespace aw
 {
 
-class FileInputStream : public std::istream
+class FileOutputStream : public std::ostream
 {
 public:
-  FileInputStream(Path path);
-  ~FileInputStream();
+  FileOutputStream(Path path);
+  ~FileOutputStream();
 
   bool isOpen() const;
 
   const Path& getPath() const { return mPath; }
 
 private:
-private:
   Path mPath;
-  std::ifstream mFileStream;
+  std::ofstream mFileStream;
   bool mIsOpen;
 
 #ifdef AW_ANDROID
