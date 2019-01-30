@@ -1,11 +1,10 @@
 #include <aw/engine/window.hpp>
 
 #include <aw/engine/settings.hpp>
+#include <aw/engine/windowEvent.hpp>
 #include <aw/opengl/opengl.hpp>
-
 #include <aw/utils/log.hpp>
-
-#include <SFML/Window/Event.hpp>
+#include <aw/utils/messageBus/messageBus.hpp>
 
 #include <chrono>
 #include <thread>
@@ -13,22 +12,22 @@
 namespace aw
 {
 
-Window::Window(const Settings& settings)
+Window::Window(const Settings& settings, const msg::Bus& bus) : mMessageBus(bus)
 {
   applySettings(settings);
 }
 
 void Window::handleEvents(/*const EventHandlers& eventHandlers*/)
 {
-  sf::Event event;
+  WindowEvent event;
   while (mWindow.pollEvent(event))
   {
     if (event.type == sf::Event::LostFocus || event.type == sf::Event::MouseLeft)
       mHasFocus = false;
     if (event.type == sf::Event::GainedFocus || event.type == sf::Event::MouseEntered)
       mHasFocus = true;
-    for (auto& callback : mEventListeners)
-      callback.second(event);
+
+    mMessageBus.broadcast<WindowEvent>(event);
   }
 }
 
@@ -78,25 +77,6 @@ void Window::applySettings(const Settings& settings)
   handleEvents();
   mWindow.display();
 #endif
-}
-
-Window::EventListenerID Window::registerEventListener(EventCallback callback)
-{
-  mEventListeners.push_back({mListenerID, callback});
-  return mListenerID++;
-}
-
-void Window::unregisterEventListener(EventListenerID id)
-{
-  for (auto it = mEventListeners.begin(); it != mEventListeners.end(); it++)
-  {
-    if (it->first == id)
-    {
-      *it = *(mEventListeners.end() - 1);
-      mEventListeners.pop_back();
-      break;
-    }
-  }
 }
 
 sf::Window& Window::getSFMLWindow()

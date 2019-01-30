@@ -14,7 +14,7 @@ struct MessageB
 
 TEST_CASE("MessageBus")
 {
-  aw::MessageBus bus;
+  aw::msg::Bus bus;
   bus.broadcast(MessageA{"Hallo"});
 
   SECTION("One receiver")
@@ -70,7 +70,7 @@ TEST_CASE("MessageBus")
     MessageB messageB{"B"};
     MessageA recA;
     MessageB recB;
-    aw::MessageBus bus2;
+    aw::msg::Bus bus2;
     auto subB = bus2.subscribeToChannel<MessageB>([&](const auto& msg) { recB = msg; });
     bus2.broadcast(messageB);
     CHECK(recB.msg == messageB.msg);

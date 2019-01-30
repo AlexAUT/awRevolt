@@ -54,7 +54,7 @@ function(defineTarget targetName files targetList)
   #Add target to targetList
   set(${targetList} ${${targetList}} ${targetName} PARENT_SCOPE)
 
-  add_library(${targetName} STATIC ${files})
+  add_library(${targetName} ${files})
   include(cmake/${targetName}Dependencies.cmake)
   target_link_libraries(${targetName} ${${targetName}Dependencies})
   set_target_properties(${targetName} PROPERTIES SOVERSION 1)

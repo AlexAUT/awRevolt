@@ -21,8 +21,8 @@ public:
 
   void terminate(int returnCode = 0);
 
-  MessageBus& getMessageBus() { return mMsgBus; }
-  const MessageBus& getMessageBus() const { return mMsgBus; }
+  msg::Bus& getMessageBus() { return mMsgBus; }
+  const msg::Bus& getMessageBus() const { return mMsgBus; }
   const Settings& getSettings() const;
   StateMachine& getStateMachine();
   const StateMachine& getStateMachine() const;
@@ -35,7 +35,7 @@ private:
   void render();
 
 private:
-  MessageBus mMsgBus;
+  msg::Bus mMsgBus;
   Settings mSettings;
   StateMachine mStateMachine;
   Window mWindow;

@@ -15,6 +15,10 @@
 namespace aw
 {
 struct Settings;
+namespace msg
+{
+class Bus;
+}
 
 class Window
 {
@@ -31,14 +35,11 @@ public:
   };
 
 public:
-  Window(const Settings& settings);
+  Window(const Settings& settings, const msg::Bus& bus);
   void handleEvents(/*const EventHandlers& eventHandlers*/);
   void clear(ClearType target = ClearType::All);
   void swapBuffers();
   void applySettings(const Settings& settings);
-
-  EventListenerID registerEventListener(EventCallback callback);
-  void unregisterEventListener(EventListenerID id);
 
   sf::Window& getSFMLWindow();
   const sf::Window& getSFMLWindow() const;
@@ -50,12 +51,10 @@ public:
   void setClearColor(aw::Color color);
 
 private:
+  const msg::Bus& mMessageBus;
+
   sf::Window mWindow;
-
   bool mHasFocus{true};
-
-  unsigned mListenerID{0};
-  std::vector<std::pair<unsigned, EventCallback>> mEventListeners;
 };
 
 } // namespace aw

@@ -2,11 +2,12 @@
 
 #include <aw/utils/typeHelper/typeCounter.hpp>
 
+#include <cassert>
 #include <functional>
 #include <memory>
 #include <vector>
 
-namespace aw
+namespace aw::msg
 {
 class ChannelWrapper
 {
@@ -87,15 +88,15 @@ private:
   int mCounter{1};
 };
 
-class MessageBus
+class Bus
 {
 public:
   using TypeIDs = TypeCounter<struct Anonym>;
 
 public:
-  MessageBus() = default;
-  MessageBus(const MessageBus&) = delete;
-  MessageBus operator=(const MessageBus&) = delete;
+  Bus() = default;
+  Bus(const Bus&) = delete;
+  Bus operator=(const Bus&) = delete;
 
   template <typename EventType>
   typename Channel<EventType>::SubscriptionType subscribeToChannel(typename Channel<EventType>::Callback callback)
@@ -162,4 +163,4 @@ private:
 private:
   std::vector<std::unique_ptr<ChannelWrapper>> mChannels;
 };
-} // namespace aw
+} // namespace aw::msg
