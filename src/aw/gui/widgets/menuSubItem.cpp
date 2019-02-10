@@ -9,15 +9,11 @@ MenuSubItem::MenuSubItem(const GUI& gui, Menu& menu, std::string text) : Label(g
 {
   setAlignment({AlignmentH::Left, AlignmentV::Middle});
   setPadding({4.f, 10.f});
-
-  auto style = getGUI().getTextStyles().getStyle("menuItem");
-  assert(style);
-  setTextLayout(style);
 }
 
-void MenuSubItem::render(Vec2 parentPos)
+void MenuSubItem::render()
 {
-  Widget::render(parentPos);
+  Widget::render();
   getGUI().getRenderer().render(*this);
 }
 } // namespace aw::gui

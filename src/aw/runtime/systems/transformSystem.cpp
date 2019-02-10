@@ -4,6 +4,8 @@
 #include <aw/runtime/entitySystem/entitySystem.hpp>
 #include <aw/utils/log.hpp>
 
+DEFINE_LOG_CATEGORIES(TransformSystem, "Transform system");
+
 using Transform = aw::ecs::components::Transform;
 
 namespace aw::ecs::systems
@@ -43,7 +45,7 @@ void TransformSystem::update(float dt)
     }
   }
   if (orderNumber != 0)
-    LogTemp() << "Reorders needed: " << orderNumber;
+    LogDebugTransformSystem() << "Reorders needed: " << orderNumber;
   // Propagate dirty bit
   int dirtyPropagationNeeded = 0;
   for (auto [id, transform] : view)
@@ -58,7 +60,7 @@ void TransformSystem::update(float dt)
     }
   }
   if (dirtyPropagationNeeded > 0)
-    LogTemp() << "Dirty propagations needed: " << dirtyPropagationNeeded;
+    LogDebugTransformSystem() << "Dirty propagations needed: " << dirtyPropagationNeeded;
   // Update transforms
   int updatesNeeded = 0;
   for (auto [id, transform] : view)
@@ -68,7 +70,7 @@ void TransformSystem::update(float dt)
     transform->updateTransform();
   }
   if (updatesNeeded > 0)
-    LogTemp() << "Updates needed: " << updatesNeeded;
+    LogDebugTransformSystem() << "Updates needed: " << updatesNeeded;
 }
 
 } // namespace aw::ecs::systems

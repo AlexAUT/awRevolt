@@ -15,8 +15,9 @@ public:
   };
 
 public:
-  FloatingContainer(const GUI& gui, BoundsPolicy boundsPolicy = BoundsPolicy::Strict)
-      : Container(gui), mBoundsPolicy(boundsPolicy)
+  FloatingContainer(const GUI& gui, BoundsPolicy boundsPolicy = BoundsPolicy::Strict) :
+      Container(gui),
+      mBoundsPolicy(boundsPolicy)
   {
   }
   ~FloatingContainer() = default;
@@ -35,7 +36,7 @@ public:
   void setBoundsPolicy(BoundsPolicy policy);
   BoundsPolicy getBoundsPolicy() const { return mBoundsPolicy; }
 
-  virtual void updateLayout() override;
+  virtual void updateLayout(aw::Vec2 parentPos) override;
   virtual Vec2 getMinimalSize() const override;
 
 private:

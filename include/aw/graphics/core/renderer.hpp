@@ -1,28 +1,12 @@
 #pragma once
 
+#include <aw/graphics/core/indicesType.hpp>
+#include <aw/graphics/core/primitiveType.hpp>
+
 namespace aw
 {
 class Renderer
 {
-public:
-  enum class PrimitiveType
-  {
-    Points,
-    LineStrip,
-    LineLoop,
-    Lines,
-    TriangleStrip,
-    TriangleFan,
-    Triangles,
-  };
-
-  enum class IndicesType
-  {
-    UnsignedByte,
-    UnsignedShort,
-    UnsignedInt,
-  };
-
 public:
   Renderer(PrimitiveType primitiveType);
   Renderer(PrimitiveType type, IndicesType indicesType);

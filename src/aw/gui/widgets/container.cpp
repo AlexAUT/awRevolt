@@ -1,6 +1,6 @@
-#include <aw/gui/widgets/container.hpp>
-
+#include <aw/gui/gui.hpp>
 #include <aw/gui/utils/eventConvert.hpp>
+#include <aw/gui/widgets/container.hpp>
 
 #include <glm/common.hpp>
 
@@ -12,12 +12,14 @@ void Container::update(float delta)
     child->update(delta);
 }
 
-void Container::render(Vec2 pos)
+void Container::render()
 {
-  Widget::render(pos);
+  Widget::render();
+
+  getGUI().getRenderer().render(*this);
 
   for (auto& child : mChildren)
-    child->render(getGlobalPosition());
+    child->render();
 }
 
 bool Container::processEvent(const WindowEvent& event)
@@ -30,25 +32,23 @@ bool Container::processEvent(const WindowEvent& event)
     usedEvent = mChildren[i]->processEvent(localEvent) || usedEvent;
   }
 
-  return usedEvent || Widget::processEvent(event);
+  return Widget::processEvent(event) || usedEvent;
 }
 
-void Container::updateLayout()
+void Container::updateLayout(aw::Vec2 parentPos)
 {
   if (!isLayoutDirty())
     return;
 
   for (auto& child : mChildren)
-    child->updateLayout();
+    child->updateLayout(parentPos + getRelativePosition());
 
-  Widget::updateLayout();
+  // We need to clear invalid state...
+  Widget::updateLayout(parentPos);
 }
 
 void Container::invalidateLayout()
 {
-  if (isLayoutDirty())
-    return;
-
   Widget::invalidateLayout();
   for (auto& child : mChildren)
     child->invalidateLayout();

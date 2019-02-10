@@ -43,7 +43,7 @@ struct VertexPosTex
 struct VertexPosColor
 {
   Vec3 position;
-  Vec4 color;
+  Color color;
   static VertexLayout<2> Layout;
 };
 

@@ -8,12 +8,12 @@ namespace aw::gui
 ListItem::ListItem(const GUI& gui, std::string text, std::string id) : Label(gui, text), mId(id)
 {
   setSelectable(true);
-  mDeselectByEvents = false;
+  setDeselectableByMouseEvent(false);
 }
 
-void ListItem::render(Vec2 parentPos)
+void ListItem::render()
 {
-  Widget::render(parentPos);
+  Widget::render();
   getGUI().getRenderer().render(*this);
 }
 } // namespace aw::gui

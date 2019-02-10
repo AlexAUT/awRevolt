@@ -1,4 +1,6 @@
 set(HEADER_FILES_GRAPHICS ${HEADER_FILES_GRAPHICS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/bufferedRenderer.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/bufferedRenderer.inl
     ${CMAKE_CURRENT_SOURCE_DIR}/bufferObject.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/camera.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/frameBuffer.hpp

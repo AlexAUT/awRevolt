@@ -7,8 +7,9 @@
 
 namespace aw
 {
-MeshInstance::MeshInstance(const Mesh& mesh)
-    : mMesh(mesh), mRenderer(Renderer::PrimitiveType::Triangles, Renderer::IndicesType::UnsignedInt)
+MeshInstance::MeshInstance(const Mesh& mesh) :
+    mMesh(mesh),
+    mRenderer(PrimitiveType::Triangles, IndicesType::UnsignedInt)
 {
   mPose.setMeshInstance(this);
   mBoneTransforms.resize(mesh.getBoneCount());

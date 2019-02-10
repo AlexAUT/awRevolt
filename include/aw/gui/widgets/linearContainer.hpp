@@ -19,16 +19,22 @@ public:
   virtual ~LinearContainer() = default;
 
   void addChild(Widget::SPtr newChild, float weight = 1.f);
+  void addChildAt(size_t index, Widget::SPtr newChild, float weight = 1.f);
+  void addChildAfter(Widget* before, Widget::SPtr newChild, float weight = 1.f);
+
+  bool removeChild(Widget* child);
 
   void setSpaceBetweenElements(float space);
   float getSpaceBetweenElements() const { return mSpaceBetweenElements; }
 
-  virtual void updateLayout() override;
+  virtual void updateLayout(aw::Vec2 parentPos) override;
   virtual Vec2 getMinimalSize() const override;
 
 private:
   Vec2 getDynamicAxisPadding() const;
   Vec2 getStaticAxisPadding() const;
+
+  void updateMinimalSize();
 
 private:
   Orientation mOrientation;

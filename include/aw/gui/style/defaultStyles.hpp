@@ -1,9 +1,9 @@
 #pragma once
 
-#include <aw/gui/style/styles.hpp>
+#include <aw/gui/style/style.hpp>
+#include <aw/gui/style/styleManager.hpp>
 
 namespace aw::gui
 {
-class GUI;
-void applyDefaultStyles(GUI& gui);
+StyleManager getDefaultTextStyles();
 } // namespace aw::gui

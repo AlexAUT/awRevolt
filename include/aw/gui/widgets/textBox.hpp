@@ -16,7 +16,7 @@ public:
 
   virtual bool processEvent(const WindowEvent& event) override;
   virtual void update(float delta) override;
-  virtual void render(Vec2 parentPos) override;
+  virtual void render() override;
 
   void removeAtCursor(unsigned numToRemove);
   void addCharacterAtCursor(char c);
@@ -28,26 +28,17 @@ public:
   bool shouldRenderCursor() const { return isInState(State::Selected) && mShowCursor; }
   int getCursorPosition() const { return mCursorPosition; }
 
-  void setSelectedTextStyle(const TextStyle* textStyle);
-  void setDeselectedTextStyle(const TextStyle* textStyle);
-  const TextStyle* getSelectedTextStyle() const { return mSelectedTextStyle; }
-  const TextStyle* getDeselectedStyle() const { return mDeselectedTextStyle; }
-
-  virtual const TextStyle* getCurrentTextStyle() const;
-
-  virtual void updateLayout() override;
+  virtual void updateLayout(aw::Vec2 parentPos) override;
   virtual Vec2 getMinimalSize() const override;
 
 public:
-  Widget::Callback onTextChange;
+  Widget::Signal onTextChange;
 
 protected:
   virtual void changedText();
 
 private:
   std::string mText;
-  const TextStyle* mSelectedTextStyle{nullptr};
-  const TextStyle* mDeselectedTextStyle{nullptr};
 
   int mCursorPosition;
   float mCursorBlinkRate{0.5f};

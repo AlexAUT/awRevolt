@@ -2,9 +2,6 @@
 
 #include <aw/graphics/core/camera.hpp>
 
-#include <aw/utils/math/constants.hpp>
-using namespace aw::constantsF;
-
 #include <algorithm>
 #include <cmath>
 

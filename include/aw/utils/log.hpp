@@ -60,6 +60,8 @@ private:
   DEFINE_LOG_INSTANCE(Warning##Name, aw::log::Warning, DisplayName)                                                    \
   DEFINE_LOG_INSTANCE(Debug##Name, aw::log::Debug, DisplayName)                                                        \
   DEFINE_LOG_INSTANCE(Verbose##Name, aw::log::Verbose, DisplayName)
+
+#define LOG_NVP(varname) " " << #varname << ": " << varname << " "
 } // namespace log
 
 bool LOG_INITIALIZE(log::LogLevel console = log::Debug, log::LogLevel filesystem = log::Verbose,

@@ -10,9 +10,43 @@ namespace aw::gui
 {
 void LinearContainer::addChild(Widget::SPtr widget, float weight)
 {
-  mWeights.push_back(weight);
-  mChildren.push_back(std::move(widget));
-  mChildren.back()->setParent(getSharedPtr());
+  addChildAt(mChildren.size(), widget, weight);
+}
+
+void LinearContainer::addChildAt(size_t index, Widget::SPtr newChild, float weight)
+{
+  assert(index <= mChildren.size());
+  mWeights.insert(std::next(mWeights.begin(), index), weight);
+  mChildren.insert(std::next(mChildren.begin(), index), newChild);
+  mChildren[index]->setParent(getSharedPtr());
+
+  updateMinimalSize();
+}
+
+void LinearContainer::addChildAfter(Widget* before, Widget::SPtr newChild, float weight)
+{
+  auto found = std::find_if(mChildren.begin(), mChildren.end(), [=](const auto& c) { return c.get() == before; });
+  auto pos = std::distance(mChildren.begin(), found);
+  if (found != mChildren.end())
+    pos += 1;
+  addChildAt(pos, newChild, weight);
+}
+
+bool LinearContainer::removeChild(Widget* toRemove)
+{
+  for (auto i = 0lu; i < mChildren.size(); i++)
+  {
+    auto* child = mChildren[i].get();
+    if (child == toRemove)
+    {
+      child->clearParent();
+      invalidateLayout();
+      mChildren.erase(std::next(mChildren.begin(), i));
+      mWeights.erase(std::next(mWeights.begin(), i));
+      return true;
+    }
+  }
+  return false;
 }
 
 void LinearContainer::setSpaceBetweenElements(float space)
@@ -21,18 +55,18 @@ void LinearContainer::setSpaceBetweenElements(float space)
   invalidateLayout();
 }
 
-void LinearContainer::updateLayout()
+void LinearContainer::updateLayout(aw::Vec2 parentPos)
 {
   if (!isLayoutDirty())
     return;
 
-  Container::updateLayout();
+  Container::updateLayout(parentPos);
 
   auto dynamicAxis = static_cast<int>(mOrientation);
   auto staticAxis = dynamicAxis ^ 1;
 
-  auto freeSpace = getSize()[dynamicAxis];
-  auto staticAxisValue = getSize()[staticAxis];
+  auto freeSpace = getContentSize()[dynamicAxis];
+  auto staticAxisValue = getContentSize()[staticAxis];
 
   // In the first pass try to give everyone their minimal size + spaceBetween
   for (auto& child : mChildren)
@@ -70,24 +104,13 @@ void LinearContainer::updateLayout()
     pos[staticAxis] = outerStaticPadding[0];
     child->setRelativePosition(pos);
     // Tell the child to update his own layout
-    child->updateLayout();
+    child->updateLayout(parentPos + getRelativePosition());
 
     cursor += childSize[dynamicAxis] + mSpaceBetweenElements;
   }
-  Container::updateLayout();
+  Container::updateLayout(parentPos);
 
-  // Update minimal size cache
-  mMinimalSizeCache = Vec2{0.f};
-  for (auto& child : mChildren)
-  {
-    auto size = child->getMinimalSize();
-    mMinimalSizeCache[dynamicAxis] += size[dynamicAxis] + mSpaceBetweenElements;
-    mMinimalSizeCache[staticAxis] = std::max(mMinimalSizeCache[staticAxis], size[staticAxis]);
-  }
-  mMinimalSizeCache[dynamicAxis] -= mSpaceBetweenElements; // same as above
-  mMinimalSizeCache[dynamicAxis] += (outerDynamicPadding[0] + outerDynamicPadding[1]);
-  mMinimalSizeCache[staticAxis] += (outerStaticPadding[0] + outerStaticPadding[1]);
-  mMinimalSizeCache = glm::max(mMinimalSizeCache, getPreferedSize());
+  updateMinimalSize();
 }
 
 Vec2 LinearContainer::getMinimalSize() const
@@ -109,5 +132,27 @@ Vec2 LinearContainer::getStaticAxisPadding() const
     return {getPadding().left, getPadding().right};
   else
     return {getPadding().top, getPadding().bottom};
+}
+
+void LinearContainer::updateMinimalSize()
+{
+  auto dynamicAxis = static_cast<int>(mOrientation);
+  auto staticAxis = dynamicAxis ^ 1;
+
+  // Subtract the outer padding from the freespace and from the static axis size
+  auto outerDynamicPadding = getDynamicAxisPadding();
+  auto outerStaticPadding = getStaticAxisPadding();
+  // Update minimal size cache
+  mMinimalSizeCache = Vec2{0.f};
+  for (auto& child : mChildren)
+  {
+    auto size = child->getMinimalSize();
+    mMinimalSizeCache[dynamicAxis] += size[dynamicAxis] + mSpaceBetweenElements;
+    mMinimalSizeCache[staticAxis] = std::max(mMinimalSizeCache[staticAxis], size[staticAxis]);
+  }
+  mMinimalSizeCache[dynamicAxis] -= mSpaceBetweenElements; // same as above
+  mMinimalSizeCache[dynamicAxis] += (outerDynamicPadding[0] + outerDynamicPadding[1]);
+  mMinimalSizeCache[staticAxis] += (outerStaticPadding[0] + outerStaticPadding[1]);
+  mMinimalSizeCache = glm::max(mMinimalSizeCache, getPreferedSize());
 }
 } // namespace aw::gui

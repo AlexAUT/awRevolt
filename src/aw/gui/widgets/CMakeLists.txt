@@ -13,7 +13,12 @@ set(SOURCE_FILES_GUI ${SOURCE_FILES_GUI}
   ${CMAKE_CURRENT_SOURCE_DIR}/menuSubItem.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/panel.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/screen.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/scrollableBin.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/tableContainer.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/textBox.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/tileContainer.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/treeView.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/viewport.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/widget.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/window.cpp
   PARENT_SCOPE)

@@ -1,17 +1,16 @@
 #include <aw/gui/widgets/menuItem.hpp>
 
 #include <aw/gui/gui.hpp>
-#include <aw/gui/style/textStyle.hpp>
 #include <aw/gui/utils/eventConvert.hpp>
 #include <aw/gui/widgets/menu.hpp>
 
 namespace aw::gui
 {
-TextStyle defaultStyle{"sans", 10.f, Color(0.5f, 0.5f, 0.5f, 1.0f)};
-
-MenuItem::MenuItem(const GUI& gui, Menu& menu, std::string text)
-    : Label(gui, std::move(text)), mMenu(menu), mChildPanel(std::make_shared<Panel>(gui)),
-      mChildContainer(std::make_shared<LinearContainer>(gui, Orientation::Vertical))
+MenuItem::MenuItem(const GUI& gui, Menu& menu, std::string text) :
+    Label(gui, std::move(text)),
+    mMenu(menu),
+    mChildPanel(std::make_shared<Panel>(gui)),
+    mChildContainer(std::make_shared<LinearContainer>(gui, Orientation::Vertical))
 {
   mChildPanel->setChild(mChildContainer);
 
@@ -20,22 +19,18 @@ MenuItem::MenuItem(const GUI& gui, Menu& menu, std::string text)
 
   setSelectable(true);
   setConsumeClickOnDeselect(true);
-
-  auto style = getGUI().getTextStyles().getStyle("menuItem");
-  assert(style);
-  setTextLayout(style);
 }
 
 MenuSubItem::SPtr MenuItem::addSubEntry(const std::string& text)
 {
   auto newChild = std::make_shared<MenuSubItem>(getGUI(), mMenu, text);
 
+  mChildPanel->setParent(getSharedPtr());
   mChildContainer->addChild(newChild, 0.f);
   newChild->invalidateLayout();
-  mChildPanel->updateLayout();
+  mChildPanel->updateLayout(getGlobalPosition());
   mChildPanel->setSize(mChildContainer->getMinimalSize());
-  mChildPanel->updateLayout();
-  invalidateLayout();
+  mChildPanel->updateLayout(getGlobalPosition());
 
   return newChild;
 }
@@ -51,27 +46,27 @@ bool MenuItem::processEvent(const WindowEvent& event)
   return Label::processEvent(event);
 }
 
-void MenuItem::render(Vec2 parentPos)
+void MenuItem::render()
 {
-  Widget::render(parentPos);
+  Widget::render();
   getGUI().getRenderer().render(*this);
 
   if (isInState(State::Selected))
   {
     getGUI().getRenderer().render(*this);
-    mChildPanel->render(getGlobalPosition());
+    mChildPanel->render();
   }
 }
 
-void MenuItem::updateLayout()
+void MenuItem::updateLayout(aw::Vec2 parentPos)
 {
-  Label::updateLayout();
-
   // calculate child container position
-  auto pos = getSize();
+  Vec2 pos{0, getSize().y};
   pos.x = 0;
   mChildPanel->setRelativePosition(pos);
-  mChildPanel->updateLayout();
+  mChildPanel->updateLayout(parentPos + getRelativePosition());
+
+  Label::updateLayout(parentPos);
 }
 
 void MenuItem::select(Vec2 mousePos)

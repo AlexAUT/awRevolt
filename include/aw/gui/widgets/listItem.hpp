@@ -15,7 +15,7 @@ public:
   ListItem(const GUI& gui, std::string text, std::string id);
   virtual ~ListItem() = default;
 
-  virtual void render(Vec2 parentPos) override;
+  virtual void render() override;
 
   std::string_view getId() const { return mId; }
 

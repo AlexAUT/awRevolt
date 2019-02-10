@@ -31,7 +31,7 @@ public:
   Type getValue() const { return mValue; }
 
 protected:
-  void updateValue() override
+  virtual void updateValue(aw::Vec2 parentPos) override
   {
     auto match = regex::checkStringForType<Type>(getText());
     changeValidState(match);

@@ -18,10 +18,10 @@ public:
   const ChildVector& getChildren() const { return mChildren; }
 
   virtual void update(float delta) override;
-  virtual void render(Vec2 parentPos) override;
+  virtual void render() override;
   virtual bool processEvent(const WindowEvent& event) override;
 
-  virtual void updateLayout() override;
+  virtual void updateLayout(aw::Vec2 parentPos) override;
 
   virtual void invalidateLayout() override;
 

@@ -14,23 +14,24 @@ void Bin::update(float delta)
 
 bool Bin::processEvent(const WindowEvent& event)
 {
+  auto usedByChild = false;
   if (mChild)
   {
     auto localEvent = convertToLocalEvent(event, *this);
-    if (mChild->processEvent(localEvent))
-      return true;
+    usedByChild = mChild->processEvent(localEvent);
   }
-  return Widget::processEvent(event);
+  // Also update bin
+  return Widget::processEvent(event) || usedByChild;
 }
 
-void Bin::render(Vec2 parentPos)
+void Bin::render()
 {
-  Widget::render(parentPos);
+  Widget::render();
   if (mChild)
-    mChild->render(getGlobalPosition());
+    mChild->render();
 }
 
-void Bin::updateLayout()
+void Bin::updateLayout(aw::Vec2 parentPos)
 {
   if (!isLayoutDirty())
     return;
@@ -39,18 +40,17 @@ void Bin::updateLayout()
   {
     mChild->setSize(calculateChildSize());
     mChild->setRelativePosition(calculateChildRelPosition());
-    mChild->updateLayout();
+    mChild->updateLayout(parentPos + getRelativePosition());
   }
-  Widget::updateLayout();
+  Widget::updateLayout(parentPos);
 }
 
 Vec2 Bin::getMinimalSize() const
 {
-  auto padding = getPadding();
-  Vec2 advance{padding.left + padding.right, padding.top + padding.bottom};
+  auto pad = getPadding().horizontalVertical();
   if (mChild)
-    return glm::max(mChild->getMinimalSize(), Widget::getMinimalSize()) + advance;
-  return Widget::getMinimalSize() + advance;
+    return glm::max(mChild->getMinimalSize() + pad, Widget::getMinimalSize());
+  return Widget::getMinimalSize();
 }
 
 void Bin::setChild(Widget::SPtr ptr)
@@ -59,22 +59,27 @@ void Bin::setChild(Widget::SPtr ptr)
     return;
 
   if (mChild)
-    mChild->setParent(nullptr);
+    mChild->clearParent();
 
   mChild = std::move(ptr);
   if (mChild)
     mChild->setParent(getSharedPtr());
 }
 
+void Bin::invalidateLayout()
+{
+  Widget::invalidateLayout();
+  if (mChild)
+    mChild->invalidateLayout();
+}
+
 Vec2 Bin::calculateChildRelPosition() const
 {
-  return {getPadding().left, getPadding().top};
+  return getPadding().leftTop();
 }
 
 Vec2 Bin::calculateChildSize() const
 {
-  auto size = getSize();
-  auto& padding = getPadding();
-  return {size.x - padding.left - padding.right, size.y - padding.top - padding.bottom};
+  return getContentSize();
 }
 } // namespace aw::gui

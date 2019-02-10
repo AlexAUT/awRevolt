@@ -9,15 +9,23 @@ namespace aw::gui
 inline WindowEvent convertToLocalEvent(const WindowEvent& event, const Widget& widget)
 {
   auto localEvent = event;
-  if (event.type == WindowEvent::MouseMoved)
+  switch (event.type)
   {
+  case WindowEvent::MouseMoved:
     localEvent.mouseMove.x -= static_cast<int>(widget.getRelativePosition().x);
     localEvent.mouseMove.y -= static_cast<int>(widget.getRelativePosition().y);
-  }
-  if (event.type == WindowEvent::MouseButtonPressed || event.type == WindowEvent::MouseButtonReleased)
-  {
+    break;
+  case WindowEvent::MouseButtonPressed:
+  case WindowEvent::MouseButtonReleased:
     localEvent.mouseButton.x -= static_cast<int>(widget.getRelativePosition().x);
     localEvent.mouseButton.y -= static_cast<int>(widget.getRelativePosition().y);
+    break;
+  case WindowEvent::MouseWheelScrolled:
+    localEvent.mouseWheelScroll.x -= static_cast<int>(widget.getRelativePosition().x);
+    localEvent.mouseWheelScroll.y -= static_cast<int>(widget.getRelativePosition().y);
+    break;
+  default:
+    break;
   }
 
   return localEvent;

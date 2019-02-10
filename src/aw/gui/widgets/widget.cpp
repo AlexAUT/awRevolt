@@ -4,6 +4,23 @@
 
 namespace aw::gui
 {
+namespace priv
+{
+const char* stateToString(Widget::State state)
+{
+  switch (state)
+  {
+  case Widget::State::Hovered:
+    return "hover";
+  case Widget::State::Pressed:
+    return "press";
+  case Widget::State::Selected:
+    return "select";
+  default:
+    return "";
+  }
+}
+} // namespace priv
 bool Widget::processEvent(const WindowEvent& event)
 {
   if (!mConsumeEvent)
@@ -69,18 +86,51 @@ bool Widget::processEvent(const WindowEvent& event)
 
   return usedEvent;
 }
-
-void Widget::setParent(SPtr parent)
+void Widget::addStyleClass(std::string styleClass)
 {
-  if (mParent == parent)
+  addStyleClass(std::move(styleClass), mStyleClasses.size());
+}
+
+void Widget::addStyleClass(std::string styleClass, size_t pos)
+{
+  if (!hasStyleClass(styleClass))
+  {
+    mStyleClasses.insert(std::next(mStyleClasses.begin(), pos), std::move(styleClass));
+  }
+}
+
+void Widget::removeStyleClass(std::string_view styleClass)
+{
+  auto found = std::find(mStyleClasses.begin(), mStyleClasses.end(), styleClass);
+  if (found != mStyleClasses.end())
+    mStyleClasses.erase(found);
+}
+
+bool Widget::hasStyleClass(std::string_view styleClass)
+{
+  auto found = std::find(mStyleClasses.begin(), mStyleClasses.end(), styleClass);
+  return found != mStyleClasses.end();
+}
+
+void Widget::setParent(WPtr parent)
+{
+  auto oldParent = mParent.lock();
+  auto newParent = parent.lock();
+  if (oldParent == newParent)
     return;
 
   mParent = std::move(parent);
   invalidateLayout();
   // Since invalid layout skips if it is already dirty, we need to apply it on the new parent manually here, not nice
   // but avoids doing it every time in invalidateLayout
-  if (mParent)
-    mParent->invalidateLayout();
+  if (newParent)
+    newParent->invalidateLayout();
+}
+
+void Widget::clearParent()
+{
+  mParent = {};
+  invalidateLayout();
 }
 
 void Widget::setPreferedSize(Vec2 size)
@@ -95,6 +145,24 @@ void Widget::setPadding(Padding padding)
 {
   mPadding = padding;
   invalidateLayout();
+}
+
+void Widget::changeState(State state, bool value)
+{
+  if (value)
+    enableState(state);
+  else
+    disableState(state);
+}
+void Widget::enableState(State state)
+{
+  mState.set(static_cast<size_t>(state));
+  addStyleClass(priv::stateToString(state));
+}
+void Widget::disableState(State state)
+{
+  mState.reset(static_cast<size_t>(state));
+  removeStyleClass(priv::stateToString(state));
 }
 
 void Widget::setSize(Vec2 size)
@@ -124,7 +192,8 @@ void Widget::invalidateLayout()
     return;
 
   mIsLayoutDirty = true;
-  if (mParent)
-    mParent->invalidateLayout();
+  auto parent = mParent.lock();
+  if (parent)
+    parent->invalidateLayout();
 }
 } // namespace aw::gui

@@ -19,8 +19,7 @@ public:
   void setInvalidTextStyle(const TextStyle* invalidTextStyle) { mInvalidTextStyle = invalidTextStyle; }
   const TextStyle& getInvalidTextStyle() const { return *mInvalidTextStyle; }
 
-  virtual const TextStyle* getCurrentTextStyle() const override;
-  virtual void render(Vec2 parentPos) override;
+  virtual void render() override;
 
 protected:
   void changeValidState(bool valid) { mValid = valid; }

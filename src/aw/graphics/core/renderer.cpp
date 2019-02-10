@@ -6,13 +6,15 @@
 
 namespace aw
 {
-unsigned convertPrimitiveTypeToGL(Renderer::PrimitiveType type);
-unsigned convertIndicesTypeToGL(Renderer::IndicesType type);
+// TODO: move them into opengl package
+unsigned convertPrimitiveTypeToGL(PrimitiveType type);
+unsigned convertIndicesTypeToGL(IndicesType type);
 
 Renderer::Renderer(PrimitiveType pType) : mPrimitiveType(convertPrimitiveTypeToGL(pType)) {}
 
-Renderer::Renderer(PrimitiveType pType, IndicesType iType)
-    : mPrimitiveType(convertPrimitiveTypeToGL(pType)), mIndicesType(convertIndicesTypeToGL(iType))
+Renderer::Renderer(PrimitiveType pType, IndicesType iType) :
+    mPrimitiveType(convertPrimitiveTypeToGL(pType)),
+    mIndicesType(convertIndicesTypeToGL(iType))
 {
 }
 
@@ -37,9 +39,9 @@ void Renderer::renderElements(int count, const void* indicesOffset) const
       glDrawElements(static_cast<GLenum>(mPrimitiveType), count, static_cast<GLenum>(mIndicesType), indicesOffset));
 }
 
-unsigned convertPrimitiveTypeToGL(Renderer::PrimitiveType type)
+unsigned convertPrimitiveTypeToGL(PrimitiveType type)
 {
-  using Type = Renderer::PrimitiveType;
+  using Type = PrimitiveType;
   switch (type)
   {
   case Type::Triangles:
@@ -62,9 +64,9 @@ unsigned convertPrimitiveTypeToGL(Renderer::PrimitiveType type)
   }
 }
 
-unsigned convertIndicesTypeToGL(Renderer::IndicesType type)
+unsigned convertIndicesTypeToGL(IndicesType type)
 {
-  using Type = Renderer::IndicesType;
+  using Type = IndicesType;
   switch (type)
   {
   case Type::UnsignedInt:

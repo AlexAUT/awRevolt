@@ -7,8 +7,9 @@
 namespace aw
 {
 template <typename VertexType>
-IntermediateRenderer<VertexType>::IntermediateRenderer(size_t bufferCount)
-    : mBuffer(bufferCount), mRenderer(Renderer::PrimitiveType::Triangles)
+IntermediateRenderer<VertexType>::IntermediateRenderer(size_t bufferCount) :
+    mBuffer(bufferCount),
+    mRenderer(PrimitiveType::Triangles)
 {
   assert(bufferCount > 0);
   mVBO.bind();
@@ -51,6 +52,7 @@ template <typename VertexType>
 void IntermediateRenderer<VertexType>::clear()
 {
   mBufferCursor = 0;
+  mVersion++;
 }
 
 template <typename VertexType>

@@ -2,17 +2,18 @@
 
 #include <aw/utils/math/vector.hpp>
 
+#include <ostream>
+
 namespace aw
 {
-class Color
+struct Color
 {
-public:
-  Color(float r, float g, float b, float a) : r(r), g(g), b(b), a(a) {}
-
-  void tint(float amount);
-  void shade(float amount);
-
 public:
   float r, g, b, a;
 };
+
+Color tintColor(Color color, float amount);
+Color shadeColor(Color color, float amount);
 } // namespace aw
+
+std::ostream& operator<<(std::ostream&, const aw::Color&);

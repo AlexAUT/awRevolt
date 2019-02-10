@@ -26,6 +26,6 @@ private:
 private:
   EntitySystem& mEntitySystem;
 
-  Renderer mRenderer{Renderer::PrimitiveType::Triangles, Renderer::IndicesType::UnsignedInt};
+  Renderer mRenderer{PrimitiveType::Triangles, IndicesType::UnsignedInt};
 };
 } // namespace aw::ecs::systems

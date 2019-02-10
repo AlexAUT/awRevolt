@@ -2,17 +2,19 @@
 
 namespace aw
 {
-void Color::tint(float amount)
+Color tintColor(Color c, float amount)
 {
-  r = r - r * amount;
-  g = g - g * amount;
-  b = b - b * amount;
+  return {c.r - c.r * amount, c.g - c.g * amount, c.b - c.b * amount};
 }
 
-void Color::shade(float amount)
+Color shadeColor(Color c, float amount)
 {
-  r = r + (1.f - r) * amount;
-  g = g + (1.f - g) * amount;
-  b = b + (1.f - b) * amount;
+  return {c.r + (1.f - c.r) * amount, c.g + (1.f - c.g) * amount, c.b + (1.f - c.b) * amount};
 }
 } // namespace aw
+
+std::ostream& operator<<(std::ostream& stream, const aw::Color& color)
+{
+  stream << "Color{ " << color.r << ", " << color.g << ", " << color.b << ", " << color.a << " }";
+  return stream;
+}

@@ -1,7 +1,8 @@
 #pragma once
 
 #include <aw/gui/renderer/nanovgRenderer.hpp>
-#include <aw/gui/style/textStyle.hpp>
+#include <aw/gui/style/defaultStyles.hpp>
+#include <aw/gui/style/styleManager.hpp>
 #include <aw/gui/widgets/screen.hpp>
 #include <aw/utils/math/vector.hpp>
 
@@ -15,23 +16,29 @@ class GUI
 public:
   using ScreenVector = std::vector<Screen::SPtr>;
 
-  GUI(Vec2 screenSize) : mScreenSize{screenSize} {}
+  GUI(Vec2 screenSize, StyleManager styles = getDefaultTextStyles()) :
+      mScreenSize{screenSize},
+      mRenderer{*this},
+      mStyles(std::move(styles))
+  {
+  }
 
   void updateLayout();
 
   void update(float delta);
-  bool processEvent(const WindowEvent& event);
+  bool receive(const WindowEvent& event);
   void render();
 
   void setScreenSize(Vec2 size);
+  Vec2 getScreenSize() const { return mScreenSize; }
 
   Screen::SPtr addScreen();
   const ScreenVector getScreens() const { return mScreens; }
 
-  const NanovgRenderer& getRenderer() const { return mRenderer; }
+  NanovgRenderer& getRenderer() const { return const_cast<NanovgRenderer&>(mRenderer); }
 
-  TextStyleManager& getTextStyles() { return mTextStyles; }
-  const TextStyleManager& getTextStyles() const { return mTextStyles; }
+  StyleManager& getStyles() { return mStyles; }
+  const StyleManager& getStyles() const { return mStyles; }
 
   void setSelectedWidget(Widget::SPtr widget) const { mSelectedWidget = std::move(widget); }
   Widget* getSelectedWidget() const { return mSelectedWidget.get(); }
@@ -46,7 +53,7 @@ private:
   NanovgRenderer mRenderer;
   ScreenVector mScreens;
 
-  TextStyleManager mTextStyles;
+  StyleManager mStyles;
 
   mutable Widget::SPtr mSelectedWidget{nullptr};
 };

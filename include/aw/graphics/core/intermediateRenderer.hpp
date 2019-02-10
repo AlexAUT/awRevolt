@@ -31,6 +31,7 @@ private:
 
   std::vector<VertexType> mBuffer;
   size_t mBufferCursor{0};
+  size_t mVersion{0};
 
   Renderer mRenderer;
 };

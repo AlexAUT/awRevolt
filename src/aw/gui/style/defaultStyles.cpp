@@ -1,22 +1,64 @@
 #include <aw/gui/style/defaultStyles.hpp>
 
-#include <aw/gui/gui.hpp>
-
 namespace aw::gui
 {
-void applyTextStyles(TextStyleManager& manager);
-
-void applyDefaultStyles(GUI& gui)
+StyleManager getDefaultTextStyles()
 {
-  applyTextStyles(gui.getTextStyles());
+  StyleManager styles;
+
+  StyleTemplate s;
+  s.fontName = "sans";
+  s.fontSize = 15.f;
+  s.fontColor = Color{0.8f, 0.8f, 0.8f, 1.0f};
+  s.backgroundColor = Color{0.f, 0.f, 0.f, 0.f};
+  styles.addStyle("default", s);
+
+  s = StyleTemplate();
+  s.fontName = "sans";
+  s.fontSize = 15.f;
+  s.fontColor = Color{0.4f, 0.4f, 0.4f, 1.0f};
+  styles.addStyle("defaultMuted", s);
+
+  s = StyleTemplate();
+  s.fontName = "sans";
+  s.fontSize = 15.f;
+  s.fontColor = Color{0.8f, 0.1f, 0.1f, 1.0f};
+  styles.addStyle("defaultFail", s);
+
+  s = StyleTemplate();
+  s.fontName = "sans";
+  s.fontSize = 12.f;
+  s.fontColor = Color{0.8f, 0.8f, 0.8f, 1.0f};
+  styles.addStyle("menuItem", s);
+
+  s = StyleTemplate();
+  s.fontName = "sans-bold";
+  s.fontSize = 25.f;
+  s.fontColor = Color{0.86, 0.86f, 0.86f, 0.62f};
+  styles.addStyle("headline", s);
+
+  s = StyleTemplate();
+  s.fontName = "icon";
+  s.fontSize = 22.f;
+  s.fontColor = Color{1.f, 1.f, 1.f, 1.f};
+  styles.addStyle("icon", s);
+
+  s = StyleTemplate();
+  s.fontName = "icon";
+  s.fontSize = 50.f;
+  s.fontColor = Color{1.f, 1.f, 1.f, 1.f};
+  styles.addStyle("fileIcon", s);
+
+  s = StyleTemplate();
+  s.backgroundColor = Color{0.4f, 0.4f, 0.4f, 1.f};
+  styles.addStyle("folderViewEntry hover", s);
+
+  styles.addStyle("fileViewEntry hover", s);
+
+  s = StyleTemplate();
+  s.backgroundColor = Color{0.1f, 0.1f, 0.3f, 1.f};
+  styles.addStyle("folderViewEntry select", s);
+
+  return styles;
 }
-
-void applyTextStyles(TextStyleManager& styles)
-{
-  styles.addStyle("default", {"sans", 15.f, Color(0.8f, 0.8f, 0.8f, 1.0f)});
-  styles.addStyle("defaultMuted", {"sans", 15.f, Color(0.4f, 0.4f, 0.4f, 1.0f)});
-  styles.addStyle("defaultFail", {"sans", 15.f, Color(0.8f, 0.1f, 0.1f, 1.0f)});
-  styles.addStyle("menuItem", {"sans", 12.f, Color(0.8f, 0.8f, 0.8f, 1.0f)});
-  styles.addStyle("headline", {"sans-bold", 25.f, Color{0.86f, 0.86f, 0.86f, 0.62f}});
-} // namespace aw::gui
 } // namespace aw::gui

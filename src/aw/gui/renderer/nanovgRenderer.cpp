@@ -2,7 +2,8 @@
 
 #include "nanovgDrawHelper.hpp"
 
-#include <aw/gui/style/textStyle.hpp>
+#include <aw/gui/gui.hpp>
+#include <aw/gui/style/style.hpp>
 #include <aw/gui/widgets/widgets.hpp>
 #include <aw/opengl/opengl.hpp>
 #include <aw/utils/color.hpp>
@@ -12,14 +13,31 @@
 
 #include <cassert>
 
+DEFINE_LOG_CATEGORIES(NanovgRenderer, "nanovg renderer");
+
 namespace aw::gui
 {
-NanovgRenderer::NanovgRenderer() : mContext(nvgCreateGL3(NVG_STENCIL_STROKES)) //| NVG_DEBUG))
+NanovgRenderer::NanovgRenderer(GUI& gui) : mGUI(gui), mContext(nvgCreateGL3(NVG_STENCIL_STROKES)) //| NVG_DEBUG))
 {
   assert(mContext);
 
-  nvgCreateFont(mContext, "sans", "assets/fonts/Roboto-Regular.ttf");
-  nvgCreateFont(mContext, "sans-bold", "assets/fonts/Roboto-Bold.ttf");
+  const char* fontPath = "assets/fonts/Roboto-Regular.ttf";
+  auto guiFontHandle = nvgCreateFont(mContext, "sans", fontPath);
+  if (guiFontHandle == -1)
+    LogErrorNanovgRenderer() << "Could not find gui font: " << fontPath;
+  assert(guiFontHandle != -1);
+
+  fontPath = "assets/fonts/Roboto-Bold.ttf";
+  guiFontHandle = nvgCreateFont(mContext, "sans-bold", fontPath);
+  if (guiFontHandle == -1)
+    LogErrorNanovgRenderer() << "Could not find gui font: " << fontPath;
+  assert(guiFontHandle != -1);
+
+  fontPath = "assets/fonts/line-awesome.ttf";
+  guiFontHandle = nvgCreateFont(mContext, "icon", fontPath);
+  if (guiFontHandle == -1)
+    LogErrorNanovgRenderer() << "Could not find gui font: " << fontPath;
+  assert(guiFontHandle != -1);
 }
 
 NanovgRenderer::~NanovgRenderer()
@@ -28,9 +46,9 @@ NanovgRenderer::~NanovgRenderer()
     nvgDeleteGL3(mContext);
 }
 
-Vec2 NanovgRenderer::calculateTextSize(const std::string& text, const TextStyle& style) const
+Vec2 NanovgRenderer::calculateTextSize(const std::string& text, const std::vector<std::string>& styleClasses) const
 {
-  return getTextSize(mContext, text, style);
+  return getTextSize(mContext, text, getStyle(styleClasses));
 }
 
 void NanovgRenderer::beginFrame(Vec2 windowResolution)
@@ -42,6 +60,92 @@ void NanovgRenderer::beginFrame(Vec2 windowResolution)
 void NanovgRenderer::endFrame()
 {
   nvgEndFrame(mContext);
+}
+
+int NanovgRenderer::setZOrder(int zOrder)
+{
+  auto oldValue = mZOrder;
+  mZOrder = zOrder;
+  return oldValue;
+}
+
+void NanovgRenderer::pushViewport(aw::Vec2 leftTop, aw::Vec2 size)
+{
+  mViewportStack.push({leftTop, size});
+  activateViewport(mViewportStack.top());
+}
+
+void NanovgRenderer::popViewport()
+{
+  if (mViewportStack.empty())
+  {
+    resetViewport();
+  }
+  else
+  {
+    mViewportStack.pop();
+    if (mViewportStack.empty())
+      resetViewport();
+    else
+      activateViewport(mViewportStack.top());
+  }
+}
+
+void NanovgRenderer::resetViewport()
+{
+  nvgResetScissor(mContext);
+}
+
+void NanovgRenderer::activateViewport(NanovgRenderer::Viewport& viewport)
+{
+  nvgScissor(mContext, viewport.leftTop.x, viewport.leftTop.y, viewport.size.x, viewport.size.y);
+}
+
+const Style& NanovgRenderer::getStyle(const Widget& widget) const
+{
+  return getStyle(widget.getStyleClasses());
+}
+
+const Style& NanovgRenderer::getStyle(const std::vector<std::string>& styleClass) const
+{
+  auto foundInCache = mStyleCache.find(styleClass);
+  if (foundInCache != mStyleCache.end())
+  {
+    return foundInCache->second;
+  }
+
+  Style combinedStyle;
+  auto& styles = mGUI.getStyles();
+
+  auto* defaultTemplate = styles.getStyle("default");
+  if (defaultTemplate)
+    combinedStyle += *defaultTemplate;
+
+  const std::string* firstStyle = nullptr;
+  LogTemp() << "Start: ";
+  for (auto& style : styleClass)
+  {
+    LogTemp() << "Style: " << style;
+    // Try with previous class prefix
+    const StyleTemplate* styleTemplate = nullptr;
+    if (firstStyle)
+      styleTemplate = styles.getStyle(*firstStyle + " " + style);
+
+    // Try only class
+    if (!styleTemplate)
+      styleTemplate = styles.getStyle(style);
+
+    if (styleTemplate)
+      combinedStyle += *styleTemplate;
+
+    if (!firstStyle)
+      firstStyle = &style;
+  }
+  LogTemp() << "End";
+
+  auto insert = mStyleCache.insert({styleClass, combinedStyle});
+
+  return insert.first->second;
 }
 
 template <>
@@ -69,8 +173,23 @@ void NanovgRenderer::render(const Window& window) const
   // Header
   drawHeaderHighlight(mContext, pos, {size.x, 30.f}, bgColor, 3.f);
 
-  drawTextBlurred(mContext, window.getTitle(), pos, {size.x, 30.f}, window.getTitleTextStyle(),
+  auto windowTitleStyle = getStyle(window);
+  drawTextBlurred(mContext, window.getTitle(), pos, {size.x, 30.f}, windowTitleStyle,
                   {AlignmentH::Center, AlignmentV::Middle}, Padding{0.f});
+}
+
+template <>
+void NanovgRenderer::render(const Container& container) const
+{
+  auto pos = container.getGlobalPosition();
+  auto size = container.getSize();
+  const auto& style = getStyle(container);
+  // Window
+  if (style.backgroundColor.a > 0)
+  {
+    float dropShadowSize = 0.f;
+    drawRoundedRect(mContext, pos, size, 3.f, style.backgroundColor, dropShadowSize);
+  }
 }
 
 void tintColor(NVGcolor& color, float amount)
@@ -103,7 +222,7 @@ void NanovgRenderer::render(const Button& button) const
   using namespace aw::gui;
   const auto a = Alignment{AlignmentH::Center, AlignmentV::Middle};
   const auto p = Padding(0.f);
-  drawText(mContext, button.getText(), pos, size, button.getTextLayout(), a, p);
+  drawText(mContext, button.getText(), pos, size, getStyle(button), a, p);
 }
 
 template <>
@@ -111,8 +230,9 @@ void NanovgRenderer::render(const Label& label) const
 {
   auto pos = label.getGlobalPosition();
   auto size = label.getSize();
+  auto& style = getStyle(label);
 
-  drawText(mContext, label.getText(), pos, size, label.getTextLayout(), label.getAlignment(), label.getPadding());
+  drawText(mContext, label.getText(), pos, size, style, label.getAlignment(), label.getPadding());
 }
 
 template <>
@@ -129,13 +249,13 @@ void NanovgRenderer::render(const TextBox& textBox) const
   pos.x += textBox.getPadding().left;
   // size -= Vec2{p.left + p.right, p.top + p.bottom};
   using namespace aw::gui;
-  const auto& textStyle = *textBox.getCurrentTextStyle();
-  drawText(mContext, text, pos, size, textStyle, {AlignmentH::Left, AlignmentV::Middle}, {});
+  const auto& style = getStyle(textBox);
+
+  drawText(mContext, text, pos, size, style, {AlignmentH::Left, AlignmentV::Middle}, {});
 
   if (textBox.shouldRenderCursor())
   {
-    drawEditBoxCursor(mContext, *textBox.getSelectedTextStyle(), text.c_str(), pos.x, pos.y, size.x, size.y,
-                      textBox.getCursorPosition());
+    drawEditBoxCursor(mContext, style, text.c_str(), pos.x, pos.y, size.x, size.y, textBox.getCursorPosition());
   }
 }
 
@@ -199,7 +319,7 @@ void NanovgRenderer::render(const ListItem& listItem) const
     auto size = listItem.getSize();
     Color color{28 / 255.f, 30 / 255.f, 255 / 255.f, 255 / 255.f};
     if (!listItem.isInState(State::Selected))
-      color.shade(0.25f);
+      color = shadeColor(color, 0.25f);
 
     drawRoundedRect(mContext, pos, size, 3.f, color);
     drawHeaderHighlight(mContext, pos, size, color, 0.f);
@@ -237,4 +357,5 @@ int NanovgRenderer::calculateCursorPosition(const TextBox& textBox, Vec2 relativ
   }
   return static_cast<int>(text.size());
 }
+
 } // namespace aw::gui

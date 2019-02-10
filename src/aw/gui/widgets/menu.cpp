@@ -13,12 +13,12 @@ MenuItem::SPtr Menu::addMenuEntry(std::string text)
   return item;
 }
 
-void Menu::render(Vec2 parentPos)
+void Menu::render()
 {
-  Widget::render(parentPos);
+  Widget::render();
   getGUI().getRenderer().render(*this);
   // Render childs
-  LinearContainer::render(parentPos);
+  LinearContainer::render();
 }
 
 void Menu::setSelectedChild(Widget* child, Widget* caller)
@@ -41,4 +41,4 @@ void Menu::setSelectedChild(Widget* child, Widget* caller)
     getGUI().setSelectedWidget(nullptr);
   }
 }
-}
+} // namespace aw::gui

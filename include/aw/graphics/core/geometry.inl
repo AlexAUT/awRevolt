@@ -2,15 +2,12 @@
 
 #include <aw/graphics/core/geometry.hpp>
 
-#include <aw/utils/log.hpp>
 #include <aw/utils/typeHelper/typeChecks.hpp>
 
 #include <algorithm>
 #include <type_traits>
 
-namespace aw
-{
-namespace geo
+namespace aw::geo
 {
 namespace priv
 {
@@ -19,7 +16,7 @@ MEMBER_PRESENT_CHECKER(normal, Vec3)
 MEMBER_PRESENT_CHECKER(texCoord, Vec2)
 
 template <typename VertexIterator>
-void setVertex(VertexIterator vertexIterator, Vec3 pos, Vec3 normal, Vec2 texCoord)
+void setVertex(VertexIterator vertexIterator, Vec3 pos, Vec3 normal = Vec3{0.f}, Vec2 texCoord = Vec2{0.f})
 {
   using VertexType = typename std::decay<decltype(*vertexIterator)>::type;
 
@@ -31,6 +28,60 @@ void setVertex(VertexIterator vertexIterator, Vec3 pos, Vec3 normal, Vec2 texCoo
     (*vertexIterator).texCoord = texCoord;
 }
 } // namespace priv
+
+template <std::size_t vertexCount>
+std::array<float, (vertexCount + 2) * 3> circle(float centerX, float centerY, float radius, float depth)
+{
+  std::array<float, (vertexCount + 2) * 3> result;
+  result[0] = centerX;
+  result[1] = centerY;
+  result[2] = depth;
+  constexpr float pi2 = 2 * aw::constants::pi();
+  constexpr float oneIter = pi2 / vertexCount;
+  float angle = 0;
+  for (std::size_t i = 1; i < vertexCount + 2; i++)
+  {
+    result[i * 3] = centerX + std::cos(angle) * radius;
+    result[i * 3 + 1] = centerY + std::sin(angle) * radius;
+    result[i * 3 + 2] = depth;
+    angle += oneIter;
+  }
+  return result;
+}
+
+template <typename VertexIterator>
+VertexIterator line(Vec3 from, Vec3 to, VertexIterator insertIterator)
+{
+  priv::setVertex(insertIterator++, from);
+  priv::setVertex(insertIterator++, to);
+  return insertIterator;
+}
+
+template <typename VertexIterator>
+VertexIterator lineGrid(Vec3 center, Vec2 size, Vec2 cellSize, VertexIterator insertIterator)
+{
+  auto sizeHalf = size * 0.5f;
+  auto leftTop = center - Vec3{sizeHalf.x, 0, sizeHalf.y};
+  if (size.y >= cellSize.y)
+  {
+    for (float z = 0; z <= size.y; z += cellSize.y)
+    {
+      Vec3 from{center.x + sizeHalf.x, 0, leftTop.z + z};
+      Vec3 to{center.x - sizeHalf.x, 0, from.z};
+      insertIterator = line(from, to, insertIterator);
+    }
+  }
+  if (size.x >= cellSize.x)
+  {
+    for (float x = 0; x <= size.x; x += cellSize.x)
+    {
+      Vec3 from{leftTop.x + x, 0, center.z + sizeHalf.y};
+      Vec3 to{from.x, 0, center.z - sizeHalf.y};
+      insertIterator = line(from, to, insertIterator);
+    }
+  }
+  return insertIterator;
+}
 
 template <typename VertexType>
 std::array<VertexType, 6 * 6> cube(Vec3 center, Vec3 size)
@@ -175,5 +226,4 @@ void cubeLines(Vec3 center, Vec3 size, VertexIterator begin)
   priv::setVertex(begin++, {left, top, back}, null, null);
   priv::setVertex(begin++, {left, top, front}, null, null);
 }
-} // namespace geo
-} // namespace aw
+} // namespace aw::geo

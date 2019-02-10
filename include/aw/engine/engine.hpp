@@ -3,7 +3,7 @@
 #include <aw/engine/runtime/stateMachine.hpp>
 #include <aw/engine/settings.hpp>
 #include <aw/engine/window.hpp>
-
+#include <aw/runtime/resourceManager/resourceManager.hpp>
 #include <aw/utils/messageBus/messageBus.hpp>
 #include <aw/utils/time/clock.hpp>
 
@@ -23,11 +23,13 @@ public:
 
   msg::Bus& getMessageBus() { return mMsgBus; }
   const msg::Bus& getMessageBus() const { return mMsgBus; }
-  const Settings& getSettings() const;
-  StateMachine& getStateMachine();
-  const StateMachine& getStateMachine() const;
-  Window& getWindow();
-  const Window& getWindow() const;
+  const Settings& getSettings() const { return mSettings; }
+  StateMachine& getStateMachine() { return mStateMachine; }
+  const StateMachine& getStateMachine() const { return mStateMachine; }
+  Window& getWindow() { return mWindow; }
+  const Window& getWindow() const { return mWindow; }
+  ResourceManager& getResourceManager() { return mResourceManager; }
+  const ResourceManager& getResourceManager() const { return mResourceManager; }
 
 private:
   void handleEvents();
@@ -39,6 +41,7 @@ private:
   Settings mSettings;
   StateMachine mStateMachine;
   Window mWindow;
+  ResourceManager mResourceManager;
 
   Clock mUpdateTimer;
 

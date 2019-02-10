@@ -24,8 +24,13 @@ public:
   ResourceRegistry(const ResourceRegistry&) = delete;
   ResourceRegistry operator=(const ResourceRegistry&) = delete;
 
+  TypePtr insert(std::string name, TypePtr object);
+
   template <typename Factory, typename... Args>
-  TypePtr create(std::string name, Args&&... args);
+  TypePtr emplace(std::string name, Args&&... args);
+
+  template <typename... Args>
+  TypePtr emplace(std::string name, Args&&... args);
 
   bool has(std::string_view name) const;
   TypePtr get(std::string_view name);

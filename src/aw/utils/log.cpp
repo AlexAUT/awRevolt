@@ -99,9 +99,6 @@ void LogInstance::writeToServer(std::string text) const
   getAll.setBody("content=" + text);
 
   auto response = httpClient.sendRequest(getAll);
-
-  LogTemp() << "Response: " << response.getStatus();
-  LogTemp() << "Content: " << response.getBody();
 }
 
 } // namespace log

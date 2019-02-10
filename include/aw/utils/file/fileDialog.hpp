@@ -22,6 +22,24 @@ Path openFile(const std::string& title, const std::string& defaultPath,
   ;
 }
 
+Path openFolder(const std::string& title, const std::string& defaultPath = "")
+{
+  auto* result = tinyfd_selectFolderDialog(title.c_str(), defaultPath.c_str());
+
+  if (result)
+    return createAbsolutePath(result);
+  return createAbsolutePath("");
+  ;
+}
+
+std::string textDialog(const std::string& title, const std::string& message, const std::string& defaultValue)
+{
+  auto* result = tinyfd_inputBox(title.c_str(), message.c_str(), defaultValue.c_str());
+  if (result)
+    return result;
+  return "";
+}
+
 template <int numOfExtensions>
 Path saveFile(const std::string& title, const std::string& defaultPath,
               std::array<const char*, numOfExtensions> allowedExtensions, const std::string& filterDescription)

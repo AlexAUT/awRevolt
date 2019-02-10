@@ -7,6 +7,20 @@
 
 namespace aw
 {
+void Path::append(const std::string_view part)
+{
+  if (mRelativePath.back() != '/' && mRelativePath.back() != '\\')
+    mRelativePath.push_back('/');
+  mRelativePath.append(part);
+}
+
+Path operator+(const Path& path, std::string_view toAdd)
+{
+  Path result = path;
+  result.append(toAdd);
+  return result;
+}
+
 std::string Path::getAssetPath()
 {
 #ifdef AW_DESKTOP

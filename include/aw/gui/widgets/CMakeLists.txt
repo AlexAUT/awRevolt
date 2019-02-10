@@ -11,7 +11,11 @@ set(HEADER_FILES_GUI ${HEADER_FILES_GUI}
   ${CMAKE_CURRENT_SOURCE_DIR}/menuSubItem.hpp
   ${CMAKE_CURRENT_SOURCE_DIR}/panel.hpp
   ${CMAKE_CURRENT_SOURCE_DIR}/screen.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/scrollableBin.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/tableContainer.hpp
   ${CMAKE_CURRENT_SOURCE_DIR}/textBox.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/tileContainer.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/treeView.hpp
   ${CMAKE_CURRENT_SOURCE_DIR}/typedTextBox.hpp
   ${CMAKE_CURRENT_SOURCE_DIR}/widget.hpp
   ${CMAKE_CURRENT_SOURCE_DIR}/widgets.hpp

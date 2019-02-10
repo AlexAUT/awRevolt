@@ -7,7 +7,7 @@ namespace aw::gui
 void GUI::updateLayout()
 {
   for (auto& screen : mScreens)
-    screen->updateLayout();
+    screen->updateLayout(aw::Vec2{0.f});
 }
 
 void GUI::update(float delta)
@@ -16,7 +16,7 @@ void GUI::update(float delta)
     screen->update(delta);
 }
 
-bool GUI::processEvent(const WindowEvent& event)
+bool GUI::receive(const WindowEvent& event)
 {
   // Check for resize events
   updateSize(event);
@@ -26,9 +26,9 @@ bool GUI::processEvent(const WindowEvent& event)
     return mSelectedWidget->processEvent(event);
   }
 
+  updateLayout();
   for (auto& screen : mScreens)
   {
-    screen->updateLayout();
     if (screen->processEvent(event))
       return true;
   }
@@ -42,14 +42,11 @@ void GUI::render()
   for (auto& screen : mScreens)
   {
     updateLayout();
-    screen->render({0.f, 0.f});
+    screen->render();
   }
   if (mSelectedWidget)
   {
-    Vec2 parentPos{0.f, 0.f};
-    if (mSelectedWidget->getParent())
-      parentPos = mSelectedWidget->getParent()->getGlobalPosition();
-    mSelectedWidget->render(parentPos);
+    mSelectedWidget->render();
   }
   mRenderer.endFrame();
 }
@@ -60,8 +57,9 @@ void GUI::setScreenSize(Vec2 size)
   for (auto& screen : mScreens)
   {
     screen->setSize(mScreenSize);
-    screen->updateLayout();
   }
+
+  updateLayout();
 }
 
 Screen::SPtr GUI::addScreen()

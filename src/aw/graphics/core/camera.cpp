@@ -92,8 +92,11 @@ void Camera::setFarPlane(float far)
 
 void Camera::setAspectRatio(float aspectRatio)
 {
-  mAspectRatio = aspectRatio;
-  invalidProjectionCache();
+  if (mAspectRatio != aspectRatio)
+  {
+    mAspectRatio = aspectRatio;
+    invalidProjectionCache();
+  }
 }
 
 void Camera::setOrthoWidth(float orthoWidth)

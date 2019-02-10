@@ -41,6 +41,9 @@ public:
   const std::string& getRelativePath() const { return mRelativePath; }
   const std::string getCompletePath() const { return Path::getBasePath(mType) + getRelativePath(); }
 
+  void append(std::string_view part);
+  friend Path operator+(const Path& path, std::string_view toAdd);
+
 private:
 private:
   std::string mRelativePath;

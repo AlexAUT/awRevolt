@@ -4,23 +4,33 @@
 
 namespace aw
 {
-namespace constantsF
+namespace constants
 {
-constexpr float PI = 3.14159265358979f;
-constexpr float PI_2 = PI / 2.f;
-constexpr float PI_4 = PI / 4.f;
-
-constexpr float TO_RAD = PI / 180.f;
-constexpr float TO_DEG = 180.f / PI;
-} // namespace constantsF
-
-namespace constatsD
+template <typename Type = float>
+constexpr Type pi()
 {
-constexpr double PI = 3.14159265358979;
-constexpr double PI_2 = PI / 2.0;
-constexpr double PI_4 = PI / 4.0;
+  return 3.14159265358979;
+}
+template <typename Type = float>
+constexpr Type pi_2()
+{
+  return pi<Type>() / 2.f;
+}
+template <typename Type = float>
+constexpr Type pi_4()
+{
+  return pi<Type>() / 4.f;
+}
 
-constexpr double TO_RAD = PI / 180.0;
-constexpr double TO_DEG = 180.0 / PI;
-} // namespace constatsD
+template <typename Type = float>
+constexpr Type to_rad()
+{
+  return pi<Type>() / 180.f;
+}
+template <typename Type = float>
+constexpr Type to_deg()
+{
+  return 180.f / pi<Type>();
+}
+} // namespace constants
 } // namespace aw

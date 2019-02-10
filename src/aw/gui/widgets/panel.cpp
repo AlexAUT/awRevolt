@@ -5,10 +5,10 @@
 
 namespace aw::gui
 {
-void Panel::render(Vec2 parentPos)
+void Panel::render()
 {
-  Widget::render(parentPos);
+  Widget::render();
   getGUI().getRenderer().render(*this);
-  Bin::render(parentPos);
+  Bin::render();
 }
-}
+} // namespace aw::gui

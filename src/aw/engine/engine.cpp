@@ -56,29 +56,4 @@ void Engine::render()
   mWindow.getSFMLWindow().display();
 }
 
-const Settings& Engine::getSettings() const
-{
-  return mSettings;
-}
-
-StateMachine& Engine::getStateMachine()
-{
-  return mStateMachine;
-}
-
-const StateMachine& Engine::getStateMachine() const
-{
-  return mStateMachine;
-}
-
-Window& Engine::getWindow()
-{
-  return mWindow;
-}
-
-const Window& Engine::getWindow() const
-{
-  return mWindow;
-}
-
 } // namespace aw

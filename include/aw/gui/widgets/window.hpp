@@ -19,21 +19,19 @@ public:
   };
 
 public:
-  Window(const GUI& gui, std::string title, Style style = Style::Default);
+  Window(const GUI& gui, std::string title, Window::Style style = Window::Style::Default);
   virtual ~Window() = default;
 
   virtual bool processEvent(const WindowEvent& event) override;
-  virtual void render(Vec2 parentPos) override;
+  virtual void render() override;
 
   void setTitle(std::string title);
   void setStyle(Style style);
-  void setTitleTextStyle(const TextStyle* style);
 
   const std::string& getTitle() const { return mTitle; }
   Style getStyle() const { return mStyle; }
-  const TextStyle& getTitleTextStyle() const { return *mTextStyle; }
 
-  virtual void updateLayout() override;
+  virtual void updateLayout(aw::Vec2 parentPos) override;
 
 private:
   bool hitTitleBar(Vec2 point);
@@ -43,8 +41,6 @@ private:
 private:
   std::string mTitle;
   Style mStyle;
-
-  const TextStyle* mTextStyle;
 
   float mTitleBarHeight{0.f};
   bool mDrag{false};

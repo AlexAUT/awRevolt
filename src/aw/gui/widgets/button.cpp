@@ -10,32 +10,23 @@
 
 namespace aw::gui
 {
-Button::Button(const GUI& gui, std::string text)
-    : Widget(gui), mText(std::move(text)), mTextLayout(getGUI().getTextStyles().getStyle("default"))
+Button::Button(const GUI& gui, std::string text) : Widget(gui), mText(std::move(text))
 {
-  assert(mTextLayout);
   setPadding({5.f});
 }
 
-void Button::render(Vec2 parentPos)
+void Button::render()
 {
-  Widget::render(parentPos);
+  Widget::render();
   getGUI().getRenderer().render(*this);
 }
 
-void Button::setTextLayout(const TextStyle* layout)
+void Button::updateLayout(aw::Vec2 parentPos)
 {
-  assert(layout);
-  mTextLayout = layout;
-  invalidateLayout();
-}
-
-void Button::updateLayout()
-{
-  Widget::updateLayout();
+  Widget::updateLayout(parentPos);
   // Update the cached minimum size
   // (textsize + padding) or prefered size
-  mMinimumSize = getGUI().getRenderer().calculateTextSize(mText, *mTextLayout);
+  mMinimumSize = getGUI().getRenderer().calculateTextSize(mText, getStyleClasses());
   auto& padding = getPadding();
   mMinimumSize.x += padding.left + padding.right;
   mMinimumSize.y += padding.top + padding.bottom;

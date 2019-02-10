@@ -7,8 +7,10 @@
 
 namespace aw::gui
 {
-Window::Window(const GUI& gui, std::string title, Style style)
-    : Bin(gui), mTitle(std::move(title)), mStyle(style), mTextStyle(getGUI().getTextStyles().getStyle("headline"))
+Window::Window(const GUI& gui, std::string title, Window::Style style) :
+    Bin(gui),
+    mTitle(std::move(title)),
+    mStyle(style)
 {
 }
 
@@ -25,11 +27,11 @@ bool Window::processEvent(const WindowEvent& event)
   return usedEvent;
 }
 
-void Window::render(Vec2 pos)
+void Window::render()
 {
-  Widget::render(pos);
+  Widget::render();
   getGUI().getRenderer().render(*this);
-  Bin::render(pos);
+  Bin::render();
 }
 void Window::setTitle(std::string title)
 {
@@ -43,18 +45,11 @@ void Window::setStyle(Style style)
   invalidateLayout();
 }
 
-void Window::setTitleTextStyle(const TextStyle* textStyle)
+void Window::updateLayout(aw::Vec2 parentPos)
 {
-  assert(textStyle);
-  mTextStyle = textStyle;
-  invalidateLayout();
-}
-
-void Window::updateLayout()
-{
-  mTitleBarHeight = getGUI().getRenderer().calculateTextSize(mTitle, *mTextStyle).y;
+  mTitleBarHeight = getGUI().getRenderer().calculateTextSize(mTitle, getStyleClasses()).y;
   setPadding({mTitleBarHeight, 0.f, 0.f, 0.f});
-  Bin::updateLayout();
+  Bin::updateLayout(parentPos);
 }
 
 bool Window::hitTitleBar(Vec2 point)

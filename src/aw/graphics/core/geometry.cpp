@@ -2,10 +2,23 @@
 
 #include <glm/geometric.hpp>
 
+#include <cmath>
+
 namespace aw
 {
 namespace geo
 {
+size_t lineGridVertexCount(Vec2 size, Vec2 cellSize)
+{
+  auto xCount = 1 + std::floor(size.x / cellSize.x);
+  if (size.x < cellSize.x)
+    xCount = 0;
+  auto yCount = 1 + std::floor(size.y / cellSize.y);
+  if (size.y < cellSize.y)
+    yCount = 0;
+
+  return 2 * (xCount + yCount);
+}
 
 std::array<Vertex, 6> quad(float left, float bottom, float width, float height, float depth)
 {

@@ -6,14 +6,8 @@
 
 namespace aw::gui
 {
-TextBox::TextBox(const GUI& gui, std::string text) :
-    Widget(gui),
-    mText(std::move(text)),
-    mSelectedTextStyle(gui.getTextStyles().getStyle("default")),
-    mDeselectedTextStyle(gui.getTextStyles().getStyle("defaultMuted"))
+TextBox::TextBox(const GUI& gui, std::string text) : Widget(gui), mText(std::move(text))
 {
-  assert(mSelectedTextStyle);
-  assert(mDeselectedTextStyle);
   setSelectable(true);
   setPadding({3.f});
 }
@@ -79,9 +73,9 @@ void TextBox::update(float delta)
   }
 }
 
-void TextBox::render(Vec2 parentPos)
+void TextBox::render()
 {
-  Widget::render(parentPos);
+  Widget::render();
   getGUI().getRenderer().render(*this);
 }
 
@@ -125,38 +119,16 @@ void TextBox::setCursorPosition(int position)
   mCursorPosition = std::max(std::min(position, static_cast<int>(mText.size())), 0);
 }
 
-void TextBox::setSelectedTextStyle(const TextStyle* textStyle)
+void TextBox::updateLayout(aw::Vec2 parentPos)
 {
-  assert(textStyle);
-  mSelectedTextStyle = textStyle;
-  invalidateLayout();
-}
-
-void TextBox::setDeselectedTextStyle(const TextStyle* textStyle)
-{
-  assert(textStyle);
-  mDeselectedTextStyle = textStyle;
-  invalidateLayout();
-}
-
-const TextStyle* TextBox::getCurrentTextStyle() const
-{
-  if (isInState(State::Selected))
-    return mSelectedTextStyle;
-  else
-    return mDeselectedTextStyle;
-}
-
-void TextBox::updateLayout()
-{
-  auto textSize = getGUI().getRenderer().calculateTextSize("A", *getSelectedTextStyle());
+  auto textSize = getGUI().getRenderer().calculateTextSize("A", getStyleClasses());
   mMinimalSize.x = std::max(getPreferedSize().x, textSize.x * mMinWidthInCharacter);
   mMinimalSize.y = std::max(getPreferedSize().y, textSize.y);
 
   mMinimalSize.x += getPadding().left + getPadding().right;
   mMinimalSize.y += getPadding().top + getPadding().bottom;
 
-  Widget::updateLayout();
+  Widget::updateLayout(parentPos);
 }
 
 Vec2 TextBox::getMinimalSize() const
@@ -166,7 +138,6 @@ Vec2 TextBox::getMinimalSize() const
 
 void TextBox::changedText()
 {
-  if (onTextChange)
-    onTextChange(*this);
+  onTextChange(*this);
 }
 } // namespace aw::gui

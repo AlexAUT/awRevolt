@@ -4,13 +4,13 @@
 
 namespace aw::gui
 {
-void FloatingContainer::updateLayout()
+void FloatingContainer::updateLayout(aw::Vec2 parentPos)
 {
   if (!isLayoutDirty() || mBoundsPolicy == BoundsPolicy::NoChecks)
     return;
 
   // Update child elemens
-  Container::updateLayout();
+  Container::updateLayout(parentPos);
 
   // Do bounds checks
   for (auto& child : mChildren)
@@ -39,7 +39,7 @@ void FloatingContainer::updateLayout()
     if (child->getSize() != size)
       child->setSize(size);
 
-    child->updateLayout();
+    child->updateLayout(getGlobalPosition());
   }
   // Update the minimal size cache
   mMinimalSizeCache = Vec2{0.f};
@@ -47,7 +47,7 @@ void FloatingContainer::updateLayout()
     mMinimalSizeCache += child->getMinimalSize();
   mMinimalSizeCache = glm::max(mMinimalSizeCache, Widget::getMinimalSize());
 
-  Widget::updateLayout();
+  Widget::updateLayout(parentPos);
 }
 
 Vec2 FloatingContainer::getMinimalSize() const

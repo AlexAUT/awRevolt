@@ -283,7 +283,7 @@ bool AssimpLoader::parseMaterial(aw::Mesh& mesh, const aiMaterial* assimpMat)
     {
       auto& foundPath = *result;
       using TexFactory = aw::factories::TextureFactory;
-      auto tex = mResourceManager.getRegistry<Texture2D>().create<TexFactory>(foundPath.getRelativePath(), foundPath);
+      auto tex = mResourceManager.getRegistry<Texture2D>().emplace<TexFactory>(foundPath.getRelativePath(), foundPath);
       if (tex)
       {
         tex->bind();

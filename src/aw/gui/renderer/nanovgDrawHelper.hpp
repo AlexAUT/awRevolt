@@ -5,7 +5,7 @@
 
 #include <aw/gui/style/alignment.hpp>
 #include <aw/gui/style/padding.hpp>
-#include <aw/gui/style/textStyle.hpp>
+#include <aw/gui/style/style.hpp>
 #include <aw/utils/log.hpp>
 #include <aw/utils/math/vector.hpp>
 
@@ -19,20 +19,20 @@ NVGcolor convertColor(Color color);
 NVGalign convertAlignment(Alignment align);
 int isBlack(NVGcolor col);
 // static char* cpToUTF8(int cp, char* str);
-void applyTextStyle(NVGcontext* vg, const TextStyle& style);
+void applyTextStyle(NVGcontext* vg, const Style& style);
 
-Vec2 getTextSize(NVGcontext* vg, const std::string& text, const TextStyle& style);
+Vec2 getTextSize(NVGcontext* vg, const std::string& text, const Style& style);
 
 void drawButton(NVGcontext* vg, int preicon, const char* text, float x, float y, float w, float h, NVGcolor col);
 void drawEditBoxBase(NVGcontext* vg, float x, float y, float w, float h);
 void drawEditBox(NVGcontext* vg, const char* text, float x, float y, float w, float h);
-void drawEditBoxCursor(NVGcontext* vg, const TextStyle& textStyle, const std::string& text, float x, float y, float w,
+void drawEditBoxCursor(NVGcontext* vg, const Style& textStyle, const std::string& text, float x, float y, float w,
                        float h, int cursorPos);
 
 void drawRoundedRect(NVGcontext* vg, Vec2 pos, Vec2 size, float radius, Color fillColor, float dropShadowSize = 0.f);
-void drawText(NVGcontext* vg, const std::string& text, Vec2 pos, Vec2 containerSize, const TextStyle& style,
+void drawText(NVGcontext* vg, const std::string& text, Vec2 pos, Vec2 containerSize, const Style& style,
               Alignment align, Padding padding);
-void drawTextBlurred(NVGcontext* vg, const std::string& text, Vec2 pos, Vec2 containerSize, const TextStyle& style,
+void drawTextBlurred(NVGcontext* vg, const std::string& text, Vec2 pos, Vec2 containerSize, const Style& style,
                      Alignment align, Padding padding);
 void drawHeaderHighlight(NVGcontext* vg, Vec2 pos, Vec2 size, Color color, float cornerRadius);
 
@@ -125,14 +125,14 @@ int isBlack(NVGcolor col)
   return str;
 }*/
 
-void applyTextStyle(NVGcontext* vg, const TextStyle& style)
+void applyTextStyle(NVGcontext* vg, const Style& style)
 {
   nvgFontSize(vg, style.fontSize);
   nvgFontFace(vg, style.fontName.c_str());
   nvgFillColor(vg, convertColor(style.fontColor));
 }
 
-Vec2 getTextSize(NVGcontext* vg, const std::string& text, const TextStyle& style)
+Vec2 getTextSize(NVGcontext* vg, const std::string& text, const Style& style)
 {
   applyTextStyle(vg, style);
   float bounds[4];
@@ -179,10 +179,10 @@ void drawEditBoxBase(NVGcontext* vg, float x, float y, float w, float h)
   nvgStroke(vg);
 }
 
-void drawEditBoxCursor(NVGcontext* vg, const TextStyle& textStyle, const std::string& text, float x, float y, float w,
-                       float h, int cursorPos)
+void drawEditBoxCursor(NVGcontext* vg, const Style& style, const std::string& text, float x, float y, float w, float h,
+                       int cursorPos)
 {
-  applyTextStyle(vg, textStyle);
+  applyTextStyle(vg, style);
   float cursorX;
   if (text.empty())
   {
@@ -201,7 +201,7 @@ void drawEditBoxCursor(NVGcontext* vg, const TextStyle& textStyle, const std::st
       cursorX = positions.back().maxx - 2.f;
   }
 
-  nvgFontSize(vg, textStyle.fontSize * 1.25);
+  nvgFontSize(vg, style.fontSize * 1.25);
   nvgText(vg, cursorX, y + h * 0.48f, "|", nullptr);
 }
 
@@ -230,7 +230,7 @@ void drawRoundedRect(NVGcontext* vg, Vec2 pos, Vec2 size, float radius, Color fi
   }
 }
 
-void drawText(NVGcontext* vg, const std::string& text, Vec2 pos, Vec2 containerSize, const TextStyle& style,
+void drawText(NVGcontext* vg, const std::string& text, Vec2 pos, Vec2 containerSize, const Style& style,
               Alignment align, Padding padding)
 {
   applyTextStyle(vg, style);
@@ -253,7 +253,7 @@ void drawText(NVGcontext* vg, const std::string& text, Vec2 pos, Vec2 containerS
   nvgText(vg, pos.x, pos.y, text.c_str(), nullptr);
 }
 
-void drawTextBlurred(NVGcontext* vg, const std::string& text, Vec2 pos, Vec2 containerSize, const TextStyle& style,
+void drawTextBlurred(NVGcontext* vg, const std::string& text, Vec2 pos, Vec2 containerSize, const Style& style,
                      Alignment align, Padding padding)
 {
   applyTextStyle(vg, style);

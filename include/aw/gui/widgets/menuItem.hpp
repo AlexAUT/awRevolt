@@ -24,8 +24,8 @@ public:
   const LinearContainer& getChildContainer() const { return *mChildContainer; }
 
   virtual bool processEvent(const WindowEvent& event) override;
-  virtual void render(Vec2 parentPos) override;
-  virtual void updateLayout() override;
+  virtual void render() override;
+  virtual void updateLayout(aw::Vec2 parentPos) override;
 
   virtual void select(Vec2 mousePos) override;
   virtual void deselect(Vec2 mousePos) override;

@@ -2,16 +2,15 @@
 
 #include <aw/gui/gui.hpp>
 #include <aw/gui/renderer/nanovgRenderer.hpp>
-#include <aw/utils/log.hpp>
 
 #include <glm/common.hpp>
 
 namespace aw::gui
 {
-Label::Label(const GUI& gui, std::string text)
-    : Widget(gui), mText(text), mTextLayout(getGUI().getTextStyles().getStyle("default"))
+Label::Label(const GUI& gui, std::string text) : Widget(gui), mText(text)
 {
-  assert(mTextLayout);
+  // Set minimal size
+  updateLayout(aw::Vec2{0.f});
 }
 
 void Label::setText(std::string text)
@@ -20,17 +19,9 @@ void Label::setText(std::string text)
   invalidateLayout();
 }
 
-void Label::setTextLayout(const TextStyle* layout)
+void Label::render()
 {
-  assert(layout);
-  mTextLayout = layout;
-  invalidateLayout();
-}
-
-void Label::render(Vec2 parentPos)
-{
-  assert(!isLayoutDirty());
-  Widget::render(parentPos);
+  Widget::render();
   getGUI().getRenderer().render(*this);
 }
 
@@ -52,15 +43,13 @@ void Label::setAlignmentV(AlignmentV alignment)
   invalidateLayout();
 }
 
-void Label::updateLayout()
+void Label::updateLayout(aw::Vec2 parentPos)
 {
-  Widget::updateLayout();
+  Widget::updateLayout(parentPos);
   // Update the cached minimum size
   // (textsize + padding) or prefered size
-  mMinimumSize = getGUI().getRenderer().calculateTextSize(mText, *mTextLayout);
-  auto& padding = getPadding();
-  mMinimumSize.x += padding.left + padding.right;
-  mMinimumSize.y += padding.top + padding.bottom;
+  mMinimumSize = getGUI().getRenderer().calculateTextSize(mText, getStyleClasses());
+  mMinimumSize += getPadding().horizontalVertical();
 
   mMinimumSize = glm::max(mMinimumSize, getPreferedSize());
 }
