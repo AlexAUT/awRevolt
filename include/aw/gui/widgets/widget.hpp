@@ -15,9 +15,23 @@ namespace aw::gui
 {
 class GUI;
 
+#define AW_GUI_CLASS_NAME(name)                                                                                        \
+  virtual const std::string& getElementId() const override                                                             \
+                                                                                                                       \
+  {                                                                                                                    \
+    static std::string id = "#" #name;                                                                                 \
+    return id;                                                                                                         \
+  }
+
 class Widget : public std::enable_shared_from_this<Widget>
 {
 public:
+  // Define it here manually, because of the override keyword, in child classes use the macro above
+  virtual const std::string& getElementId() const
+  {
+    static std::string id = "#Widget";
+    return id;
+  }
   using SPtr = std::shared_ptr<Widget>;
   using CSPtr = std::shared_ptr<const Widget>;
   using WPtr = std::weak_ptr<Widget>;
@@ -25,11 +39,14 @@ public:
   enum class State
   {
     Hovered = 0,
-    Pressed = 1,
-    Selected = 2,
+    Selected = 1,
+    Pressed = 2,
+    // Do not use count and it should always be last (needed until we finally get reflection)
+    _COUNT = 3
   };
 
   using Signal = aw::gui::Signal<void(Widget&)>;
+  using MousePosSignal = aw::gui::Signal<void(Widget&, Vec2)>;
 
 public:
   Widget(const GUI& gui) : mGUI(gui) {}
@@ -57,7 +74,7 @@ public:
   void disableState(State state);
   void setSelectable(bool value) { mSelectable = value; }
   void setDeselectableByMouseEvent(bool value) { mDeselectByEvents = value; }
-  void setConsumeEvent(bool value) { mConsumeEvent = value; }
+  void setIgnoreEvents(bool value) { mIgnoreEvents = value; }
   void setConsumeClickOnDeselect(bool value) { mConsumeClickOnDeselect = value; }
 
   WPtr getParent() const { return mParent; }
@@ -78,12 +95,12 @@ public:
 
   bool isLocalPointOnWidget(Vec2 point)
   {
-    return (point.x > mRelativePosition.x + mPadding.left &&
-            point.x < (mRelativePosition.x + mPadding.left + mSize.x) && point.y > mRelativePosition.y + mPadding.top &&
-            point.y < (mRelativePosition.y + mPadding.top + mSize.y));
+    return (point.x >= mRelativePosition.x && point.x < (mRelativePosition.x + mSize.x) &&
+            point.y >= mRelativePosition.y && point.y < (mRelativePosition.y + mSize.y));
   }
 
   bool isInState(State state) const { return mState.test(static_cast<size_t>(state)); }
+  unsigned getCombinedState() const { return static_cast<unsigned>(mState.to_ulong()); }
 
 public:
   // These should be called by the layouter, calling them may result in wrong rendering
@@ -98,12 +115,13 @@ public:
 
 public:
   // Callback (expose them directly to the user)
-  Signal onSelect;
-  Signal onDeselect;
-  Signal onMouseEnter;
-  Signal onMouseLeft;
-  Signal onMouseMoved;
-  Signal onClick;
+  MousePosSignal onSelect;
+  MousePosSignal onDeselect;
+  MousePosSignal onMouseEnter;
+  MousePosSignal onMouseLeft;
+  MousePosSignal onMouseMoved;
+  MousePosSignal onClick;
+  MousePosSignal onRightClick;
 
 private:
   const GUI& mGUI;
@@ -117,7 +135,7 @@ private:
 
   bool mSelectable{false};
   bool mDeselectByEvents{true};
-  bool mConsumeEvent{true};
+  bool mIgnoreEvents{false};
   bool mConsumeClickOnDeselect{false};
   Vec2 mPreferedSize{0.f};
   Vec2 mSize{0.f};
@@ -134,7 +152,7 @@ public:
     if (mSelectable && !isInState(State::Selected))
     {
       enableState(State::Selected);
-      onSelect(*this);
+      onSelect(*this, mousePos);
     }
   }
   virtual void deselect(Vec2 mousePos = {})
@@ -142,24 +160,25 @@ public:
     if (isInState(State::Selected))
     {
       disableState(State::Selected);
-      onDeselect(*this);
+      onDeselect(*this, mousePos);
     }
   }
   virtual void mouseEntered(Vec2 mousePos)
   {
     enableState(State::Hovered);
-    onMouseEnter(*this);
+    onMouseEnter(*this, mousePos);
   }
   virtual void mouseLeft(Vec2 mousePos)
   {
     disableState(State::Hovered);
-    onMouseLeft(*this);
+    onMouseLeft(*this, mousePos);
   }
   virtual void mouseMoved(Vec2 mousePos)
   {
     enableState(State::Hovered); // Safety reasons
-    onMouseMoved(*this);
+    onMouseMoved(*this, mousePos);
   }
-  virtual void clicked(Vec2 mousePos) { onClick(*this); }
+  virtual void clicked(Vec2 mousePos) { onClick(*this, mousePos); }
+  virtual void rightClicked(Vec2 mousePos) { onRightClick(*this, mousePos); }
 };
 } // namespace aw::gui

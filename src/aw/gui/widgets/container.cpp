@@ -32,7 +32,12 @@ bool Container::processEvent(const WindowEvent& event)
     usedEvent = mChildren[i]->processEvent(localEvent) || usedEvent;
   }
 
-  return Widget::processEvent(event) || usedEvent;
+  auto shouldProcessEvent = !usedEvent;
+  shouldProcessEvent = shouldProcessEvent || event.type == WindowEvent::MouseMoved;
+  if (shouldProcessEvent)
+    usedEvent = Widget::processEvent(event) || usedEvent;
+
+  return usedEvent;
 }
 
 void Container::updateLayout(aw::Vec2 parentPos)

@@ -7,6 +7,7 @@ namespace aw::gui
 class Viewport : public Widget
 {
 public:
+  AW_GUI_CLASS_NAME(Viewport)
   using SPtr = std::shared_ptr<Viewport>;
 
 public:

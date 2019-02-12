@@ -83,6 +83,11 @@ VertexIterator lineGrid(Vec3 center, Vec2 size, Vec2 cellSize, VertexIterator in
   return insertIterator;
 }
 
+template <typename VertexIterator>
+VertexIterator quad(float left, float bottom, float w, float h, float depth, VertexIterator insertIterator)
+{
+}
+
 template <typename VertexType>
 std::array<VertexType, 6 * 6> cube(Vec3 center, Vec3 size)
 {

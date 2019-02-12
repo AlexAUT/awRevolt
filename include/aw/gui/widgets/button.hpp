@@ -13,6 +13,8 @@ struct TextStyle;
 class Button : public Widget
 {
 public:
+  AW_GUI_CLASS_NAME(Button)
+
   Button(const GUI& gui, std::string text);
 
   void render() override;

@@ -7,6 +7,8 @@ namespace aw::gui
 class Bin : public Widget
 {
 public:
+  AW_GUI_CLASS_NAME(Bin)
+
   Bin(const GUI& gui) : Widget(gui) {}
   virtual ~Bin() = default;
 

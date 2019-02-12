@@ -13,6 +13,7 @@ struct TextStyle;
 class Label : public Widget
 {
 public:
+  AW_GUI_CLASS_NAME(Label)
   using SPtr = std::shared_ptr<Label>;
 
 public:

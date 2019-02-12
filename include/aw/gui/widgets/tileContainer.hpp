@@ -8,6 +8,7 @@ namespace aw::gui
 class TileContainer : public Container
 {
 public:
+  AW_GUI_CLASS_NAME(TileContainer)
   using SPtr = std::shared_ptr<TileContainer>;
 
 public:

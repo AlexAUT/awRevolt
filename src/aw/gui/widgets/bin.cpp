@@ -14,14 +14,19 @@ void Bin::update(float delta)
 
 bool Bin::processEvent(const WindowEvent& event)
 {
-  auto usedByChild = false;
+  auto usedEvent = false;
   if (mChild)
   {
     auto localEvent = convertToLocalEvent(event, *this);
-    usedByChild = mChild->processEvent(localEvent);
+    usedEvent = mChild->processEvent(localEvent);
   }
-  // Also update bin
-  return Widget::processEvent(event) || usedByChild;
+
+  auto shouldProcessEvent = !usedEvent;
+  shouldProcessEvent = shouldProcessEvent || event.type == WindowEvent::MouseMoved;
+  if (shouldProcessEvent)
+    usedEvent = Widget::processEvent(event) || usedEvent;
+
+  return usedEvent;
 }
 
 void Bin::render()

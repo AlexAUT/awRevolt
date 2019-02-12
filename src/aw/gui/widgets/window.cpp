@@ -47,7 +47,7 @@ void Window::setStyle(Style style)
 
 void Window::updateLayout(aw::Vec2 parentPos)
 {
-  mTitleBarHeight = getGUI().getRenderer().calculateTextSize(mTitle, getStyleClasses()).y;
+  mTitleBarHeight = getGUI().getRenderer().calculateTextSize(mTitle, *this).y;
   setPadding({mTitleBarHeight, 0.f, 0.f, 0.f});
   Bin::updateLayout(parentPos);
 }

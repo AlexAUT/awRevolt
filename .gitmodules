@@ -22,3 +22,6 @@
 [submodule "dependencies/cereal"]
 	path = dependencies/cereal
 	url = https://github.com/USCiLab/cereal.git
+[submodule "dependencies/etc2comp"]
+	path = dependencies/etc2comp
+	url = https://github.com/google/etc2comp

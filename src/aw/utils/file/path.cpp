@@ -5,6 +5,8 @@
 #include <android/native_activity.h>
 #endif
 
+#include <aw/utils/log.hpp>
+
 namespace aw
 {
 void Path::append(const std::string_view part)
@@ -19,6 +21,21 @@ Path operator+(const Path& path, std::string_view toAdd)
   Path result = path;
   result.append(toAdd);
   return result;
+}
+
+std::string_view Path::getExtension() const
+{
+  auto lastSlashPos = mRelativePath.find_last_of('/');
+  if (lastSlashPos == std::string::npos)
+    lastSlashPos = 0;
+  auto dotPos = mRelativePath.find_last_of('.');
+  if (dotPos > lastSlashPos && dotPos < mRelativePath.size() - 1)
+  {
+    auto view = std::string_view{mRelativePath.data() + dotPos + 1, mRelativePath.size() - dotPos - 1};
+    return view;
+  }
+
+  return {};
 }
 
 std::string Path::getAssetPath()

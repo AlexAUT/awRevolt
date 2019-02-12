@@ -11,5 +11,9 @@ find_package(SFML 2 COMPONENTS window system REQUIRED)
 set(assimp_DIR "${THIRD_PARTY_DIR}/lib/${ANDROID_ABI}/cmake/assimp-4.1")
 find_package(assimp REQUIRED)
 
-set(awGraphicsDependencies awUtils sfml-window sfml-system assimp::assimp)
+add_subdirectory(dependencies/etc2comp)
+target_include_directories(awGraphics PUBLIC dependencies/etc2comp/EtcLib/Etc)
+target_include_directories(awGraphics PUBLIC dependencies/etc2comp/EtcLib/EtcCodec)
+
+set(awGraphicsDependencies awUtils sfml-window sfml-system assimp::assimp EtcLib)
 

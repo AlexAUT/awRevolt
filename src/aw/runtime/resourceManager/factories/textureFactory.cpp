@@ -11,9 +11,8 @@ namespace aw::factories
 {
 auto TextureFactory::create(const Path& path) -> TypePtr
 {
-  aw::FileInputStream texFile(path);
   aw::Image img;
-  if (!img.loadFromStream(texFile))
+  if (!img.load(path))
   {
     LogErrorTextureFactory() << "Failed to load mesh texture: " << path;
     return nullptr;

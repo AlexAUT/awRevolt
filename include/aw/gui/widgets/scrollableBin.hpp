@@ -7,6 +7,8 @@ namespace aw::gui
 class ScrollableBin : public Viewport
 {
 public:
+  AW_GUI_CLASS_NAME(ScrollableBin)
+
   ScrollableBin(const GUI& gui);
   virtual ~ScrollableBin() = default;
 

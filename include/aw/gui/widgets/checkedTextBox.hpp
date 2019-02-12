@@ -7,6 +7,8 @@ namespace aw::gui
 class CheckedTextBox : public TextBox
 {
 public:
+  AW_GUI_CLASS_NAME(CheckedTextBox)
+
   CheckedTextBox(const aw::gui::GUI& gui, std::string text);
   virtual ~CheckedTextBox() = default;
 

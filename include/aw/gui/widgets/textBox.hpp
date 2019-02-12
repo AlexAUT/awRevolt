@@ -9,6 +9,8 @@ struct TextStyle;
 class TextBox : public Widget
 {
 public:
+  AW_GUI_CLASS_NAME(TextBox)
+
   TextBox(const GUI& gui, std::string text = "");
 
   void setText(std::string text);

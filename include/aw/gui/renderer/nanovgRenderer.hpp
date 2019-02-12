@@ -1,6 +1,7 @@
 #pragma once
 
 #include <aw/gui/style/style.hpp>
+#include <aw/gui/widgets/widget.hpp>
 #include <aw/utils/math/vector.hpp>
 
 #include <nanovg.h>
@@ -17,6 +18,10 @@ class Widget;
 
 class NanovgRenderer
 {
+public:
+  using StateMap = std::map<int, Style>;
+  using StyleMap = std::map<std::vector<std::string>, StateMap>;
+
 private:
   struct Viewport
   {
@@ -28,7 +33,9 @@ public:
   NanovgRenderer(GUI& gui);
   ~NanovgRenderer();
 
-  Vec2 calculateTextSize(const std::string& text, const std::vector<std::string>& styleClasses) const;
+  Vec2 calculateTextSize(const std::string& text, const Widget& widget);
+  Vec2 calculateTextSize(const std::string& text, const std::string& elementId,
+                         const std::vector<std::string>& styleClasses) const;
 
   void beginFrame(Vec2 windowResolution);
   void endFrame();
@@ -49,7 +56,6 @@ private:
   void activateViewport(Viewport& viewport);
 
   const Style& getStyle(const Widget&) const;
-  const Style& getStyle(const std::vector<std::string>& styleClasses) const;
 
 private:
   const GUI& mGUI;
@@ -57,6 +63,7 @@ private:
   int mZOrder{0};
   std::stack<Viewport> mViewportStack;
 
-  mutable std::map<std::vector<std::string>, Style> mStyleCache;
+  // Cache for each #element styles
+  mutable std::map<std::string, StyleMap> mElementStyleCache;
 };
 } // namespace aw::gui

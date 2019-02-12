@@ -7,6 +7,7 @@ namespace aw::gui
 class Screen : public Bin
 {
 public:
+  AW_GUI_CLASS_NAME(Screen)
   using SPtr = std::shared_ptr<Screen>;
 
 public:

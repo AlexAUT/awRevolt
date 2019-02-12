@@ -73,6 +73,11 @@ TreeView::TreeNode* TreeView::addNodeToRoot(TreeNode::SPtr newNode)
   return nullptr;
 }
 
+void TreeView::removeAllNodes()
+{
+  mRootNode.removeAllChilds();
+}
+
 void TreeView::update(float delta)
 {
   mChildContainer->update(delta);

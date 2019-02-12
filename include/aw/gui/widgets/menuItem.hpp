@@ -13,6 +13,7 @@ class Menu;
 class MenuItem : public Label
 {
 public:
+  AW_GUI_CLASS_NAME(MenuItem)
   using SPtr = std::shared_ptr<MenuItem>;
 
 public:

@@ -13,6 +13,7 @@ namespace aw::gui
 class List : public Bin
 {
 public:
+  AW_GUI_CLASS_NAME(List)
   using SPtr = std::shared_ptr<List>;
 
   using SelectChildCallack = aw::gui::Signal<void(ListItem&)>;

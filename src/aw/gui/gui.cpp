@@ -1,6 +1,7 @@
 #include <aw/gui/gui.hpp>
 
 #include <aw/engine/windowEvent.hpp>
+#include <aw/gui/utils/eventConvert.hpp>
 
 namespace aw::gui
 {
@@ -23,7 +24,8 @@ bool GUI::receive(const WindowEvent& event)
 
   if (mSelectedWidget)
   {
-    return mSelectedWidget->processEvent(event);
+    auto localEvent = convertToLocalEventFromGlobal(event, *mSelectedWidget);
+    return mSelectedWidget->processEvent(localEvent);
   }
 
   updateLayout();

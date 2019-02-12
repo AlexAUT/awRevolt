@@ -23,7 +23,7 @@ const char* stateToString(Widget::State state)
 } // namespace priv
 bool Widget::processEvent(const WindowEvent& event)
 {
-  if (!mConsumeEvent)
+  if (mIgnoreEvents)
     return false;
 
   bool usedEvent = false;
@@ -58,6 +58,15 @@ bool Widget::processEvent(const WindowEvent& event)
       {
         deselect(mousePos);
         usedEvent = usedEvent | mConsumeClickOnDeselect;
+      }
+    }
+    else if (event.mouseButton.button == sf::Mouse::Right)
+    {
+      Vec2 mousePos{event.mouseButton.x, event.mouseButton.y};
+      if (isLocalPointOnWidget(mousePos))
+      {
+        rightClicked(mousePos);
+        usedEvent = true;
       }
     }
   }

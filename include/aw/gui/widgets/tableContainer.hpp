@@ -7,6 +7,8 @@ namespace aw::gui
 class TableContainer : public Container
 {
 public:
+  AW_GUI_CLASS_NAME(TableContainer)
+
   TableContainer(const GUI& gui);
 
   void addElement(unsigned collumn, unsigned row);

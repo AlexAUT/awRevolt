@@ -10,6 +10,7 @@ namespace aw::gui
 class TreeView : public Widget
 {
 public:
+  AW_GUI_CLASS_NAME(TreeView)
   using SPtr = std::shared_ptr<TreeView>;
 
 public:
@@ -45,6 +46,7 @@ public:
   virtual ~TreeView() = default;
 
   TreeNode* addNodeToRoot(TreeNode::SPtr newNode);
+  void removeAllNodes();
 
   virtual void update(float delta) override;
   virtual bool processEvent(const WindowEvent& event) override;

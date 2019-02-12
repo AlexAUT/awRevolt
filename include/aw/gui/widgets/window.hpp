@@ -19,6 +19,8 @@ public:
   };
 
 public:
+  AW_GUI_CLASS_NAME(Window)
+
   Window(const GUI& gui, std::string title, Window::Style style = Window::Style::Default);
   virtual ~Window() = default;
 

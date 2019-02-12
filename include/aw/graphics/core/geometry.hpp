@@ -21,6 +21,9 @@ size_t lineGridVertexCount(Vec2 size, Vec2 cellSize);
 template <typename VertexIterator>
 VertexIterator lineGrid(Vec3 center, Vec2 size, Vec2 cellSize, VertexIterator insertIterator);
 
+template <typename VertexIterator>
+VertexIterator quad(float left, float bottom, float w, float h, float depth, VertexIterator insertIterator);
+
 std::array<Vertex, 6> quad(float left, float bottom, float width, float height, float depth = 0.f);
 std::array<Vertex, 6> quad(float left, float bottom, float width, float height, RectFloat texCoords, float depth = 0.f);
 std::array<Vertex, 6> quad(RectFloat rect, float depth = 0.f);

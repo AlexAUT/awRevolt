@@ -7,6 +7,7 @@ namespace aw::gui
 class Panel : public Bin
 {
 public:
+  AW_GUI_CLASS_NAME(Panel)
   using SPtr = std::shared_ptr<Panel>;
 
 public:

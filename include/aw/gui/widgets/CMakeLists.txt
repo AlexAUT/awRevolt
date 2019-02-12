@@ -1,6 +1,7 @@
 set(HEADER_FILES_GUI ${HEADER_FILES_GUI}
   ${CMAKE_CURRENT_SOURCE_DIR}/button.hpp
   ${CMAKE_CURRENT_SOURCE_DIR}/container.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/contextMenu.hpp
   ${CMAKE_CURRENT_SOURCE_DIR}/floatingContainer.hpp
   ${CMAKE_CURRENT_SOURCE_DIR}/label.hpp
   ${CMAKE_CURRENT_SOURCE_DIR}/linearContainer.hpp

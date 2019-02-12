@@ -46,9 +46,9 @@ NanovgRenderer::~NanovgRenderer()
     nvgDeleteGL3(mContext);
 }
 
-Vec2 NanovgRenderer::calculateTextSize(const std::string& text, const std::vector<std::string>& styleClasses) const
+Vec2 NanovgRenderer::calculateTextSize(const std::string& text, const Widget& widget)
 {
-  return getTextSize(mContext, text, getStyle(styleClasses));
+  return getTextSize(mContext, text, getStyle(widget));
 }
 
 void NanovgRenderer::beginFrame(Vec2 windowResolution)
@@ -101,51 +101,95 @@ void NanovgRenderer::activateViewport(NanovgRenderer::Viewport& viewport)
   nvgScissor(mContext, viewport.leftTop.x, viewport.leftTop.y, viewport.size.x, viewport.size.y);
 }
 
-const Style& NanovgRenderer::getStyle(const Widget& widget) const
+const std::string& stateToString(Widget::State state)
 {
-  return getStyle(widget.getStyleClasses());
+  using State = Widget::State;
+  switch (state)
+  {
+  case State::Hovered:
+  {
+    static std::string text{" .hover"};
+    return text;
+  }
+  case State::Pressed:
+  {
+    static std::string text{" .press"};
+    return text;
+  }
+  case State::Selected:
+  {
+    static std::string text{" .select"};
+    return text;
+  }
+  default:
+  {
+    static std::string text{""};
+    return text;
+  }
+  }
 }
 
-const Style& NanovgRenderer::getStyle(const std::vector<std::string>& styleClass) const
+const Style* getStyleForState(const NanovgRenderer::StateMap& stateMap, const Widget& widget)
 {
-  auto foundInCache = mStyleCache.find(styleClass);
-  if (foundInCache != mStyleCache.end())
+  auto found = stateMap.find(widget.getCombinedState());
+  if (found != stateMap.end())
+    return &found->second;
+  return nullptr;
+}
+
+const Style& NanovgRenderer::getStyle(const Widget& widget) const
+{
+  const auto& elementId = widget.getElementId();
+  const auto& styleClasses = widget.getStyleClasses();
+
+  auto& elementCache = mElementStyleCache[elementId];
+
+  auto foundInCache = elementCache.find(styleClasses);
+  if (foundInCache != elementCache.end())
   {
-    return foundInCache->second;
+    auto& stateMap = foundInCache->second;
+    const auto* foundStyle = getStyleForState(stateMap, widget);
+    if (foundStyle)
+      return *foundStyle;
   }
 
   Style combinedStyle;
   auto& styles = mGUI.getStyles();
 
-  auto* defaultTemplate = styles.getStyle("default");
+  auto* defaultTemplate = styles.get(elementId);
   if (defaultTemplate)
     combinedStyle += *defaultTemplate;
+  else
+    LogErrorNanovgRenderer() << "No default style for: " << elementId << " found!";
 
-  const std::string* firstStyle = nullptr;
-  LogTemp() << "Start: ";
-  for (auto& style : styleClass)
+  for (auto& styleClass : styleClasses)
   {
-    LogTemp() << "Style: " << style;
-    // Try with previous class prefix
-    const StyleTemplate* styleTemplate = nullptr;
-    if (firstStyle)
-      styleTemplate = styles.getStyle(*firstStyle + " " + style);
-
     // Try only class
-    if (!styleTemplate)
-      styleTemplate = styles.getStyle(style);
-
-    if (styleTemplate)
-      combinedStyle += *styleTemplate;
-
-    if (!firstStyle)
-      firstStyle = &style;
+    const auto* nonStateTemplate = styles.get(styleClass);
+    if (nonStateTemplate)
+      combinedStyle += *nonStateTemplate;
   }
-  LogTemp() << "End";
 
-  auto insert = mStyleCache.insert({styleClass, combinedStyle});
+  auto state = widget.getCombinedState();
+  for (int i = 0; i < static_cast<int>(Widget::State::_COUNT); i++)
+  {
+    Widget::State state = static_cast<Widget::State>(i);
+    if (!widget.isInState(state))
+      continue;
 
-  return insert.first->second;
+    const auto& stateModifier = stateToString(static_cast<Widget::State>(i));
+    for (auto& styleClass : styleClasses)
+    {
+      // Try with previous class prefix
+      const auto* stateTemplate = styles.get(styleClass + stateModifier);
+      if (stateTemplate)
+        combinedStyle += *stateTemplate;
+    }
+  }
+
+  elementCache[styleClasses][state] = combinedStyle;
+
+  return elementCache[styleClasses][state];
 }
 
 template <>
@@ -153,11 +197,11 @@ void NanovgRenderer::render(const Panel& panel) const
 {
   auto pos = panel.getGlobalPosition();
   auto size = panel.getSize();
+  auto style = getStyle(panel);
 
-  Color bgColor{28 / 255.f, 30 / 255.f, 34 / 255.f, 192 / 255.f};
   float dropShadowSize = 20.f;
 
-  drawRoundedRect(mContext, pos, size, 4.f, bgColor, dropShadowSize);
+  drawRoundedRect(mContext, pos, size, 4.f, style.backgroundColor, dropShadowSize);
 }
 
 template <>
@@ -231,6 +275,11 @@ void NanovgRenderer::render(const Label& label) const
   auto pos = label.getGlobalPosition();
   auto size = label.getSize();
   auto& style = getStyle(label);
+
+  if (style.backgroundColor.a > 0.f)
+  {
+    drawRoundedRect(mContext, pos, size, 3.f, style.backgroundColor);
+  }
 
   drawText(mContext, label.getText(), pos, size, style, label.getAlignment(), label.getPadding());
 }

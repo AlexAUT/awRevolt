@@ -12,6 +12,7 @@ namespace aw::gui
 class LinearContainer : public Container
 {
 public:
+  AW_GUI_CLASS_NAME(LinearContainer)
   using SPtr = std::shared_ptr<LinearContainer>;
 
 public:

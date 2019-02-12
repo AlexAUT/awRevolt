@@ -23,7 +23,7 @@ ListItem::SPtr List::addItem(std::string text, std::string id, size_t index)
     setChild(panel);
   }
   auto newChild = std::make_shared<ListItem>(getGUI(), text, id);
-  newChild->onClick.connect([this](Widget& widget) { selectedChild(widget); });
+  newChild->onClick.connect([this](Widget& widget, auto) { selectedChild(widget); });
   mChildContainer->addChildAt(index, newChild);
   return newChild;
 }

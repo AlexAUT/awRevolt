@@ -9,6 +9,7 @@ class Menu;
 class MenuSubItem : public Label
 {
 public:
+  AW_GUI_CLASS_NAME(MenuSubItem)
   using SPtr = std::shared_ptr<MenuSubItem>;
 
 public:

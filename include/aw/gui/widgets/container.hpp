@@ -10,9 +10,10 @@ class Container : public Widget
 {
 public:
   using ChildVector = std::vector<Widget::SPtr>;
+  AW_GUI_CLASS_NAME(Container)
 
 public:
-  Container(const GUI& gui) : Widget(gui) { setConsumeEvent(false); }
+  Container(const GUI& gui) : Widget(gui) { setIgnoreEvents(true); }
   virtual ~Container() = default;
 
   const ChildVector& getChildren() const { return mChildren; }

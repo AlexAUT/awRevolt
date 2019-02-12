@@ -121,7 +121,7 @@ void TextBox::setCursorPosition(int position)
 
 void TextBox::updateLayout(aw::Vec2 parentPos)
 {
-  auto textSize = getGUI().getRenderer().calculateTextSize("A", getStyleClasses());
+  auto textSize = getGUI().getRenderer().calculateTextSize("A", *this);
   mMinimalSize.x = std::max(getPreferedSize().x, textSize.x * mMinWidthInCharacter);
   mMinimalSize.y = std::max(getPreferedSize().y, textSize.y);
 

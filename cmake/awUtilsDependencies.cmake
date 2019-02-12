@@ -5,6 +5,7 @@ target_compile_definitions(awUtils PUBLIC GLM_FORCE_SILENT_WARNINGS)
 set(TINYFD_SOURCES "dependencies/tinyfd/tinyfiledialogs.c")
 add_library(tinyfd STATIC ${TINYFD_SOURCES})
 set_target_properties(tinyfd PROPERTIES SOVERSION 1)
+set_property(TARGET tinyfd PROPERTY POSITION_INDEPENDENT_CODE ON)
 target_include_directories(tinyfd PUBLIC "dependencies/tinyfd")
 
 #SFML network (logging)

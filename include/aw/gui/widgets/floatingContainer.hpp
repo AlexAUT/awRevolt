@@ -15,6 +15,8 @@ public:
   };
 
 public:
+  AW_GUI_CLASS_NAME(FloatingContainer)
+
   FloatingContainer(const GUI& gui, BoundsPolicy boundsPolicy = BoundsPolicy::Strict) :
       Container(gui),
       mBoundsPolicy(boundsPolicy)

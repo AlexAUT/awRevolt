@@ -48,7 +48,7 @@ void Label::updateLayout(aw::Vec2 parentPos)
   Widget::updateLayout(parentPos);
   // Update the cached minimum size
   // (textsize + padding) or prefered size
-  mMinimumSize = getGUI().getRenderer().calculateTextSize(mText, getStyleClasses());
+  mMinimumSize = getGUI().getRenderer().calculateTextSize(mText, *this);
   mMinimumSize += getPadding().horizontalVertical();
 
   mMinimumSize = glm::max(mMinimumSize, getPreferedSize());

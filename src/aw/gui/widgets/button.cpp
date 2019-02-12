@@ -26,7 +26,7 @@ void Button::updateLayout(aw::Vec2 parentPos)
   Widget::updateLayout(parentPos);
   // Update the cached minimum size
   // (textsize + padding) or prefered size
-  mMinimumSize = getGUI().getRenderer().calculateTextSize(mText, getStyleClasses());
+  mMinimumSize = getGUI().getRenderer().calculateTextSize(mText, *this);
   auto& padding = getPadding();
   mMinimumSize.x += padding.left + padding.right;
   mMinimumSize.y += padding.top + padding.bottom;

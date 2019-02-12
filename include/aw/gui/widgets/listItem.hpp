@@ -9,6 +9,7 @@ namespace aw::gui
 class ListItem : public Label
 {
 public:
+  AW_GUI_CLASS_NAME(ListItem)
   using SPtr = std::shared_ptr<ListItem>;
 
 public:

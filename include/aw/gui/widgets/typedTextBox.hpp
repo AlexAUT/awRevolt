@@ -21,6 +21,7 @@ template <typename Type, typename ConvOp>
 class TypedTextBox final : public CheckedTextBox
 {
 public:
+  AW_GUI_CLASS_NAME(TypedTextBox)
   using SPtr = std::shared_ptr<TypedTextBox<Type, ConvOp>>;
 
 public:

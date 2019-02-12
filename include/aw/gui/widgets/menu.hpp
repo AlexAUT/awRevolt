@@ -9,10 +9,11 @@ namespace aw::gui
 class Menu : public LinearContainer
 {
 public:
+  AW_GUI_CLASS_NAME(Menu)
   using SPtr = std::shared_ptr<Menu>;
 
 public:
-  Menu(const GUI& gui) : LinearContainer(gui, Orientation::Horizontal) { setConsumeEvent(true); }
+  Menu(const GUI& gui) : LinearContainer(gui, Orientation::Horizontal) { setIgnoreEvents(false); }
 
   MenuItem::SPtr addMenuEntry(std::string text);
 
