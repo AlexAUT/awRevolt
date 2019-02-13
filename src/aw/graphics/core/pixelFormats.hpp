@@ -1,14 +1,16 @@
 #pragma once
 
+#include <cmath>
+
 namespace aw
 {
 enum class PixelFormat
 {
   // uint8's
   R8,
-  RG16,
-  RGB24,
-  RGBA32,
+  RG8,
+  RGB8,
+  RGBA8,
   // Floats
   RFloat,
   RGFloat,
@@ -20,21 +22,21 @@ enum class PixelFormat
   RGBA_ETC2,
 };
 
-inline unsigned pixelFormatToChannelCount(PixelFormat format);
-inline unsigned pixelFormatToPixelSize(PixelFormat format);
+inline constexpr unsigned pixelFormatToChannelCount(PixelFormat format);
+inline constexpr unsigned pixelFormatImageSize(PixelFormat format, int w, int h);
 
-inline unsigned pixelFormatToChannelCount(PixelFormat format)
+inline constexpr unsigned pixelFormatToChannelCount(PixelFormat format)
 {
   switch (format)
   {
   // uint8's
   case PixelFormat::R8:
     return 1;
-  case PixelFormat::RG16:
+  case PixelFormat::RG8:
     return 2;
-  case PixelFormat::RGB24:
+  case PixelFormat::RGB8:
     return 3;
-  case PixelFormat::RGBA32:
+  case PixelFormat::RGBA8:
     return 4;
   // floats
   case PixelFormat::RFloat:
@@ -57,24 +59,31 @@ inline unsigned pixelFormatToChannelCount(PixelFormat format)
   return 0;
 }
 
-inline unsigned pixelFormatToPixelSize(PixelFormat format)
+inline constexpr unsigned pixelFormatImageSize(PixelFormat format, int w, int h)
 {
   auto numChannels = pixelFormatToChannelCount(format);
   switch (format)
   {
   // uint8's
   case PixelFormat::R8:
-  case PixelFormat::RG16:
-  case PixelFormat::RGB24:
-  case PixelFormat::RGBA32:
-    return numChannels;
+  case PixelFormat::RG8:
+  case PixelFormat::RGB8:
+  case PixelFormat::RGBA8:
+    return w * h * numChannels;
   // floats
   case PixelFormat::RFloat:
   case PixelFormat::RGFloat:
   case PixelFormat::RGBFloat:
   case PixelFormat::RGBAFloat:
-    return numChannels * sizeof(float);
-  };
+    return w * h * numChannels * sizeof(float);
+  // ETC2
+  case PixelFormat::RGB_ETC2:
+    return std::ceil(w / 4) * std::ceil(h / 4) * 8;
+  case PixelFormat::RGBA_ETC2:
+    return std::ceil(w / 4) * std::ceil(h / 4) * 8;
+  case PixelFormat::RGBA1_ETC2:
+    return std::ceil(w / 4) * std::ceil(h / 4) * 16;
+  }
 
   return 0;
 }

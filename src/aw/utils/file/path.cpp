@@ -9,11 +9,20 @@
 
 namespace aw
 {
+Path::Path(Type type, std::string_view relativePath)
+{
+  mCompletePath = getBasePath(type);
+  mBasePathView = mCompletePath;
+  mCompletePath += relativePath;
+  mRelativePathView = {mCompletePath.data() + mBasePathView.size(), mCompletePath.size() - mBasePathView.size()};
+}
+
 void Path::append(const std::string_view part)
 {
-  if (mRelativePath.back() != '/' && mRelativePath.back() != '\\')
-    mRelativePath.push_back('/');
-  mRelativePath.append(part);
+  if (mCompletePath.back() != '/' && mCompletePath.back() != '\\')
+    mCompletePath.push_back('/');
+  mCompletePath.append(part);
+  mRelativePathView = {mCompletePath.data() + mBasePathView.size(), mCompletePath.size() - mBasePathView.size()};
 }
 
 Path operator+(const Path& path, std::string_view toAdd)
@@ -23,19 +32,16 @@ Path operator+(const Path& path, std::string_view toAdd)
   return result;
 }
 
-std::string_view Path::getExtension() const
+std::string Path::getExtension() const
 {
-  auto lastSlashPos = mRelativePath.find_last_of('/');
+  auto lastSlashPos = mRelativePathView.find_last_of('/');
   if (lastSlashPos == std::string::npos)
     lastSlashPos = 0;
-  auto dotPos = mRelativePath.find_last_of('.');
-  if (dotPos > lastSlashPos && dotPos < mRelativePath.size() - 1)
-  {
-    auto view = std::string_view{mRelativePath.data() + dotPos + 1, mRelativePath.size() - dotPos - 1};
-    return view;
-  }
+  auto dotPos = mRelativePathView.find_last_of('.');
+  if (dotPos > lastSlashPos && dotPos < mRelativePathView.size() - 1)
+    return std::string(mRelativePathView.substr(dotPos + 1));
 
-  return {};
+  return "";
 }
 
 std::string Path::getAssetPath()
@@ -118,7 +124,7 @@ const char* typeToString(aw::Path::Type type)
 
 std::ostream& operator<<(std::ostream& stream, const aw::Path& path)
 {
-  stream << "Path: { " << typeToString(path.getType()) << ": " << path.getCompletePath() << " } ";
+  stream << "Path: { " << typeToString(path.getType()) << ": " << path.asString() << " } ";
 
   return stream;
 }

@@ -6,6 +6,7 @@
 
 namespace aw
 {
+std::tuple<GLenum, GLenum> pixelFormatToOpengl(PixelFormat format);
 
 Texture2D::Texture2D()
 {
@@ -17,17 +18,19 @@ Texture2D::~Texture2D()
   glDeleteTextures(1, &mId);
 }
 
-void Texture2D::loadFromImage(const Image& image)
+void Texture2D::load(const Image& image)
 {
-  loadFromMemory(image.getPixelPtr(), image.getWidth(), image.getHeight());
+  auto pixelFormat = image.getPixelFormat();
+  auto [format, dataType] = pixelFormatToOpengl(pixelFormat);
+  load(image.getPixels(), image.getWidth(), image.getHeight(), format, format, dataType);
 }
 
-void Texture2D::loadFromMemory(const void* data, unsigned width, unsigned height)
+void Texture2D::load(const void* data, unsigned width, unsigned height)
 {
-  loadFromMemory(data, width, height, GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE);
+  load(data, width, height, GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE);
 }
-void Texture2D::loadFromMemory(const void* data, unsigned width, unsigned height, GLenum interalFormat, GLenum format,
-                               GLenum dataType)
+void Texture2D::load(const void* data, unsigned width, unsigned height, GLenum interalFormat, GLenum format,
+                     GLenum dataType)
 {
   GL_CHECK(glTexImage2D(GL_TEXTURE_2D, 0, interalFormat, width, height, 0, format, dataType, data));
   setMinFilter(MinFilter::LINEAR);
@@ -138,4 +141,36 @@ unsigned Texture2D::getId() const
   return mId;
 }
 
+std::tuple<GLenum, GLenum> pixelFormatToOpengl(PixelFormat format)
+{
+  switch (format)
+  {
+  // uint8's
+  case PixelFormat::R8:
+    return {GL_R8, GL_UNSIGNED_BYTE};
+  case PixelFormat::RG8:
+    return {GL_RG8, GL_UNSIGNED_BYTE};
+  case PixelFormat::RGB8:
+    return {GL_RGB8, GL_UNSIGNED_BYTE};
+  case PixelFormat::RGBA8:
+    return {GL_RGBA8, GL_UNSIGNED_BYTE};
+  // float
+  case PixelFormat::RFloat:
+    return {GL_R32F, GL_FLOAT};
+  case PixelFormat::RGFloat:
+    return {GL_RG32F, GL_FLOAT};
+  case PixelFormat::RGBFloat:
+    return {GL_RGB32F, GL_FLOAT};
+  case PixelFormat::RGBAFloat:
+    return {GL_RGBA32F, GL_FLOAT};
+  // etc2
+  case PixelFormat::RGB_ETC2:
+    return {GL_COMPRESSED_RGB8_ETC2, GL_UNSIGNED_BYTE};
+  case PixelFormat::RGBA_ETC2:
+    return {GL_COMPRESSED_RGBA8_ETC2_EAC, GL_UNSIGNED_BYTE};
+  case PixelFormat::RGBA1_ETC2:
+    return {GL_COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2, GL_UNSIGNED_BYTE};
+  }
+  return {GL_NONE, GL_NONE};
+}
 } // namespace aw

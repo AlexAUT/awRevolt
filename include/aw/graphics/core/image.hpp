@@ -4,8 +4,8 @@
 #include <aw/utils/types.hpp>
 
 #include <istream>
+#include <memory>
 #include <string>
-#include <vector>
 
 namespace aw
 {
@@ -17,21 +17,35 @@ public:
   static Image convertToPixelFormat(const Image& image, PixelFormat newFormat);
 
 public:
+  Image() = default;
+  Image(PixelFormat format, unsigned width, unsigned height, std::unique_ptr<uint8> data = nullptr);
+
   bool load(const aw::Path& path);
 
-  int getWidth() const { return mWidth; }
-  int getHeight() const { return mHeight; }
-  int getNumChannels() const { return mNumChannels; }
-  const uint8* getPixelPtr() const { return mData.data(); }
-  const std::vector<uint8> getPixels() const { return mData; }
+  // This does invalidate the content of the image
+  void resize(unsigned width, unsigned height);
+  // This does invalidate the content of the image
+  void setPixelFormat(PixelFormat pixelFormat);
+
+  unsigned getWidth() const { return mWidth; }
+  unsigned getHeight() const { return mHeight; }
+  unsigned getChannelCount() const { return pixelFormatToChannelCount(mPixelFormat); }
+
+  // The default interpretation is row wise
+  uint8* getPixels() { return mData.get(); }
+  const uint8* getPixels() const { return mData.get(); }
+
+  size_t getPixelsSize() const { return pixelFormatImageSize(mPixelFormat, mWidth, mHeight); }
+
   PixelFormat getPixelFormat() const { return mPixelFormat; }
 
 private:
+  void resizeInternalPtr();
+
 private:
-  std::vector<uint8> mData;
-  int mWidth;
-  int mHeight;
-  int mNumChannels;
+  std::unique_ptr<uint8> mData;
+  unsigned mWidth;
+  unsigned mHeight;
   PixelFormat mPixelFormat;
 };
 

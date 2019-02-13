@@ -66,6 +66,898 @@ static void* GalogenGetProcAddress(const char* name)
 
 #endif
 
+static void GL_APIENTRY _impl_glGetPointerv(GLenum pname, void** params)
+{
+  _glptr_glGetPointerv = (PFN_glGetPointerv)GalogenGetProcAddress("glGetPointerv");
+  _glptr_glGetPointerv(pname, params);
+}
+PFN_glGetPointerv _glptr_glGetPointerv = _impl_glGetPointerv;
+
+static void GL_APIENTRY _impl_glGetObjectPtrLabel(const void* ptr, GLsizei bufSize, GLsizei* length, GLchar* label)
+{
+  _glptr_glGetObjectPtrLabel = (PFN_glGetObjectPtrLabel)GalogenGetProcAddress("glGetObjectPtrLabel");
+  _glptr_glGetObjectPtrLabel(ptr, bufSize, length, label);
+}
+PFN_glGetObjectPtrLabel _glptr_glGetObjectPtrLabel = _impl_glGetObjectPtrLabel;
+
+static void GL_APIENTRY _impl_glObjectPtrLabel(const void* ptr, GLsizei length, const GLchar* label)
+{
+  _glptr_glObjectPtrLabel = (PFN_glObjectPtrLabel)GalogenGetProcAddress("glObjectPtrLabel");
+  _glptr_glObjectPtrLabel(ptr, length, label);
+}
+PFN_glObjectPtrLabel _glptr_glObjectPtrLabel = _impl_glObjectPtrLabel;
+
+static void GL_APIENTRY _impl_glPushDebugGroup(GLenum source, GLuint id, GLsizei length, const GLchar* message)
+{
+  _glptr_glPushDebugGroup = (PFN_glPushDebugGroup)GalogenGetProcAddress("glPushDebugGroup");
+  _glptr_glPushDebugGroup(source, id, length, message);
+}
+PFN_glPushDebugGroup _glptr_glPushDebugGroup = _impl_glPushDebugGroup;
+
+static void GL_APIENTRY _impl_glDebugMessageControl(GLenum source, GLenum type, GLenum severity, GLsizei count,
+                                                    const GLuint* ids, GLboolean enabled)
+{
+  _glptr_glDebugMessageControl = (PFN_glDebugMessageControl)GalogenGetProcAddress("glDebugMessageControl");
+  _glptr_glDebugMessageControl(source, type, severity, count, ids, enabled);
+}
+PFN_glDebugMessageControl _glptr_glDebugMessageControl = _impl_glDebugMessageControl;
+
+static void GL_APIENTRY _impl_glVertexAttribBinding(GLuint attribindex, GLuint bindingindex)
+{
+  _glptr_glVertexAttribBinding = (PFN_glVertexAttribBinding)GalogenGetProcAddress("glVertexAttribBinding");
+  _glptr_glVertexAttribBinding(attribindex, bindingindex);
+}
+PFN_glVertexAttribBinding _glptr_glVertexAttribBinding = _impl_glVertexAttribBinding;
+
+static void GL_APIENTRY _impl_glVertexAttribLFormat(GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset)
+{
+  _glptr_glVertexAttribLFormat = (PFN_glVertexAttribLFormat)GalogenGetProcAddress("glVertexAttribLFormat");
+  _glptr_glVertexAttribLFormat(attribindex, size, type, relativeoffset);
+}
+PFN_glVertexAttribLFormat _glptr_glVertexAttribLFormat = _impl_glVertexAttribLFormat;
+
+static void GL_APIENTRY _impl_glVertexAttribIFormat(GLuint attribindex, GLint size, GLenum type, GLuint relativeoffset)
+{
+  _glptr_glVertexAttribIFormat = (PFN_glVertexAttribIFormat)GalogenGetProcAddress("glVertexAttribIFormat");
+  _glptr_glVertexAttribIFormat(attribindex, size, type, relativeoffset);
+}
+PFN_glVertexAttribIFormat _glptr_glVertexAttribIFormat = _impl_glVertexAttribIFormat;
+
+static void GL_APIENTRY _impl_glVertexAttribFormat(GLuint attribindex, GLint size, GLenum type, GLboolean normalized,
+                                                   GLuint relativeoffset)
+{
+  _glptr_glVertexAttribFormat = (PFN_glVertexAttribFormat)GalogenGetProcAddress("glVertexAttribFormat");
+  _glptr_glVertexAttribFormat(attribindex, size, type, normalized, relativeoffset);
+}
+PFN_glVertexAttribFormat _glptr_glVertexAttribFormat = _impl_glVertexAttribFormat;
+
+static void GL_APIENTRY _impl_glTexStorage2DMultisample(GLenum target, GLsizei samples, GLenum internalformat,
+                                                        GLsizei width, GLsizei height, GLboolean fixedsamplelocations)
+{
+  _glptr_glTexStorage2DMultisample = (PFN_glTexStorage2DMultisample)GalogenGetProcAddress("glTexStorage2DMultisample");
+  _glptr_glTexStorage2DMultisample(target, samples, internalformat, width, height, fixedsamplelocations);
+}
+PFN_glTexStorage2DMultisample _glptr_glTexStorage2DMultisample = _impl_glTexStorage2DMultisample;
+
+static void GL_APIENTRY _impl_glShaderStorageBlockBinding(GLuint program, GLuint storageBlockIndex,
+                                                          GLuint storageBlockBinding)
+{
+  _glptr_glShaderStorageBlockBinding =
+      (PFN_glShaderStorageBlockBinding)GalogenGetProcAddress("glShaderStorageBlockBinding");
+  _glptr_glShaderStorageBlockBinding(program, storageBlockIndex, storageBlockBinding);
+}
+PFN_glShaderStorageBlockBinding _glptr_glShaderStorageBlockBinding = _impl_glShaderStorageBlockBinding;
+
+static GLint GL_APIENTRY _impl_glGetProgramResourceLocationIndex(GLuint program, GLenum programInterface,
+                                                                 const GLchar* name)
+{
+  _glptr_glGetProgramResourceLocationIndex =
+      (PFN_glGetProgramResourceLocationIndex)GalogenGetProcAddress("glGetProgramResourceLocationIndex");
+  return _glptr_glGetProgramResourceLocationIndex(program, programInterface, name);
+}
+PFN_glGetProgramResourceLocationIndex _glptr_glGetProgramResourceLocationIndex =
+    _impl_glGetProgramResourceLocationIndex;
+
+static void GL_APIENTRY _impl_glGetProgramResourceName(GLuint program, GLenum programInterface, GLuint index,
+                                                       GLsizei bufSize, GLsizei* length, GLchar* name)
+{
+  _glptr_glGetProgramResourceName = (PFN_glGetProgramResourceName)GalogenGetProcAddress("glGetProgramResourceName");
+  _glptr_glGetProgramResourceName(program, programInterface, index, bufSize, length, name);
+}
+PFN_glGetProgramResourceName _glptr_glGetProgramResourceName = _impl_glGetProgramResourceName;
+
+static GLuint GL_APIENTRY _impl_glGetProgramResourceIndex(GLuint program, GLenum programInterface, const GLchar* name)
+{
+  _glptr_glGetProgramResourceIndex = (PFN_glGetProgramResourceIndex)GalogenGetProcAddress("glGetProgramResourceIndex");
+  return _glptr_glGetProgramResourceIndex(program, programInterface, name);
+}
+PFN_glGetProgramResourceIndex _glptr_glGetProgramResourceIndex = _impl_glGetProgramResourceIndex;
+
+static void GL_APIENTRY _impl_glMultiDrawElementsIndirect(GLenum mode, GLenum type, const void* indirect,
+                                                          GLsizei drawcount, GLsizei stride)
+{
+  _glptr_glMultiDrawElementsIndirect =
+      (PFN_glMultiDrawElementsIndirect)GalogenGetProcAddress("glMultiDrawElementsIndirect");
+  _glptr_glMultiDrawElementsIndirect(mode, type, indirect, drawcount, stride);
+}
+PFN_glMultiDrawElementsIndirect _glptr_glMultiDrawElementsIndirect = _impl_glMultiDrawElementsIndirect;
+
+static void GL_APIENTRY _impl_glInvalidateSubFramebuffer(GLenum target, GLsizei numAttachments,
+                                                         const GLenum* attachments, GLint x, GLint y, GLsizei width,
+                                                         GLsizei height)
+{
+  _glptr_glInvalidateSubFramebuffer =
+      (PFN_glInvalidateSubFramebuffer)GalogenGetProcAddress("glInvalidateSubFramebuffer");
+  _glptr_glInvalidateSubFramebuffer(target, numAttachments, attachments, x, y, width, height);
+}
+PFN_glInvalidateSubFramebuffer _glptr_glInvalidateSubFramebuffer = _impl_glInvalidateSubFramebuffer;
+
+static void GL_APIENTRY _impl_glInvalidateBufferSubData(GLuint buffer, GLintptr offset, GLsizeiptr length)
+{
+  _glptr_glInvalidateBufferSubData = (PFN_glInvalidateBufferSubData)GalogenGetProcAddress("glInvalidateBufferSubData");
+  _glptr_glInvalidateBufferSubData(buffer, offset, length);
+}
+PFN_glInvalidateBufferSubData _glptr_glInvalidateBufferSubData = _impl_glInvalidateBufferSubData;
+
+static void GL_APIENTRY _impl_glInvalidateTexImage(GLuint texture, GLint level)
+{
+  _glptr_glInvalidateTexImage = (PFN_glInvalidateTexImage)GalogenGetProcAddress("glInvalidateTexImage");
+  _glptr_glInvalidateTexImage(texture, level);
+}
+PFN_glInvalidateTexImage _glptr_glInvalidateTexImage = _impl_glInvalidateTexImage;
+
+static void GL_APIENTRY _impl_glInvalidateTexSubImage(GLuint texture, GLint level, GLint xoffset, GLint yoffset,
+                                                      GLint zoffset, GLsizei width, GLsizei height, GLsizei depth)
+{
+  _glptr_glInvalidateTexSubImage = (PFN_glInvalidateTexSubImage)GalogenGetProcAddress("glInvalidateTexSubImage");
+  _glptr_glInvalidateTexSubImage(texture, level, xoffset, yoffset, zoffset, width, height, depth);
+}
+PFN_glInvalidateTexSubImage _glptr_glInvalidateTexSubImage = _impl_glInvalidateTexSubImage;
+
+static void GL_APIENTRY _impl_glGetFramebufferParameteriv(GLenum target, GLenum pname, GLint* params)
+{
+  _glptr_glGetFramebufferParameteriv =
+      (PFN_glGetFramebufferParameteriv)GalogenGetProcAddress("glGetFramebufferParameteriv");
+  _glptr_glGetFramebufferParameteriv(target, pname, params);
+}
+PFN_glGetFramebufferParameteriv _glptr_glGetFramebufferParameteriv = _impl_glGetFramebufferParameteriv;
+
+static void GL_APIENTRY _impl_glFramebufferParameteri(GLenum target, GLenum pname, GLint param)
+{
+  _glptr_glFramebufferParameteri = (PFN_glFramebufferParameteri)GalogenGetProcAddress("glFramebufferParameteri");
+  _glptr_glFramebufferParameteri(target, pname, param);
+}
+PFN_glFramebufferParameteri _glptr_glFramebufferParameteri = _impl_glFramebufferParameteri;
+
+static void GL_APIENTRY _impl_glDispatchComputeIndirect(GLintptr indirect)
+{
+  _glptr_glDispatchComputeIndirect = (PFN_glDispatchComputeIndirect)GalogenGetProcAddress("glDispatchComputeIndirect");
+  _glptr_glDispatchComputeIndirect(indirect);
+}
+PFN_glDispatchComputeIndirect _glptr_glDispatchComputeIndirect = _impl_glDispatchComputeIndirect;
+
+static void GL_APIENTRY _impl_glDispatchCompute(GLuint num_groups_x, GLuint num_groups_y, GLuint num_groups_z)
+{
+  _glptr_glDispatchCompute = (PFN_glDispatchCompute)GalogenGetProcAddress("glDispatchCompute");
+  _glptr_glDispatchCompute(num_groups_x, num_groups_y, num_groups_z);
+}
+PFN_glDispatchCompute _glptr_glDispatchCompute = _impl_glDispatchCompute;
+
+static void GL_APIENTRY _impl_glDrawTransformFeedbackStreamInstanced(GLenum mode, GLuint id, GLuint stream,
+                                                                     GLsizei instancecount)
+{
+  _glptr_glDrawTransformFeedbackStreamInstanced =
+      (PFN_glDrawTransformFeedbackStreamInstanced)GalogenGetProcAddress("glDrawTransformFeedbackStreamInstanced");
+  _glptr_glDrawTransformFeedbackStreamInstanced(mode, id, stream, instancecount);
+}
+PFN_glDrawTransformFeedbackStreamInstanced _glptr_glDrawTransformFeedbackStreamInstanced =
+    _impl_glDrawTransformFeedbackStreamInstanced;
+
+static void GL_APIENTRY _impl_glTexStorage2D(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width,
+                                             GLsizei height)
+{
+  _glptr_glTexStorage2D = (PFN_glTexStorage2D)GalogenGetProcAddress("glTexStorage2D");
+  _glptr_glTexStorage2D(target, levels, internalformat, width, height);
+}
+PFN_glTexStorage2D _glptr_glTexStorage2D = _impl_glTexStorage2D;
+
+static void GL_APIENTRY _impl_glTexStorage1D(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width)
+{
+  _glptr_glTexStorage1D = (PFN_glTexStorage1D)GalogenGetProcAddress("glTexStorage1D");
+  _glptr_glTexStorage1D(target, levels, internalformat, width);
+}
+PFN_glTexStorage1D _glptr_glTexStorage1D = _impl_glTexStorage1D;
+
+static void GL_APIENTRY _impl_glVertexBindingDivisor(GLuint bindingindex, GLuint divisor)
+{
+  _glptr_glVertexBindingDivisor = (PFN_glVertexBindingDivisor)GalogenGetProcAddress("glVertexBindingDivisor");
+  _glptr_glVertexBindingDivisor(bindingindex, divisor);
+}
+PFN_glVertexBindingDivisor _glptr_glVertexBindingDivisor = _impl_glVertexBindingDivisor;
+
+static void GL_APIENTRY _impl_glBindImageTexture(GLuint unit, GLuint texture, GLint level, GLboolean layered,
+                                                 GLint layer, GLenum access, GLenum format)
+{
+  _glptr_glBindImageTexture = (PFN_glBindImageTexture)GalogenGetProcAddress("glBindImageTexture");
+  _glptr_glBindImageTexture(unit, texture, level, layered, layer, access, format);
+}
+PFN_glBindImageTexture _glptr_glBindImageTexture = _impl_glBindImageTexture;
+
+static void GL_APIENTRY _impl_glGetInternalformativ(GLenum target, GLenum internalformat, GLenum pname, GLsizei bufSize,
+                                                    GLint* params)
+{
+  _glptr_glGetInternalformativ = (PFN_glGetInternalformativ)GalogenGetProcAddress("glGetInternalformativ");
+  _glptr_glGetInternalformativ(target, internalformat, pname, bufSize, params);
+}
+PFN_glGetInternalformativ _glptr_glGetInternalformativ = _impl_glGetInternalformativ;
+
+static void GL_APIENTRY _impl_glDrawElementsInstancedBaseInstance(GLenum mode, GLsizei count, GLenum type,
+                                                                  const void* indices, GLsizei instancecount,
+                                                                  GLuint baseinstance)
+{
+  _glptr_glDrawElementsInstancedBaseInstance =
+      (PFN_glDrawElementsInstancedBaseInstance)GalogenGetProcAddress("glDrawElementsInstancedBaseInstance");
+  _glptr_glDrawElementsInstancedBaseInstance(mode, count, type, indices, instancecount, baseinstance);
+}
+PFN_glDrawElementsInstancedBaseInstance _glptr_glDrawElementsInstancedBaseInstance =
+    _impl_glDrawElementsInstancedBaseInstance;
+
+static void GL_APIENTRY _impl_glDrawArraysInstancedBaseInstance(GLenum mode, GLint first, GLsizei count,
+                                                                GLsizei instancecount, GLuint baseinstance)
+{
+  _glptr_glDrawArraysInstancedBaseInstance =
+      (PFN_glDrawArraysInstancedBaseInstance)GalogenGetProcAddress("glDrawArraysInstancedBaseInstance");
+  _glptr_glDrawArraysInstancedBaseInstance(mode, first, count, instancecount, baseinstance);
+}
+PFN_glDrawArraysInstancedBaseInstance _glptr_glDrawArraysInstancedBaseInstance =
+    _impl_glDrawArraysInstancedBaseInstance;
+
+static void GL_APIENTRY _impl_glDepthRangeArrayv(GLuint first, GLsizei count, const GLdouble* v)
+{
+  _glptr_glDepthRangeArrayv = (PFN_glDepthRangeArrayv)GalogenGetProcAddress("glDepthRangeArrayv");
+  _glptr_glDepthRangeArrayv(first, count, v);
+}
+PFN_glDepthRangeArrayv _glptr_glDepthRangeArrayv = _impl_glDepthRangeArrayv;
+
+static void GL_APIENTRY _impl_glScissorIndexedv(GLuint index, const GLint* v)
+{
+  _glptr_glScissorIndexedv = (PFN_glScissorIndexedv)GalogenGetProcAddress("glScissorIndexedv");
+  _glptr_glScissorIndexedv(index, v);
+}
+PFN_glScissorIndexedv _glptr_glScissorIndexedv = _impl_glScissorIndexedv;
+
+static void GL_APIENTRY _impl_glViewportIndexedf(GLuint index, GLfloat x, GLfloat y, GLfloat w, GLfloat h)
+{
+  _glptr_glViewportIndexedf = (PFN_glViewportIndexedf)GalogenGetProcAddress("glViewportIndexedf");
+  _glptr_glViewportIndexedf(index, x, y, w, h);
+}
+PFN_glViewportIndexedf _glptr_glViewportIndexedf = _impl_glViewportIndexedf;
+
+static void GL_APIENTRY _impl_glVertexAttribLPointer(GLuint index, GLint size, GLenum type, GLsizei stride,
+                                                     const void* pointer)
+{
+  _glptr_glVertexAttribLPointer = (PFN_glVertexAttribLPointer)GalogenGetProcAddress("glVertexAttribLPointer");
+  _glptr_glVertexAttribLPointer(index, size, type, stride, pointer);
+}
+PFN_glVertexAttribLPointer _glptr_glVertexAttribLPointer = _impl_glVertexAttribLPointer;
+
+static void GL_APIENTRY _impl_glVertexAttribL4dv(GLuint index, const GLdouble* v)
+{
+  _glptr_glVertexAttribL4dv = (PFN_glVertexAttribL4dv)GalogenGetProcAddress("glVertexAttribL4dv");
+  _glptr_glVertexAttribL4dv(index, v);
+}
+PFN_glVertexAttribL4dv _glptr_glVertexAttribL4dv = _impl_glVertexAttribL4dv;
+
+static void GL_APIENTRY _impl_glVertexAttribL3dv(GLuint index, const GLdouble* v)
+{
+  _glptr_glVertexAttribL3dv = (PFN_glVertexAttribL3dv)GalogenGetProcAddress("glVertexAttribL3dv");
+  _glptr_glVertexAttribL3dv(index, v);
+}
+PFN_glVertexAttribL3dv _glptr_glVertexAttribL3dv = _impl_glVertexAttribL3dv;
+
+static void GL_APIENTRY _impl_glVertexAttribL2dv(GLuint index, const GLdouble* v)
+{
+  _glptr_glVertexAttribL2dv = (PFN_glVertexAttribL2dv)GalogenGetProcAddress("glVertexAttribL2dv");
+  _glptr_glVertexAttribL2dv(index, v);
+}
+PFN_glVertexAttribL2dv _glptr_glVertexAttribL2dv = _impl_glVertexAttribL2dv;
+
+static void GL_APIENTRY _impl_glTexBufferRange(GLenum target, GLenum internalformat, GLuint buffer, GLintptr offset,
+                                               GLsizeiptr size)
+{
+  _glptr_glTexBufferRange = (PFN_glTexBufferRange)GalogenGetProcAddress("glTexBufferRange");
+  _glptr_glTexBufferRange(target, internalformat, buffer, offset, size);
+}
+PFN_glTexBufferRange _glptr_glTexBufferRange = _impl_glTexBufferRange;
+
+static void GL_APIENTRY _impl_glVertexAttribL4d(GLuint index, GLdouble x, GLdouble y, GLdouble z, GLdouble w)
+{
+  _glptr_glVertexAttribL4d = (PFN_glVertexAttribL4d)GalogenGetProcAddress("glVertexAttribL4d");
+  _glptr_glVertexAttribL4d(index, x, y, z, w);
+}
+PFN_glVertexAttribL4d _glptr_glVertexAttribL4d = _impl_glVertexAttribL4d;
+
+static void GL_APIENTRY _impl_glVertexAttribL2d(GLuint index, GLdouble x, GLdouble y)
+{
+  _glptr_glVertexAttribL2d = (PFN_glVertexAttribL2d)GalogenGetProcAddress("glVertexAttribL2d");
+  _glptr_glVertexAttribL2d(index, x, y);
+}
+PFN_glVertexAttribL2d _glptr_glVertexAttribL2d = _impl_glVertexAttribL2d;
+
+static void GL_APIENTRY _impl_glGetProgramPipelineInfoLog(GLuint pipeline, GLsizei bufSize, GLsizei* length,
+                                                          GLchar* infoLog)
+{
+  _glptr_glGetProgramPipelineInfoLog =
+      (PFN_glGetProgramPipelineInfoLog)GalogenGetProcAddress("glGetProgramPipelineInfoLog");
+  _glptr_glGetProgramPipelineInfoLog(pipeline, bufSize, length, infoLog);
+}
+PFN_glGetProgramPipelineInfoLog _glptr_glGetProgramPipelineInfoLog = _impl_glGetProgramPipelineInfoLog;
+
+static void GL_APIENTRY _impl_glValidateProgramPipeline(GLuint pipeline)
+{
+  _glptr_glValidateProgramPipeline = (PFN_glValidateProgramPipeline)GalogenGetProcAddress("glValidateProgramPipeline");
+  _glptr_glValidateProgramPipeline(pipeline);
+}
+PFN_glValidateProgramPipeline _glptr_glValidateProgramPipeline = _impl_glValidateProgramPipeline;
+
+static void GL_APIENTRY _impl_glProgramUniformMatrix4x3dv(GLuint program, GLint location, GLsizei count,
+                                                          GLboolean transpose, const GLdouble* value)
+{
+  _glptr_glProgramUniformMatrix4x3dv =
+      (PFN_glProgramUniformMatrix4x3dv)GalogenGetProcAddress("glProgramUniformMatrix4x3dv");
+  _glptr_glProgramUniformMatrix4x3dv(program, location, count, transpose, value);
+}
+PFN_glProgramUniformMatrix4x3dv _glptr_glProgramUniformMatrix4x3dv = _impl_glProgramUniformMatrix4x3dv;
+
+static void GL_APIENTRY _impl_glProgramUniformMatrix3x4fv(GLuint program, GLint location, GLsizei count,
+                                                          GLboolean transpose, const GLfloat* value)
+{
+  _glptr_glProgramUniformMatrix3x4fv =
+      (PFN_glProgramUniformMatrix3x4fv)GalogenGetProcAddress("glProgramUniformMatrix3x4fv");
+  _glptr_glProgramUniformMatrix3x4fv(program, location, count, transpose, value);
+}
+PFN_glProgramUniformMatrix3x4fv _glptr_glProgramUniformMatrix3x4fv = _impl_glProgramUniformMatrix3x4fv;
+
+static void GL_APIENTRY _impl_glProgramUniformMatrix4x2fv(GLuint program, GLint location, GLsizei count,
+                                                          GLboolean transpose, const GLfloat* value)
+{
+  _glptr_glProgramUniformMatrix4x2fv =
+      (PFN_glProgramUniformMatrix4x2fv)GalogenGetProcAddress("glProgramUniformMatrix4x2fv");
+  _glptr_glProgramUniformMatrix4x2fv(program, location, count, transpose, value);
+}
+PFN_glProgramUniformMatrix4x2fv _glptr_glProgramUniformMatrix4x2fv = _impl_glProgramUniformMatrix4x2fv;
+
+static void GL_APIENTRY _impl_glProgramUniformMatrix2x4fv(GLuint program, GLint location, GLsizei count,
+                                                          GLboolean transpose, const GLfloat* value)
+{
+  _glptr_glProgramUniformMatrix2x4fv =
+      (PFN_glProgramUniformMatrix2x4fv)GalogenGetProcAddress("glProgramUniformMatrix2x4fv");
+  _glptr_glProgramUniformMatrix2x4fv(program, location, count, transpose, value);
+}
+PFN_glProgramUniformMatrix2x4fv _glptr_glProgramUniformMatrix2x4fv = _impl_glProgramUniformMatrix2x4fv;
+
+static void GL_APIENTRY _impl_glPopDebugGroup()
+{
+  _glptr_glPopDebugGroup = (PFN_glPopDebugGroup)GalogenGetProcAddress("glPopDebugGroup");
+  _glptr_glPopDebugGroup();
+}
+PFN_glPopDebugGroup _glptr_glPopDebugGroup = _impl_glPopDebugGroup;
+
+static void GL_APIENTRY _impl_glProgramUniformMatrix3x2fv(GLuint program, GLint location, GLsizei count,
+                                                          GLboolean transpose, const GLfloat* value)
+{
+  _glptr_glProgramUniformMatrix3x2fv =
+      (PFN_glProgramUniformMatrix3x2fv)GalogenGetProcAddress("glProgramUniformMatrix3x2fv");
+  _glptr_glProgramUniformMatrix3x2fv(program, location, count, transpose, value);
+}
+PFN_glProgramUniformMatrix3x2fv _glptr_glProgramUniformMatrix3x2fv = _impl_glProgramUniformMatrix3x2fv;
+
+static void GL_APIENTRY _impl_glProgramUniformMatrix4dv(GLuint program, GLint location, GLsizei count,
+                                                        GLboolean transpose, const GLdouble* value)
+{
+  _glptr_glProgramUniformMatrix4dv = (PFN_glProgramUniformMatrix4dv)GalogenGetProcAddress("glProgramUniformMatrix4dv");
+  _glptr_glProgramUniformMatrix4dv(program, location, count, transpose, value);
+}
+PFN_glProgramUniformMatrix4dv _glptr_glProgramUniformMatrix4dv = _impl_glProgramUniformMatrix4dv;
+
+static void GL_APIENTRY _impl_glProgramUniformMatrix3dv(GLuint program, GLint location, GLsizei count,
+                                                        GLboolean transpose, const GLdouble* value)
+{
+  _glptr_glProgramUniformMatrix3dv = (PFN_glProgramUniformMatrix3dv)GalogenGetProcAddress("glProgramUniformMatrix3dv");
+  _glptr_glProgramUniformMatrix3dv(program, location, count, transpose, value);
+}
+PFN_glProgramUniformMatrix3dv _glptr_glProgramUniformMatrix3dv = _impl_glProgramUniformMatrix3dv;
+
+static void GL_APIENTRY _impl_glProgramUniformMatrix4fv(GLuint program, GLint location, GLsizei count,
+                                                        GLboolean transpose, const GLfloat* value)
+{
+  _glptr_glProgramUniformMatrix4fv = (PFN_glProgramUniformMatrix4fv)GalogenGetProcAddress("glProgramUniformMatrix4fv");
+  _glptr_glProgramUniformMatrix4fv(program, location, count, transpose, value);
+}
+PFN_glProgramUniformMatrix4fv _glptr_glProgramUniformMatrix4fv = _impl_glProgramUniformMatrix4fv;
+
+static void GL_APIENTRY _impl_glProgramUniformMatrix3fv(GLuint program, GLint location, GLsizei count,
+                                                        GLboolean transpose, const GLfloat* value)
+{
+  _glptr_glProgramUniformMatrix3fv = (PFN_glProgramUniformMatrix3fv)GalogenGetProcAddress("glProgramUniformMatrix3fv");
+  _glptr_glProgramUniformMatrix3fv(program, location, count, transpose, value);
+}
+PFN_glProgramUniformMatrix3fv _glptr_glProgramUniformMatrix3fv = _impl_glProgramUniformMatrix3fv;
+
+static void GL_APIENTRY _impl_glProgramUniformMatrix2fv(GLuint program, GLint location, GLsizei count,
+                                                        GLboolean transpose, const GLfloat* value)
+{
+  _glptr_glProgramUniformMatrix2fv = (PFN_glProgramUniformMatrix2fv)GalogenGetProcAddress("glProgramUniformMatrix2fv");
+  _glptr_glProgramUniformMatrix2fv(program, location, count, transpose, value);
+}
+PFN_glProgramUniformMatrix2fv _glptr_glProgramUniformMatrix2fv = _impl_glProgramUniformMatrix2fv;
+
+static void GL_APIENTRY _impl_glProgramUniform4dv(GLuint program, GLint location, GLsizei count, const GLdouble* value)
+{
+  _glptr_glProgramUniform4dv = (PFN_glProgramUniform4dv)GalogenGetProcAddress("glProgramUniform4dv");
+  _glptr_glProgramUniform4dv(program, location, count, value);
+}
+PFN_glProgramUniform4dv _glptr_glProgramUniform4dv = _impl_glProgramUniform4dv;
+
+static void GL_APIENTRY _impl_glProgramUniform4d(GLuint program, GLint location, GLdouble v0, GLdouble v1, GLdouble v2,
+                                                 GLdouble v3)
+{
+  _glptr_glProgramUniform4d = (PFN_glProgramUniform4d)GalogenGetProcAddress("glProgramUniform4d");
+  _glptr_glProgramUniform4d(program, location, v0, v1, v2, v3);
+}
+PFN_glProgramUniform4d _glptr_glProgramUniform4d = _impl_glProgramUniform4d;
+
+static void GL_APIENTRY _impl_glProgramUniform4f(GLuint program, GLint location, GLfloat v0, GLfloat v1, GLfloat v2,
+                                                 GLfloat v3)
+{
+  _glptr_glProgramUniform4f = (PFN_glProgramUniform4f)GalogenGetProcAddress("glProgramUniform4f");
+  _glptr_glProgramUniform4f(program, location, v0, v1, v2, v3);
+}
+PFN_glProgramUniform4f _glptr_glProgramUniform4f = _impl_glProgramUniform4f;
+
+static void GL_APIENTRY _impl_glProgramUniform4i(GLuint program, GLint location, GLint v0, GLint v1, GLint v2, GLint v3)
+{
+  _glptr_glProgramUniform4i = (PFN_glProgramUniform4i)GalogenGetProcAddress("glProgramUniform4i");
+  _glptr_glProgramUniform4i(program, location, v0, v1, v2, v3);
+}
+PFN_glProgramUniform4i _glptr_glProgramUniform4i = _impl_glProgramUniform4i;
+
+static void GL_APIENTRY _impl_glProgramUniform3dv(GLuint program, GLint location, GLsizei count, const GLdouble* value)
+{
+  _glptr_glProgramUniform3dv = (PFN_glProgramUniform3dv)GalogenGetProcAddress("glProgramUniform3dv");
+  _glptr_glProgramUniform3dv(program, location, count, value);
+}
+PFN_glProgramUniform3dv _glptr_glProgramUniform3dv = _impl_glProgramUniform3dv;
+
+static void GL_APIENTRY _impl_glProgramUniform3d(GLuint program, GLint location, GLdouble v0, GLdouble v1, GLdouble v2)
+{
+  _glptr_glProgramUniform3d = (PFN_glProgramUniform3d)GalogenGetProcAddress("glProgramUniform3d");
+  _glptr_glProgramUniform3d(program, location, v0, v1, v2);
+}
+PFN_glProgramUniform3d _glptr_glProgramUniform3d = _impl_glProgramUniform3d;
+
+static void GL_APIENTRY _impl_glProgramUniformMatrix3x4dv(GLuint program, GLint location, GLsizei count,
+                                                          GLboolean transpose, const GLdouble* value)
+{
+  _glptr_glProgramUniformMatrix3x4dv =
+      (PFN_glProgramUniformMatrix3x4dv)GalogenGetProcAddress("glProgramUniformMatrix3x4dv");
+  _glptr_glProgramUniformMatrix3x4dv(program, location, count, transpose, value);
+}
+PFN_glProgramUniformMatrix3x4dv _glptr_glProgramUniformMatrix3x4dv = _impl_glProgramUniformMatrix3x4dv;
+
+static void GL_APIENTRY _impl_glProgramUniform3fv(GLuint program, GLint location, GLsizei count, const GLfloat* value)
+{
+  _glptr_glProgramUniform3fv = (PFN_glProgramUniform3fv)GalogenGetProcAddress("glProgramUniform3fv");
+  _glptr_glProgramUniform3fv(program, location, count, value);
+}
+PFN_glProgramUniform3fv _glptr_glProgramUniform3fv = _impl_glProgramUniform3fv;
+
+static void GL_APIENTRY _impl_glProgramUniform3f(GLuint program, GLint location, GLfloat v0, GLfloat v1, GLfloat v2)
+{
+  _glptr_glProgramUniform3f = (PFN_glProgramUniform3f)GalogenGetProcAddress("glProgramUniform3f");
+  _glptr_glProgramUniform3f(program, location, v0, v1, v2);
+}
+PFN_glProgramUniform3f _glptr_glProgramUniform3f = _impl_glProgramUniform3f;
+
+static void GL_APIENTRY _impl_glProgramUniform2ui(GLuint program, GLint location, GLuint v0, GLuint v1)
+{
+  _glptr_glProgramUniform2ui = (PFN_glProgramUniform2ui)GalogenGetProcAddress("glProgramUniform2ui");
+  _glptr_glProgramUniform2ui(program, location, v0, v1);
+}
+PFN_glProgramUniform2ui _glptr_glProgramUniform2ui = _impl_glProgramUniform2ui;
+
+static void GL_APIENTRY _impl_glProgramUniform2dv(GLuint program, GLint location, GLsizei count, const GLdouble* value)
+{
+  _glptr_glProgramUniform2dv = (PFN_glProgramUniform2dv)GalogenGetProcAddress("glProgramUniform2dv");
+  _glptr_glProgramUniform2dv(program, location, count, value);
+}
+PFN_glProgramUniform2dv _glptr_glProgramUniform2dv = _impl_glProgramUniform2dv;
+
+static void GL_APIENTRY _impl_glProgramUniform2d(GLuint program, GLint location, GLdouble v0, GLdouble v1)
+{
+  _glptr_glProgramUniform2d = (PFN_glProgramUniform2d)GalogenGetProcAddress("glProgramUniform2d");
+  _glptr_glProgramUniform2d(program, location, v0, v1);
+}
+PFN_glProgramUniform2d _glptr_glProgramUniform2d = _impl_glProgramUniform2d;
+
+static void GL_APIENTRY _impl_glProgramUniform2f(GLuint program, GLint location, GLfloat v0, GLfloat v1)
+{
+  _glptr_glProgramUniform2f = (PFN_glProgramUniform2f)GalogenGetProcAddress("glProgramUniform2f");
+  _glptr_glProgramUniform2f(program, location, v0, v1);
+}
+PFN_glProgramUniform2f _glptr_glProgramUniform2f = _impl_glProgramUniform2f;
+
+static void GL_APIENTRY _impl_glProgramUniform2i(GLuint program, GLint location, GLint v0, GLint v1)
+{
+  _glptr_glProgramUniform2i = (PFN_glProgramUniform2i)GalogenGetProcAddress("glProgramUniform2i");
+  _glptr_glProgramUniform2i(program, location, v0, v1);
+}
+PFN_glProgramUniform2i _glptr_glProgramUniform2i = _impl_glProgramUniform2i;
+
+static void GL_APIENTRY _impl_glProgramUniform1uiv(GLuint program, GLint location, GLsizei count, const GLuint* value)
+{
+  _glptr_glProgramUniform1uiv = (PFN_glProgramUniform1uiv)GalogenGetProcAddress("glProgramUniform1uiv");
+  _glptr_glProgramUniform1uiv(program, location, count, value);
+}
+PFN_glProgramUniform1uiv _glptr_glProgramUniform1uiv = _impl_glProgramUniform1uiv;
+
+static void GL_APIENTRY _impl_glProgramUniform1d(GLuint program, GLint location, GLdouble v0)
+{
+  _glptr_glProgramUniform1d = (PFN_glProgramUniform1d)GalogenGetProcAddress("glProgramUniform1d");
+  _glptr_glProgramUniform1d(program, location, v0);
+}
+PFN_glProgramUniform1d _glptr_glProgramUniform1d = _impl_glProgramUniform1d;
+
+static void GL_APIENTRY _impl_glProgramUniform1fv(GLuint program, GLint location, GLsizei count, const GLfloat* value)
+{
+  _glptr_glProgramUniform1fv = (PFN_glProgramUniform1fv)GalogenGetProcAddress("glProgramUniform1fv");
+  _glptr_glProgramUniform1fv(program, location, count, value);
+}
+PFN_glProgramUniform1fv _glptr_glProgramUniform1fv = _impl_glProgramUniform1fv;
+
+static void GL_APIENTRY _impl_glProgramUniform1f(GLuint program, GLint location, GLfloat v0)
+{
+  _glptr_glProgramUniform1f = (PFN_glProgramUniform1f)GalogenGetProcAddress("glProgramUniform1f");
+  _glptr_glProgramUniform1f(program, location, v0);
+}
+PFN_glProgramUniform1f _glptr_glProgramUniform1f = _impl_glProgramUniform1f;
+
+static void GL_APIENTRY _impl_glProgramUniform1iv(GLuint program, GLint location, GLsizei count, const GLint* value)
+{
+  _glptr_glProgramUniform1iv = (PFN_glProgramUniform1iv)GalogenGetProcAddress("glProgramUniform1iv");
+  _glptr_glProgramUniform1iv(program, location, count, value);
+}
+PFN_glProgramUniform1iv _glptr_glProgramUniform1iv = _impl_glProgramUniform1iv;
+
+static void GL_APIENTRY _impl_glGenProgramPipelines(GLsizei n, GLuint* pipelines)
+{
+  _glptr_glGenProgramPipelines = (PFN_glGenProgramPipelines)GalogenGetProcAddress("glGenProgramPipelines");
+  _glptr_glGenProgramPipelines(n, pipelines);
+}
+PFN_glGenProgramPipelines _glptr_glGenProgramPipelines = _impl_glGenProgramPipelines;
+
+static void GL_APIENTRY _impl_glActiveShaderProgram(GLuint pipeline, GLuint program)
+{
+  _glptr_glActiveShaderProgram = (PFN_glActiveShaderProgram)GalogenGetProcAddress("glActiveShaderProgram");
+  _glptr_glActiveShaderProgram(pipeline, program);
+}
+PFN_glActiveShaderProgram _glptr_glActiveShaderProgram = _impl_glActiveShaderProgram;
+
+static void GL_APIENTRY _impl_glProgramBinary(GLuint program, GLenum binaryFormat, const void* binary, GLsizei length)
+{
+  _glptr_glProgramBinary = (PFN_glProgramBinary)GalogenGetProcAddress("glProgramBinary");
+  _glptr_glProgramBinary(program, binaryFormat, binary, length);
+}
+PFN_glProgramBinary _glptr_glProgramBinary = _impl_glProgramBinary;
+
+static void GL_APIENTRY _impl_glGetProgramBinary(GLuint program, GLsizei bufSize, GLsizei* length, GLenum* binaryFormat,
+                                                 void* binary)
+{
+  _glptr_glGetProgramBinary = (PFN_glGetProgramBinary)GalogenGetProcAddress("glGetProgramBinary");
+  _glptr_glGetProgramBinary(program, bufSize, length, binaryFormat, binary);
+}
+PFN_glGetProgramBinary _glptr_glGetProgramBinary = _impl_glGetProgramBinary;
+
+static void GL_APIENTRY _impl_glDebugMessageCallback(GLDEBUGPROC callback, const void* userParam)
+{
+  _glptr_glDebugMessageCallback = (PFN_glDebugMessageCallback)GalogenGetProcAddress("glDebugMessageCallback");
+  _glptr_glDebugMessageCallback(callback, userParam);
+}
+PFN_glDebugMessageCallback _glptr_glDebugMessageCallback = _impl_glDebugMessageCallback;
+
+static void GL_APIENTRY _impl_glClearBufferSubData(GLenum target, GLenum internalformat, GLintptr offset,
+                                                   GLsizeiptr size, GLenum format, GLenum type, const void* data)
+{
+  _glptr_glClearBufferSubData = (PFN_glClearBufferSubData)GalogenGetProcAddress("glClearBufferSubData");
+  _glptr_glClearBufferSubData(target, internalformat, offset, size, format, type, data);
+}
+PFN_glClearBufferSubData _glptr_glClearBufferSubData = _impl_glClearBufferSubData;
+
+static void GL_APIENTRY _impl_glClearDepthf(GLfloat d)
+{
+  _glptr_glClearDepthf = (PFN_glClearDepthf)GalogenGetProcAddress("glClearDepthf");
+  _glptr_glClearDepthf(d);
+}
+PFN_glClearDepthf _glptr_glClearDepthf = _impl_glClearDepthf;
+
+static void GL_APIENTRY _impl_glDepthRangef(GLfloat n, GLfloat f)
+{
+  _glptr_glDepthRangef = (PFN_glDepthRangef)GalogenGetProcAddress("glDepthRangef");
+  _glptr_glDepthRangef(n, f);
+}
+PFN_glDepthRangef _glptr_glDepthRangef = _impl_glDepthRangef;
+
+static void GL_APIENTRY _impl_glShaderBinary(GLsizei count, const GLuint* shaders, GLenum binaryformat,
+                                             const void* binary, GLsizei length)
+{
+  _glptr_glShaderBinary = (PFN_glShaderBinary)GalogenGetProcAddress("glShaderBinary");
+  _glptr_glShaderBinary(count, shaders, binaryformat, binary, length);
+}
+PFN_glShaderBinary _glptr_glShaderBinary = _impl_glShaderBinary;
+
+static void GL_APIENTRY _impl_glGetQueryIndexediv(GLenum target, GLuint index, GLenum pname, GLint* params)
+{
+  _glptr_glGetQueryIndexediv = (PFN_glGetQueryIndexediv)GalogenGetProcAddress("glGetQueryIndexediv");
+  _glptr_glGetQueryIndexediv(target, index, pname, params);
+}
+PFN_glGetQueryIndexediv _glptr_glGetQueryIndexediv = _impl_glGetQueryIndexediv;
+
+static void GL_APIENTRY _impl_glEndQueryIndexed(GLenum target, GLuint index)
+{
+  _glptr_glEndQueryIndexed = (PFN_glEndQueryIndexed)GalogenGetProcAddress("glEndQueryIndexed");
+  _glptr_glEndQueryIndexed(target, index);
+}
+PFN_glEndQueryIndexed _glptr_glEndQueryIndexed = _impl_glEndQueryIndexed;
+
+static void GL_APIENTRY _impl_glBeginQueryIndexed(GLenum target, GLuint index, GLuint id)
+{
+  _glptr_glBeginQueryIndexed = (PFN_glBeginQueryIndexed)GalogenGetProcAddress("glBeginQueryIndexed");
+  _glptr_glBeginQueryIndexed(target, index, id);
+}
+PFN_glBeginQueryIndexed _glptr_glBeginQueryIndexed = _impl_glBeginQueryIndexed;
+
+static void GL_APIENTRY _impl_glDrawTransformFeedbackStream(GLenum mode, GLuint id, GLuint stream)
+{
+  _glptr_glDrawTransformFeedbackStream =
+      (PFN_glDrawTransformFeedbackStream)GalogenGetProcAddress("glDrawTransformFeedbackStream");
+  _glptr_glDrawTransformFeedbackStream(mode, id, stream);
+}
+PFN_glDrawTransformFeedbackStream _glptr_glDrawTransformFeedbackStream = _impl_glDrawTransformFeedbackStream;
+
+static void GL_APIENTRY _impl_glBindProgramPipeline(GLuint pipeline)
+{
+  _glptr_glBindProgramPipeline = (PFN_glBindProgramPipeline)GalogenGetProcAddress("glBindProgramPipeline");
+  _glptr_glBindProgramPipeline(pipeline);
+}
+PFN_glBindProgramPipeline _glptr_glBindProgramPipeline = _impl_glBindProgramPipeline;
+
+static void GL_APIENTRY _impl_glResumeTransformFeedback()
+{
+  _glptr_glResumeTransformFeedback = (PFN_glResumeTransformFeedback)GalogenGetProcAddress("glResumeTransformFeedback");
+  _glptr_glResumeTransformFeedback();
+}
+PFN_glResumeTransformFeedback _glptr_glResumeTransformFeedback = _impl_glResumeTransformFeedback;
+
+static void GL_APIENTRY _impl_glGenTransformFeedbacks(GLsizei n, GLuint* ids)
+{
+  _glptr_glGenTransformFeedbacks = (PFN_glGenTransformFeedbacks)GalogenGetProcAddress("glGenTransformFeedbacks");
+  _glptr_glGenTransformFeedbacks(n, ids);
+}
+PFN_glGenTransformFeedbacks _glptr_glGenTransformFeedbacks = _impl_glGenTransformFeedbacks;
+
+static void GL_APIENTRY _impl_glBindTransformFeedback(GLenum target, GLuint id)
+{
+  _glptr_glBindTransformFeedback = (PFN_glBindTransformFeedback)GalogenGetProcAddress("glBindTransformFeedback");
+  _glptr_glBindTransformFeedback(target, id);
+}
+PFN_glBindTransformFeedback _glptr_glBindTransformFeedback = _impl_glBindTransformFeedback;
+
+static void GL_APIENTRY _impl_glGetInternalformati64v(GLenum target, GLenum internalformat, GLenum pname,
+                                                      GLsizei bufSize, GLint64* params)
+{
+  _glptr_glGetInternalformati64v = (PFN_glGetInternalformati64v)GalogenGetProcAddress("glGetInternalformati64v");
+  _glptr_glGetInternalformati64v(target, internalformat, pname, bufSize, params);
+}
+PFN_glGetInternalformati64v _glptr_glGetInternalformati64v = _impl_glGetInternalformati64v;
+
+static void GL_APIENTRY _impl_glPatchParameterfv(GLenum pname, const GLfloat* values)
+{
+  _glptr_glPatchParameterfv = (PFN_glPatchParameterfv)GalogenGetProcAddress("glPatchParameterfv");
+  _glptr_glPatchParameterfv(pname, values);
+}
+PFN_glPatchParameterfv _glptr_glPatchParameterfv = _impl_glPatchParameterfv;
+
+static void GL_APIENTRY _impl_glScissorIndexed(GLuint index, GLint left, GLint bottom, GLsizei width, GLsizei height)
+{
+  _glptr_glScissorIndexed = (PFN_glScissorIndexed)GalogenGetProcAddress("glScissorIndexed");
+  _glptr_glScissorIndexed(index, left, bottom, width, height);
+}
+PFN_glScissorIndexed _glptr_glScissorIndexed = _impl_glScissorIndexed;
+
+static void GL_APIENTRY _impl_glPatchParameteri(GLenum pname, GLint value)
+{
+  _glptr_glPatchParameteri = (PFN_glPatchParameteri)GalogenGetProcAddress("glPatchParameteri");
+  _glptr_glPatchParameteri(pname, value);
+}
+PFN_glPatchParameteri _glptr_glPatchParameteri = _impl_glPatchParameteri;
+
+static void GL_APIENTRY _impl_glGetProgramStageiv(GLuint program, GLenum shadertype, GLenum pname, GLint* values)
+{
+  _glptr_glGetProgramStageiv = (PFN_glGetProgramStageiv)GalogenGetProcAddress("glGetProgramStageiv");
+  _glptr_glGetProgramStageiv(program, shadertype, pname, values);
+}
+PFN_glGetProgramStageiv _glptr_glGetProgramStageiv = _impl_glGetProgramStageiv;
+
+static void GL_APIENTRY _impl_glMemoryBarrier(GLbitfield barriers)
+{
+  _glptr_glMemoryBarrier = (PFN_glMemoryBarrier)GalogenGetProcAddress("glMemoryBarrier");
+  _glptr_glMemoryBarrier(barriers);
+}
+PFN_glMemoryBarrier _glptr_glMemoryBarrier = _impl_glMemoryBarrier;
+
+static void GL_APIENTRY _impl_glGetUniformSubroutineuiv(GLenum shadertype, GLint location, GLuint* params)
+{
+  _glptr_glGetUniformSubroutineuiv = (PFN_glGetUniformSubroutineuiv)GalogenGetProcAddress("glGetUniformSubroutineuiv");
+  _glptr_glGetUniformSubroutineuiv(shadertype, location, params);
+}
+PFN_glGetUniformSubroutineuiv _glptr_glGetUniformSubroutineuiv = _impl_glGetUniformSubroutineuiv;
+
+static void GL_APIENTRY _impl_glProgramUniform4iv(GLuint program, GLint location, GLsizei count, const GLint* value)
+{
+  _glptr_glProgramUniform4iv = (PFN_glProgramUniform4iv)GalogenGetProcAddress("glProgramUniform4iv");
+  _glptr_glProgramUniform4iv(program, location, count, value);
+}
+PFN_glProgramUniform4iv _glptr_glProgramUniform4iv = _impl_glProgramUniform4iv;
+
+static void GL_APIENTRY _impl_glGetActiveSubroutineUniformName(GLuint program, GLenum shadertype, GLuint index,
+                                                               GLsizei bufsize, GLsizei* length, GLchar* name)
+{
+  _glptr_glGetActiveSubroutineUniformName =
+      (PFN_glGetActiveSubroutineUniformName)GalogenGetProcAddress("glGetActiveSubroutineUniformName");
+  _glptr_glGetActiveSubroutineUniformName(program, shadertype, index, bufsize, length, name);
+}
+PFN_glGetActiveSubroutineUniformName _glptr_glGetActiveSubroutineUniformName = _impl_glGetActiveSubroutineUniformName;
+
+static void GL_APIENTRY _impl_glGetActiveSubroutineUniformiv(GLuint program, GLenum shadertype, GLuint index,
+                                                             GLenum pname, GLint* values)
+{
+  _glptr_glGetActiveSubroutineUniformiv =
+      (PFN_glGetActiveSubroutineUniformiv)GalogenGetProcAddress("glGetActiveSubroutineUniformiv");
+  _glptr_glGetActiveSubroutineUniformiv(program, shadertype, index, pname, values);
+}
+PFN_glGetActiveSubroutineUniformiv _glptr_glGetActiveSubroutineUniformiv = _impl_glGetActiveSubroutineUniformiv;
+
+static void GL_APIENTRY _impl_glProgramUniform1ui(GLuint program, GLint location, GLuint v0)
+{
+  _glptr_glProgramUniform1ui = (PFN_glProgramUniform1ui)GalogenGetProcAddress("glProgramUniform1ui");
+  _glptr_glProgramUniform1ui(program, location, v0);
+}
+PFN_glProgramUniform1ui _glptr_glProgramUniform1ui = _impl_glProgramUniform1ui;
+
+static GLuint GL_APIENTRY _impl_glGetSubroutineIndex(GLuint program, GLenum shadertype, const GLchar* name)
+{
+  _glptr_glGetSubroutineIndex = (PFN_glGetSubroutineIndex)GalogenGetProcAddress("glGetSubroutineIndex");
+  return _glptr_glGetSubroutineIndex(program, shadertype, name);
+}
+PFN_glGetSubroutineIndex _glptr_glGetSubroutineIndex = _impl_glGetSubroutineIndex;
+
+static GLint GL_APIENTRY _impl_glGetSubroutineUniformLocation(GLuint program, GLenum shadertype, const GLchar* name)
+{
+  _glptr_glGetSubroutineUniformLocation =
+      (PFN_glGetSubroutineUniformLocation)GalogenGetProcAddress("glGetSubroutineUniformLocation");
+  return _glptr_glGetSubroutineUniformLocation(program, shadertype, name);
+}
+PFN_glGetSubroutineUniformLocation _glptr_glGetSubroutineUniformLocation = _impl_glGetSubroutineUniformLocation;
+
+static void GL_APIENTRY _impl_glGetUniformdv(GLuint program, GLint location, GLdouble* params)
+{
+  _glptr_glGetUniformdv = (PFN_glGetUniformdv)GalogenGetProcAddress("glGetUniformdv");
+  _glptr_glGetUniformdv(program, location, params);
+}
+PFN_glGetUniformdv _glptr_glGetUniformdv = _impl_glGetUniformdv;
+
+static void GL_APIENTRY _impl_glUniformMatrix3x4dv(GLint location, GLsizei count, GLboolean transpose,
+                                                   const GLdouble* value)
+{
+  _glptr_glUniformMatrix3x4dv = (PFN_glUniformMatrix3x4dv)GalogenGetProcAddress("glUniformMatrix3x4dv");
+  _glptr_glUniformMatrix3x4dv(location, count, transpose, value);
+}
+PFN_glUniformMatrix3x4dv _glptr_glUniformMatrix3x4dv = _impl_glUniformMatrix3x4dv;
+
+static void GL_APIENTRY _impl_glUniformMatrix3x2dv(GLint location, GLsizei count, GLboolean transpose,
+                                                   const GLdouble* value)
+{
+  _glptr_glUniformMatrix3x2dv = (PFN_glUniformMatrix3x2dv)GalogenGetProcAddress("glUniformMatrix3x2dv");
+  _glptr_glUniformMatrix3x2dv(location, count, transpose, value);
+}
+PFN_glUniformMatrix3x2dv _glptr_glUniformMatrix3x2dv = _impl_glUniformMatrix3x2dv;
+
+static void GL_APIENTRY _impl_glUniform4dv(GLint location, GLsizei count, const GLdouble* value)
+{
+  _glptr_glUniform4dv = (PFN_glUniform4dv)GalogenGetProcAddress("glUniform4dv");
+  _glptr_glUniform4dv(location, count, value);
+}
+PFN_glUniform4dv _glptr_glUniform4dv = _impl_glUniform4dv;
+
+static void GL_APIENTRY _impl_glUniform3dv(GLint location, GLsizei count, const GLdouble* value)
+{
+  _glptr_glUniform3dv = (PFN_glUniform3dv)GalogenGetProcAddress("glUniform3dv");
+  _glptr_glUniform3dv(location, count, value);
+}
+PFN_glUniform3dv _glptr_glUniform3dv = _impl_glUniform3dv;
+
+static void GL_APIENTRY _impl_glUniform2dv(GLint location, GLsizei count, const GLdouble* value)
+{
+  _glptr_glUniform2dv = (PFN_glUniform2dv)GalogenGetProcAddress("glUniform2dv");
+  _glptr_glUniform2dv(location, count, value);
+}
+PFN_glUniform2dv _glptr_glUniform2dv = _impl_glUniform2dv;
+
+static void GL_APIENTRY _impl_glUniform1dv(GLint location, GLsizei count, const GLdouble* value)
+{
+  _glptr_glUniform1dv = (PFN_glUniform1dv)GalogenGetProcAddress("glUniform1dv");
+  _glptr_glUniform1dv(location, count, value);
+}
+PFN_glUniform1dv _glptr_glUniform1dv = _impl_glUniform1dv;
+
+static void GL_APIENTRY _impl_glUniform4d(GLint location, GLdouble x, GLdouble y, GLdouble z, GLdouble w)
+{
+  _glptr_glUniform4d = (PFN_glUniform4d)GalogenGetProcAddress("glUniform4d");
+  _glptr_glUniform4d(location, x, y, z, w);
+}
+PFN_glUniform4d _glptr_glUniform4d = _impl_glUniform4d;
+
+static void GL_APIENTRY _impl_glUniform3d(GLint location, GLdouble x, GLdouble y, GLdouble z)
+{
+  _glptr_glUniform3d = (PFN_glUniform3d)GalogenGetProcAddress("glUniform3d");
+  _glptr_glUniform3d(location, x, y, z);
+}
+PFN_glUniform3d _glptr_glUniform3d = _impl_glUniform3d;
+
+static void GL_APIENTRY _impl_glDrawArraysIndirect(GLenum mode, const void* indirect)
+{
+  _glptr_glDrawArraysIndirect = (PFN_glDrawArraysIndirect)GalogenGetProcAddress("glDrawArraysIndirect");
+  _glptr_glDrawArraysIndirect(mode, indirect);
+}
+PFN_glDrawArraysIndirect _glptr_glDrawArraysIndirect = _impl_glDrawArraysIndirect;
+
+static void GL_APIENTRY _impl_glBlendFuncSeparatei(GLuint buf, GLenum srcRGB, GLenum dstRGB, GLenum srcAlpha,
+                                                   GLenum dstAlpha)
+{
+  _glptr_glBlendFuncSeparatei = (PFN_glBlendFuncSeparatei)GalogenGetProcAddress("glBlendFuncSeparatei");
+  _glptr_glBlendFuncSeparatei(buf, srcRGB, dstRGB, srcAlpha, dstAlpha);
+}
+PFN_glBlendFuncSeparatei _glptr_glBlendFuncSeparatei = _impl_glBlendFuncSeparatei;
+
+static void GL_APIENTRY _impl_glBlendFunci(GLuint buf, GLenum src, GLenum dst)
+{
+  _glptr_glBlendFunci = (PFN_glBlendFunci)GalogenGetProcAddress("glBlendFunci");
+  _glptr_glBlendFunci(buf, src, dst);
+}
+PFN_glBlendFunci _glptr_glBlendFunci = _impl_glBlendFunci;
+
+static void GL_APIENTRY _impl_glBlendEquationSeparatei(GLuint buf, GLenum modeRGB, GLenum modeAlpha)
+{
+  _glptr_glBlendEquationSeparatei = (PFN_glBlendEquationSeparatei)GalogenGetProcAddress("glBlendEquationSeparatei");
+  _glptr_glBlendEquationSeparatei(buf, modeRGB, modeAlpha);
+}
+PFN_glBlendEquationSeparatei _glptr_glBlendEquationSeparatei = _impl_glBlendEquationSeparatei;
+
+static void GL_APIENTRY _impl_glGetObjectLabel(GLenum identifier, GLuint name, GLsizei bufSize, GLsizei* length,
+                                               GLchar* label)
+{
+  _glptr_glGetObjectLabel = (PFN_glGetObjectLabel)GalogenGetProcAddress("glGetObjectLabel");
+  _glptr_glGetObjectLabel(identifier, name, bufSize, length, label);
+}
+PFN_glGetObjectLabel _glptr_glGetObjectLabel = _impl_glGetObjectLabel;
+
+static void GL_APIENTRY _impl_glBlendEquationi(GLuint buf, GLenum mode)
+{
+  _glptr_glBlendEquationi = (PFN_glBlendEquationi)GalogenGetProcAddress("glBlendEquationi");
+  _glptr_glBlendEquationi(buf, mode);
+}
+PFN_glBlendEquationi _glptr_glBlendEquationi = _impl_glBlendEquationi;
+
 static void GL_APIENTRY _impl_glVertexAttribP4uiv(GLuint index, GLenum type, GLboolean normalized, const GLuint* value)
 {
   _glptr_glVertexAttribP4uiv = (PFN_glVertexAttribP4uiv)GalogenGetProcAddress("glVertexAttribP4uiv");
@@ -94,6 +986,13 @@ static void GL_APIENTRY _impl_glVertexAttribP2ui(GLuint index, GLenum type, GLbo
 }
 PFN_glVertexAttribP2ui _glptr_glVertexAttribP2ui = _impl_glVertexAttribP2ui;
 
+static void GL_APIENTRY _impl_glProgramUniform4uiv(GLuint program, GLint location, GLsizei count, const GLuint* value)
+{
+  _glptr_glProgramUniform4uiv = (PFN_glProgramUniform4uiv)GalogenGetProcAddress("glProgramUniform4uiv");
+  _glptr_glProgramUniform4uiv(program, location, count, value);
+}
+PFN_glProgramUniform4uiv _glptr_glProgramUniform4uiv = _impl_glProgramUniform4uiv;
+
 static void GL_APIENTRY _impl_glVertexAttribP1uiv(GLuint index, GLenum type, GLboolean normalized, const GLuint* value)
 {
   _glptr_glVertexAttribP1uiv = (PFN_glVertexAttribP1uiv)GalogenGetProcAddress("glVertexAttribP1uiv");
@@ -108,12 +1007,26 @@ static void GL_APIENTRY _impl_glGetQueryObjectui64v(GLuint id, GLenum pname, GLu
 }
 PFN_glGetQueryObjectui64v _glptr_glGetQueryObjectui64v = _impl_glGetQueryObjectui64v;
 
+static GLboolean GL_APIENTRY _impl_glIsTransformFeedback(GLuint id)
+{
+  _glptr_glIsTransformFeedback = (PFN_glIsTransformFeedback)GalogenGetProcAddress("glIsTransformFeedback");
+  return _glptr_glIsTransformFeedback(id);
+}
+PFN_glIsTransformFeedback _glptr_glIsTransformFeedback = _impl_glIsTransformFeedback;
+
 static void GL_APIENTRY _impl_glGetSamplerParameterfv(GLuint sampler, GLenum pname, GLfloat* params)
 {
   _glptr_glGetSamplerParameterfv = (PFN_glGetSamplerParameterfv)GalogenGetProcAddress("glGetSamplerParameterfv");
   _glptr_glGetSamplerParameterfv(sampler, pname, params);
 }
 PFN_glGetSamplerParameterfv _glptr_glGetSamplerParameterfv = _impl_glGetSamplerParameterfv;
+
+static GLboolean GL_APIENTRY _impl_glIsProgramPipeline(GLuint pipeline)
+{
+  _glptr_glIsProgramPipeline = (PFN_glIsProgramPipeline)GalogenGetProcAddress("glIsProgramPipeline");
+  return _glptr_glIsProgramPipeline(pipeline);
+}
+PFN_glIsProgramPipeline _glptr_glIsProgramPipeline = _impl_glIsProgramPipeline;
 
 static void GL_APIENTRY _impl_glSamplerParameterIuiv(GLuint sampler, GLenum pname, const GLuint* param)
 {
@@ -128,6 +1041,14 @@ static void GL_APIENTRY _impl_glSamplerParameterfv(GLuint sampler, GLenum pname,
   _glptr_glSamplerParameterfv(sampler, pname, param);
 }
 PFN_glSamplerParameterfv _glptr_glSamplerParameterfv = _impl_glSamplerParameterfv;
+
+static void GL_APIENTRY _impl_glDebugMessageInsert(GLenum source, GLenum type, GLuint id, GLenum severity,
+                                                   GLsizei length, const GLchar* buf)
+{
+  _glptr_glDebugMessageInsert = (PFN_glDebugMessageInsert)GalogenGetProcAddress("glDebugMessageInsert");
+  _glptr_glDebugMessageInsert(source, type, id, severity, length, buf);
+}
+PFN_glDebugMessageInsert _glptr_glDebugMessageInsert = _impl_glDebugMessageInsert;
 
 static void GL_APIENTRY _impl_glSamplerParameteriv(GLuint sampler, GLenum pname, const GLint* param)
 {
@@ -217,6 +1138,14 @@ static void GL_APIENTRY _impl_glGetInteger64i_v(GLenum target, GLuint index, GLi
 }
 PFN_glGetInteger64i_v _glptr_glGetInteger64i_v = _impl_glGetInteger64i_v;
 
+static void GL_APIENTRY _impl_glUniformMatrix2dv(GLint location, GLsizei count, GLboolean transpose,
+                                                 const GLdouble* value)
+{
+  _glptr_glUniformMatrix2dv = (PFN_glUniformMatrix2dv)GalogenGetProcAddress("glUniformMatrix2dv");
+  _glptr_glUniformMatrix2dv(location, count, transpose, value);
+}
+PFN_glUniformMatrix2dv _glptr_glUniformMatrix2dv = _impl_glUniformMatrix2dv;
+
 static void GL_APIENTRY _impl_glWaitSync(GLsync sync, GLbitfield flags, GLuint64 timeout)
 {
   _glptr_glWaitSync = (PFN_glWaitSync)GalogenGetProcAddress("glWaitSync");
@@ -247,6 +1176,14 @@ static void GL_APIENTRY _impl_glMultiDrawElementsBaseVertex(GLenum mode, const G
   _glptr_glMultiDrawElementsBaseVertex(mode, count, type, indices, drawcount, basevertex);
 }
 PFN_glMultiDrawElementsBaseVertex _glptr_glMultiDrawElementsBaseVertex = _impl_glMultiDrawElementsBaseVertex;
+
+static void GL_APIENTRY _impl_glProgramUniform4ui(GLuint program, GLint location, GLuint v0, GLuint v1, GLuint v2,
+                                                  GLuint v3)
+{
+  _glptr_glProgramUniform4ui = (PFN_glProgramUniform4ui)GalogenGetProcAddress("glProgramUniform4ui");
+  _glptr_glProgramUniform4ui(program, location, v0, v1, v2, v3);
+}
+PFN_glProgramUniform4ui _glptr_glProgramUniform4ui = _impl_glProgramUniform4ui;
 
 static void GL_APIENTRY _impl_glDrawElementsInstancedBaseVertex(GLenum mode, GLsizei count, GLenum type,
                                                                 const void* indices, GLsizei instancecount,
@@ -283,6 +1220,15 @@ static void GL_APIENTRY _impl_glGetActiveUniformName(GLuint program, GLuint unif
 }
 PFN_glGetActiveUniformName _glptr_glGetActiveUniformName = _impl_glGetActiveUniformName;
 
+static void GL_APIENTRY _impl_glGetProgramResourceiv(GLuint program, GLenum programInterface, GLuint index,
+                                                     GLsizei propCount, const GLenum* props, GLsizei bufSize,
+                                                     GLsizei* length, GLint* params)
+{
+  _glptr_glGetProgramResourceiv = (PFN_glGetProgramResourceiv)GalogenGetProcAddress("glGetProgramResourceiv");
+  _glptr_glGetProgramResourceiv(program, programInterface, index, propCount, props, bufSize, length, params);
+}
+PFN_glGetProgramResourceiv _glptr_glGetProgramResourceiv = _impl_glGetProgramResourceiv;
+
 static void GL_APIENTRY _impl_glGetUniformIndices(GLuint program, GLsizei uniformCount,
                                                   const GLchar* const* uniformNames, GLuint* uniformIndices)
 {
@@ -297,6 +1243,14 @@ static void GL_APIENTRY _impl_glTexBuffer(GLenum target, GLenum internalformat, 
   _glptr_glTexBuffer(target, internalformat, buffer);
 }
 PFN_glTexBuffer _glptr_glTexBuffer = _impl_glTexBuffer;
+
+static void GL_APIENTRY _impl_glUniformMatrix4dv(GLint location, GLsizei count, GLboolean transpose,
+                                                 const GLdouble* value)
+{
+  _glptr_glUniformMatrix4dv = (PFN_glUniformMatrix4dv)GalogenGetProcAddress("glUniformMatrix4dv");
+  _glptr_glUniformMatrix4dv(location, count, transpose, value);
+}
+PFN_glUniformMatrix4dv _glptr_glUniformMatrix4dv = _impl_glUniformMatrix4dv;
 
 static GLboolean GL_APIENTRY _impl_glIsVertexArray(GLuint array)
 {
@@ -318,6 +1272,13 @@ static void GL_APIENTRY _impl_glFlushMappedBufferRange(GLenum target, GLintptr o
   _glptr_glFlushMappedBufferRange(target, offset, length);
 }
 PFN_glFlushMappedBufferRange _glptr_glFlushMappedBufferRange = _impl_glFlushMappedBufferRange;
+
+static void GL_APIENTRY _impl_glProgramUniform2fv(GLuint program, GLint location, GLsizei count, const GLfloat* value)
+{
+  _glptr_glProgramUniform2fv = (PFN_glProgramUniform2fv)GalogenGetProcAddress("glProgramUniform2fv");
+  _glptr_glProgramUniform2fv(program, location, count, value);
+}
+PFN_glProgramUniform2fv _glptr_glProgramUniform2fv = _impl_glProgramUniform2fv;
 
 static void* GL_APIENTRY _impl_glMapBufferRange(GLenum target, GLintptr offset, GLsizeiptr length, GLbitfield access)
 {
@@ -368,6 +1329,21 @@ static void GL_APIENTRY _impl_glFramebufferTexture1D(GLenum target, GLenum attac
 }
 PFN_glFramebufferTexture1D _glptr_glFramebufferTexture1D = _impl_glFramebufferTexture1D;
 
+static void GL_APIENTRY _impl_glGetProgramInterfaceiv(GLuint program, GLenum programInterface, GLenum pname,
+                                                      GLint* params)
+{
+  _glptr_glGetProgramInterfaceiv = (PFN_glGetProgramInterfaceiv)GalogenGetProcAddress("glGetProgramInterfaceiv");
+  _glptr_glGetProgramInterfaceiv(program, programInterface, pname, params);
+}
+PFN_glGetProgramInterfaceiv _glptr_glGetProgramInterfaceiv = _impl_glGetProgramInterfaceiv;
+
+static void GL_APIENTRY _impl_glGetProgramPipelineiv(GLuint pipeline, GLenum pname, GLint* params)
+{
+  _glptr_glGetProgramPipelineiv = (PFN_glGetProgramPipelineiv)GalogenGetProcAddress("glGetProgramPipelineiv");
+  _glptr_glGetProgramPipelineiv(pipeline, pname, params);
+}
+PFN_glGetProgramPipelineiv _glptr_glGetProgramPipelineiv = _impl_glGetProgramPipelineiv;
+
 static void GL_APIENTRY _impl_glGenFramebuffers(GLsizei n, GLuint* framebuffers)
 {
   _glptr_glGenFramebuffers = (PFN_glGenFramebuffers)GalogenGetProcAddress("glGenFramebuffers");
@@ -381,6 +1357,13 @@ static void GL_APIENTRY _impl_glBindFramebuffer(GLenum target, GLuint framebuffe
   _glptr_glBindFramebuffer(target, framebuffer);
 }
 PFN_glBindFramebuffer _glptr_glBindFramebuffer = _impl_glBindFramebuffer;
+
+static void GL_APIENTRY _impl_glProgramUniform3i(GLuint program, GLint location, GLint v0, GLint v1, GLint v2)
+{
+  _glptr_glProgramUniform3i = (PFN_glProgramUniform3i)GalogenGetProcAddress("glProgramUniform3i");
+  _glptr_glProgramUniform3i(program, location, v0, v1, v2);
+}
+PFN_glProgramUniform3i _glptr_glProgramUniform3i = _impl_glProgramUniform3i;
 
 static void GL_APIENTRY _impl_glGetQueryObjecti64v(GLuint id, GLenum pname, GLint64* params)
 {
@@ -403,6 +1386,14 @@ static GLboolean GL_APIENTRY _impl_glIsFramebuffer(GLuint framebuffer)
 }
 PFN_glIsFramebuffer _glptr_glIsFramebuffer = _impl_glIsFramebuffer;
 
+static void GL_APIENTRY _impl_glUniformMatrix4x3dv(GLint location, GLsizei count, GLboolean transpose,
+                                                   const GLdouble* value)
+{
+  _glptr_glUniformMatrix4x3dv = (PFN_glUniformMatrix4x3dv)GalogenGetProcAddress("glUniformMatrix4x3dv");
+  _glptr_glUniformMatrix4x3dv(location, count, transpose, value);
+}
+PFN_glUniformMatrix4x3dv _glptr_glUniformMatrix4x3dv = _impl_glUniformMatrix4x3dv;
+
 static void GL_APIENTRY _impl_glGetRenderbufferParameteriv(GLenum target, GLenum pname, GLint* params)
 {
   _glptr_glGetRenderbufferParameteriv =
@@ -410,6 +1401,13 @@ static void GL_APIENTRY _impl_glGetRenderbufferParameteriv(GLenum target, GLenum
   _glptr_glGetRenderbufferParameteriv(target, pname, params);
 }
 PFN_glGetRenderbufferParameteriv _glptr_glGetRenderbufferParameteriv = _impl_glGetRenderbufferParameteriv;
+
+static void GL_APIENTRY _impl_glUniform1d(GLint location, GLdouble x)
+{
+  _glptr_glUniform1d = (PFN_glUniform1d)GalogenGetProcAddress("glUniform1d");
+  _glptr_glUniform1d(location, x);
+}
+PFN_glUniform1d _glptr_glUniform1d = _impl_glUniform1d;
 
 static void GL_APIENTRY _impl_glBindRenderbuffer(GLenum target, GLuint renderbuffer)
 {
@@ -446,6 +1444,13 @@ static void GL_APIENTRY _impl_glClearBufferfv(GLenum buffer, GLint drawbuffer, c
 }
 PFN_glClearBufferfv _glptr_glClearBufferfv = _impl_glClearBufferfv;
 
+static GLuint GL_APIENTRY _impl_glCreateShaderProgramv(GLenum type, GLsizei count, const GLchar* const* strings)
+{
+  _glptr_glCreateShaderProgramv = (PFN_glCreateShaderProgramv)GalogenGetProcAddress("glCreateShaderProgramv");
+  return _glptr_glCreateShaderProgramv(type, count, strings);
+}
+PFN_glCreateShaderProgramv _glptr_glCreateShaderProgramv = _impl_glCreateShaderProgramv;
+
 static void GL_APIENTRY _impl_glGetTexParameterIiv(GLenum target, GLenum pname, GLint* params)
 {
   _glptr_glGetTexParameterIiv = (PFN_glGetTexParameterIiv)GalogenGetProcAddress("glGetTexParameterIiv");
@@ -474,12 +1479,26 @@ static void GL_APIENTRY _impl_glUniform4uiv(GLint location, GLsizei count, const
 }
 PFN_glUniform4uiv _glptr_glUniform4uiv = _impl_glUniform4uiv;
 
+static void GL_APIENTRY _impl_glVertexAttribL3d(GLuint index, GLdouble x, GLdouble y, GLdouble z)
+{
+  _glptr_glVertexAttribL3d = (PFN_glVertexAttribL3d)GalogenGetProcAddress("glVertexAttribL3d");
+  _glptr_glVertexAttribL3d(index, x, y, z);
+}
+PFN_glVertexAttribL3d _glptr_glVertexAttribL3d = _impl_glVertexAttribL3d;
+
 static void GL_APIENTRY _impl_glUniform3ui(GLint location, GLuint v0, GLuint v1, GLuint v2)
 {
   _glptr_glUniform3ui = (PFN_glUniform3ui)GalogenGetProcAddress("glUniform3ui");
   _glptr_glUniform3ui(location, v0, v1, v2);
 }
 PFN_glUniform3ui _glptr_glUniform3ui = _impl_glUniform3ui;
+
+static void GL_APIENTRY _impl_glDrawTransformFeedback(GLenum mode, GLuint id)
+{
+  _glptr_glDrawTransformFeedback = (PFN_glDrawTransformFeedback)GalogenGetProcAddress("glDrawTransformFeedback");
+  _glptr_glDrawTransformFeedback(mode, id);
+}
+PFN_glDrawTransformFeedback _glptr_glDrawTransformFeedback = _impl_glDrawTransformFeedback;
 
 static void GL_APIENTRY _impl_glUniform1ui(GLint location, GLuint v0)
 {
@@ -516,6 +1535,15 @@ static void GL_APIENTRY _impl_glVertexAttribI2iv(GLuint index, const GLint* v)
 }
 PFN_glVertexAttribI2iv _glptr_glVertexAttribI2iv = _impl_glVertexAttribI2iv;
 
+static void GL_APIENTRY _impl_glGetShaderPrecisionFormat(GLenum shadertype, GLenum precisiontype, GLint* range,
+                                                         GLint* precision)
+{
+  _glptr_glGetShaderPrecisionFormat =
+      (PFN_glGetShaderPrecisionFormat)GalogenGetProcAddress("glGetShaderPrecisionFormat");
+  _glptr_glGetShaderPrecisionFormat(shadertype, precisiontype, range, precision);
+}
+PFN_glGetShaderPrecisionFormat _glptr_glGetShaderPrecisionFormat = _impl_glGetShaderPrecisionFormat;
+
 static void GL_APIENTRY _impl_glVertexAttribI1iv(GLuint index, const GLint* v)
 {
   _glptr_glVertexAttribI1iv = (PFN_glVertexAttribI1iv)GalogenGetProcAddress("glVertexAttribI1iv");
@@ -543,6 +1571,13 @@ static void GL_APIENTRY _impl_glVertexAttribI1ui(GLuint index, GLuint x)
   _glptr_glVertexAttribI1ui(index, x);
 }
 PFN_glVertexAttribI1ui _glptr_glVertexAttribI1ui = _impl_glVertexAttribI1ui;
+
+static void GL_APIENTRY _impl_glProgramUniform3iv(GLuint program, GLint location, GLsizei count, const GLint* value)
+{
+  _glptr_glProgramUniform3iv = (PFN_glProgramUniform3iv)GalogenGetProcAddress("glProgramUniform3iv");
+  _glptr_glProgramUniform3iv(program, location, count, value);
+}
+PFN_glProgramUniform3iv _glptr_glProgramUniform3iv = _impl_glProgramUniform3iv;
 
 static void GL_APIENTRY _impl_glVertexAttribI4i(GLuint index, GLint x, GLint y, GLint z, GLint w)
 {
@@ -578,6 +1613,13 @@ static void GL_APIENTRY _impl_glGetVertexAttribIiv(GLuint index, GLenum pname, G
   _glptr_glGetVertexAttribIiv(index, pname, params);
 }
 PFN_glGetVertexAttribIiv _glptr_glGetVertexAttribIiv = _impl_glGetVertexAttribIiv;
+
+static void GL_APIENTRY _impl_glProgramUniform2uiv(GLuint program, GLint location, GLsizei count, const GLuint* value)
+{
+  _glptr_glProgramUniform2uiv = (PFN_glProgramUniform2uiv)GalogenGetProcAddress("glProgramUniform2uiv");
+  _glptr_glProgramUniform2uiv(program, location, count, value);
+}
+PFN_glProgramUniform2uiv _glptr_glProgramUniform2uiv = _impl_glProgramUniform2uiv;
 
 static void GL_APIENTRY _impl_glVertexAttribIPointer(GLuint index, GLint size, GLenum type, GLsizei stride,
                                                      const void* pointer)
@@ -636,6 +1678,13 @@ static void GL_APIENTRY _impl_glGetIntegeri_v(GLenum target, GLuint index, GLint
   _glptr_glGetIntegeri_v(target, index, data);
 }
 PFN_glGetIntegeri_v _glptr_glGetIntegeri_v = _impl_glGetIntegeri_v;
+
+static void GL_APIENTRY _impl_glProgramUniform4fv(GLuint program, GLint location, GLsizei count, const GLfloat* value)
+{
+  _glptr_glProgramUniform4fv = (PFN_glProgramUniform4fv)GalogenGetProcAddress("glProgramUniform4fv");
+  _glptr_glProgramUniform4fv(program, location, count, value);
+}
+PFN_glProgramUniform4fv _glptr_glProgramUniform4fv = _impl_glProgramUniform4fv;
 
 static void GL_APIENTRY _impl_glColorMaski(GLuint index, GLboolean r, GLboolean g, GLboolean b, GLboolean a)
 {
@@ -698,6 +1747,13 @@ static void GL_APIENTRY _impl_glVertexAttrib4ubv(GLuint index, const GLubyte* v)
 }
 PFN_glVertexAttrib4ubv _glptr_glVertexAttrib4ubv = _impl_glVertexAttrib4ubv;
 
+static void GL_APIENTRY _impl_glProgramUniform1dv(GLuint program, GLint location, GLsizei count, const GLdouble* value)
+{
+  _glptr_glProgramUniform1dv = (PFN_glProgramUniform1dv)GalogenGetProcAddress("glProgramUniform1dv");
+  _glptr_glProgramUniform1dv(program, location, count, value);
+}
+PFN_glProgramUniform1dv _glptr_glProgramUniform1dv = _impl_glProgramUniform1dv;
+
 static void GL_APIENTRY _impl_glVertexAttrib4sv(GLuint index, const GLshort* v)
 {
   _glptr_glVertexAttrib4sv = (PFN_glVertexAttrib4sv)GalogenGetProcAddress("glVertexAttrib4sv");
@@ -718,6 +1774,13 @@ static void GL_APIENTRY _impl_glVertexAttrib4Nusv(GLuint index, const GLushort* 
   _glptr_glVertexAttrib4Nusv(index, v);
 }
 PFN_glVertexAttrib4Nusv _glptr_glVertexAttrib4Nusv = _impl_glVertexAttrib4Nusv;
+
+static void GL_APIENTRY _impl_glBindVertexBuffer(GLuint bindingindex, GLuint buffer, GLintptr offset, GLsizei stride)
+{
+  _glptr_glBindVertexBuffer = (PFN_glBindVertexBuffer)GalogenGetProcAddress("glBindVertexBuffer");
+  _glptr_glBindVertexBuffer(bindingindex, buffer, offset, stride);
+}
+PFN_glBindVertexBuffer _glptr_glBindVertexBuffer = _impl_glBindVertexBuffer;
 
 static void GL_APIENTRY _impl_glVertexAttrib4Nuiv(GLuint index, const GLuint* v)
 {
@@ -781,6 +1844,13 @@ static void GL_APIENTRY _impl_glVertexAttrib2sv(GLuint index, const GLshort* v)
   _glptr_glVertexAttrib2sv(index, v);
 }
 PFN_glVertexAttrib2sv _glptr_glVertexAttrib2sv = _impl_glVertexAttrib2sv;
+
+static void GL_APIENTRY _impl_glUseProgramStages(GLuint pipeline, GLbitfield stages, GLuint program)
+{
+  _glptr_glUseProgramStages = (PFN_glUseProgramStages)GalogenGetProcAddress("glUseProgramStages");
+  _glptr_glUseProgramStages(pipeline, stages, program);
+}
+PFN_glUseProgramStages _glptr_glUseProgramStages = _impl_glUseProgramStages;
 
 static void GL_APIENTRY _impl_glVertexAttrib2fv(GLuint index, const GLfloat* v)
 {
@@ -868,6 +1938,13 @@ static void GL_APIENTRY _impl_glUniformMatrix2fv(GLint location, GLsizei count, 
 }
 PFN_glUniformMatrix2fv _glptr_glUniformMatrix2fv = _impl_glUniformMatrix2fv;
 
+static void GL_APIENTRY _impl_glUniform2d(GLint location, GLdouble x, GLdouble y)
+{
+  _glptr_glUniform2d = (PFN_glUniform2d)GalogenGetProcAddress("glUniform2d");
+  _glptr_glUniform2d(location, x, y);
+}
+PFN_glUniform2d _glptr_glUniform2d = _impl_glUniform2d;
+
 static void GL_APIENTRY _impl_glUniform4iv(GLint location, GLsizei count, const GLint* value)
 {
   _glptr_glUniform4iv = (PFN_glUniform4iv)GalogenGetProcAddress("glUniform4iv");
@@ -895,6 +1972,13 @@ static void GL_APIENTRY _impl_glUniform2fv(GLint location, GLsizei count, const 
   _glptr_glUniform2fv(location, count, value);
 }
 PFN_glUniform2fv _glptr_glUniform2fv = _impl_glUniform2fv;
+
+static void GL_APIENTRY _impl_glProgramUniform3ui(GLuint program, GLint location, GLuint v0, GLuint v1, GLuint v2)
+{
+  _glptr_glProgramUniform3ui = (PFN_glProgramUniform3ui)GalogenGetProcAddress("glProgramUniform3ui");
+  _glptr_glProgramUniform3ui(program, location, v0, v1, v2);
+}
+PFN_glProgramUniform3ui _glptr_glProgramUniform3ui = _impl_glProgramUniform3ui;
 
 static void GL_APIENTRY _impl_glUniform3i(GLint location, GLint v0, GLint v1, GLint v2)
 {
@@ -931,6 +2015,14 @@ static void GL_APIENTRY _impl_glUniform1f(GLint location, GLfloat v0)
 }
 PFN_glUniform1f _glptr_glUniform1f = _impl_glUniform1f;
 
+static void GL_APIENTRY _impl_glUniformMatrix2x3dv(GLint location, GLsizei count, GLboolean transpose,
+                                                   const GLdouble* value)
+{
+  _glptr_glUniformMatrix2x3dv = (PFN_glUniformMatrix2x3dv)GalogenGetProcAddress("glUniformMatrix2x3dv");
+  _glptr_glUniformMatrix2x3dv(location, count, transpose, value);
+}
+PFN_glUniformMatrix2x3dv _glptr_glUniformMatrix2x3dv = _impl_glUniformMatrix2x3dv;
+
 static void GL_APIENTRY _impl_glUseProgram(GLuint program)
 {
   _glptr_glUseProgram = (PFN_glUseProgram)GalogenGetProcAddress("glUseProgram");
@@ -946,6 +2038,17 @@ static void GL_APIENTRY _impl_glShaderSource(GLuint shader, GLsizei count, const
 }
 PFN_glShaderSource _glptr_glShaderSource = _impl_glShaderSource;
 
+static void GL_APIENTRY _impl_glCopyImageSubData(GLuint srcName, GLenum srcTarget, GLint srcLevel, GLint srcX,
+                                                 GLint srcY, GLint srcZ, GLuint dstName, GLenum dstTarget,
+                                                 GLint dstLevel, GLint dstX, GLint dstY, GLint dstZ, GLsizei srcWidth,
+                                                 GLsizei srcHeight, GLsizei srcDepth)
+{
+  _glptr_glCopyImageSubData = (PFN_glCopyImageSubData)GalogenGetProcAddress("glCopyImageSubData");
+  _glptr_glCopyImageSubData(srcName, srcTarget, srcLevel, srcX, srcY, srcZ, dstName, dstTarget, dstLevel, dstX, dstY,
+                            dstZ, srcWidth, srcHeight, srcDepth);
+}
+PFN_glCopyImageSubData _glptr_glCopyImageSubData = _impl_glCopyImageSubData;
+
 static void GL_APIENTRY _impl_glLinkProgram(GLuint program)
 {
   _glptr_glLinkProgram = (PFN_glLinkProgram)GalogenGetProcAddress("glLinkProgram");
@@ -959,6 +2062,14 @@ static GLboolean GL_APIENTRY _impl_glIsShader(GLuint shader)
   return _glptr_glIsShader(shader);
 }
 PFN_glIsShader _glptr_glIsShader = _impl_glIsShader;
+
+static void GL_APIENTRY _impl_glUniformMatrix3dv(GLint location, GLsizei count, GLboolean transpose,
+                                                 const GLdouble* value)
+{
+  _glptr_glUniformMatrix3dv = (PFN_glUniformMatrix3dv)GalogenGetProcAddress("glUniformMatrix3dv");
+  _glptr_glUniformMatrix3dv(location, count, transpose, value);
+}
+PFN_glUniformMatrix3dv _glptr_glUniformMatrix3dv = _impl_glUniformMatrix3dv;
 
 static void GL_APIENTRY _impl_glGetVertexAttribPointerv(GLuint index, GLenum pname, void** pointer)
 {
@@ -1009,6 +2120,15 @@ static void GL_APIENTRY _impl_glGetProgramInfoLog(GLuint program, GLsizei bufSiz
   _glptr_glGetProgramInfoLog(program, bufSize, length, infoLog);
 }
 PFN_glGetProgramInfoLog _glptr_glGetProgramInfoLog = _impl_glGetProgramInfoLog;
+
+static void GL_APIENTRY _impl_glProgramUniformMatrix2x3fv(GLuint program, GLint location, GLsizei count,
+                                                          GLboolean transpose, const GLfloat* value)
+{
+  _glptr_glProgramUniformMatrix2x3fv =
+      (PFN_glProgramUniformMatrix2x3fv)GalogenGetProcAddress("glProgramUniformMatrix2x3fv");
+  _glptr_glProgramUniformMatrix2x3fv(program, location, count, transpose, value);
+}
+PFN_glProgramUniformMatrix2x3fv _glptr_glProgramUniformMatrix2x3fv = _impl_glProgramUniformMatrix2x3fv;
 
 static GLint GL_APIENTRY _impl_glGetAttribLocation(GLuint program, const GLchar* name)
 {
@@ -1061,6 +2181,13 @@ static void GL_APIENTRY _impl_glDeleteShader(GLuint shader)
   _glptr_glDeleteShader(shader);
 }
 PFN_glDeleteShader _glptr_glDeleteShader = _impl_glDeleteShader;
+
+static void GL_APIENTRY _impl_glProgramUniform3uiv(GLuint program, GLint location, GLsizei count, const GLuint* value)
+{
+  _glptr_glProgramUniform3uiv = (PFN_glProgramUniform3uiv)GalogenGetProcAddress("glProgramUniform3uiv");
+  _glptr_glProgramUniform3uiv(program, location, count, value);
+}
+PFN_glProgramUniform3uiv _glptr_glProgramUniform3uiv = _impl_glProgramUniform3uiv;
 
 static void GL_APIENTRY _impl_glDeleteProgram(GLuint program)
 {
@@ -1134,6 +2261,13 @@ static GLboolean GL_APIENTRY _impl_glUnmapBuffer(GLenum target)
 }
 PFN_glUnmapBuffer _glptr_glUnmapBuffer = _impl_glUnmapBuffer;
 
+static void GL_APIENTRY _impl_glDepthRangeIndexed(GLuint index, GLdouble n, GLdouble f)
+{
+  _glptr_glDepthRangeIndexed = (PFN_glDepthRangeIndexed)GalogenGetProcAddress("glDepthRangeIndexed");
+  _glptr_glDepthRangeIndexed(index, n, f);
+}
+PFN_glDepthRangeIndexed _glptr_glDepthRangeIndexed = _impl_glDepthRangeIndexed;
+
 static void GL_APIENTRY _impl_glVertexAttrib4dv(GLuint index, const GLdouble* v)
 {
   _glptr_glVertexAttrib4dv = (PFN_glVertexAttrib4dv)GalogenGetProcAddress("glVertexAttrib4dv");
@@ -1147,6 +2281,14 @@ static void* GL_APIENTRY _impl_glMapBuffer(GLenum target, GLenum access)
   return _glptr_glMapBuffer(target, access);
 }
 PFN_glMapBuffer _glptr_glMapBuffer = _impl_glMapBuffer;
+
+static void GL_APIENTRY _impl_glUniformMatrix2x4dv(GLint location, GLsizei count, GLboolean transpose,
+                                                   const GLdouble* value)
+{
+  _glptr_glUniformMatrix2x4dv = (PFN_glUniformMatrix2x4dv)GalogenGetProcAddress("glUniformMatrix2x4dv");
+  _glptr_glUniformMatrix2x4dv(location, count, transpose, value);
+}
+PFN_glUniformMatrix2x4dv _glptr_glUniformMatrix2x4dv = _impl_glUniformMatrix2x4dv;
 
 static void GL_APIENTRY _impl_glBufferSubData(GLenum target, GLintptr offset, GLsizeiptr size, const void* data)
 {
@@ -1168,6 +2310,14 @@ static void GL_APIENTRY _impl_glGetQueryObjectiv(GLuint id, GLenum pname, GLint*
   _glptr_glGetQueryObjectiv(id, pname, params);
 }
 PFN_glGetQueryObjectiv _glptr_glGetQueryObjectiv = _impl_glGetQueryObjectiv;
+
+static void GL_APIENTRY _impl_glTextureView(GLuint texture, GLenum target, GLuint origtexture, GLenum internalformat,
+                                            GLuint minlevel, GLuint numlevels, GLuint minlayer, GLuint numlayers)
+{
+  _glptr_glTextureView = (PFN_glTextureView)GalogenGetProcAddress("glTextureView");
+  _glptr_glTextureView(texture, target, origtexture, internalformat, minlevel, numlevels, minlayer, numlayers);
+}
+PFN_glTextureView _glptr_glTextureView = _impl_glTextureView;
 
 static GLboolean GL_APIENTRY _impl_glIsQuery(GLuint id)
 {
@@ -1217,6 +2367,15 @@ static void GL_APIENTRY _impl_glGenBuffers(GLsizei n, GLuint* buffers)
   _glptr_glGenBuffers(n, buffers);
 }
 PFN_glGenBuffers _glptr_glGenBuffers = _impl_glGenBuffers;
+
+static GLuint GL_APIENTRY _impl_glGetDebugMessageLog(GLuint count, GLsizei bufSize, GLenum* sources, GLenum* types,
+                                                     GLuint* ids, GLenum* severities, GLsizei* lengths,
+                                                     GLchar* messageLog)
+{
+  _glptr_glGetDebugMessageLog = (PFN_glGetDebugMessageLog)GalogenGetProcAddress("glGetDebugMessageLog");
+  return _glptr_glGetDebugMessageLog(count, bufSize, sources, types, ids, severities, lengths, messageLog);
+}
+PFN_glGetDebugMessageLog _glptr_glGetDebugMessageLog = _impl_glGetDebugMessageLog;
 
 static GLenum GL_APIENTRY _impl_glCheckFramebufferStatus(GLenum target)
 {
@@ -1276,6 +2435,13 @@ static void GL_APIENTRY _impl_glFramebufferRenderbuffer(GLenum target, GLenum at
 }
 PFN_glFramebufferRenderbuffer _glptr_glFramebufferRenderbuffer = _impl_glFramebufferRenderbuffer;
 
+static void GL_APIENTRY _impl_glGetVertexAttribLdv(GLuint index, GLenum pname, GLdouble* params)
+{
+  _glptr_glGetVertexAttribLdv = (PFN_glGetVertexAttribLdv)GalogenGetProcAddress("glGetVertexAttribLdv");
+  _glptr_glGetVertexAttribLdv(index, pname, params);
+}
+PFN_glGetVertexAttribLdv _glptr_glGetVertexAttribLdv = _impl_glGetVertexAttribLdv;
+
 static GLint GL_APIENTRY _impl_glGetFragDataIndex(GLuint program, const GLchar* name)
 {
   _glptr_glGetFragDataIndex = (PFN_glGetFragDataIndex)GalogenGetProcAddress("glGetFragDataIndex");
@@ -1310,6 +2476,22 @@ static void GL_APIENTRY _impl_glDeleteSync(GLsync sync)
   _glptr_glDeleteSync(sync);
 }
 PFN_glDeleteSync _glptr_glDeleteSync = _impl_glDeleteSync;
+
+static void GL_APIENTRY _impl_glVertexAttribL1d(GLuint index, GLdouble x)
+{
+  _glptr_glVertexAttribL1d = (PFN_glVertexAttribL1d)GalogenGetProcAddress("glVertexAttribL1d");
+  _glptr_glVertexAttribL1d(index, x);
+}
+PFN_glVertexAttribL1d _glptr_glVertexAttribL1d = _impl_glVertexAttribL1d;
+
+static void GL_APIENTRY _impl_glProgramUniformMatrix2x3dv(GLuint program, GLint location, GLsizei count,
+                                                          GLboolean transpose, const GLdouble* value)
+{
+  _glptr_glProgramUniformMatrix2x3dv =
+      (PFN_glProgramUniformMatrix2x3dv)GalogenGetProcAddress("glProgramUniformMatrix2x3dv");
+  _glptr_glProgramUniformMatrix2x3dv(program, location, count, transpose, value);
+}
+PFN_glProgramUniformMatrix2x3dv _glptr_glProgramUniformMatrix2x3dv = _impl_glProgramUniformMatrix2x3dv;
 
 static void GL_APIENTRY _impl_glGetCompressedTexImage(GLenum target, GLint level, void* img)
 {
@@ -1365,12 +2547,29 @@ static void GL_APIENTRY _impl_glSampleCoverage(GLfloat value, GLboolean invert)
 }
 PFN_glSampleCoverage _glptr_glSampleCoverage = _impl_glSampleCoverage;
 
+static GLint GL_APIENTRY _impl_glGetProgramResourceLocation(GLuint program, GLenum programInterface, const GLchar* name)
+{
+  _glptr_glGetProgramResourceLocation =
+      (PFN_glGetProgramResourceLocation)GalogenGetProcAddress("glGetProgramResourceLocation");
+  return _glptr_glGetProgramResourceLocation(program, programInterface, name);
+}
+PFN_glGetProgramResourceLocation _glptr_glGetProgramResourceLocation = _impl_glGetProgramResourceLocation;
+
 static void GL_APIENTRY _impl_glActiveTexture(GLenum texture)
 {
   _glptr_glActiveTexture = (PFN_glActiveTexture)GalogenGetProcAddress("glActiveTexture");
   _glptr_glActiveTexture(texture);
 }
 PFN_glActiveTexture _glptr_glActiveTexture = _impl_glActiveTexture;
+
+static void GL_APIENTRY _impl_glProgramUniformMatrix4x2dv(GLuint program, GLint location, GLsizei count,
+                                                          GLboolean transpose, const GLdouble* value)
+{
+  _glptr_glProgramUniformMatrix4x2dv =
+      (PFN_glProgramUniformMatrix4x2dv)GalogenGetProcAddress("glProgramUniformMatrix4x2dv");
+  _glptr_glProgramUniformMatrix4x2dv(program, location, count, transpose, value);
+}
+PFN_glProgramUniformMatrix4x2dv _glptr_glProgramUniformMatrix4x2dv = _impl_glProgramUniformMatrix4x2dv;
 
 static void GL_APIENTRY _impl_glCopyTexSubImage3D(GLenum target, GLint level, GLint xoffset, GLint yoffset,
                                                   GLint zoffset, GLint x, GLint y, GLsizei width, GLsizei height)
@@ -1405,12 +2604,27 @@ static void GL_APIENTRY _impl_glUniformMatrix4fv(GLint location, GLsizei count, 
 }
 PFN_glUniformMatrix4fv _glptr_glUniformMatrix4fv = _impl_glUniformMatrix4fv;
 
+static void GL_APIENTRY _impl_glObjectLabel(GLenum identifier, GLuint name, GLsizei length, const GLchar* label)
+{
+  _glptr_glObjectLabel = (PFN_glObjectLabel)GalogenGetProcAddress("glObjectLabel");
+  _glptr_glObjectLabel(identifier, name, length, label);
+}
+PFN_glObjectLabel _glptr_glObjectLabel = _impl_glObjectLabel;
+
 static const GLubyte* GL_APIENTRY _impl_glGetString(GLenum name)
 {
   _glptr_glGetString = (PFN_glGetString)GalogenGetProcAddress("glGetString");
   return _glptr_glGetString(name);
 }
 PFN_glGetString _glptr_glGetString = _impl_glGetString;
+
+static void GL_APIENTRY _impl_glUniformMatrix4x2dv(GLint location, GLsizei count, GLboolean transpose,
+                                                   const GLdouble* value)
+{
+  _glptr_glUniformMatrix4x2dv = (PFN_glUniformMatrix4x2dv)GalogenGetProcAddress("glUniformMatrix4x2dv");
+  _glptr_glUniformMatrix4x2dv(location, count, transpose, value);
+}
+PFN_glUniformMatrix4x2dv _glptr_glUniformMatrix4x2dv = _impl_glUniformMatrix4x2dv;
 
 static void GL_APIENTRY _impl_glRenderbufferStorage(GLenum target, GLenum internalformat, GLsizei width, GLsizei height)
 {
@@ -1425,6 +2639,15 @@ static GLboolean GL_APIENTRY _impl_glIsTexture(GLuint texture)
   return _glptr_glIsTexture(texture);
 }
 PFN_glIsTexture _glptr_glIsTexture = _impl_glIsTexture;
+
+static void GL_APIENTRY _impl_glGetActiveAtomicCounterBufferiv(GLuint program, GLuint bufferIndex, GLenum pname,
+                                                               GLint* params)
+{
+  _glptr_glGetActiveAtomicCounterBufferiv =
+      (PFN_glGetActiveAtomicCounterBufferiv)GalogenGetProcAddress("glGetActiveAtomicCounterBufferiv");
+  _glptr_glGetActiveAtomicCounterBufferiv(program, bufferIndex, pname, params);
+}
+PFN_glGetActiveAtomicCounterBufferiv _glptr_glGetActiveAtomicCounterBufferiv = _impl_glGetActiveAtomicCounterBufferiv;
 
 static void GL_APIENTRY _impl_glGenTextures(GLsizei n, GLuint* textures)
 {
@@ -1447,6 +2670,14 @@ static void GL_APIENTRY _impl_glTexSubImage1D(GLenum target, GLint level, GLint 
   _glptr_glTexSubImage1D(target, level, xoffset, width, format, type, pixels);
 }
 PFN_glTexSubImage1D _glptr_glTexSubImage1D = _impl_glTexSubImage1D;
+
+static void GL_APIENTRY _impl_glTexStorage3D(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width,
+                                             GLsizei height, GLsizei depth)
+{
+  _glptr_glTexStorage3D = (PFN_glTexStorage3D)GalogenGetProcAddress("glTexStorage3D");
+  _glptr_glTexStorage3D(target, levels, internalformat, width, height, depth);
+}
+PFN_glTexStorage3D _glptr_glTexStorage3D = _impl_glTexStorage3D;
 
 static GLenum GL_APIENTRY _impl_glClientWaitSync(GLsync sync, GLbitfield flags, GLuint64 timeout)
 {
@@ -1596,6 +2827,13 @@ static void GL_APIENTRY _impl_glGetActiveUniformBlockiv(GLuint program, GLuint u
 }
 PFN_glGetActiveUniformBlockiv _glptr_glGetActiveUniformBlockiv = _impl_glGetActiveUniformBlockiv;
 
+static void GL_APIENTRY _impl_glMinSampleShading(GLfloat value)
+{
+  _glptr_glMinSampleShading = (PFN_glMinSampleShading)GalogenGetProcAddress("glMinSampleShading");
+  _glptr_glMinSampleShading(value);
+}
+PFN_glMinSampleShading _glptr_glMinSampleShading = _impl_glMinSampleShading;
+
 static void GL_APIENTRY _impl_glGetUniformuiv(GLuint program, GLint location, GLuint* params)
 {
   _glptr_glGetUniformuiv = (PFN_glGetUniformuiv)GalogenGetProcAddress("glGetUniformuiv");
@@ -1609,6 +2847,15 @@ static void GL_APIENTRY _impl_glVertexAttrib4Nbv(GLuint index, const GLbyte* v)
   _glptr_glVertexAttrib4Nbv(index, v);
 }
 PFN_glVertexAttrib4Nbv _glptr_glVertexAttrib4Nbv = _impl_glVertexAttrib4Nbv;
+
+static void GL_APIENTRY _impl_glProgramUniformMatrix2x4dv(GLuint program, GLint location, GLsizei count,
+                                                          GLboolean transpose, const GLdouble* value)
+{
+  _glptr_glProgramUniformMatrix2x4dv =
+      (PFN_glProgramUniformMatrix2x4dv)GalogenGetProcAddress("glProgramUniformMatrix2x4dv");
+  _glptr_glProgramUniformMatrix2x4dv(program, location, count, transpose, value);
+}
+PFN_glProgramUniformMatrix2x4dv _glptr_glProgramUniformMatrix2x4dv = _impl_glProgramUniformMatrix2x4dv;
 
 static void GL_APIENTRY _impl_glTexImage3D(GLenum target, GLint level, GLint internalformat, GLsizei width,
                                            GLsizei height, GLsizei depth, GLint border, GLenum format, GLenum type,
@@ -1654,6 +2901,13 @@ static void GL_APIENTRY _impl_glGetTexParameterIuiv(GLenum target, GLenum pname,
 }
 PFN_glGetTexParameterIuiv _glptr_glGetTexParameterIuiv = _impl_glGetTexParameterIuiv;
 
+static void GL_APIENTRY _impl_glInvalidateBufferData(GLuint buffer)
+{
+  _glptr_glInvalidateBufferData = (PFN_glInvalidateBufferData)GalogenGetProcAddress("glInvalidateBufferData");
+  _glptr_glInvalidateBufferData(buffer);
+}
+PFN_glInvalidateBufferData _glptr_glInvalidateBufferData = _impl_glInvalidateBufferData;
+
 static void GL_APIENTRY _impl_glVertexAttrib4bv(GLuint index, const GLbyte* v)
 {
   _glptr_glVertexAttrib4bv = (PFN_glVertexAttrib4bv)GalogenGetProcAddress("glVertexAttrib4bv");
@@ -1681,6 +2935,13 @@ static GLboolean GL_APIENTRY _impl_glIsBuffer(GLuint buffer)
   return _glptr_glIsBuffer(buffer);
 }
 PFN_glIsBuffer _glptr_glIsBuffer = _impl_glIsBuffer;
+
+static void GL_APIENTRY _impl_glPauseTransformFeedback()
+{
+  _glptr_glPauseTransformFeedback = (PFN_glPauseTransformFeedback)GalogenGetProcAddress("glPauseTransformFeedback");
+  _glptr_glPauseTransformFeedback();
+}
+PFN_glPauseTransformFeedback _glptr_glPauseTransformFeedback = _impl_glPauseTransformFeedback;
 
 static void GL_APIENTRY _impl_glGetBufferPointerv(GLenum target, GLenum pname, void** params)
 {
@@ -1738,6 +2999,14 @@ static GLuint GL_APIENTRY _impl_glCreateShader(GLenum type)
 }
 PFN_glCreateShader _glptr_glCreateShader = _impl_glCreateShader;
 
+static void GL_APIENTRY _impl_glDrawTransformFeedbackInstanced(GLenum mode, GLuint id, GLsizei instancecount)
+{
+  _glptr_glDrawTransformFeedbackInstanced =
+      (PFN_glDrawTransformFeedbackInstanced)GalogenGetProcAddress("glDrawTransformFeedbackInstanced");
+  _glptr_glDrawTransformFeedbackInstanced(mode, id, instancecount);
+}
+PFN_glDrawTransformFeedbackInstanced _glptr_glDrawTransformFeedbackInstanced = _impl_glDrawTransformFeedbackInstanced;
+
 static void GL_APIENTRY _impl_glTexSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width,
                                               GLsizei height, GLenum format, GLenum type, const void* pixels)
 {
@@ -1745,6 +3014,13 @@ static void GL_APIENTRY _impl_glTexSubImage2D(GLenum target, GLint level, GLint 
   _glptr_glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels);
 }
 PFN_glTexSubImage2D _glptr_glTexSubImage2D = _impl_glTexSubImage2D;
+
+static void GL_APIENTRY _impl_glGetFloati_v(GLenum target, GLuint index, GLfloat* data)
+{
+  _glptr_glGetFloati_v = (PFN_glGetFloati_v)GalogenGetProcAddress("glGetFloati_v");
+  _glptr_glGetFloati_v(target, index, data);
+}
+PFN_glGetFloati_v _glptr_glGetFloati_v = _impl_glGetFloati_v;
 
 static void GL_APIENTRY _impl_glClearDepth(GLdouble depth)
 {
@@ -1759,6 +3035,13 @@ static void GL_APIENTRY _impl_glGetBufferSubData(GLenum target, GLintptr offset,
   _glptr_glGetBufferSubData(target, offset, size, data);
 }
 PFN_glGetBufferSubData _glptr_glGetBufferSubData = _impl_glGetBufferSubData;
+
+static void GL_APIENTRY _impl_glReleaseShaderCompiler()
+{
+  _glptr_glReleaseShaderCompiler = (PFN_glReleaseShaderCompiler)GalogenGetProcAddress("glReleaseShaderCompiler");
+  _glptr_glReleaseShaderCompiler();
+}
+PFN_glReleaseShaderCompiler _glptr_glReleaseShaderCompiler = _impl_glReleaseShaderCompiler;
 
 static void GL_APIENTRY _impl_glVertexAttrib4uiv(GLuint index, const GLuint* v)
 {
@@ -1782,6 +3065,13 @@ static void GL_APIENTRY _impl_glFramebufferTexture2D(GLenum target, GLenum attac
   _glptr_glFramebufferTexture2D(target, attachment, textarget, texture, level);
 }
 PFN_glFramebufferTexture2D _glptr_glFramebufferTexture2D = _impl_glFramebufferTexture2D;
+
+static void GL_APIENTRY _impl_glScissorArrayv(GLuint first, GLsizei count, const GLint* v)
+{
+  _glptr_glScissorArrayv = (PFN_glScissorArrayv)GalogenGetProcAddress("glScissorArrayv");
+  _glptr_glScissorArrayv(first, count, v);
+}
+PFN_glScissorArrayv _glptr_glScissorArrayv = _impl_glScissorArrayv;
 
 static void GL_APIENTRY _impl_glPointParameterf(GLenum pname, GLfloat param)
 {
@@ -1842,6 +3132,13 @@ static void GL_APIENTRY _impl_glTransformFeedbackVaryings(GLuint program, GLsize
 }
 PFN_glTransformFeedbackVaryings _glptr_glTransformFeedbackVaryings = _impl_glTransformFeedbackVaryings;
 
+static void GL_APIENTRY _impl_glProgramUniform1i(GLuint program, GLint location, GLint v0)
+{
+  _glptr_glProgramUniform1i = (PFN_glProgramUniform1i)GalogenGetProcAddress("glProgramUniform1i");
+  _glptr_glProgramUniform1i(program, location, v0);
+}
+PFN_glProgramUniform1i _glptr_glProgramUniform1i = _impl_glProgramUniform1i;
+
 static void GL_APIENTRY _impl_glVertexAttrib1d(GLuint index, GLdouble x)
 {
   _glptr_glVertexAttrib1d = (PFN_glVertexAttrib1d)GalogenGetProcAddress("glVertexAttrib1d");
@@ -1892,6 +3189,14 @@ static void GL_APIENTRY _impl_glDrawElementsInstanced(GLenum mode, GLsizei count
 }
 PFN_glDrawElementsInstanced _glptr_glDrawElementsInstanced = _impl_glDrawElementsInstanced;
 
+static void GL_APIENTRY _impl_glDeleteTransformFeedbacks(GLsizei n, const GLuint* ids)
+{
+  _glptr_glDeleteTransformFeedbacks =
+      (PFN_glDeleteTransformFeedbacks)GalogenGetProcAddress("glDeleteTransformFeedbacks");
+  _glptr_glDeleteTransformFeedbacks(n, ids);
+}
+PFN_glDeleteTransformFeedbacks _glptr_glDeleteTransformFeedbacks = _impl_glDeleteTransformFeedbacks;
+
 static void GL_APIENTRY _impl_glUniform3iv(GLint location, GLsizei count, const GLint* value)
 {
   _glptr_glUniform3iv = (PFN_glUniform3iv)GalogenGetProcAddress("glUniform3iv");
@@ -1941,6 +3246,13 @@ static void GL_APIENTRY _impl_glDisable(GLenum cap)
   _glptr_glDisable(cap);
 }
 PFN_glDisable _glptr_glDisable = _impl_glDisable;
+
+static void GL_APIENTRY _impl_glUniformSubroutinesuiv(GLenum shadertype, GLsizei count, const GLuint* indices)
+{
+  _glptr_glUniformSubroutinesuiv = (PFN_glUniformSubroutinesuiv)GalogenGetProcAddress("glUniformSubroutinesuiv");
+  _glptr_glUniformSubroutinesuiv(shadertype, count, indices);
+}
+PFN_glUniformSubroutinesuiv _glptr_glUniformSubroutinesuiv = _impl_glUniformSubroutinesuiv;
 
 static void GL_APIENTRY _impl_glVertexAttribI4uiv(GLuint index, const GLuint* v)
 {
@@ -2027,6 +3339,22 @@ static void GL_APIENTRY _impl_glDrawRangeElements(GLenum mode, GLuint start, GLu
 }
 PFN_glDrawRangeElements _glptr_glDrawRangeElements = _impl_glDrawRangeElements;
 
+static void GL_APIENTRY _impl_glTexStorage3DMultisample(GLenum target, GLsizei samples, GLenum internalformat,
+                                                        GLsizei width, GLsizei height, GLsizei depth,
+                                                        GLboolean fixedsamplelocations)
+{
+  _glptr_glTexStorage3DMultisample = (PFN_glTexStorage3DMultisample)GalogenGetProcAddress("glTexStorage3DMultisample");
+  _glptr_glTexStorage3DMultisample(target, samples, internalformat, width, height, depth, fixedsamplelocations);
+}
+PFN_glTexStorage3DMultisample _glptr_glTexStorage3DMultisample = _impl_glTexStorage3DMultisample;
+
+static void GL_APIENTRY _impl_glDrawElementsIndirect(GLenum mode, GLenum type, const void* indirect)
+{
+  _glptr_glDrawElementsIndirect = (PFN_glDrawElementsIndirect)GalogenGetProcAddress("glDrawElementsIndirect");
+  _glptr_glDrawElementsIndirect(mode, type, indirect);
+}
+PFN_glDrawElementsIndirect _glptr_glDrawElementsIndirect = _impl_glDrawElementsIndirect;
+
 static void GL_APIENTRY _impl_glDrawArraysInstanced(GLenum mode, GLint first, GLsizei count, GLsizei instancecount)
 {
   _glptr_glDrawArraysInstanced = (PFN_glDrawArraysInstanced)GalogenGetProcAddress("glDrawArraysInstanced");
@@ -2055,6 +3383,13 @@ static void GL_APIENTRY _impl_glVertexAttribI3iv(GLuint index, const GLint* v)
 }
 PFN_glVertexAttribI3iv _glptr_glVertexAttribI3iv = _impl_glVertexAttribI3iv;
 
+static void GL_APIENTRY _impl_glViewportArrayv(GLuint first, GLsizei count, const GLfloat* v)
+{
+  _glptr_glViewportArrayv = (PFN_glViewportArrayv)GalogenGetProcAddress("glViewportArrayv");
+  _glptr_glViewportArrayv(first, count, v);
+}
+PFN_glViewportArrayv _glptr_glViewportArrayv = _impl_glViewportArrayv;
+
 static void GL_APIENTRY _impl_glDrawRangeElementsBaseVertex(GLenum mode, GLuint start, GLuint end, GLsizei count,
                                                             GLenum type, const void* indices, GLint basevertex)
 {
@@ -2063,6 +3398,19 @@ static void GL_APIENTRY _impl_glDrawRangeElementsBaseVertex(GLenum mode, GLuint 
   _glptr_glDrawRangeElementsBaseVertex(mode, start, end, count, type, indices, basevertex);
 }
 PFN_glDrawRangeElementsBaseVertex _glptr_glDrawRangeElementsBaseVertex = _impl_glDrawRangeElementsBaseVertex;
+
+static void GL_APIENTRY _impl_glDrawElementsInstancedBaseVertexBaseInstance(GLenum mode, GLsizei count, GLenum type,
+                                                                            const void* indices, GLsizei instancecount,
+                                                                            GLint basevertex, GLuint baseinstance)
+{
+  _glptr_glDrawElementsInstancedBaseVertexBaseInstance =
+      (PFN_glDrawElementsInstancedBaseVertexBaseInstance)GalogenGetProcAddress(
+          "glDrawElementsInstancedBaseVertexBaseInstance");
+  _glptr_glDrawElementsInstancedBaseVertexBaseInstance(mode, count, type, indices, instancecount, basevertex,
+                                                       baseinstance);
+}
+PFN_glDrawElementsInstancedBaseVertexBaseInstance _glptr_glDrawElementsInstancedBaseVertexBaseInstance =
+    _impl_glDrawElementsInstancedBaseVertexBaseInstance;
 
 static void GL_APIENTRY _impl_glScissor(GLint x, GLint y, GLsizei width, GLsizei height)
 {
@@ -2085,6 +3433,13 @@ static void GL_APIENTRY _impl_glUniform3fv(GLint location, GLsizei count, const 
 }
 PFN_glUniform3fv _glptr_glUniform3fv = _impl_glUniform3fv;
 
+static void GL_APIENTRY _impl_glProgramUniform2iv(GLuint program, GLint location, GLsizei count, const GLint* value)
+{
+  _glptr_glProgramUniform2iv = (PFN_glProgramUniform2iv)GalogenGetProcAddress("glProgramUniform2iv");
+  _glptr_glProgramUniform2iv(program, location, count, value);
+}
+PFN_glProgramUniform2iv _glptr_glProgramUniform2iv = _impl_glProgramUniform2iv;
+
 static void GL_APIENTRY _impl_glUniform3uiv(GLint location, GLsizei count, const GLuint* value)
 {
   _glptr_glUniform3uiv = (PFN_glUniform3uiv)GalogenGetProcAddress("glUniform3uiv");
@@ -2105,6 +3460,13 @@ static void GL_APIENTRY _impl_glVertexAttribI4ubv(GLuint index, const GLubyte* v
   _glptr_glVertexAttribI4ubv(index, v);
 }
 PFN_glVertexAttribI4ubv _glptr_glVertexAttribI4ubv = _impl_glVertexAttribI4ubv;
+
+static void GL_APIENTRY _impl_glVertexAttribL1dv(GLuint index, const GLdouble* v)
+{
+  _glptr_glVertexAttribL1dv = (PFN_glVertexAttribL1dv)GalogenGetProcAddress("glVertexAttribL1dv");
+  _glptr_glVertexAttribL1dv(index, v);
+}
+PFN_glVertexAttribL1dv _glptr_glVertexAttribL1dv = _impl_glVertexAttribL1dv;
 
 static void GL_APIENTRY _impl_glGetBooleanv(GLenum pname, GLboolean* data)
 {
@@ -2170,6 +3532,14 @@ static void GL_APIENTRY _impl_glVertexAttrib3fv(GLuint index, const GLfloat* v)
 }
 PFN_glVertexAttrib3fv _glptr_glVertexAttrib3fv = _impl_glVertexAttrib3fv;
 
+static void GL_APIENTRY _impl_glProgramUniformMatrix2dv(GLuint program, GLint location, GLsizei count,
+                                                        GLboolean transpose, const GLdouble* value)
+{
+  _glptr_glProgramUniformMatrix2dv = (PFN_glProgramUniformMatrix2dv)GalogenGetProcAddress("glProgramUniformMatrix2dv");
+  _glptr_glProgramUniformMatrix2dv(program, location, count, transpose, value);
+}
+PFN_glProgramUniformMatrix2dv _glptr_glProgramUniformMatrix2dv = _impl_glProgramUniformMatrix2dv;
+
 static void GL_APIENTRY _impl_glGetSamplerParameteriv(GLuint sampler, GLenum pname, GLint* params)
 {
   _glptr_glGetSamplerParameteriv = (PFN_glGetSamplerParameteriv)GalogenGetProcAddress("glGetSamplerParameteriv");
@@ -2190,6 +3560,14 @@ static GLboolean GL_APIENTRY _impl_glIsProgram(GLuint program)
   return _glptr_glIsProgram(program);
 }
 PFN_glIsProgram _glptr_glIsProgram = _impl_glIsProgram;
+
+static void GL_APIENTRY _impl_glClearBufferData(GLenum target, GLenum internalformat, GLenum format, GLenum type,
+                                                const void* data)
+{
+  _glptr_glClearBufferData = (PFN_glClearBufferData)GalogenGetProcAddress("glClearBufferData");
+  _glptr_glClearBufferData(target, internalformat, format, type, data);
+}
+PFN_glClearBufferData _glptr_glClearBufferData = _impl_glClearBufferData;
 
 static void GL_APIENTRY _impl_glGetIntegerv(GLenum pname, GLint* data)
 {
@@ -2249,6 +3627,14 @@ static void GL_APIENTRY _impl_glPointSize(GLfloat size)
 }
 PFN_glPointSize _glptr_glPointSize = _impl_glPointSize;
 
+static void GL_APIENTRY _impl_glMultiDrawArraysIndirect(GLenum mode, const void* indirect, GLsizei drawcount,
+                                                        GLsizei stride)
+{
+  _glptr_glMultiDrawArraysIndirect = (PFN_glMultiDrawArraysIndirect)GalogenGetProcAddress("glMultiDrawArraysIndirect");
+  _glptr_glMultiDrawArraysIndirect(mode, indirect, drawcount, stride);
+}
+PFN_glMultiDrawArraysIndirect _glptr_glMultiDrawArraysIndirect = _impl_glMultiDrawArraysIndirect;
+
 static void GL_APIENTRY _impl_glMultiDrawElements(GLenum mode, const GLsizei* count, GLenum type,
                                                   const void* const* indices, GLsizei drawcount)
 {
@@ -2306,12 +3692,27 @@ static void GL_APIENTRY _impl_glBlendColor(GLfloat red, GLfloat green, GLfloat b
 }
 PFN_glBlendColor _glptr_glBlendColor = _impl_glBlendColor;
 
+static void GL_APIENTRY _impl_glProgramParameteri(GLuint program, GLenum pname, GLint value)
+{
+  _glptr_glProgramParameteri = (PFN_glProgramParameteri)GalogenGetProcAddress("glProgramParameteri");
+  _glptr_glProgramParameteri(program, pname, value);
+}
+PFN_glProgramParameteri _glptr_glProgramParameteri = _impl_glProgramParameteri;
+
 static void GL_APIENTRY _impl_glVertexAttribI3i(GLuint index, GLint x, GLint y, GLint z)
 {
   _glptr_glVertexAttribI3i = (PFN_glVertexAttribI3i)GalogenGetProcAddress("glVertexAttribI3i");
   _glptr_glVertexAttribI3i(index, x, y, z);
 }
 PFN_glVertexAttribI3i _glptr_glVertexAttribI3i = _impl_glVertexAttribI3i;
+
+static void GL_APIENTRY _impl_glGetActiveSubroutineName(GLuint program, GLenum shadertype, GLuint index,
+                                                        GLsizei bufsize, GLsizei* length, GLchar* name)
+{
+  _glptr_glGetActiveSubroutineName = (PFN_glGetActiveSubroutineName)GalogenGetProcAddress("glGetActiveSubroutineName");
+  _glptr_glGetActiveSubroutineName(program, shadertype, index, bufsize, length, name);
+}
+PFN_glGetActiveSubroutineName _glptr_glGetActiveSubroutineName = _impl_glGetActiveSubroutineName;
 
 static void GL_APIENTRY _impl_glCompressedTexSubImage3D(GLenum target, GLint level, GLint xoffset, GLint yoffset,
                                                         GLint zoffset, GLsizei width, GLsizei height, GLsizei depth,
@@ -2322,6 +3723,13 @@ static void GL_APIENTRY _impl_glCompressedTexSubImage3D(GLenum target, GLint lev
                                    data);
 }
 PFN_glCompressedTexSubImage3D _glptr_glCompressedTexSubImage3D = _impl_glCompressedTexSubImage3D;
+
+static void GL_APIENTRY _impl_glGetDoublei_v(GLenum target, GLuint index, GLdouble* data)
+{
+  _glptr_glGetDoublei_v = (PFN_glGetDoublei_v)GalogenGetProcAddress("glGetDoublei_v");
+  _glptr_glGetDoublei_v(target, index, data);
+}
+PFN_glGetDoublei_v _glptr_glGetDoublei_v = _impl_glGetDoublei_v;
 
 static void GL_APIENTRY _impl_glReadPixels(GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type,
                                            void* pixels)
@@ -2337,6 +3745,13 @@ static void GL_APIENTRY _impl_glTexParameterf(GLenum target, GLenum pname, GLflo
   _glptr_glTexParameterf(target, pname, param);
 }
 PFN_glTexParameterf _glptr_glTexParameterf = _impl_glTexParameterf;
+
+static void GL_APIENTRY _impl_glViewportIndexedfv(GLuint index, const GLfloat* v)
+{
+  _glptr_glViewportIndexedfv = (PFN_glViewportIndexedfv)GalogenGetProcAddress("glViewportIndexedfv");
+  _glptr_glViewportIndexedfv(index, v);
+}
+PFN_glViewportIndexedfv _glptr_glViewportIndexedfv = _impl_glViewportIndexedfv;
 
 static void GL_APIENTRY _impl_glSamplerParameterIiv(GLuint sampler, GLenum pname, const GLint* param)
 {
@@ -2358,6 +3773,15 @@ static void GL_APIENTRY _impl_glGetShaderInfoLog(GLuint shader, GLsizei bufSize,
   _glptr_glGetShaderInfoLog(shader, bufSize, length, infoLog);
 }
 PFN_glGetShaderInfoLog _glptr_glGetShaderInfoLog = _impl_glGetShaderInfoLog;
+
+static void GL_APIENTRY _impl_glProgramUniformMatrix4x3fv(GLuint program, GLint location, GLsizei count,
+                                                          GLboolean transpose, const GLfloat* value)
+{
+  _glptr_glProgramUniformMatrix4x3fv =
+      (PFN_glProgramUniformMatrix4x3fv)GalogenGetProcAddress("glProgramUniformMatrix4x3fv");
+  _glptr_glProgramUniformMatrix4x3fv(program, location, count, transpose, value);
+}
+PFN_glProgramUniformMatrix4x3fv _glptr_glProgramUniformMatrix4x3fv = _impl_glProgramUniformMatrix4x3fv;
 
 static void GL_APIENTRY _impl_glDepthFunc(GLenum func)
 {
@@ -2458,6 +3882,20 @@ static void GL_APIENTRY _impl_glTexImage1D(GLenum target, GLint level, GLint int
 }
 PFN_glTexImage1D _glptr_glTexImage1D = _impl_glTexImage1D;
 
+static void GL_APIENTRY _impl_glInvalidateFramebuffer(GLenum target, GLsizei numAttachments, const GLenum* attachments)
+{
+  _glptr_glInvalidateFramebuffer = (PFN_glInvalidateFramebuffer)GalogenGetProcAddress("glInvalidateFramebuffer");
+  _glptr_glInvalidateFramebuffer(target, numAttachments, attachments);
+}
+PFN_glInvalidateFramebuffer _glptr_glInvalidateFramebuffer = _impl_glInvalidateFramebuffer;
+
+static void GL_APIENTRY _impl_glDeleteProgramPipelines(GLsizei n, const GLuint* pipelines)
+{
+  _glptr_glDeleteProgramPipelines = (PFN_glDeleteProgramPipelines)GalogenGetProcAddress("glDeleteProgramPipelines");
+  _glptr_glDeleteProgramPipelines(n, pipelines);
+}
+PFN_glDeleteProgramPipelines _glptr_glDeleteProgramPipelines = _impl_glDeleteProgramPipelines;
+
 static void GL_APIENTRY _impl_glTexParameterfv(GLenum target, GLenum pname, const GLfloat* params)
 {
   _glptr_glTexParameterfv = (PFN_glTexParameterfv)GalogenGetProcAddress("glTexParameterfv");
@@ -2501,6 +3939,15 @@ static void GL_APIENTRY _impl_glVertexAttrib4Niv(GLuint index, const GLint* v)
   _glptr_glVertexAttrib4Niv(index, v);
 }
 PFN_glVertexAttrib4Niv _glptr_glVertexAttrib4Niv = _impl_glVertexAttrib4Niv;
+
+static void GL_APIENTRY _impl_glProgramUniformMatrix3x2dv(GLuint program, GLint location, GLsizei count,
+                                                          GLboolean transpose, const GLdouble* value)
+{
+  _glptr_glProgramUniformMatrix3x2dv =
+      (PFN_glProgramUniformMatrix3x2dv)GalogenGetProcAddress("glProgramUniformMatrix3x2dv");
+  _glptr_glProgramUniformMatrix3x2dv(program, location, count, transpose, value);
+}
+PFN_glProgramUniformMatrix3x2dv _glptr_glProgramUniformMatrix3x2dv = _impl_glProgramUniformMatrix3x2dv;
 
 static void GL_APIENTRY _impl_glGetVertexAttribIuiv(GLuint index, GLenum pname, GLuint* params)
 {

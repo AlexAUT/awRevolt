@@ -8,7 +8,7 @@ FileOutputStream::FileOutputStream(Path path)
 {
   assert(path.getType() != aw::Path::Type::Asset && "Never write to asset directory");
 
-  auto absPath = path.getCompletePath();
+  const auto& absPath = path.asString();
 
   mFileStream.open(absPath);
   rdbuf(mFileStream.rdbuf());

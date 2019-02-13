@@ -80,7 +80,7 @@ bool AssimpLoader::loadFromPath(const Path& assetPath, const char* hint)
 {
   mMeshPath = assetPath;
   aw::FileInputStream file(assetPath);
-  return loadFromStream(assetPath.getCompletePath(), file, hint);
+  return loadFromStream(assetPath.asString(), file, hint);
 }
 
 std::unique_ptr<aw::Mesh> AssimpLoader::loadMesh(const std::string& displayName, bool withSkeleton)
@@ -201,7 +201,7 @@ std::optional<Path> searchTexture(std::string_view texName, std::string_view tex
     return assetPath;
 
   // Look if model is inside another project
-  auto mPath = meshPath.getCompletePath();
+  auto mPath = meshPath.asString();
   mPath = mPath.erase(mPath.find_last_of('/'));
   auto dir = std::string(mPath) + "/../textures/meshes/" + texName.data();
   Path externalPath = createAbsolutePath(dir);

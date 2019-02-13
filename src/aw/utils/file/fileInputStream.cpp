@@ -9,7 +9,7 @@ namespace aw
 
 FileInputStream::FileInputStream(Path path) : std::istream(nullptr), mPath(path)
 {
-  auto absPath = path.getCompletePath();
+  const auto& absPath = path.asString();
   // Handle android asset file differently because they are zipped inside the apk
 #ifdef AW_ANDROID
   if (path.getType() == Path::Type::ASSET)

@@ -19,7 +19,7 @@ auto TextureFactory::create(const Path& path) -> TypePtr
   }
   auto tex2D = std::make_shared<aw::Texture2D>();
   tex2D->bind();
-  tex2D->loadFromImage(img);
+  tex2D->load(img);
   tex2D->unbind();
   return tex2D;
 }

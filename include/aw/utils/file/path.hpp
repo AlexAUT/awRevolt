@@ -16,7 +16,8 @@ public:
     Internal,
     External,
     Config,
-    Absolute
+    Absolute,
+    Custom
   };
 
 public:
@@ -29,8 +30,7 @@ public:
 
 public:
   Path() = default;
-  Path(Type type, std::string relativePath) : mRelativePath(std::move(relativePath)), mType(type) {}
-  Path(Type type, std::string_view relativePath) : mRelativePath(relativePath), mType(type){};
+  Path(Type type, std::string_view relativePath);
 
   Path(const Path&) = default;
   Path(Path&&) = default;
@@ -38,17 +38,20 @@ public:
   Path& operator=(Path&&) = default;
 
   Type getType() const { return mType; }
-  const std::string& getRelativePath() const { return mRelativePath; }
-  const std::string getCompletePath() const { return Path::getBasePath(mType) + getRelativePath(); }
+  std::string getBasePath() const { return std::string{mBasePathView}; }
+  std::string getRelativePath() const { return std::string{mRelativePathView}; }
+  const std::string& asString() const { return mCompletePath; }
 
-  std::string_view getExtension() const;
+  std::string getExtension() const;
 
   void append(std::string_view part);
   friend Path operator+(const Path& path, std::string_view toAdd);
 
 private:
 private:
-  std::string mRelativePath;
+  std::string mCompletePath;
+  std::string_view mBasePathView;
+  std::string_view mRelativePathView;
   Type mType;
 };
 
