@@ -1,7 +1,10 @@
 #pragma once
 
 #include <aw/graphics/core/texture2D.hpp>
+#include <aw/runtime/resourceManager/resourceDatabase.hpp>
 #include <aw/runtime/resourceManager/resourceFactory.hpp>
+#include <aw/runtime/resourceManager/resourcePtr.hpp>
+#include <aw/runtime/resourceManager/resourceRegistry.hpp>
 
 namespace aw
 {
@@ -14,9 +17,11 @@ class TextureFactory : public ResourceFactory<TextureFactory, Texture2D>
 {
 public:
   using TypePtr = std::shared_ptr<Texture2D>;
+  using Registry = ResourceRegistry<Texture2D>;
+  using ResourcePointer = ResourcePtr<Texture2D>;
 
 public:
-  TypePtr create(const Path& path);
+  ResourcePointer create(Registry& registry, ResourceDatabase& dataBase, const Path& path);
 
 private:
 private:

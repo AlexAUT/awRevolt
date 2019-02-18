@@ -9,20 +9,37 @@
 
 namespace aw
 {
-Path::Path(Type type, std::string_view relativePath)
+Path::Path(Type type, std::string_view relativePath) : mType(type)
 {
-  mCompletePath = getBasePath(type);
-  mBasePathView = mCompletePath;
-  mCompletePath += relativePath;
-  mRelativePathView = {mCompletePath.data() + mBasePathView.size(), mCompletePath.size() - mBasePathView.size()};
+  mPath = getBasePath(type);
+  if (mPath.size() > 1 && mPath.back() == '/')
+    mPath.pop_back();
+
+  append(relativePath);
 }
 
-void Path::append(const std::string_view part)
+Path::Path(std::string path) : mPath(path), mType(Path::Type::Custom) {}
+
+void Path::append(std::string_view part)
 {
-  if (mCompletePath.back() != '/' && mCompletePath.back() != '\\')
-    mCompletePath.push_back('/');
-  mCompletePath.append(part);
-  mRelativePathView = {mCompletePath.data() + mBasePathView.size(), mCompletePath.size() - mBasePathView.size()};
+  if (part.empty() || part.find_first_not_of('/') == std::string::npos)
+    return;
+
+  if (part.front() != '/' && !mPath.empty())
+    mPath.push_back('/');
+
+  mPath.append(part);
+  if (mPath.size() > 1 && mPath.back() == '/')
+    mPath.pop_back();
+}
+
+void Path::removeBasePath(const Path& base)
+{
+  auto cutPos = mPath.find_first_not_of(base.mPath);
+  if (cutPos != std::string::npos)
+  {
+    mPath.erase(0, cutPos);
+  }
 }
 
 Path operator+(const Path& path, std::string_view toAdd)
@@ -32,14 +49,37 @@ Path operator+(const Path& path, std::string_view toAdd)
   return result;
 }
 
+Path operator-(const Path& fullPath, const Path& partToRemove)
+{
+  Path result = fullPath;
+  result.removeBasePath(partToRemove);
+  return result;
+}
+
+std::string Path::getFileName() const
+{
+  if (mPath.empty())
+    return "";
+
+  auto lastSlashPos = mPath.find_last_of('/');
+  if (lastSlashPos == std::string::npos)
+    return mPath;
+
+  auto dotPos = mPath.find_last_of('.');
+  if (dotPos == std::string::npos || dotPos < lastSlashPos)
+    return mPath.substr(lastSlashPos + 1);
+  else
+    return mPath.substr(lastSlashPos + 1, dotPos - 1 - lastSlashPos);
+}
+
 std::string Path::getExtension() const
 {
-  auto lastSlashPos = mRelativePathView.find_last_of('/');
+  auto lastSlashPos = mPath.find_last_of('/');
   if (lastSlashPos == std::string::npos)
     lastSlashPos = 0;
-  auto dotPos = mRelativePathView.find_last_of('.');
-  if (dotPos > lastSlashPos && dotPos < mRelativePathView.size() - 1)
-    return std::string(mRelativePathView.substr(dotPos + 1));
+  auto dotPos = mPath.find_last_of('.');
+  if (dotPos > lastSlashPos && dotPos < mPath.size() - 1)
+    return std::string(mPath.substr(dotPos));
 
   return "";
 }

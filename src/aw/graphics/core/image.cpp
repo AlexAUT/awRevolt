@@ -62,7 +62,7 @@ bool Image::load(const aw::Path& path)
       stbi_image_free(ptr);
       return false;
     }
-    size_t size = pixelFormatImageSize(mPixelFormat, mWidth, mHeight);
+    size_t size = pixelFormatToImageSize(mPixelFormat, mWidth, mHeight);
     std::memcpy(mData.get(), ptr, size);
     stbi_image_free(ptr);
 
@@ -89,7 +89,7 @@ void Image::setPixelFormat(PixelFormat pixelFormat)
 
 void Image::resizeInternalPtr()
 {
-  size_t size = pixelFormatImageSize(mPixelFormat, mWidth, mHeight);
+  size_t size = pixelFormatToImageSize(mPixelFormat, mWidth, mHeight);
   uint8* newBuffer = static_cast<uint8*>(realloc(mData.get(), size));
   mData.release();
   if (newBuffer)

@@ -20,19 +20,21 @@ Texture2D::~Texture2D()
 
 void Texture2D::load(const Image& image)
 {
-  auto pixelFormat = image.getPixelFormat();
-  auto [format, dataType] = pixelFormatToOpengl(pixelFormat);
-  load(image.getPixels(), image.getWidth(), image.getHeight(), format, format, dataType);
+  load(image.getPixels(), image.getWidth(), image.getHeight(), image.getPixelFormat());
 }
 
-void Texture2D::load(const void* data, unsigned width, unsigned height)
+void Texture2D::load(const void* data, unsigned width, unsigned height, PixelFormat pixelFormat)
 {
-  load(data, width, height, GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE);
-}
-void Texture2D::load(const void* data, unsigned width, unsigned height, GLenum interalFormat, GLenum format,
-                     GLenum dataType)
-{
-  GL_CHECK(glTexImage2D(GL_TEXTURE_2D, 0, interalFormat, width, height, 0, format, dataType, data));
+  auto [format, dataType] = pixelFormatToOpengl(pixelFormat);
+
+  if (isPixelFormatCompressed(pixelFormat))
+    GL_CHECK(glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, dataType, data));
+  else
+  {
+    auto imageSize = pixelFormatToImageSize(pixelFormat, width, height);
+    GL_CHECK(glCompressedTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, imageSize, data));
+  }
+
   setMinFilter(MinFilter::LINEAR);
   setMagFilter(MagFilter::LINEAR);
   setWrapMode(WrapMode::REPEAT);
@@ -170,6 +172,18 @@ std::tuple<GLenum, GLenum> pixelFormatToOpengl(PixelFormat format)
     return {GL_COMPRESSED_RGBA8_ETC2_EAC, GL_UNSIGNED_BYTE};
   case PixelFormat::RGBA1_ETC2:
     return {GL_COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2, GL_UNSIGNED_BYTE};
+  // Depth
+  case PixelFormat::Depth16:
+    return {GL_DEPTH_COMPONENT16, GL_UNSIGNED_BYTE};
+  case PixelFormat::Depth24:
+    return {GL_DEPTH_COMPONENT24, GL_UNSIGNED_BYTE};
+  case PixelFormat::DepthFloat:
+    return {GL_DEPTH_COMPONENT32F, GL_FLOAT};
+  // Depth stencil
+  case PixelFormat::Depth24Stencil8:
+    return {GL_DEPTH24_STENCIL8, GL_UNSIGNED_BYTE};
+  case PixelFormat::DepthFloatStencil8:
+    return {GL_DEPTH32F_STENCIL8, GL_UNSIGNED_BYTE};
   }
   return {GL_NONE, GL_NONE};
 }

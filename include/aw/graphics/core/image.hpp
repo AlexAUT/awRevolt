@@ -35,7 +35,7 @@ public:
   uint8* getPixels() { return mData.get(); }
   const uint8* getPixels() const { return mData.get(); }
 
-  size_t getPixelsSize() const { return pixelFormatImageSize(mPixelFormat, mWidth, mHeight); }
+  size_t getPixelsSize() const { return pixelFormatToImageSize(mPixelFormat, mWidth, mHeight); }
 
   PixelFormat getPixelFormat() const { return mPixelFormat; }
 

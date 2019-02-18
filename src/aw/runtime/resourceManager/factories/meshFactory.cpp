@@ -9,7 +9,7 @@ auto MeshFactory::create(const aw::Path& path, ResourceManager& resourceManager)
   AssimpLoader loader(resourceManager);
   loader.loadFromPath(path);
 
-  auto meshUPtr = loader.loadMesh(path.getRelativePath());
+  auto meshUPtr = loader.loadMesh(path.asString());
   return TypePtr{meshUPtr.release()};
 }
 

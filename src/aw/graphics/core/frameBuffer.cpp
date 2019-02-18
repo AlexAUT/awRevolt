@@ -24,7 +24,7 @@ void FrameBuffer::create(unsigned width, unsigned height, unsigned depthPrecisio
   bind();
 
   mColorTexture.bind();
-  mColorTexture.load(nullptr, width, height);
+  mColorTexture.load(nullptr, width, height, PixelFormat::RGB8);
   mColorTexture.setMagFilter(Texture2D::MagFilter::NEAREST);
   GL_CHECK(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, mColorTexture.getId(), 0));
 
@@ -32,7 +32,7 @@ void FrameBuffer::create(unsigned width, unsigned height, unsigned depthPrecisio
   {
     mDepthTexture.bind();
 
-    mDepthTexture.load(nullptr, width, height, GL_DEPTH_COMPONENT, GL_DEPTH_COMPONENT, GL_UNSIGNED_SHORT);
+    mDepthTexture.load(nullptr, width, height, PixelFormat::Depth16);
 
     mDepthTexture.setMagFilter(Texture2D::MagFilter::LINEAR);
     mDepthTexture.setMinFilter(Texture2D::MinFilter::LINEAR);

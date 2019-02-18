@@ -4,20 +4,20 @@
 
 namespace aw::msg
 {
-template <typename HostClass, typename EventType>
+template <typename HostClass, typename... EventTypes>
 class Listener
 {
 public:
   Listener(msg::Bus& bus) :
-      mSubscription(bus.subscribeToChannel<EventType>([this](const auto& event) {
+      mSubscriptions({bus.subscribeToChannel<EventTypes>([this](const auto& event) {
         auto* instance = static_cast<HostClass*>(this);
         instance->receive(event);
-      }))
+      })...})
   {
   }
 
 private:
 private:
-  typename msg::Channel<EventType>::SubscriptionType mSubscription;
+  std::tuple<typename msg::Channel<EventTypes>::SubscriptionType...> mSubscriptions;
 };
 } // namespace aw::msg

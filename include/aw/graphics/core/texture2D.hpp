@@ -1,5 +1,8 @@
 #pragma once
 
+#include <aw/graphics/core/pixelFormats.hpp>
+#include <aw/utils/math/vector.hpp>
+
 typedef unsigned GLenum;
 
 namespace aw
@@ -33,8 +36,8 @@ public:
   ~Texture2D();
 
   void load(const Image& img);
-  void load(const void* data, unsigned width, unsigned height);
-  void load(const void* data, unsigned width, unsigned height, GLenum interalFormat, GLenum format, GLenum dataType);
+  void load(const void* data, unsigned width, unsigned height, PixelFormat pixelFormat);
+  void loadCompressed(const void* data, PixelFormat format);
 
   void bind(unsigned textureUnit = 0) const;
   void unbind() const;
@@ -46,10 +49,15 @@ public:
   void setWrapModeT(WrapMode mode);
 
   unsigned getId() const;
+  Vec2u getSize() const { return mSize; }
+  PixelFormat getPixelFormat() const { return mPixelFormat; }
 
 private:
 private:
   unsigned mId;
+
+  Vec2u mSize;
+  PixelFormat mPixelFormat;
 
   // Used to unbind the correct texture unit
   mutable unsigned mBoundTextureUnit;

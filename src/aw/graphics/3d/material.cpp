@@ -11,7 +11,7 @@ Texture2D* getFallbackTexture()
     Texture2D* tex = new Texture2D();
     uint8 color[] = {255, 20, 147};
     tex->bind();
-    tex->load(&color, 1, 1, GL_RGB8, GL_RGB, GL_UNSIGNED_BYTE);
+    tex->load(&color, 1, 1, PixelFormat::RGB8);
     tex->unbind();
     return tex;
   };

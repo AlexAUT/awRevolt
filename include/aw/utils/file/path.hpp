@@ -31,6 +31,7 @@ public:
 public:
   Path() = default;
   Path(Type type, std::string_view relativePath);
+  Path(std::string path);
 
   Path(const Path&) = default;
   Path(Path&&) = default;
@@ -38,20 +39,19 @@ public:
   Path& operator=(Path&&) = default;
 
   Type getType() const { return mType; }
-  std::string getBasePath() const { return std::string{mBasePathView}; }
-  std::string getRelativePath() const { return std::string{mRelativePathView}; }
-  const std::string& asString() const { return mCompletePath; }
+  const std::string& asString() const { return mPath; }
 
+  std::string getFileName() const;
   std::string getExtension() const;
 
   void append(std::string_view part);
+  void removeBasePath(const Path& base);
   friend Path operator+(const Path& path, std::string_view toAdd);
+  friend Path operator-(const Path& fullPath, const Path& partPath);
 
 private:
 private:
-  std::string mCompletePath;
-  std::string_view mBasePathView;
-  std::string_view mRelativePathView;
+  std::string mPath;
   Type mType;
 };
 
