@@ -1,3 +1,4 @@
-set(SOURCE_FILES_UTILS ${SOURCE_FILES_UTILS}
-    ${CMAKE_CURRENT_SOURCE_DIR}/date.cpp
-    PARENT_SCOPE)
+target_sources(awUtils
+  PUBLIC
+  ${CMAKE_CURRENT_SOURCE_DIR}/date.cpp
+)

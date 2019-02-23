@@ -1,7 +1,7 @@
-#
-set(SOURCE_FILES_UTILS ${SOURCE_FILES_UTILS}
-    ${CMAKE_CURRENT_SOURCE_DIR}/frustum.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/matrix.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/quaternion.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/vector.cpp
-    PARENT_SCOPE)
+target_sources(awUtils
+  PRIVATE
+  ${CMAKE_CURRENT_SOURCE_DIR}/frustum.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/matrix.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/quaternion.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/vector.cpp
+)

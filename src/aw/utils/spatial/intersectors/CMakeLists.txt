@@ -1,4 +1,5 @@
-set(SOURCE_FILES_UTILS ${SOURCE_FILES_UTILS}
+target_sources(awUtils
+  PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/AABBIntersectors.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/rayIntersectors.cpp
-  PARENT_SCOPE)
+)

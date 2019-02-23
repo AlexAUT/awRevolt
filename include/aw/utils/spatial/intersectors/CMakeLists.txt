@@ -1,4 +1,5 @@
-set(HEADER_FILES_UTILS ${HEADER_FILES_UTILS}
+target_sources(awUtils
+  PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR}/AABBIntersectors.hpp
   ${CMAKE_CURRENT_SOURCE_DIR}/rayIntersectors.hpp
-  PARENT_SCOPE)
+)

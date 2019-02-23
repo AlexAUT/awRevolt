@@ -5,7 +5,7 @@
 #include <array>
 #include <string>
 
-#include <tinyfiledialogs.h>
+#include <tinyfd/tinyfiledialogs.h>
 
 namespace aw::fileDialog
 {
