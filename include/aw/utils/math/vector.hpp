@@ -28,6 +28,27 @@ typedef glm::uvec4 Vec4u;
 typedef glm::dvec4 Vec4d;
 } // namespace aw
 
+// Serialize function for all glm vectors
+namespace glm
+{
+#ifndef CEREAL_NVP
+#define CEREAL_NVP(x)
+#endif
+template <class Archive, glm::length_t length, typename VectorType, qualifier precesion>
+void serialize(Archive& archive, vec<length, VectorType, precesion>& vec)
+{
+  if constexpr (length >= 1)
+    archive(CEREAL_NVP(vec.x));
+  if constexpr (length >= 2)
+    archive(CEREAL_NVP(vec.y));
+  if constexpr (length >= 3)
+    archive(CEREAL_NVP(vec.z));
+  if constexpr (length >= 4)
+    archive(CEREAL_NVP(vec.x));
+}
+
+} // namespace glm
+
 std::ostream& operator<<(std::ostream& stream, const aw::Vec2& vec);
 std::ostream& operator<<(std::ostream& stream, const aw::Vec2i& vec);
 std::ostream& operator<<(std::ostream& stream, const aw::Vec2u& vec);

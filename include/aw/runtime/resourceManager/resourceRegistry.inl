@@ -91,7 +91,7 @@ template <typename ResourceType>
 auto ResourceRegistry<ResourceType>::get(const std::string& name) -> ResourcePointer
 {
   if (!has(name))
-    return nullptr;
+    return {0, nullptr};
 
   auto id = mResourceDatabase.get(name);
   return get(id);

@@ -18,7 +18,10 @@ Path::Path(Type type, std::string_view relativePath) : mType(type)
   append(relativePath);
 }
 
-Path::Path(std::string path) : mPath(path), mType(Path::Type::Custom) {}
+Path::Path(std::string path) : mPath(path), mType(Path::Type::Custom)
+{
+  std::replace(mPath.begin(), mPath.end(), '\\', '/');
+}
 
 void Path::append(std::string_view part)
 {
@@ -36,9 +39,9 @@ void Path::append(std::string_view part)
 void Path::removeBasePath(const Path& base)
 {
   auto cutPos = mPath.find_first_not_of(base.mPath);
-  if (cutPos != std::string::npos)
+  if (cutPos > 0 && cutPos != std::string::npos)
   {
-    mPath.erase(0, cutPos);
+    mPath.erase(0, cutPos - 1);
   }
 }
 
@@ -64,6 +67,20 @@ std::string Path::getFileName() const
   auto lastSlashPos = mPath.find_last_of('/');
   if (lastSlashPos == std::string::npos)
     return mPath;
+  if (lastSlashPos == mPath.size() - 1)
+    return "";
+
+  return mPath.substr(lastSlashPos + 1);
+}
+
+std::string Path::getFileStem() const
+{
+  if (mPath.empty())
+    return "";
+
+  auto lastSlashPos = mPath.find_last_of('/');
+  if (lastSlashPos == std::string::npos)
+    return mPath;
 
   auto dotPos = mPath.find_last_of('.');
   if (dotPos == std::string::npos || dotPos < lastSlashPos)
@@ -82,6 +99,22 @@ std::string Path::getExtension() const
     return std::string(mPath.substr(dotPos));
 
   return "";
+}
+
+void Path::removeFileName()
+{
+  if (mPath.empty())
+    return;
+
+  auto lastSlashPos = mPath.find_last_of('/');
+  if (lastSlashPos == std::string::npos)
+  {
+    mPath.clear();
+  }
+  else if (lastSlashPos != mPath.size() - 1)
+  {
+    mPath.erase(lastSlashPos + 1);
+  }
 }
 
 std::string Path::getAssetPath()

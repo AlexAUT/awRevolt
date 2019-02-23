@@ -42,7 +42,10 @@ public:
   const std::string& asString() const { return mPath; }
 
   std::string getFileName() const;
+  std::string getFileStem() const;
   std::string getExtension() const;
+
+  void removeFileName();
 
   void append(std::string_view part);
   void removeBasePath(const Path& base);

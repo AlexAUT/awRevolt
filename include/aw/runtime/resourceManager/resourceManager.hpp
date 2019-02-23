@@ -22,8 +22,8 @@ public:
   template <typename ResourceType>
   const ResourceRegistry<ResourceType>& getRegistry() const;
 
-  ResourceDatabase& getResouceDatabse() { return mResourceDatabase; }
-  const ResourceDatabase& getResouceDatabse() const { return mResourceDatabase; }
+  ResourceDatabase& getResouceDatabase() { return mResourceDatabase; }
+  const ResourceDatabase& getResouceDatabase() const { return mResourceDatabase; }
 
 private:
 private:
