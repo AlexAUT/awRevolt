@@ -1,7 +1,3 @@
 add_subdirectory(factories)
 
-set(SOURCE_FILES_ENGINE ${SOURCE_FILES_ENGINE}
-  ${CMAKE_CURRENT_SOURCE_DIR}/resourceDatabase.cpp 
-  PARENT_SCOPE)
-set(HEADER_FILES_ENGINE ${HEADER_FILES_ENGINE} PARENT_SCOPE)
-
+add_to_target(awRuntime PRIVATE resourceDatabase.cpp)

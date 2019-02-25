@@ -1,24 +1,21 @@
-set(HEADER_FILES_GUI ${HEADER_FILES_GUI}
-  ${CMAKE_CURRENT_SOURCE_DIR}/button.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/container.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/contextMenu.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/floatingContainer.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/label.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/linearContainer.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/list.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/listItem.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/menu.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/menuItem.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/menuSubItem.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/panel.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/screen.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/scrollableBin.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/tableContainer.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/textBox.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/tileContainer.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/treeView.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/typedTextBox.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/widget.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/widgets.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/window.hpp
-  PARENT_SCOPE)
+add_to_target(awGUI PUBLIC button.hpp)
+add_to_target(awGUI PUBLIC container.hpp)
+add_to_target(awGUI PUBLIC contextMenu.hpp)
+add_to_target(awGUI PUBLIC floatingContainer.hpp)
+add_to_target(awGUI PUBLIC label.hpp)
+add_to_target(awGUI PUBLIC linearContainer.hpp)
+add_to_target(awGUI PUBLIC list.hpp)
+add_to_target(awGUI PUBLIC listItem.hpp)
+add_to_target(awGUI PUBLIC menu.hpp)
+add_to_target(awGUI PUBLIC menuItem.hpp)
+add_to_target(awGUI PUBLIC panel.hpp)
+add_to_target(awGUI PUBLIC screen.hpp)
+add_to_target(awGUI PUBLIC scrollableBin.hpp)
+add_to_target(awGUI PUBLIC tableContainer.hpp)
+add_to_target(awGUI PUBLIC textBox.hpp)
+add_to_target(awGUI PUBLIC tileContainer.hpp)
+add_to_target(awGUI PUBLIC treeView.hpp)
+add_to_target(awGUI PUBLIC typedTextBox.hpp)
+add_to_target(awGUI PUBLIC widget.hpp)
+add_to_target(awGUI PUBLIC widgets.hpp)
+add_to_target(awGUI PUBLIC window.hpp)

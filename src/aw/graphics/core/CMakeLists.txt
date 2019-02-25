@@ -1,22 +1,16 @@
-#
-set(SOURCE_FILES_GRAPHICS ${SOURCE_FILES_GRAPHICS}
-    ${CMAKE_CURRENT_SOURCE_DIR}/bufferObject.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/camera.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/frameBuffer.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/geometry.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/image.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/indicesBuffer.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/postProcessRenderer.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/renderer.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/renderBuffer.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/shaderProgram.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/shaderStage.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/texture2D.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/vertex.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/vertexBuffer.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/vertexArrayObject.cpp
-    PARENT_SCOPE)
-
-  set(HEADER_FILES_GRAPHICS ${HEADER_FILES_GRAPHICS}
-    ${CMAKE_CURRENT_SOURCE_DIR}/stb_image.hpp
-    PARENT_SCOPE)
+add_to_target(awGraphics PRIVATE bufferObject.cpp)
+add_to_target(awGraphics PRIVATE camera.cpp)
+add_to_target(awGraphics PRIVATE frameBuffer.cpp)
+add_to_target(awGraphics PRIVATE geometry.cpp)
+add_to_target(awGraphics PRIVATE image.cpp)
+add_to_target(awGraphics PRIVATE indicesBuffer.cpp)
+add_to_target(awGraphics PRIVATE postProcessRenderer.cpp)
+add_to_target(awGraphics PRIVATE renderer.cpp)
+add_to_target(awGraphics PRIVATE renderBuffer.cpp)
+add_to_target(awGraphics PRIVATE shaderProgram.cpp)
+add_to_target(awGraphics PRIVATE shaderStage.cpp)
+add_to_target(awGraphics PRIVATE texture2D.cpp)
+add_to_target(awGraphics PRIVATE vertex.cpp)
+add_to_target(awGraphics PRIVATE vertexBuffer.cpp)
+add_to_target(awGraphics PRIVATE vertexArrayObject.cpp)
+add_to_target(awGraphics PRIVATE stb_image.hpp)

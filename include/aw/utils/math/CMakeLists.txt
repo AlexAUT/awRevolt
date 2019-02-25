@@ -1,9 +1,6 @@
-target_sources(awUtils
-  PUBLIC
-  ${CMAKE_CURRENT_SOURCE_DIR}/constants.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/frustum.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/matrix.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/rect.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/vector.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/quaternion.hpp
-)
+add_to_target(awUtils PUBLIC constants.hpp)
+add_to_target(awUtils PUBLIC frustum.hpp)
+add_to_target(awUtils PUBLIC matrix.hpp)
+add_to_target(awUtils PUBLIC rect.hpp)
+add_to_target(awUtils PUBLIC vector.hpp)
+add_to_target(awUtils PUBLIC quaternion.hpp)

@@ -1,10 +1,6 @@
-#OPENGL only when AW_USE_OPENGL is defined
+add_to_target(awRuntime PRIVATE opengl.cpp)
+
 if(AW_USE_OPENGL)
-  set(IMPL_SOURCE_FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/impl/gl.cpp
-  )
+  add_to_target(awRuntime PRIVATE /impl/gl.cpp)
 endif()
-set(SOURCE_FILES_GRAPHICS ${SOURCE_FILES_GRAPHICS} ${IMPL_SOURCE_FILES}
-    ${CMAKE_CURRENT_SOURCE_DIR}/opengl.cpp
-    PARENT_SCOPE)
 

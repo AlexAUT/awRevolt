@@ -9,7 +9,7 @@
 #include <aw/utils/color.hpp>
 #include <aw/utils/log.hpp>
 
-#include <nanovg_gl.h>
+#include <nanovg/nanovg_gl.h>
 
 #include <cassert>
 

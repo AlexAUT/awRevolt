@@ -1,3 +1,1 @@
-set(HEADER_FILES_ENGINE ${HEADER_FILES_ENGINE}
-    ${CMAKE_CURRENT_SOURCE_DIR}/primitiveRenderer.hpp
-    PARENT_SCOPE)
+add_to_target(awRuntime PUBLIC primitiveRenderer.hpp)

@@ -1,5 +1,2 @@
-target_sources(awUtils
-  PUBLIC
-  ${CMAKE_CURRENT_SOURCE_DIR}/AABBIntersectors.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/rayIntersectors.hpp
-)
+add_to_target(awUtils PUBLIC AABBIntersectors.hpp)
+add_to_target(awUtils PUBLIC rayIntersectors.hpp)

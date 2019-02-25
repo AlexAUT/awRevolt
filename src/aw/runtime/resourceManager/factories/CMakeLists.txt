@@ -1,4 +1,2 @@
-set(SOURCE_FILES_ENGINE ${SOURCE_FILES_ENGINE}
-  ${CMAKE_CURRENT_SOURCE_DIR}/meshFactory.cpp 
-  ${CMAKE_CURRENT_SOURCE_DIR}/textureFactory.cpp 
-  PARENT_SCOPE)
+add_to_target(awRuntime PRIVATE meshFactory.cpp)
+add_to_target(awRuntime PRIVATE textureFactory.cpp)

@@ -1,4 +1,2 @@
-target_sources(awUtils
-  PUBLIC
-  ${CMAKE_CURRENT_SOURCE_DIR}/messageBus.hpp
-)
+add_to_target(awUtils PUBLIC listener.hpp)
+add_to_target(awUtils PUBLIC messageBus.hpp)

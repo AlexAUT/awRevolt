@@ -1,3 +1,1 @@
-set(HEADER_FILES_GUI ${HEADER_FILES_GUI}
-  ${CMAKE_CURRENT_SOURCE_DIR}/eventConvert.hpp
-  PARENT_SCOPE)
+add_to_target(awGUI PUBLIC eventConvert.hpp)

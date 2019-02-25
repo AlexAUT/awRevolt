@@ -1,8 +1,5 @@
-target_sources(awUtils
-  PUBLIC
-  ${CMAKE_CURRENT_SOURCE_DIR}/enumClassBitmask.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/staticForLoop.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/trueFalseTypes.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/typeChecks.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/typeCounter.hpp
-)
+add_to_target(awUtils PUBLIC enumClassBitmask.hpp)
+add_to_target(awUtils PUBLIC staticForLoop.hpp)
+add_to_target(awUtils PUBLIC trueFalseTypes.hpp)
+add_to_target(awUtils PUBLIC typeChecks.hpp)
+add_to_target(awUtils PUBLIC typeCounter.hpp)

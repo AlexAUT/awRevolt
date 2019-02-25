@@ -1,4 +1,2 @@
-set(SOURCE_FILES_ENGINE ${SOURCE_FILES_ENGINE}
-    ${CMAKE_CURRENT_SOURCE_DIR}/meshRendererSystem.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/transformSystem.cpp
-    PARENT_SCOPE)
+add_to_target(awRuntime PRIVATE meshRendererSystem.cpp)
+add_to_target(awRuntime PRIVATE transformSystem.cpp)

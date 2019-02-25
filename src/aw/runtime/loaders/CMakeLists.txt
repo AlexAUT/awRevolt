@@ -1,6 +1,1 @@
-#
-set(SOURCE_FILES_ENGINE ${SOURCE_FILES_ENGINE}
-    ${CMAKE_CURRENT_SOURCE_DIR}/assimpLoader.cpp
-    PARENT_SCOPE)
-
-
+add_to_target(awRuntime PRIVATE assimpLoader.cpp)

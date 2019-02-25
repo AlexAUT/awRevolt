@@ -1,11 +1,8 @@
-
-set(SOURCE_FILES_GRAPHICS ${SOURCE_FILES_GRAPHICS}
-  ${CMAKE_CURRENT_SOURCE_DIR}/material.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/mesh.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/meshAnimation.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/meshInstance.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/meshPose.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/meshSkeleton.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/orbitCameraController.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/transform.cpp
-  PARENT_SCOPE)
+add_to_target(awGraphics PRIVATE material.cpp)
+add_to_target(awGraphics PRIVATE mesh.cpp)
+add_to_target(awGraphics PRIVATE meshAnimation.cpp)
+add_to_target(awGraphics PRIVATE meshInstance.cpp)
+add_to_target(awGraphics PRIVATE meshPose.cpp)
+add_to_target(awGraphics PRIVATE meshSkeleton.cpp)
+add_to_target(awGraphics PRIVATE orbitCameraController.cpp)
+add_to_target(awGraphics PRIVATE transform.cpp)

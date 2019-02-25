@@ -1,7 +1,5 @@
-add_subdirectory(runtime)
-
-set(SOURCE_FILES_ENGINE ${SOURCE_FILES_ENGINE}
-    ${CMAKE_CURRENT_SOURCE_DIR}/engine.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/settings.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/window.cpp
-    PARENT_SCOPE)
+add_to_target(awEngine PRIVATE engine.cpp)
+add_to_target(awEngine PRIVATE settings.cpp)
+add_to_target(awEngine PRIVATE state.cpp)
+add_to_target(awEngine PRIVATE stateMachine.cpp)
+add_to_target(awEngine PRIVATE window.cpp)

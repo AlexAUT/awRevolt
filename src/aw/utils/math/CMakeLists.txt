@@ -1,7 +1,4 @@
-target_sources(awUtils
-  PRIVATE
-  ${CMAKE_CURRENT_SOURCE_DIR}/frustum.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/matrix.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/quaternion.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/vector.cpp
-)
+add_to_target(awUtils PRIVATE frustum.cpp)
+add_to_target(awUtils PRIVATE matrix.cpp)
+add_to_target(awUtils PRIVATE quaternion.cpp)
+add_to_target(awUtils PRIVATE vector.cpp)

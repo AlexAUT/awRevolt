@@ -1,3 +1,2 @@
-set(SOURCE_FILES_GUI ${SOURCE_FILES_GUI}
-  ${CMAKE_CURRENT_SOURCE_DIR}/nanovgRenderer.cpp
-  PARENT_SCOPE)
+add_to_target(awGUI PRIVATE nanovgDrawHelper.hpp)
+add_to_target(awGUI PRIVATE nanovgRenderer.cpp)

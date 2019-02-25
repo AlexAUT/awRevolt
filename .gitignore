@@ -8,3 +8,6 @@ log.txt
 dependencies/built
 dependencies/precompiledDependencies
 dependencies/linuxBuild
+dependencies/compiled
+dependencies/sqlite3/
+dependencies/sqlite-amalgamation-3270100.zip

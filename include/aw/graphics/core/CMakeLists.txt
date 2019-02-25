@@ -1,24 +1,22 @@
-set(HEADER_FILES_GRAPHICS ${HEADER_FILES_GRAPHICS}
-    ${CMAKE_CURRENT_SOURCE_DIR}/bufferedRenderer.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/bufferedRenderer.inl
-    ${CMAKE_CURRENT_SOURCE_DIR}/bufferObject.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/camera.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/frameBuffer.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/geometry.inl
-    ${CMAKE_CURRENT_SOURCE_DIR}/geometry.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/image.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/indicesBuffer.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/intermediateRenderer.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/intermediateRenderer.inl
-    ${CMAKE_CURRENT_SOURCE_DIR}/postProcessRenderer.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/renderer.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/renderBuffer.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/shaderProgram.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/shaderStage.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/texture2D.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/vertex.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/vertexBuffer.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/vertexArrayObject.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/vertexAttribute.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/vertexLayout.hpp
-    PARENT_SCOPE)
+add_to_target(awGraphics PUBLIC bufferedRenderer.hpp)
+add_to_target(awGraphics PUBLIC bufferObject.hpp)
+add_to_target(awGraphics PUBLIC camera.hpp)
+add_to_target(awGraphics PUBLIC frameBuffer.hpp)
+add_to_target(awGraphics PUBLIC geometry.hpp)
+add_to_target(awGraphics PUBLIC image.hpp)
+add_to_target(awGraphics PUBLIC indicesBuffer.hpp)
+add_to_target(awGraphics PUBLIC intermediateRenderer.hpp)
+add_to_target(awGraphics PUBLIC postProcessRenderer.hpp)
+add_to_target(awGraphics PUBLIC renderer.hpp)
+add_to_target(awGraphics PUBLIC renderBuffer.hpp)
+add_to_target(awGraphics PUBLIC shaderProgram.hpp)
+add_to_target(awGraphics PUBLIC shaderStage.hpp)
+add_to_target(awGraphics PUBLIC texture2D.hpp)
+add_to_target(awGraphics PUBLIC vertex.hpp)
+add_to_target(awGraphics PUBLIC vertexBuffer.hpp)
+add_to_target(awGraphics PUBLIC vertexArrayObject.hpp)
+add_to_target(awGraphics PUBLIC vertexAttribute.hpp)
+add_to_target(awGraphics PUBLIC vertexLayout.hpp)
+add_to_target(awGraphics INTERFACE bufferedRenderer.inl)
+add_to_target(awGraphics INTERFACE geometry.inl)
+add_to_target(awGraphics INTERFACE intermediateRenderer.inl)

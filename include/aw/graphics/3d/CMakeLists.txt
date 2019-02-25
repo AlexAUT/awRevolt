@@ -1,13 +1,11 @@
-set(HEADER_FILES_GRAPHICS ${HEADER_FILES_GRAPHICS}
-  ${CMAKE_CURRENT_SOURCE_DIR}/directionalLight.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/light.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/material.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/mesh.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/meshAnimation.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/meshInstance.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/meshPose.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/meshSkeleton.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/meshSkeletonNode.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/orbitCameraController.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/transform.hpp
-  PARENT_SCOPE)
+add_to_target(awGraphics PUBLIC directionalLight.hpp)
+add_to_target(awGraphics PUBLIC light.hpp)
+add_to_target(awGraphics PUBLIC material.hpp)
+add_to_target(awGraphics PUBLIC mesh.hpp)
+add_to_target(awGraphics PUBLIC meshAnimation.hpp)
+add_to_target(awGraphics PUBLIC meshInstance.hpp)
+add_to_target(awGraphics PUBLIC meshPose.hpp)
+add_to_target(awGraphics PUBLIC meshSkeleton.hpp)
+add_to_target(awGraphics PUBLIC meshSkeletonNode.hpp)
+add_to_target(awGraphics PUBLIC orbitCameraController.hpp)
+add_to_target(awGraphics PUBLIC transform.hpp)

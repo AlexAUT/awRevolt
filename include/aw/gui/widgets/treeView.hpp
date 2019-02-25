@@ -1,6 +1,5 @@
 #pragma once
 
-#include <aw/gui/string.hpp>
 #include <aw/gui/widgets/widget.hpp>
 
 #include <aw/gui/widgets/linearContainer.hpp>

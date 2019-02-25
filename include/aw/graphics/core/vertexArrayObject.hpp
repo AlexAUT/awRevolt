@@ -1,5 +1,7 @@
 #pragma once
 
+#include <aw/config.hpp>
+
 #include <aw/graphics/core/vertexAttribute.hpp>
 #include <aw/graphics/core/vertexLayout.hpp>
 

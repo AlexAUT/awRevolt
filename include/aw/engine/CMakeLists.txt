@@ -1,9 +1,7 @@
-add_subdirectory(runtime)
-
-set(HEADER_FILES_ENGINE ${HEADER_FILES_ENGINE}
-    ${CMAKE_CURRENT_SOURCE_DIR}/engine.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/settings.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/window.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/windowEvent.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/windowEventForward.hpp
-    PARENT_SCOPE)
+add_to_target(awEngine PUBLIC engine.hpp)
+add_to_target(awEngine PUBLIC settings.hpp)
+add_to_target(awEngine PUBLIC state.hpp)
+add_to_target(awEngine PUBLIC stateMachine.hpp)
+add_to_target(awEngine PUBLIC window.hpp)
+add_to_target(awEngine PUBLIC windowEvent.hpp)
+add_to_target(awEngine PUBLIC windowEventForward.hpp)

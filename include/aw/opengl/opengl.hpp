@@ -1,5 +1,7 @@
 #pragma once
 
+#include <aw/config.hpp>
+
 #ifdef AW_USE_OPENGL
 #include <aw/opengl/impl/gl.hpp>
 #endif

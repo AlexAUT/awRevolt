@@ -1,5 +1,3 @@
-set(SOURCE_FILES_GUI ${SOURCE_FILES_GUI}
-  ${CMAKE_CURRENT_SOURCE_DIR}/defaultStyles.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/style.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/styleManager.cpp
-  PARENT_SCOPE)
+add_to_target(awGUI PRIVATE defaultStyles.cpp)
+add_to_target(awGUI PRIVATE style.cpp)
+add_to_target(awGUI PRIVATE styleManager.cpp)

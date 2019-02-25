@@ -5,12 +5,11 @@ add_subdirectory(spatial)
 add_subdirectory(time)
 add_subdirectory(typeHelper)
 
-target_sources(awUtils
-  PUBLIC
-  ${CMAKE_CURRENT_SOURCE_DIR}/color.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/colors.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/log.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/streamReading.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/stringFormat.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/types.hpp
-)
+add_to_target(awUtils PUBLIC color.hpp)
+add_to_target(awUtils PUBLIC colors.hpp)
+add_to_target(awUtils PUBLIC log.hpp)
+add_to_target(awUtils PUBLIC streamReading)
+add_to_target(awUtils PUBLIC stringConverter.hpp)
+add_to_target(awUtils PUBLIC stringFormat.hpp)
+add_to_target(awUtils PUBLIC types.hpp)
+

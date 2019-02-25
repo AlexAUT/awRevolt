@@ -1,9 +1,6 @@
 add_subdirectory(factories)
 
-set(HEADER_FILES_ENGINE ${HEADER_FILES_ENGINE}
-  ${CMAKE_CURRENT_SOURCE_DIR}/resourceManager.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/resourceManager.inl
-  ${CMAKE_CURRENT_SOURCE_DIR}/resourceRegistry.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/resourceRegistry.inl
-  PARENT_SCOPE)
-
+add_to_target(awRuntime PUBLIC resourceManager.hpp)
+add_to_target(awRuntime PUBLIC resourceRegistry.hpp)
+add_to_target(awRuntime INTERFACE resourceManager.inl)
+add_to_target(awRuntime INTERFACE resourceRegistry.inl)

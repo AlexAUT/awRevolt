@@ -1,25 +1,23 @@
-set(SOURCE_FILES_GUI ${SOURCE_FILES_GUI}
-  ${CMAKE_CURRENT_SOURCE_DIR}/bin.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/button.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/contextMenu.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/checkedTextBox.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/container.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/floatingContainer.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/label.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/linearContainer.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/list.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/listItem.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/menu.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/menuItem.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/menuSubItem.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/panel.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/screen.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/scrollableBin.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/tableContainer.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/textBox.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/tileContainer.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/treeView.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/viewport.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/widget.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/window.cpp
-  PARENT_SCOPE)
+add_to_target(awGUI PRIVATE bin.cpp)
+add_to_target(awGUI PRIVATE button.cpp)
+add_to_target(awGUI PRIVATE contextMenu.cpp)
+add_to_target(awGUI PRIVATE checkedTextBox.cpp)
+add_to_target(awGUI PRIVATE container.cpp)
+add_to_target(awGUI PRIVATE floatingContainer.cpp)
+add_to_target(awGUI PRIVATE label.cpp)
+add_to_target(awGUI PRIVATE linearContainer.cpp)
+add_to_target(awGUI PRIVATE list.cpp)
+add_to_target(awGUI PRIVATE listItem.cpp)
+add_to_target(awGUI PRIVATE menu.cpp)
+add_to_target(awGUI PRIVATE menuItem.cpp)
+add_to_target(awGUI PRIVATE menuSubItem.cpp)
+add_to_target(awGUI PRIVATE panel.cpp)
+add_to_target(awGUI PRIVATE screen.cpp)
+add_to_target(awGUI PRIVATE scrollableBin.cpp)
+add_to_target(awGUI PRIVATE tableContainer.cpp)
+add_to_target(awGUI PRIVATE textBox.cpp)
+add_to_target(awGUI PRIVATE tileContainer.cpp)
+add_to_target(awGUI PRIVATE treeView.cpp)
+add_to_target(awGUI PRIVATE viewport.cpp)
+add_to_target(awGUI PRIVATE widget.cpp)
+add_to_target(awGUI PRIVATE window.cpp)

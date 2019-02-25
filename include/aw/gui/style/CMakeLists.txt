@@ -1,8 +1,6 @@
-set(HEADER_FILES_GUI ${HEADER_FILES_GUI}
-  ${CMAKE_CURRENT_SOURCE_DIR}/alignment.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/defaultStyles.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/orientation.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/padding.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/styleManager.hpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/style.hpp
-  PARENT_SCOPE)
+add_to_target(awGUI PUBLIC alignment.hpp)
+add_to_target(awGUI PUBLIC defaultStyles.hpp)
+add_to_target(awGUI PUBLIC orientation.hpp)
+add_to_target(awGUI PUBLIC padding.hpp)
+add_to_target(awGUI PUBLIC styleManager.hpp)
+add_to_target(awGUI PUBLIC style.hpp)

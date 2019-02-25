@@ -1,0 +1,12 @@
+#jsoncpp
+ExternalProject_Add(jsoncpp
+DOWNLOAD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/dependencies/"
+SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/dependencies/jsoncpp"
+DOWNLOAD_COMMAND ""
+CMAKE_ARGS ${CMAKE_FLAGS}
+           -DDEBUG_LIBNAME_SUFFIX=d
+           -DBUILD_STATIC_LIBS=True
+           -DJSONCPP_WITHPOST_BUILD_UNITTEST=False
+           -DJSONCPP_WITH_TESTS=False
+)
+set(AW_DEPENDENCIES ${AW_DEPENDENCIES} jsoncpp)

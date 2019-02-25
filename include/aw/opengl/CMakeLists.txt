@@ -1,13 +1,7 @@
-#OPENGL only when AW_USE_OPENGL is defined
-if(AW_USE_OPENGL)
-  set(IMPL_HEADER_FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/impl/gl.hpp
-    )
-endif()
+add_to_target(awGraphics PUBLIC commonTypes.hpp)
+add_to_target(awGraphics PUBLIC opengl.hpp)
+add_to_target(awGraphics PUBLIC openglExt.hpp)
 
-set(HEADER_FILES_GRAPHICS ${HEADER_FILES_GRAPHICS}
-    ${CMAKE_CURRENT_SOURCE_DIR}/commonTypes.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/opengl.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/openglExt.hpp
-    ${IMPL_HEADER_FILES}
-    PARENT_SCOPE)
+if(AW_USE_OPENGL)
+  add_to_target(awGraphics PUBLIC /impl/gl.hpp)
+endif()

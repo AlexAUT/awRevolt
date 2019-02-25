@@ -1,4 +1,4 @@
-#include <aw/engine/runtime/stateMachine.hpp>
+#include <aw/engine/stateMachine.hpp>
 
 namespace aw
 {

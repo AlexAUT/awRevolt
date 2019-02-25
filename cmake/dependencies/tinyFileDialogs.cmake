@@ -1,7 +1,8 @@
+cmake_minimum_required(VERSION 3.6)
+
 #native file dialog has no cmake script to create a target
 include(GNUInstallDirs)
 
-set(TINYFD_SOURCES "dependencies/tinyfd/tinyfiledialogs.c")
 add_library(tinyfd)
 
 target_sources(tinyfd

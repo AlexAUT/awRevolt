@@ -1,5 +1,1 @@
-set(SOURCE_FILES_ENGINE ${SOURCE_FILES_ENGINE}
-  ${CMAKE_CURRENT_SOURCE_DIR}/staticMesh.cpp
-    PARENT_SCOPE)
-
-
+add_to_target(awRuntime PRIVATE staticMesh.cpp)

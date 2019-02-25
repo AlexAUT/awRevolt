@@ -1,9 +1,6 @@
 add_subdirectory(impl)
 
-target_sources(awUtils
-  PRIVATE
-  ${CMAKE_CURRENT_SOURCE_DIR}/fileDialog.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/fileInputStream.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/fileOutputStream.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/path.cpp
-)
+add_to_target(awUtils PRIVATE fileDialog.cpp)
+add_to_target(awUtils PRIVATE fileInputStream.cpp)
+add_to_target(awUtils PRIVATE fileOutputStream.cpp)
+add_to_target(awUtils PRIVATE path.cpp)

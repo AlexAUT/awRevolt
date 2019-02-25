@@ -1,6 +1,2 @@
-set(SOURCE_FILES_ENGINE ${SOURCE_FILES_ENGINE} 
-  ${CMAKE_CURRENT_SOURCE_DIR}/entity.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/entitySystem.cpp
-  PARENT_SCOPE)
-
-set(HEADER_FILES_ENGINE ${HEADER_FILES_ENGINE} PARENT_SCOPE)
+add_to_target(awRuntime PRIVATE entity.cpp)
+add_to_target(awRuntime PRIVATE entitySystem.cpp)

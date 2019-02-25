@@ -1,7 +1,7 @@
 #pragma once
 
-#include <aw/engine/runtime/stateMachine.hpp>
 #include <aw/engine/settings.hpp>
+#include <aw/engine/stateMachine.hpp>
 #include <aw/engine/window.hpp>
 #include <aw/runtime/resourceManager/resourceManager.hpp>
 #include <aw/utils/messageBus/messageBus.hpp>

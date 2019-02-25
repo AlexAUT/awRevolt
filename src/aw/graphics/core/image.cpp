@@ -7,7 +7,7 @@
 DEFINE_LOG_CATEGORIES(Image, "Image")
 
 #define STB_IMAGE_IMPLEMENTATION
-#include <aw/graphics/core/stb_image.hpp>
+#include "stb_image.hpp"
 
 #include <cstring>
 

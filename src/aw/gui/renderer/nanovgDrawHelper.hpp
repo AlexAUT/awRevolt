@@ -9,7 +9,7 @@
 #include <aw/utils/log.hpp>
 #include <aw/utils/math/vector.hpp>
 
-#include <nanovg.h>
+#include <nanovg/nanovg.h>
 
 namespace aw::gui
 {
