@@ -22,7 +22,7 @@ const ResourceRegistry<ResourceType>& ResourceManager::getRegistry() const
       mRegistries.push_back(nullptr);
   }
   if (!mRegistries[index])
-    mRegistries[index].reset(new ResourceRegistry<ResourceType>(mResourceDatabase));
+    mRegistries[index].reset(new ResourceRegistry<ResourceType>(*mResourceDatabase));
 
   return static_cast<const ResourceRegistry<ResourceType>&>(*mRegistries[index]);
 }

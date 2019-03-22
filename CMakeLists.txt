@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.6)
 include(cmake/enableWarnings.cmake)
 
-option(AW_BUILD_DEPENDENCIES "Builds dependencies" ON)
+option(AW_BUILD_DEPENDENCIES "Builds dependencies" OFF)
 
 #OS depending variables
 if(${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
@@ -58,7 +58,6 @@ if(AW_BUILD_DEPENDENCIES)
     include(cmake/buildDependencies/awGUI.cmake)
   endif()
 
-
   ExternalProject_Add (awRevoltBuild
     DEPENDS ${AW_DEPENDENCIES}
     SOURCE_DIR ${PROJECT_SOURCE_DIR}
@@ -104,16 +103,21 @@ set(AW_INCLUDE_DIR
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>  
   $<INSTALL_INTERFACE:include>  # <prefix>/include/mylib PUBLIC
 )
+set(AW_BINARY_INCLUDE_DIR
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>  
+  $<INSTALL_INTERFACE:include>  # <prefix>/include/mylib PUBLIC
+)
+
 target_include_directories(awUtils PUBLIC ${AW_INCLUDE_DIR})
 target_include_directories(awGraphics PUBLIC ${AW_INCLUDE_DIR})
 target_include_directories(awRuntime PUBLIC ${AW_INCLUDE_DIR})
 target_include_directories(awEngine PUBLIC ${AW_INCLUDE_DIR})
 target_include_directories(awGUI PUBLIC ${AW_INCLUDE_DIR})
-target_include_directories(awUtils PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/include)
-target_include_directories(awGraphics PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/include)
-target_include_directories(awRuntime PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/include)
-target_include_directories(awEngine PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/include)
-target_include_directories(awGUI PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/include)
+target_include_directories(awUtils PUBLIC ${AW_BINARY_INCLUDE_DIR})
+target_include_directories(awGraphics PUBLIC ${AW_BINARY_INCLUDE_DIR})
+target_include_directories(awRuntime PUBLIC ${AW_BINARY_INCLUDE_DIR})
+target_include_directories(awEngine PUBLIC ${AW_BINARY_INCLUDE_DIR})
+target_include_directories(awGUI PUBLIC ${AW_BINARY_INCLUDE_DIR})
 
 include(cmake/addFilesToTarget.cmake)
 # Adds sources/includes to targets

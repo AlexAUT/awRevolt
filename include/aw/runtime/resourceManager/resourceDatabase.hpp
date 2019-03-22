@@ -7,19 +7,34 @@
 
 namespace aw
 {
-// Stores references to files, loopup for string as key is implement in O(n)! For ResourceId O(1+m) (hashmap,
+// Stores references to files, lookup for string as key is implement in O(n)! For ResourceId O(1+m) (hashmap,
 // collisionchaining)
 class ResourceDatabase
 {
 public:
-  bool has(ResourceId id) const;
-  bool has(const std::string& name) const;
+  virtual ~ResourceDatabase() = default;
 
-  ResourceId newResource(std::string name);
-  void set(ResourceId id, std::string name);
+  virtual bool has(ResourceId id) const = 0;
+  virtual bool has(const std::string& name) const = 0;
 
-  const std::string& get(ResourceId id) const;
-  ResourceId get(const std::string& name) const;
+  virtual ResourceId newResource(std::string name) = 0;
+  virtual void set(ResourceId id, std::string name) = 0;
+
+  virtual std::string get(ResourceId id) const = 0;
+  virtual ResourceId get(const std::string& name) const = 0;
+};
+
+class ResourceDatabaseUnorderedMap final : public ResourceDatabase
+{
+public:
+  virtual bool has(ResourceId id) const override;
+  virtual bool has(const std::string& name) const override;
+
+  virtual ResourceId newResource(std::string name) override;
+  virtual void set(ResourceId id, std::string name) override;
+
+  virtual std::string get(ResourceId id) const override;
+  virtual ResourceId get(const std::string& name) const override;
 
 private:
 private:

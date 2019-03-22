@@ -1,5 +1,7 @@
 #include <aw/utils/log.hpp>
 
+#include <aw/config.hpp>
+
 #include <aw/utils/time/date.hpp>
 
 #include <cassert>

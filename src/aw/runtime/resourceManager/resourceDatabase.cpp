@@ -6,12 +6,12 @@ std::string empty = "";
 
 namespace aw
 {
-bool ResourceDatabase::has(ResourceId id) const
+bool ResourceDatabaseUnorderedMap::has(ResourceId id) const
 {
   return mEntries.find(id) != mEntries.end();
 }
 
-bool ResourceDatabase::has(const std::string& id) const
+bool ResourceDatabaseUnorderedMap::has(const std::string& id) const
 {
   for (auto& entry : mEntries)
   {
@@ -21,7 +21,7 @@ bool ResourceDatabase::has(const std::string& id) const
   return false;
 }
 
-ResourceId ResourceDatabase::newResource(std::string name)
+ResourceId ResourceDatabaseUnorderedMap::newResource(std::string name)
 {
   auto tryInsert = [this, &name]() { return mEntries.try_emplace(mNewIdCounter++, name); };
 
@@ -34,12 +34,12 @@ ResourceId ResourceDatabase::newResource(std::string name)
   return inserted.first->first;
 }
 
-void ResourceDatabase::set(ResourceId id, std::string name)
+void ResourceDatabaseUnorderedMap::set(ResourceId id, std::string name)
 {
   mEntries.insert({id, name});
 }
 
-const std::string& ResourceDatabase::get(ResourceId id) const
+std::string ResourceDatabaseUnorderedMap::get(ResourceId id) const
 {
   auto found = mEntries.find(id);
   if (found != mEntries.end())
@@ -49,7 +49,7 @@ const std::string& ResourceDatabase::get(ResourceId id) const
   return empty;
 }
 
-ResourceId ResourceDatabase::get(const std::string& name) const
+ResourceId ResourceDatabaseUnorderedMap::get(const std::string& name) const
 {
   for (auto& entry : mEntries)
   {
