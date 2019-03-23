@@ -1,5 +1,7 @@
 #include <aw/utils/file/fileInputStream.hpp>
 
+#include <aw/config.hpp>
+
 #ifdef AW_ANDROID
 #include <aw/utils/impl/androidAssetBuffer.hpp>
 #endif

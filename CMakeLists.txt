@@ -28,9 +28,6 @@ option(AW_BUILD_RUNTIME "Build the runtime module" ON)
 option(AW_BUILD_ENGINE "Build the engine module" ON)
 option(AW_BUILD_GUI "Build the gui module" ON)
 
-#Create configure file
-configure_file(cmake/config.hpp.in include/aw/config.hpp)
-
 if(AW_BUILD_DEPENDENCIES)
   include (ExternalProject)
 

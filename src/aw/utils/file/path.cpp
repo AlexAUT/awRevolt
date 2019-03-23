@@ -1,5 +1,7 @@
 #include <aw/utils/file/path.hpp>
 
+#include <aw/config.hpp>
+
 #ifdef AW_ANDROID
 #include <SFML/System/NativeActivity.hpp>
 #include <android/native_activity.h>

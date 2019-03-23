@@ -1,5 +1,6 @@
 #pragma once
 
+#include <aw/config.hpp>
 #include <aw/utils/file/path.hpp>
 
 #include <fstream>

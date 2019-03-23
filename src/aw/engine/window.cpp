@@ -1,5 +1,6 @@
 #include <aw/engine/window.hpp>
 
+#include <aw/config.hpp>
 #include <aw/engine/settings.hpp>
 #include <aw/engine/windowEvent.hpp>
 #include <aw/opengl/opengl.hpp>

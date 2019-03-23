@@ -21,7 +21,7 @@ public:
   using BindPair = std::pair<DrawBufferBindings, VertexAttribute>;
 
 public:
-#ifdef AW_USE_OPENGL
+#ifdef AW_USE_GL
   VertexArrayObject();
   ~VertexArrayObject();
 #else
@@ -46,7 +46,7 @@ private:
 
 private:
   std::vector<BindPair> mAttributes;
-#ifdef AW_USE_OPENGL
+#ifdef AW_USE_GL
   unsigned mVAOHandle;
 #endif
 };

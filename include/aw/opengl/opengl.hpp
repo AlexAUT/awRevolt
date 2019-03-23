@@ -2,7 +2,7 @@
 
 #include <aw/config.hpp>
 
-#ifdef AW_USE_OPENGL
+#ifdef AW_USE_GL
 #include <aw/opengl/impl/gl.hpp>
 #endif
 #ifdef AW_USE_GLES

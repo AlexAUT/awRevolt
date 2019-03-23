@@ -1,5 +1,6 @@
 #include <aw/engine/engine.hpp>
 
+#include <aw/config.hpp>
 #include <aw/utils/log.hpp>
 
 #include <chrono>

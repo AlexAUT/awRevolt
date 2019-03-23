@@ -1,5 +1,7 @@
 #include <aw/graphics/core/frameBuffer.hpp>
 
+#include <aw/config.hpp>
+
 #include <aw/opengl/opengl.hpp>
 #include <aw/opengl/openglExt.hpp>
 #include <aw/utils/log.hpp>

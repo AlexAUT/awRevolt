@@ -1,7 +1,7 @@
 #include <aw/graphics/core/shaderStage.hpp>
 
+#include <aw/config.hpp>
 #include <aw/opengl/opengl.hpp>
-
 #include <aw/utils/file/fileInputStream.hpp>
 #include <aw/utils/file/path.hpp>
 #include <aw/utils/log.hpp>

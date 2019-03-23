@@ -1,15 +1,15 @@
 #include <aw/graphics/core/vertexArrayObject.hpp>
 
-#include <aw/opengl/opengl.hpp>
-
+#include <aw/config.hpp>
 #include <aw/graphics/core/indicesBuffer.hpp>
 #include <aw/graphics/core/vertexBuffer.hpp>
+#include <aw/opengl/opengl.hpp>
 
 #include <cassert>
 
 namespace aw
 {
-#ifdef AW_USE_OPENGL
+#ifdef AW_USE_GL
 VertexArrayObject::VertexArrayObject()
 {
   GL_CHECK(glGenVertexArrays(1, &mVAOHandle));
@@ -22,7 +22,7 @@ VertexArrayObject::~VertexArrayObject()
 #endif
 void VertexArrayObject::bind() const
 {
-#ifdef AW_USE_OPENGL
+#ifdef AW_USE_GL
   GL_CHECK(glBindVertexArray(mVAOHandle));
 #else
   for (auto& bufferAttrib : mAttributes)
@@ -34,7 +34,7 @@ void VertexArrayObject::bind() const
 
 void VertexArrayObject::unbind() const
 {
-#ifdef AW_USE_OPENGL
+#ifdef AW_USE_GL
   GL_CHECK(glBindVertexArray(0));
 #else
   for (auto& bufferAttrib : mAttributes)
@@ -62,7 +62,7 @@ void VertexArrayObject::addVertexAttribute(const VertexBuffer* buffer, const Ind
   assert(!indexInUse(attribute.index) && "You cannot insert a vertex attribute with the same index more than once!");
   assert(buffer && "VertexAttribute should not have a nullptr as buffer!");
   mAttributes.push_back({{buffer, indices}, attribute});
-#ifdef AW_USE_OPENGL
+#ifdef AW_USE_GL
   bind();
   applyVertexAttribute(mAttributes.back());
 #endif

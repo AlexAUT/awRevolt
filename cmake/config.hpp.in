@@ -1,4 +1,0 @@
-#cmakedefine AW_USE_OPENGL
-#cmakedefine AW_DESKTOP
-#cmakedefine AW_USE_GLES
-#cmakedefine AW_ANDROID
