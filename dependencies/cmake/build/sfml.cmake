@@ -1,0 +1,9 @@
+#sfml
+ExternalProject_Add(sfml
+  DOWNLOAD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/dependencies/"
+  SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/dependencies/sfml"
+  DOWNLOAD_COMMAND ""
+  CMAKE_ARGS ${CMAKE_FLAGS}
+)
+set(AW_DEPENDENCIES ${AW_DEPENDENCIES} sfml)
+

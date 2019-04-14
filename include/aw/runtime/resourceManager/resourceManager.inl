@@ -1,5 +1,3 @@
-#include <aw/runtime/resourceManager/resourceManager.hpp>
-
 namespace aw
 {
 template <typename ResourceType>

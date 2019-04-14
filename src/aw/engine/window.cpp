@@ -35,16 +35,14 @@ void Window::handleEvents(/*const EventHandlers& eventHandlers*/)
 void Window::clear(ClearType targets)
 {
   unsigned val = static_cast<unsigned>(targets);
-  GLbitfield toClear = (val & static_cast<unsigned>(ClearType::Color) ? GL_COLOR_BUFFER_BIT : GL_NONE) |
-                       (val & static_cast<unsigned>(ClearType::Depth) ? GL_DEPTH_BUFFER_BIT : GL_NONE) |
-                       (val & static_cast<unsigned>(ClearType::Stencil) ? GL_STENCIL_BUFFER_BIT : GL_NONE);
+  GLbitfield toClear =
+      (val & static_cast<unsigned>(ClearType::Color) ? GL_COLOR_BUFFER_BIT : GL_NONE) |
+      (val & static_cast<unsigned>(ClearType::Depth) ? GL_DEPTH_BUFFER_BIT : GL_NONE) |
+      (val & static_cast<unsigned>(ClearType::Stencil) ? GL_STENCIL_BUFFER_BIT : GL_NONE);
   GL_CHECK(glClear(toClear));
 }
 
-void Window::swapBuffers()
-{
-  mWindow.display();
-}
+void Window::swapBuffers() { mWindow.display(); }
 
 void Window::applySettings(const Settings& settings)
 {
@@ -54,14 +52,15 @@ void Window::applySettings(const Settings& settings)
       settings.bitsPerPixel,
   };
 
-  sf::ContextSettings contextSettings{settings.depthBits,
-                                      settings.stencilBits,
-                                      settings.antialiasing,
-                                      settings.openglMajor,
-                                      settings.openglMinor,
-                                      static_cast<unsigned>(sf::ContextSettings::Default |
-                                                            (settings.coreContext ? sf::ContextSettings::Core : 0) |
-                                                            (settings.debugContext ? sf::ContextSettings::Debug : 0))};
+  sf::ContextSettings contextSettings{
+      settings.depthBits,
+      settings.stencilBits,
+      settings.antialiasing,
+      settings.openglMajor,
+      settings.openglMinor,
+      static_cast<unsigned>(sf::ContextSettings::Default |
+                            (settings.coreContext ? sf::ContextSettings::Core : 0) |
+                            (settings.debugContext ? sf::ContextSettings::Debug : 0))};
 
   mWindow.create(videoMode, settings.applicationName, sf::Style::Default, contextSettings);
   if (settings.vsync)
@@ -80,15 +79,9 @@ void Window::applySettings(const Settings& settings)
 #endif
 }
 
-sf::Window& Window::getSFMLWindow()
-{
-  return mWindow;
-}
+sf::Window& Window::getSFMLWindow() { return mWindow; }
 
-const sf::Window& Window::getSFMLWindow() const
-{
-  return mWindow;
-}
+const sf::Window& Window::getSFMLWindow() const { return mWindow; }
 
 Vec2u Window::getSize() const
 {
@@ -102,10 +95,7 @@ float Window::getAspectRatio() const
   return static_cast<float>(size.x) / static_cast<float>(size.y);
 }
 
-bool Window::hasFocus() const
-{
-  return mHasFocus;
-}
+bool Window::hasFocus() const { return mHasFocus; }
 
 void Window::setClearColor(aw::Color color)
 {
